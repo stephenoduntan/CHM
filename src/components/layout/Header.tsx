@@ -14,32 +14,52 @@ export function Header() {
 
   return (
     <>
-      <header className="w-full bg-white relative z-40">
+      <header className="w-full bg-white relative z-40 border-b border-gray-100/60">
         <Container>
-          <div className="flex items-center justify-between py-6 h-[140px] md:h-[160px]">
-            {/* Left: Primary Navigation Links */}
-            <nav className="flex items-center gap-6 font-display font-semibold text-[17px] md:text-[18px] text-[#242424] font-recursive-mono min-w-[200px]">
-              {NAV_LINKS.map((link) => {
-                const isActive = pathname === link.href;
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className={`transition-colors hover:text-[#051202] ${
-                      isActive ? "underline decoration-2 underline-offset-8" : ""
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                );
-              })}
-            </nav>
+          <div
+            className="flex items-center justify-between py-[24px] h-[160px] relative w-full"
+            data-node-id="2086:1951"
+          >
+            {/* Left Column: Navigation Links (Width: 287px to mirror right column and center logo perfectly) */}
+            <div
+              className="flex items-center justify-start gap-[24px] w-[287px] shrink-0"
+              data-node-id="2086:1942"
+            >
+              <nav className="hidden sm:flex items-center gap-[24px]">
+                {NAV_LINKS.map((link) => {
+                  const isActive = pathname === link.href;
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className={`text-[#242424] text-[18px] font-semibold leading-normal whitespace-nowrap transition-colors hover:text-[#c8a96e] ${
+                        isActive ? "text-[#c8a96e]" : ""
+                      }`}
+                      style={{
+                        fontFamily: "var(--font-recursive), monospace",
+                        fontVariationSettings: '"CASL" 1, "CRSV" 0.5, "MONO" 1',
+                      }}
+                    >
+                      {link.label}
+                    </Link>
+                  );
+                })}
+              </nav>
+            </div>
 
-            {/* Center: Brand Logo */}
-            <div className="flex justify-center flex-1">
-              <Link href="/" className="relative block h-[80px] w-[110px] sm:h-[100px] sm:w-[138px] md:h-[112px] md:w-[154px]">
+            {/* Center Column: RCCG Court of His Majesty Official Logo (154px x 112px) */}
+            <div
+              className="flex items-center justify-center flex-1 shrink-0"
+              data-node-id="2147:3013"
+              data-name="rccgchm logo2 (1) 2"
+            >
+              <Link
+                href="/"
+                className="relative block h-[112px] w-[154px] transition-transform hover:scale-[1.02]"
+                aria-label={SITE_CONFIG.fullName}
+              >
                 <Image
-                  src="/images/logo.svg"
+                  src="/images/rccgchm-logo.svg"
                   alt={SITE_CONFIG.fullName}
                   fill
                   priority
@@ -48,29 +68,32 @@ export function Header() {
               </Link>
             </div>
 
-            {/* Right: Hamburger Menu Button */}
-            <div className="flex items-center justify-end min-w-[200px]">
+            {/* Right Column: Menu Button (Width: 287px, right-aligned) */}
+            <div
+              className="flex items-center justify-end w-[287px] shrink-0"
+              data-node-id="2086:1948"
+            >
               <button
                 type="button"
                 onClick={() => setIsMenuOpen(true)}
+                className="block cursor-pointer relative size-[40px] rounded-lg hover:bg-gray-100/80 transition-colors p-0 border-0 bg-transparent"
                 aria-label="Open menu"
-                className="relative p-2 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer group"
+                data-node-id="2086:1949"
+                data-name="fluent:line-horizontal-3-24-filled"
               >
-                <div className="relative size-[36px] md:size-[40px]">
-                  <Image
-                    src="/images/hamburger-menu.svg"
-                    alt="Menu"
-                    fill
-                    className="object-contain group-hover:scale-105 transition-transform"
-                  />
-                </div>
+                <Image
+                  src="/images/fluent-menu.svg"
+                  alt="Menu"
+                  fill
+                  className="object-contain"
+                />
               </button>
             </div>
           </div>
         </Container>
       </header>
 
-      {/* Fullscreen / Drawer Navigation Overlay */}
+      {/* Slide-over Drawer Menu Overlay */}
       {isMenuOpen && (
         <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm transition-opacity">
           <div
@@ -80,9 +103,9 @@ export function Header() {
           >
             {/* Drawer Header */}
             <div className="flex items-center justify-between pb-6 border-b border-white/10">
-              <div className="relative h-[60px] w-[90px]">
+              <div className="relative h-[80px] w-[110px]">
                 <Image
-                  src="/images/logo.svg"
+                  src="/images/rccgchm-logo.svg"
                   alt={SITE_CONFIG.name}
                   fill
                   className="object-contain brightness-0 invert"
@@ -91,14 +114,14 @@ export function Header() {
               <button
                 type="button"
                 onClick={() => setIsMenuOpen(false)}
-                className="p-2 rounded-full hover:bg-white/10 text-white transition-colors"
+                className="p-2 rounded-full hover:bg-white/10 text-white transition-colors cursor-pointer"
                 aria-label="Close menu"
               >
                 <X className="size-6" />
               </button>
             </div>
 
-            {/* Navigation Groups */}
+            {/* Drawer Navigation Links */}
             <div className="py-8 space-y-8">
               <div>
                 <h3 className="text-xs uppercase tracking-widest text-[#a8a8a8] mb-4 font-display font-recursive-mono">

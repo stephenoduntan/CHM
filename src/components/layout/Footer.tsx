@@ -20,7 +20,7 @@ export function Footer() {
             {/* Logo */}
             <div className="relative size-[100px] md:size-[120px]">
               <Image
-                src="/images/logo.svg"
+                src="/images/rccgchm-logo.svg"
                 alt={SITE_CONFIG.fullName}
                 fill
                 className="object-contain"
