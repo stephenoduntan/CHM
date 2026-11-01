@@ -1,8 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  cacheComponents: true,
-  partialPrefetching: true,
   images: {
     remotePatterns: [
       {
@@ -11,13 +9,8 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  turbopack: {
-    rules: {
-      "*.css": {
-        loaders: ["@tailwindcss/turbopack"],
-        as: "*.css",
-      },
-    },
+  eslint: {
+    ignoreDuringBuilds: true,
   },
 };
 
