@@ -32,11 +32,12 @@ export const FOOTER_QUICK_LINKS = [
 ] as const;
 
 export const FOOTER_CONNECT_LINKS = [
-  { label: "Join a Group", href: "/connect/groups" },
-  { label: "House Fellowship", href: "/connect/house-fellowship" },
+  { label: "Join a Group", href: "/connect" },
+  { label: "House Fellowship", href: "/connect" },
   { label: "Services", href: "/services" },
-  { label: "Prayer Request", href: "/connect/prayer-request" },
-  { label: "Testify", href: "/connect/testify" },
+  { label: "Prayer Request", href: "/connect" },
+  { label: "Testify", href: "/connect" },
+  { label: "Management Portal", href: "/management" },
 ] as const;
 
 export const SOCIAL_LINKS = [
