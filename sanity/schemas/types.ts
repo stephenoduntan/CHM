@@ -13,3 +13,4 @@ export function defineType<T extends SchemaDefinition>(definition: T): T {
 export function defineField<T extends SchemaDefinition>(definition: T): T {
   return definition;
 }
+

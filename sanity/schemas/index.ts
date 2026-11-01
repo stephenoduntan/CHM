@@ -11,3 +11,4 @@ export const schemaTypes = [
   podcastType,
   authorType,
 ];
+

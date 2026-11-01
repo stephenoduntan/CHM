@@ -1,0 +1,195 @@
+﻿Diagnose log at 2026-11-01T11:52:03Z
+
+AppPath: C:\Users\OlawoleSOduntan\AppData\Local\Programs\Git\ucrt64\bin\git-credential-manager.exe
+InstallDir: C:\Users\OlawoleSOduntan\AppData\Local\Programs\Git\ucrt64\bin\
+Version: 2.9.1+6760f0ef069c994aa2bb1d703fb374986ee82a3e
+
+------------
+Diagnostic: Environment
+Skipped: False
+Success: True
+Exception: None
+Log:
+OSType: Windows
+OSVersion: 10.0 (build 22000)
+Reading environment variables... OK
+ Variables:
+SystemDrive=C:
+ProgramFiles(x86)=C:\Program Files (x86)
+MSYSTEM=UCRT64
+ProgramW6432=C:\Program Files
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 141 Stepping 1, GenuineIntel
+OnlineServices=Online Services
+PROCESSOR_ARCHITECTURE=AMD64
+VSCODE_GIT_ASKPASS_MAIN=c:\Users\OlawoleSOduntan\AppData\Roaming\Code\User\globalStorage\vscode.git\askpass\70789581cae28aa7\askpass-main.js
+Path=C:/Users/OlawoleSOduntan/AppData/Local/Programs/Git/ucrt64/libexec/git-core;C:\Users\OlawoleSOduntan\AppData\Local\Programs\Git\ucrt64\bin;C:\Users\OlawoleSOduntan\AppData\Local\Programs\Git\usr\bin;C:\Users\OlawoleSOduntan\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Users\OlawoleSOduntan\AppData\Local\nodejs;C:\Users\OlawoleSOduntan\AppData\Local\Microsoft\WindowsApps;C:\Users\OlawoleSOduntan\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\OlawoleSOduntan\AppData\Local\Programs\Git\cmd;c:\Users\OlawoleSOduntan\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\debugCommand;C:\Users\OlawoleSOduntan\AppData\Local\Programs\Microsoft VS Code\bin\copilot-shim
+COMPUTERNAME=TCS-07-OSO-3UX
+CLAUDE_CODE_SSE_PORT=36850
+VSCODE_GIT_IPC_HANDLE=\\.\pipe\vscode-git-db7e6d82c8-sock
+GEMINI_CLI_IDE_AUTH_TOKEN=f61e49aa-6933-4e90-8204-a2d3e9103c8d
+PROCESSOR_REVISION=8d01
+TEMP=C:\Users\OLAWOL~1\AppData\Local\Temp
+USERPROFILE=C:\Users\OlawoleSOduntan
+CommonProgramFiles(x86)=C:\Program Files (x86)\Common Files
+LOGONSERVER=\\TCS-07-OSO-3UX
+TERM=xterm-256color
+BRB=C:\Program Files\HP\Sure Click\bin
+SystemRoot=C:\WINDOWS
+CHROME_CRASHPAD_PIPE_NAME=\\.\pipe\crashpad_32296_FOCDILNRGUBNRVQX
+GIT_EXEC_PATH=C:/Users/OlawoleSOduntan/AppData/Local/Programs/Git/ucrt64/libexec/git-core
+GEMINI_CLI_IDE_SERVER_PORT=64665
+PLINK_PROTOCOL=ssh
+VSCODE_A11Y_MODE=0
+OneDrive=C:\Users\OlawoleSOduntan\OneDrive
+USERDOMAIN_ROAMINGPROFILE=AzureAD
+VSCODE_NONCE=ca6952e2-b9e7-46e1-9c72-d30e0f380d49
+CommonProgramFiles=C:\Program Files\Common Files
+ZES_ENABLE_SYSMAN=1
+GEMINI_CLI_IDE_WORKSPACE_PATH=c:\Users\OlawoleSOduntan\Desktop\CHM
+ProgramData=C:\ProgramData
+platformcode=AN
+GIT_ASKPASS=c:\Users\OlawoleSOduntan\AppData\Roaming\Code\User\globalStorage\vscode.git\askpass\70789581cae28aa7\askpass.sh
+HOMEPATH=\Users\OlawoleSOduntan
+IGCCSVC_DB=AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAKjyfJcWxqEm2p879lZs8bAQAAAACAAAAAAAQZgAAAAEAACAAAAACUZqrdWgBzV07rHqCjJfuHRCQvjK/I+FmHDe1ZqKmbgAAAAAOgAAAAAIAACAAAACc1IMIlQhn2BdZMoOOwVU76dcnkh9jluoQpU6Ii5CdFmAAAAAqwYrDmi4w6MnK98dX1HDCVJThEJBcoJzjDxa0rUIqjjNr24V/8w3c698rRSOT/46Q4VaOkgOhAnPqVAHd0Rp/MUKBf90tfyT79kj/EMnEfXL9dtSWKw5yHr0HxhD+TidAAAAAH+y2P+kNJtNKdfTddx1BaW+5eKxrbttiJuQlMJNjGf5sx66Qo3pe9wBDY9RXYbG0RjHdGjgLk6U8BHRyO8iddQ==
+BRS=C:\Program Files\HP\Sure Click\servers
+VSCODE_INJECTION=1
+ALLUSERSPROFILE=C:\ProgramData
+CommonProgramW6432=C:\Program Files\Common Files
+USERNAME=OlawoleSOduntan
+COPILOT_DEBUG_NONCE=f6b7c409cee9bcf21cc74f85b2003648
+TMP=C:\Users\OLAWOL~1\AppData\Local\Temp
+SESSIONNAME=Console
+DriverData=C:\Windows\System32\Drivers\DriverData
+HOMEDRIVE=C:
+windir=C:\WINDOWS
+GIT_TRACE2_PARENT_SID=637bcc27-353c-48ab-8540-8f51ef4556b7
+VSCODE_GIT_ASKPASS_NODE=C:\Users\OlawoleSOduntan\AppData\Local\Programs\Microsoft VS Code\Code.exe
+NUMBER_OF_PROCESSORS=12
+OS=Windows_NT
+ProgramFiles=C:\Program Files
+ComSpec=C:\WINDOWS\system32\cmd.exe
+VSCODE_STABLE=1
+PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.CPL
+HOME=C:\Users\OlawoleSOduntan
+LANG=en_US.UTF-8
+PSModulePath=C:\Users\OlawoleSOduntan\Documents\WindowsPowerShell\Modules;C:\Program Files\WindowsPowerShell\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules
+TMPDIR=C:\Users\OLAWOL~1\AppData\Local\Temp
+APPDATA=C:\Users\OlawoleSOduntan\AppData\Roaming
+USERDOMAIN=AzureAD
+PROCESSOR_LEVEL=6
+LOCALAPPDATA=C:\Users\OlawoleSOduntan\AppData\Local
+TERM_PROGRAM_VERSION=1.144.0
+RegionCode=NA
+COLORTERM=truecolor
+PUBLIC=C:\Users\Public
+TERM_PROGRAM=vscode
+VSCODE_GIT_ASKPASS_EXTRA_ARGS=
+
+
+------------
+Diagnostic: File system
+Skipped: False
+Success: True
+Exception: None
+Log:
+Temporary directory is 'C:\Users\OlawoleSOduntan\AppData\Local\Temp\'...
+Checking basic file I/O...
+Writing to temporary file 'C:\Users\OlawoleSOduntan\AppData\Local\Temp\6e864ad7b45d8ac6eccbb5dc'... OK
+Reading from temporary file 'C:\Users\OlawoleSOduntan\AppData\Local\Temp\6e864ad7b45d8ac6eccbb5dc'... OK
+Deleting temporary file 'C:\Users\OlawoleSOduntan\AppData\Local\Temp\6e864ad7b45d8ac6eccbb5dc'... OK
+Testing IFileSystem instance...
+UserHomePath: C:\Users\OlawoleSOduntan
+UserDataDirectoryPath: C:\Users\OlawoleSOduntan\.gcm
+GetCurrentDirectory(): C:\Users\OlawoleSOduntan\Desktop\CHM
+
+------------
+Diagnostic: Networking
+Skipped: False
+Success: True
+Exception: None
+Log:
+Checking networking and HTTP stack...
+Creating HTTP client... OK
+IsNetworkAvailable: True
+Sending HEAD request to http://example.com... OK
+Sending HEAD request to https://example.com... OK
+Acquiring free TCP port... OK
+Testing local HTTP loopback connections...
+Creating new HTTP listener for http://localhost:51497/... OK
+Waiting for loopback connection... OK
+Writing response... OK
+Waiting for response data... OK
+Loopback connection data OK
+
+------------
+Diagnostic: Git
+Skipped: False
+Success: True
+Exception: None
+Log:
+Getting Git version... OK
+Git version is '2.56.0.windows.2'
+Locating current repository...Git repository at 'C:/Users/OlawoleSOduntan/Desktop/CHM/.git'
+ OK
+Listing all Git configuration... OK
+Git configuration:
+file:C:/Users/OlawoleSOduntan/AppData/Local/Programs/Git/etc/gitconfig	diff.astextplain.textconv=astextplain
+file:C:/Users/OlawoleSOduntan/AppData/Local/Programs/Git/etc/gitconfig	filter.lfs.clean=git-lfs clean -- %f
+file:C:/Users/OlawoleSOduntan/AppData/Local/Programs/Git/etc/gitconfig	filter.lfs.smudge=git-lfs smudge -- %f
+file:C:/Users/OlawoleSOduntan/AppData/Local/Programs/Git/etc/gitconfig	filter.lfs.process=git-lfs filter-process
+file:C:/Users/OlawoleSOduntan/AppData/Local/Programs/Git/etc/gitconfig	filter.lfs.required=true
+file:C:/Users/OlawoleSOduntan/AppData/Local/Programs/Git/etc/gitconfig	http.sslbackend=schannel
+file:C:/Users/OlawoleSOduntan/AppData/Local/Programs/Git/etc/gitconfig	core.autocrlf=true
+file:C:/Users/OlawoleSOduntan/AppData/Local/Programs/Git/etc/gitconfig	core.fscache=true
+file:C:/Users/OlawoleSOduntan/AppData/Local/Programs/Git/etc/gitconfig	core.symlinks=false
+file:C:/Users/OlawoleSOduntan/AppData/Local/Programs/Git/etc/gitconfig	pull.rebase=false
+file:C:/Users/OlawoleSOduntan/AppData/Local/Programs/Git/etc/gitconfig	credential.helper=manager
+file:C:/Users/OlawoleSOduntan/AppData/Local/Programs/Git/etc/gitconfig	credential.https://dev.azure.com.usehttppath=true
+file:C:/Users/OlawoleSOduntan/AppData/Local/Programs/Git/etc/gitconfig	init.defaultbranch=main
+file:C:/Users/OlawoleSOduntan/.gitconfig	core.editor="C:\Users\OlawoleSOduntan\AppData\Local\Programs\Microsoft VS Code\bin\code" --wait
+file:C:/Users/OlawoleSOduntan/.gitconfig	user.email=cto@braidingpalace.co.uk
+file:C:/Users/OlawoleSOduntan/.gitconfig	user.name=braidingpalace
+file:.git/config	core.repositoryformatversion=0
+file:.git/config	core.filemode=false
+file:.git/config	core.bare=false
+file:.git/config	core.logallrefupdates=true
+file:.git/config	core.symlinks=false
+file:.git/config	core.ignorecase=true
+file:.git/config	remote.origin.url=https://github.com/stephenoduntan/CHM.git
+file:.git/config	remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+
+
+------------
+Diagnostic: Credential storage
+Skipped: False
+Success: True
+Exception: None
+Log:
+ICredentialStore instance is of type: CredentialStore
+Writing test credential... OK
+Reading test credential... OK
+Deleting test credential... OK
+
+------------
+Diagnostic: Microsoft authentication (AAD/MSA)
+Skipped: False
+Success: True
+Exception: None
+Log:
+Broker is not enabled.
+Gathering MSAL token cache data... OK
+CacheDirectory: C:\Users\OlawoleSOduntan\AppData\Local\.IdentityService
+CacheFileName: msal.cache
+CacheFilePath: C:\Users\OlawoleSOduntan\AppData\Local\.IdentityService\msal.cache
+Creating cache helper... OK
+Verifying MSAL token cache persistence... OK
+
+------------
+Diagnostic: GitHub API
+Skipped: False
+Success: True
+Exception: None
+Log:
+Using 'https://github.com/' as API target.
+Querying '/meta' endpoint... OK
+
