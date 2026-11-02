@@ -521,7 +521,7 @@ export function HeroSection() {
       {/* ─── MOBILE & TABLET RESPONSIVE VIEW (< lg) ─── */}
       <div className="block lg:hidden relative w-full px-4 sm:px-8 py-10 z-10">
         {/* Central Hero Headline */}
-        <div className="max-w-[500px] mx-auto text-center p-6 sm:p-8 rounded-[28px] bg-white/90 backdrop-blur-md border border-gray-100 shadow-xl mb-8">
+        <div className="max-w-[500px] mx-auto text-center p-6 sm:p-8 rounded-[28px] backdrop-blur-md shadow-xl mb-8">
           <p
             className="font-display font-recursive-mono italic text-xl sm:text-2xl text-[#242424] mb-2"
             style={{ fontVariationSettings: '"CASL" 0, "CRSV" 1, "MONO" 1' }}
