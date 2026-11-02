@@ -1,8 +1,10 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
+import { flushSync } from "react-dom";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight, Volume2, VolumeX, ArrowRight } from "lucide-react";
+import { motion, useMotionValue, useTransform, animate, MotionValue } from "framer-motion";
 import { Container } from "@/components/layout/Container";
 
 export interface EventItem {
@@ -60,103 +62,306 @@ const EVENTS_DATA: EventItem[] = [
   },
 ];
 
-// Exact transform configs from cinematic-carousel.vercel.app's dd definition
-const PANEL_CONFIGS: Record<
-  number,
-  {
-    x: string;
-    rotateY: number;
-    scale: number;
-    originX: number;
-    opacity: number;
-    blur: number;
-    brightness: number;
-    zIndex: number;
+function lerp(a: number, b: number, t: number) {
+  return a + (b - a) * t;
+}
+
+/**
+ * Calculates continuous 3D transform and styling for any float offset.
+ * Maintains strict 40px gap between cards, 0 border radius, and progressive blur/overlay.
+ */
+function getPanelStyle(effectiveOffset: number, panelW: number, gap: number = 40) {
+  const step = panelW + gap;
+  const off = effectiveOffset;
+
+  let x: number;
+  let rotateY: number;
+  let scale: number;
+  let originX: string;
+  let blur: number;
+  let overlay: number;
+  let zIndex: number;
+
+  if (off <= -1) {
+    const t = Math.min(1, Math.max(0, -off - 1));
+    x = lerp(-1 * step, -2 * step, t);
+    rotateY = lerp(48, 56, t);
+    scale = lerp(0.96, 0.88, t);
+    originX = "100% 50%";
+    blur = lerp(2.5, 5, t);
+    overlay = lerp(0.55, 0.75, t);
+    zIndex = Math.round(lerp(6, 2, t));
+  } else if (off < 0) {
+    const t = -off;
+    x = lerp(0, -1 * step, t);
+    rotateY = lerp(0, 48, t);
+    scale = lerp(1, 0.96, t);
+    originX = "100% 50%";
+    blur = lerp(0, 2.5, t);
+    overlay = lerp(0, 0.55, t);
+    zIndex = Math.round(lerp(10, 6, t));
+  } else if (off <= 1) {
+    const t = off;
+    x = lerp(0, 1 * step, t);
+    rotateY = lerp(0, -48, t);
+    scale = lerp(1, 0.96, t);
+    originX = "0% 50%";
+    blur = lerp(0, 2.5, t);
+    overlay = lerp(0, 0.55, t);
+    zIndex = Math.round(lerp(10, 6, t));
+  } else {
+    const t = Math.min(1, Math.max(0, off - 1));
+    x = lerp(1 * step, 2 * step, t);
+    rotateY = lerp(-48, -56, t);
+    scale = lerp(0.96, 0.88, t);
+    originX = "0% 50%";
+    blur = lerp(2.5, 5, t);
+    overlay = lerp(0.55, 0.75, t);
+    zIndex = Math.round(lerp(6, 2, t));
   }
-> = {
-  [-2]: {
-    x: "-100vw",
-    rotateY: 62,
-    scale: 0.85,
-    originX: 1,
-    opacity: 0.3,
-    blur: 1.5,
-    brightness: 0.48,
-    zIndex: 1,
-  },
-  [-1]: {
-    x: "-41vw",
-    rotateY: 60,
-    scale: 1,
-    originX: 1,
-    opacity: 0.45,
-    blur: 1,
-    brightness: 0.8,
-    zIndex: 3,
-  },
-  [0]: {
-    x: "0vw",
-    rotateY: 0,
-    scale: 1,
-    originX: 0.5,
-    opacity: 1,
-    blur: 0,
-    brightness: 1,
-    zIndex: 5,
-  },
-  [1]: {
-    x: "41vw",
-    rotateY: -60,
-    scale: 1,
-    originX: 0,
-    opacity: 0.45,
-    blur: 1,
-    brightness: 0.8,
-    zIndex: 3,
-  },
-  [2]: {
-    x: "100vw",
-    rotateY: -62,
-    scale: 0.85,
-    originX: 0,
-    opacity: 0.3,
-    blur: 1.5,
-    brightness: 0.48,
-    zIndex: 1,
-  },
-};
+
+  return { x, rotateY, scale, originX, blur, overlay, zIndex };
+}
+
+interface PanelProps {
+  offset: number;
+  slide: EventItem;
+  isCenter: boolean;
+  panelWidth: number;
+  panelHeight: number;
+  gap: number;
+  motionProgress: MotionValue<number>;
+  isMuted: boolean;
+  toggleMute: () => void;
+  centerVideoRef: React.MutableRefObject<HTMLVideoElement | null>;
+  onSelect: () => void;
+  hasDragged: React.MutableRefObject<boolean>;
+}
+
+function Panel({
+  offset,
+  slide,
+  isCenter,
+  panelWidth,
+  panelHeight,
+  gap,
+  motionProgress,
+  isMuted,
+  toggleMute,
+  centerVideoRef,
+  onSelect,
+  hasDragged,
+}: PanelProps) {
+  const x = useTransform(motionProgress, (p) => getPanelStyle(offset - p, panelWidth, gap).x);
+  const rotateY = useTransform(motionProgress, (p) => getPanelStyle(offset - p, panelWidth, gap).rotateY);
+  const scale = useTransform(motionProgress, (p) => getPanelStyle(offset - p, panelWidth, gap).scale);
+  const transformOrigin = useTransform(motionProgress, (p) => getPanelStyle(offset - p, panelWidth, gap).originX);
+  const filter = useTransform(motionProgress, (p) => `blur(${getPanelStyle(offset - p, panelWidth, gap).blur.toFixed(2)}px)`);
+  const overlayOpacity = useTransform(motionProgress, (p) => getPanelStyle(offset - p, panelWidth, gap).overlay);
+  const zIndex = useTransform(motionProgress, (p) => getPanelStyle(offset - p, panelWidth, gap).zIndex);
+
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    if (isCenter && videoRef.current) {
+      centerVideoRef.current = videoRef.current;
+      videoRef.current.muted = isMuted;
+      videoRef.current.play().catch(() => {});
+    }
+  }, [isCenter, isMuted, centerVideoRef]);
+
+  return (
+    <motion.div
+      data-panel-offset={offset}
+      onClick={(e) => {
+        if (hasDragged.current) return;
+        if (!isCenter) {
+          e.stopPropagation();
+          onSelect();
+        }
+      }}
+      style={{
+        position: "absolute",
+        width: panelWidth,
+        height: panelHeight,
+        left: "50%",
+        top: "50%",
+        marginLeft: -panelWidth / 2,
+        marginTop: -panelHeight / 2,
+        transformStyle: "preserve-3d",
+        x,
+        rotateY,
+        scale,
+        transformOrigin,
+        zIndex,
+        userSelect: "none",
+        cursor: isCenter ? "grab" : "pointer",
+        pointerEvents: Math.abs(offset) > 1 ? "none" : "auto",
+      }}
+    >
+      {/* Soft floor shadow under center card */}
+      {isCenter && (
+        <div
+          style={{
+            position: "absolute",
+            inset: -20,
+            background: "radial-gradient(ellipse at center, rgba(0,0,0,0.12) 0%, transparent 70%)",
+            pointerEvents: "none",
+            zIndex: -1,
+          }}
+        />
+      )}
+
+      {/* RECTANGULAR CINEMATIC VIDEO (No border-radius, subtle blur on sides) */}
+      <motion.div
+        style={{
+          position: "relative",
+          width: "100%",
+          height: "100%",
+          overflow: "hidden",
+          background: "#080808",
+          borderRadius: 0,
+          filter,
+          boxShadow: isCenter
+            ? "0 25px 50px -12px rgba(0, 0, 0, 0.25)"
+            : "0 10px 25px -5px rgba(0, 0, 0, 0.15)",
+        }}
+      >
+        <video
+          ref={videoRef}
+          src={slide.videoUrl}
+          autoPlay
+          loop
+          muted={!isCenter || isMuted}
+          playsInline
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            display: "block",
+            pointerEvents: "none",
+          }}
+        />
+      </motion.div>
+
+      {/* DISTINCTIVE DARK OVERLAY ON SIDE CARDS */}
+      <motion.div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "#051202",
+          opacity: overlayOpacity,
+          pointerEvents: "none",
+          zIndex: 1,
+          borderRadius: 0,
+        }}
+      />
+
+      {/* Audio Mute/Unmute Pill (Center Card Only) */}
+      {isCenter && (
+        <div className="absolute bottom-4 right-4 z-20">
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleMute();
+            }}
+            className="p-2.5 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-md text-white border border-white/20 transition-all cursor-pointer shadow-lg group/mute"
+            aria-label={isMuted ? "Unmute audio" : "Mute audio"}
+            title={isMuted ? "Unmute audio" : "Mute audio"}
+          >
+            {isMuted ? (
+              <VolumeX className="size-4 text-white/80 group-hover/mute:text-white" />
+            ) : (
+              <Volume2 className="size-4 text-[#c8a96e]" />
+            )}
+          </button>
+        </div>
+      )}
+    </motion.div>
+  );
+}
 
 export function EventsSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMuted, setIsMuted] = useState(true);
-  const dragStartX = useRef<number>(0);
-  const isDragging = useRef<boolean>(false);
+  const [windowWidth, setWindowWidth] = useState(1440);
+
+  const motionProgress = useMotionValue(0);
+  const isAnimatingRef = useRef(false);
+  const isDraggingRef = useRef(false);
+  const dragStartX = useRef(0);
+  const hasDragged = useRef(false);
   const centerVideoRef = useRef<HTMLVideoElement | null>(null);
-  const reflectionVideoRef = useRef<HTMLVideoElement | null>(null);
 
   const total = EVENTS_DATA.length;
   const currentEvent = EVENTS_DATA[currentIndex];
 
-  const handlePrev = useCallback(() => {
-    setCurrentIndex((prev) => (prev - 1 + total) % total);
-  }, [total]);
-
-  const handleNext = useCallback(() => {
-    setCurrentIndex((prev) => (prev + 1) % total);
-  }, [total]);
-
-  // Synchronize audio and playback on index change
+  // Track responsive dimensions
   useEffect(() => {
-    if (centerVideoRef.current) {
-      centerVideoRef.current.muted = isMuted;
-      centerVideoRef.current.play().catch(() => {});
-    }
-    if (reflectionVideoRef.current) {
-      reflectionVideoRef.current.currentTime = centerVideoRef.current?.currentTime || 0;
-      reflectionVideoRef.current.play().catch(() => {});
-    }
-  }, [currentIndex, isMuted]);
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
+  // Panel sizing: Responsive width, 16:9 ratio, 40px gap (24px on mobile)
+  const isMobile = windowWidth < 640;
+  const panelWidth = useMemo(() => {
+    if (windowWidth < 640) return Math.min(520, windowWidth * 0.82);
+    if (windowWidth < 1024) return Math.min(720, windowWidth * 0.68);
+    return Math.min(840, windowWidth * 0.62);
+  }, [windowWidth]);
+
+  const panelHeight = useMemo(() => panelWidth * (9 / 16), [panelWidth]);
+  const panelGap = isMobile ? 24 : 40;
+
+  // Spring animation configs matching cinematic reference
+  const springConfig = {
+    type: "spring" as const,
+    stiffness: 240,
+    damping: 30,
+    mass: 0.9,
+  };
+
+  const snapSpringConfig = {
+    type: "spring" as const,
+    stiffness: 300,
+    damping: 32,
+    mass: 0.8,
+  };
+
+  // Navigate to Next
+  const handleNext = useCallback(() => {
+    if (isAnimatingRef.current) return;
+    isAnimatingRef.current = true;
+
+    animate(motionProgress, 1, springConfig).then(() => {
+      flushSync(() => {
+        setCurrentIndex((prev) => (prev + 1) % total);
+        motionProgress.set(0);
+      });
+      isAnimatingRef.current = false;
+    });
+  }, [motionProgress, total]);
+
+  // Navigate to Prev
+  const handlePrev = useCallback(() => {
+    if (isAnimatingRef.current) return;
+    isAnimatingRef.current = true;
+
+    animate(motionProgress, -1, springConfig).then(() => {
+      flushSync(() => {
+        setCurrentIndex((prev) => (prev - 1 + total) % total);
+        motionProgress.set(0);
+      });
+      isAnimatingRef.current = false;
+    });
+  }, [motionProgress, total]);
+
+  // Toggle audio
   const toggleMute = () => {
     setIsMuted((prev) => !prev);
     if (centerVideoRef.current) {
@@ -164,7 +369,7 @@ export function EventsSection() {
     }
   };
 
-  // Keyboard navigation (Arrow keys)
+  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "ArrowLeft") handlePrev();
@@ -174,7 +379,73 @@ export function EventsSection() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handlePrev, handleNext]);
 
-  // Offsets matching cinematic-carousel.vercel.app's rendered window [-2, -1, 0, 1, 2]
+  // Pointer Drag Handlers (1:1 tracking, threshold release)
+  const handlePointerDown = (e: React.PointerEvent) => {
+    if (isAnimatingRef.current) return;
+    dragStartX.current = e.clientX;
+    hasDragged.current = false;
+    isDraggingRef.current = true;
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+  };
+
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (!isDraggingRef.current) return;
+    const deltaX = e.clientX - dragStartX.current;
+    if (Math.abs(deltaX) > 4) {
+      hasDragged.current = true;
+    }
+    const step = panelWidth + panelGap;
+    // Normalized offset: dragging left (deltaX < 0) pushes progress positive (towards next)
+    const progress = -deltaX / step;
+    motionProgress.set(Math.max(-1.2, Math.min(1.2, progress)));
+  };
+
+  const handlePointerUp = (e: React.PointerEvent) => {
+    if (!isDraggingRef.current) return;
+    isDraggingRef.current = false;
+
+    const deltaX = e.clientX - dragStartX.current;
+    const threshold = Math.min(80, panelWidth * 0.15);
+
+    if (deltaX < -threshold) {
+      // Dragged left -> advance to Next
+      isAnimatingRef.current = true;
+      animate(motionProgress, 1, springConfig).then(() => {
+        flushSync(() => {
+          setCurrentIndex((prev) => (prev + 1) % total);
+          motionProgress.set(0);
+        });
+        isAnimatingRef.current = false;
+      });
+    } else if (deltaX > threshold) {
+      // Dragged right -> return to Prev
+      isAnimatingRef.current = true;
+      animate(motionProgress, -1, springConfig).then(() => {
+        flushSync(() => {
+          setCurrentIndex((prev) => (prev - 1 + total) % total);
+          motionProgress.set(0);
+        });
+        isAnimatingRef.current = false;
+      });
+    } else {
+      // Snap back to current
+      isAnimatingRef.current = true;
+      animate(motionProgress, 0, snapSpringConfig).then(() => {
+        isAnimatingRef.current = false;
+      });
+    }
+  };
+
+  const handlePointerCancel = () => {
+    if (!isDraggingRef.current) return;
+    isDraggingRef.current = false;
+    isAnimatingRef.current = true;
+    animate(motionProgress, 0, snapSpringConfig).then(() => {
+      isAnimatingRef.current = false;
+    });
+  };
+
+  // 5 visible offsets for continuous 3D loop [-2, -1, 0, 1, 2]
   const visibleOffsets = [-2, -1, 0, 1, 2];
 
   return (
@@ -183,9 +454,9 @@ export function EventsSection() {
       data-node-id="2110:11239"
       data-name="events"
     >
-      <Container className="max-w-[1440px]">
-        {/* Section Header matching Figma node 2110:11241 */}
-        <div className="flex items-center justify-between pb-6 mb-2 lg:mb-4">
+      {/* Section Header */}
+      <Container className="max-w-[1440px] mb-8">
+        <div className="flex items-center justify-between pb-4">
           <div>
             <h2 className="font-display font-recursive-sans font-semibold text-2xl sm:text-3xl md:text-[40px] text-[#0a0a0a] tracking-tight">
               Upcoming Events
@@ -202,32 +473,35 @@ export function EventsSection() {
             </span>
           </Link>
         </div>
+      </Container>
 
-        {/* Outer Carousel Viewport with 3D perspective and dynamic CSS variables */}
+      {/* FULL-WINDOW WIDTH EVENT CAROUSEL (Bleeds to window edges) */}
+      <div
+        className="w-full relative overflow-hidden bg-white"
+        data-node-id="2111:11848"
+        data-name="event carousel"
+      >
+        {/* Carousel Viewport with 3D Perspective */}
         <div
-          className="relative w-full h-[580px] sm:h-[680px] lg:h-[782px] flex items-center justify-center overflow-hidden"
-          style={
-            {
-              "--panel-w": "min(680px, 86vw)",
-              "--panel-h": "calc(var(--panel-w) * 405 / 680)",
-            } as React.CSSProperties
-          }
-          data-node-id="2111:11848"
-          data-name="event carousel"
+          className="relative w-full h-[460px] sm:h-[560px] md:h-[640px] lg:h-[720px] flex items-center justify-center overflow-hidden"
+          style={{
+            perspective: "1400px",
+            perspectiveOrigin: "50% 48%",
+          }}
         >
-          {/* FLOOR REFLECTION (Matching cinematic-carousel.vercel.app's Ad component & Figma reflection) */}
+          {/* FLOOR REFLECTION (Light theme on white background) */}
           <div
             aria-hidden="true"
             className="absolute left-0 right-0 pointer-events-none"
             style={{
-              top: "calc(50% + (var(--panel-h) / 2) + 7px)",
-              height: "260px",
+              top: `calc(50% + ${panelHeight / 2}px + 6px)`,
+              height: "220px",
               zIndex: 0,
               maskImage:
-                "linear-gradient(to bottom, black 0%, black 20%, transparent 80%)",
+                "linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.08) 35%, transparent 70%)",
               WebkitMaskImage:
-                "linear-gradient(to bottom, black 0%, black 20%, transparent 80%)",
-              opacity: 0.45,
+                "linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.08) 35%, transparent 70%)",
+              opacity: 0.35,
             }}
             data-name="reflection"
           >
@@ -236,9 +510,9 @@ export function EventsSection() {
                 position: "absolute",
                 top: 0,
                 left: "50%",
-                width: "var(--panel-w)",
-                height: "var(--panel-h)",
-                marginLeft: "calc(-1 * var(--panel-w) / 2)",
+                width: panelWidth,
+                height: panelHeight,
+                marginLeft: -panelWidth / 2,
                 transformOrigin: "top center",
                 transform: "perspective(900px) rotateX(60deg)",
               }}
@@ -253,7 +527,6 @@ export function EventsSection() {
                 }}
               >
                 <video
-                  ref={reflectionVideoRef}
                   src={currentEvent.videoUrl}
                   autoPlay
                   loop
@@ -265,252 +538,102 @@ export function EventsSection() {
             </div>
           </div>
 
-          {/* EXACT .panels-container FROM CINEMATIC-CAROUSEL.VERCEL.APP */}
+          {/* EXACT .panels-container WITH HARDWARE-ACCELERATED DRAG GESTURE */}
           <div
-            className="panels-container"
+            className="panels-container w-full h-full absolute inset-0 cursor-grab active:cursor-grabbing"
             style={{
               position: "absolute",
               inset: 0,
               zIndex: 1,
               touchAction: "pan-y",
               perspective: "1400px",
-              cursor: "default",
             }}
-            onPointerDown={(e) => {
-              isDragging.current = true;
-              dragStartX.current = e.clientX;
-              e.currentTarget.setPointerCapture(e.pointerId);
-            }}
-            onPointerUp={(e) => {
-              if (!isDragging.current) return;
-              isDragging.current = false;
-              const delta = e.clientX - dragStartX.current;
-              if (Math.abs(delta) > 40) {
-                if (delta < 0) handleNext();
-                else handlePrev();
-              }
-            }}
-            onPointerCancel={() => {
-              isDragging.current = false;
-            }}
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
+            onPointerCancel={handlePointerCancel}
           >
             {visibleOffsets.map((offset) => {
               const slideIdx = ((currentIndex + offset) % total + total) % total;
               const slide = EVENTS_DATA[slideIdx];
-              const cfg = PANEL_CONFIGS[offset];
               const isCenter = offset === 0;
 
               return (
-                <div
+                <Panel
                   key={`${slide.id}-${offset}`}
-                  data-panel-offset={offset}
-                  onClick={() => {
-                    if (!isCenter) {
-                      setCurrentIndex(slideIdx);
-                    }
+                  offset={offset}
+                  slide={slide}
+                  isCenter={isCenter}
+                  panelWidth={panelWidth}
+                  panelHeight={panelHeight}
+                  gap={panelGap}
+                  motionProgress={motionProgress}
+                  isMuted={isMuted}
+                  toggleMute={toggleMute}
+                  centerVideoRef={centerVideoRef}
+                  hasDragged={hasDragged}
+                  onSelect={() => {
+                    if (offset === -1) handlePrev();
+                    if (offset === 1) handleNext();
                   }}
-                  style={{
-                    position: "absolute",
-                    width: "var(--panel-w)",
-                    height: "var(--panel-h)",
-                    left: "50%",
-                    top: "50%",
-                    marginLeft: "calc(-1 * var(--panel-w) / 2)",
-                    marginTop: "calc(-1 * var(--panel-h) / 2)",
-                    transformStyle: "preserve-3d",
-                    willChange: "transform, opacity, filter",
-                    transform: `translate3d(${cfg.x}, 0px, 0px) rotateY(${cfg.rotateY}deg) scale(${cfg.scale})`,
-                    transformOrigin: `${cfg.originX * 100}% center`,
-                    opacity: cfg.opacity,
-                    filter: `blur(${cfg.blur}px) brightness(${cfg.brightness})`,
-                    zIndex: cfg.zIndex,
-                    userSelect: "none",
-                    cursor: isCenter ? "default" : "pointer",
-                    pointerEvents: Math.abs(offset) <= 1 ? "auto" : "none",
-                    transition:
-                      "transform 700ms cubic-bezier(0.25, 1, 0.5, 1), opacity 500ms ease, filter 500ms ease",
-                  }}
-                >
-                  {/* Subtle radial glow underneath active center panel */}
-                  {isCenter && (
-                    <div
-                      style={{
-                        position: "absolute",
-                        inset: -50,
-                        borderRadius: 16,
-                        background:
-                          "radial-gradient(ellipse at center, rgba(255,255,255,0.08) 0%, transparent 65%)",
-                        pointerEvents: "none",
-                        zIndex: -1,
-                      }}
-                    />
-                  )}
-
-                  {/* Panel video box */}
-                  <div
-                    style={{
-                      position: "relative",
-                      width: "100%",
-                      height: "100%",
-                      overflow: "hidden",
-                      background: "#080808",
-                      borderRadius: 16,
-                      boxShadow: isCenter
-                        ? "0 25px 50px -12px rgba(0, 0, 0, 0.5)"
-                        : "0 10px 25px -5px rgba(0, 0, 0, 0.3)",
-                    }}
-                  >
-                    <div style={{ position: "absolute", inset: 0 }}>
-                      <video
-                        ref={(el) => {
-                          if (isCenter) centerVideoRef.current = el;
-                        }}
-                        src={slide.videoUrl}
-                        autoPlay
-                        loop
-                        muted={!isCenter || isMuted}
-                        playsInline
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                          display: "block",
-                          pointerEvents: "none",
-                        }}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Overlay Darkness (matching cinematic-carousel reference) */}
-                  <div
-                    style={{
-                      position: "absolute",
-                      inset: 0,
-                      background: "rgb(0,0,0)",
-                      opacity: isCenter ? 0 : 0.35,
-                      pointerEvents: "none",
-                      zIndex: 1,
-                      borderRadius: 16,
-                      transition: "opacity 500ms ease",
-                    }}
-                  />
-
-                  {/* Center Audio Control Toggle */}
-                  {isCenter && (
-                    <div className="absolute bottom-4 right-4 z-20">
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          toggleMute();
-                        }}
-                        className="p-2.5 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-md text-white border border-white/20 transition-all cursor-pointer shadow-lg group/mute"
-                        aria-label={isMuted ? "Unmute audio" : "Mute audio"}
-                        title={isMuted ? "Unmute audio" : "Mute audio"}
-                      >
-                        {isMuted ? (
-                          <VolumeX className="size-4 text-white/80 group-hover/mute:text-white" />
-                        ) : (
-                          <Volume2 className="size-4 text-[#c8a96e]" />
-                        )}
-                      </button>
-                    </div>
-                  )}
-                </div>
+                />
               );
             })}
           </div>
 
-          {/* Cinematic Vignettes from Reference */}
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              zIndex: 2,
-              background:
-                "linear-gradient(to right, rgba(0,0,0,0.65) 0%, transparent 25%, transparent 75%, rgba(0,0,0,0.65) 100%)",
-              pointerEvents: "none",
-            }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              zIndex: 2,
-              background:
-                "linear-gradient(to bottom, transparent 65%, rgba(0,0,0,0.5) 100%)",
-              pointerEvents: "none",
-            }}
-          />
-
-          {/* Figma Overlay Button - PREVIOUS (Node 2115:12625) */}
+          {/* Navigation Pill Buttons (Light Theme, high visibility) */}
           <button
             type="button"
             onClick={handlePrev}
-            className="absolute left-0 top-[30px] bottom-[140px] z-20 w-[90px] sm:w-[120px] flex items-center justify-start pl-4 sm:pl-6 text-[#f5f5f5] font-sans font-bold text-base sm:text-[18px] transition-all cursor-pointer group hover:brightness-125"
-            style={{
-              background:
-                "linear-gradient(269.7deg, rgba(0, 0, 0, 0) 1.38%, rgba(0, 0, 0, 0.35) 46.85%, rgba(0, 0, 0, 0.2) 92.3%)",
-            }}
+            className="absolute left-4 lg:left-10 top-1/2 -translate-y-1/2 z-30 flex items-center gap-2 px-4 sm:px-5 py-3 rounded-full bg-white/95 hover:bg-white text-gray-900 border border-gray-200/90 shadow-xl backdrop-blur-md font-semibold text-xs sm:text-sm tracking-wide transition-all cursor-pointer hover:scale-105 active:scale-95"
             aria-label="Previous Event"
-            data-name="Prev"
           >
-            <div className="flex items-center gap-1.5 opacity-85 group-hover:opacity-100 group-hover:-translate-x-1 transition-all">
-              <ChevronLeft className="size-5 sm:size-6" />
-              <span className="hidden sm:inline">Previous</span>
-            </div>
+            <ChevronLeft className="size-4 sm:size-5" />
+            <span className="hidden sm:inline">Previous</span>
           </button>
 
-          {/* Figma Overlay Button - NEXT (Node 2115:12627) */}
           <button
             type="button"
             onClick={handleNext}
-            className="absolute right-0 top-[30px] bottom-[140px] z-20 w-[90px] sm:w-[120px] flex items-center justify-end pr-4 sm:pr-6 text-[#f5f5f5] font-sans font-bold text-base sm:text-[18px] transition-all cursor-pointer group hover:brightness-125"
-            style={{
-              background:
-                "linear-gradient(269.7deg, rgba(0, 0, 0, 0.2) 1.38%, rgba(0, 0, 0, 0.35) 46.85%, rgba(0, 0, 0, 0) 92.3%)",
-            }}
+            className="absolute right-4 lg:right-10 top-1/2 -translate-y-1/2 z-30 flex items-center gap-2 px-4 sm:px-5 py-3 rounded-full bg-white/95 hover:bg-white text-gray-900 border border-gray-200/90 shadow-xl backdrop-blur-md font-semibold text-xs sm:text-sm tracking-wide transition-all cursor-pointer hover:scale-105 active:scale-95"
             aria-label="Next Event"
-            data-name="Next"
           >
-            <div className="flex items-center gap-1.5 opacity-85 group-hover:opacity-100 group-hover:translate-x-1 transition-all">
-              <span className="hidden sm:inline">Next</span>
-              <ChevronRight className="size-5 sm:size-6" />
-            </div>
+            <span className="hidden sm:inline">Next</span>
+            <ChevronRight className="size-4 sm:size-5" />
           </button>
-
-          {/* ACTIVE EVENT TITLE & DATE (Matching Figma Frame 16 node 2115:12622) */}
-          <div
-            className="absolute bottom-3 sm:bottom-6 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center justify-center text-center gap-1 sm:gap-2 px-4 transition-all duration-500"
-            data-node-id="2115:12622"
-            data-name="Frame 16"
-          >
-            <h3
-              key={`title-${currentEvent.id}`}
-              className="font-sans font-semibold text-xl sm:text-2xl md:text-3xl lg:text-[36px] text-[#0a0a0a] tracking-tight animate-fade-in"
-              data-node-id="2115:12623"
-            >
-              {currentEvent.title}
-            </h3>
-
-            <p
-              key={`date-${currentEvent.id}`}
-              className="font-sans font-medium text-sm sm:text-base md:text-[18px] text-[#242424] tracking-normal"
-              data-node-id="2115:12624"
-            >
-              {currentEvent.date}
-            </p>
-
-            <Link
-              href={currentEvent.link}
-              className="mt-1 inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold uppercase tracking-wider text-[#051202] hover:text-[#c8a96e] transition-colors"
-            >
-              <span>View Details</span>
-              <ArrowRight className="size-3.5" />
-            </Link>
-          </div>
         </div>
-      </Container>
+
+        {/* ACTIVE EVENT TITLE & DATE (Matching Figma Frame 16 node 2115:12622) */}
+        <div
+          className="w-full flex flex-col items-center justify-center text-center gap-1.5 sm:gap-2 pt-4 pb-2 px-4 transition-all duration-500"
+          data-node-id="2115:12622"
+          data-name="Frame 16"
+        >
+          <h3
+            key={`title-${currentEvent.id}`}
+            className="font-sans font-semibold text-xl sm:text-2xl md:text-3xl lg:text-[36px] text-[#0a0a0a] tracking-tight animate-fade-in"
+            data-node-id="2115:12623"
+          >
+            {currentEvent.title}
+          </h3>
+
+          <p
+            key={`date-${currentEvent.id}`}
+            className="font-sans font-medium text-sm sm:text-base md:text-[18px] text-[#444444] tracking-normal"
+            data-node-id="2115:12624"
+          >
+            {currentEvent.date}
+          </p>
+
+          <Link
+            href={currentEvent.link}
+            className="mt-1 inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold uppercase tracking-wider text-[#051202] hover:text-[#c8a96e] transition-colors"
+          >
+            <span>View Details</span>
+            <ArrowRight className="size-3.5" />
+          </Link>
+        </div>
+      </div>
     </section>
   );
 }

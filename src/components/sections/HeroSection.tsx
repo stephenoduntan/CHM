@@ -467,7 +467,7 @@ export function HeroSection() {
 
         {/* ─── Central Welcome Card (Figma Frame 5 / node 2114:12589) ─── */}
         <div
-          className="absolute left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto"
+          className="absolute left-1/2 top-1/3 pt-[64px] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto"
           data-node-id="2114:12589"
         >
           <div
