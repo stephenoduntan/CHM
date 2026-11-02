@@ -178,6 +178,8 @@ function Panel({
         if (!isCenter) {
           e.stopPropagation();
           onSelect();
+        } else {
+          toggleMute();
         }
       }}
       style={{
@@ -195,7 +197,7 @@ function Panel({
         transformOrigin,
         zIndex,
         userSelect: "none",
-        cursor: isCenter ? "grab" : "pointer",
+        cursor: "pointer",
         pointerEvents: Math.abs(offset) > 1 ? "none" : "auto",
       }}
     >
@@ -259,21 +261,27 @@ function Panel({
 
       {/* Audio Mute/Unmute Pill (Center Card Only) */}
       {isCenter && (
-        <div className="absolute bottom-4 right-4 z-20">
+        <div className="absolute bottom-4 right-4 z-20 pointer-events-auto">
           <button
             type="button"
             onClick={(e) => {
               e.stopPropagation();
               toggleMute();
             }}
-            className="p-2.5 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-md text-white border border-white/20 transition-all cursor-pointer shadow-lg group/mute"
+            className="flex items-center gap-2 px-3 py-2 rounded-full bg-black/65 hover:bg-black/85 backdrop-blur-md text-white border border-white/20 transition-all cursor-pointer shadow-lg group/mute"
             aria-label={isMuted ? "Unmute audio" : "Mute audio"}
-            title={isMuted ? "Unmute audio" : "Mute audio"}
+            title={isMuted ? "Click to unmute" : "Click to mute"}
           >
             {isMuted ? (
-              <VolumeX className="size-4 text-white/80 group-hover/mute:text-white" />
+              <>
+                <VolumeX className="size-4 text-white/80 group-hover/mute:text-white" />
+                <span className="text-xs font-medium tracking-wide text-white/90 pr-0.5">Click for sound</span>
+              </>
             ) : (
-              <Volume2 className="size-4 text-[#c8a96e]" />
+              <>
+                <Volume2 className="size-4 text-[#c8a96e] animate-pulse" />
+                <span className="text-xs font-medium tracking-wide text-[#c8a96e] pr-0.5">Sound on</span>
+              </>
             )}
           </button>
         </div>
@@ -366,13 +374,20 @@ export function EventsSection() {
     });
   }, [motionProgress, total]);
 
-  // Toggle audio
-  const toggleMute = () => {
-    setIsMuted((prev) => !prev);
-    if (centerVideoRef.current) {
-      centerVideoRef.current.muted = !isMuted;
-    }
-  };
+  // Toggle audio on mouse click
+  const toggleMute = useCallback(() => {
+    setIsMuted((prev) => {
+      const nextMuted = !prev;
+      if (centerVideoRef.current) {
+        centerVideoRef.current.muted = nextMuted;
+        if (!nextMuted) {
+          centerVideoRef.current.volume = 1;
+          centerVideoRef.current.play().catch(() => {});
+        }
+      }
+      return nextMuted;
+    });
+  }, []);
 
   // Keyboard navigation
   useEffect(() => {
@@ -633,7 +648,7 @@ export function EventsSection() {
 
         {/* ACTIVE EVENT TITLE & DATE (Matching Figma Frame 16 node 2115:12622) */}
         <div
-          className="w-full flex flex-col items-center justify-center text-center gap-1.5 sm:gap-2 pt-4 pb-2 px-4 transition-all duration-500"
+          className="w-full flex flex-col items-center justify-center text-center gap-1.5 sm:gap-2 pt-4 pb-2 px-4 transition-all duration-500 absolute bottom-[24px]"
           data-node-id="2115:12622"
           data-name="Frame 16"
         >
