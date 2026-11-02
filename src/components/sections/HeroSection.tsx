@@ -114,7 +114,7 @@ const HERO_VIDEO_NODES: VideoNode[] = [
     label: "Sacred Harmonies",
     videoUrl: "./videos/ezzer women montage.webm",
     left: 17.5, // 336px / 1920
-    top: 77.36, // 1018px / 1316
+    top: 70, // 1018px / 1316
     width: 20.83, // 400px / 1920
     height: 18.24, // 240px / 1316
     aspect: "landscape",
@@ -126,7 +126,7 @@ const HERO_VIDEO_NODES: VideoNode[] = [
     label: "The Cross & Fellowship",
     videoUrl: "./videos/hymnal sunday.webm",
     left: 44.79, // 860px / 1920
-    top: 72.95, // 960px / 1316
+    top: 64.50, // 960px / 1316
     width: 10.42, // 200px / 1920
     height: 27.05, // 356px / 1316
     aspect: "portrait",
@@ -138,7 +138,7 @@ const HERO_VIDEO_NODES: VideoNode[] = [
     label: "Heritage & Vision",
     videoUrl: "./videos/Pst. Agu Irukwu.webm",
     left: 61.67, // 1184px / 1920
-    top: 77.36, // 1018px / 1316
+    top: 70, // 1018px / 1316
     width: 20.83, // 400px / 1920
     height: 18.24, // 240px / 1316
     aspect: "landscape",
@@ -467,11 +467,11 @@ export function HeroSection() {
 
         {/* ─── Central Welcome Card (Figma Frame 5 / node 2114:12589) ─── */}
         <div
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto"
+          className="absolute left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto"
           data-node-id="2114:12589"
         >
           <div
-            className="flex flex-col items-center justify-center text-center p-[40px] w-[580px] xl:w-[620px]  backdrop-blur-md"
+            className="flex flex-col items-center justify-center text-center w-[580px] xl:w-[620px]  backdrop-blur-md"
             // style={{
             //   backgroundImage:
             //     "radial-gradient(circle at center, rgba(255,255,255,0.96) 0%, rgba(248,248,248,0.72) 25%)",
@@ -506,6 +506,7 @@ export function HeroSection() {
 
               <Link
                 href="https://youtube.com/@rccgchm?si=JSIawZL2BpxMx_OW"
+                target="_blank"
                 className="inline-flex items-center justify-center gap-[8px] px-[36px] py-[15px] rounded-[28px] border border-[#b2a1ed] bg-[#b2a1ed]/10 hover:bg-[#b2a1ed]/20 text-[#180c62] font-sans font-semibold text-[17px] transition-all group"
                 data-node-id="2114:12596"
               >

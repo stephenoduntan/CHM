@@ -16,9 +16,9 @@ export function Footer() {
       {/* ─── Top Light Bar (#e8e8e8) ───────────────────────────────── */}
       <div className="w-full bg-[#e8e8e8]">
         <Container>
-          <div className="flex flex-col sm:flex-row items-center justify-between py-10 gap-6">
+          <div className="flex flex-col sm:flex-row items-center justify-between py-5 gap-6">
             {/* Logo */}
-            <div className="relative size-[100px] md:size-[120px]">
+            <div className="relative size-[100px] md:size-[100px]">
               <Image
                 src="/images/rccgchm-logo.svg"
                 alt={SITE_CONFIG.fullName}

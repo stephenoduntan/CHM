@@ -47,26 +47,28 @@ export function LatestSermonSection() {
   return (
     <section className="w-full py-16 lg:py-24 bg-white">
       <Container>
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
-          <div>
-            <h2 className="font-sans font-bold text-3xl sm:text-4xl text-[#051202]">
-              Latest Sermons
-            </h2>
-            <div className="w-24 h-1 bg-[#c8a96e] mt-3 rounded-full" />
-          </div>
-
-          <Link
-            href="/sermons"
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold text-[#051202] border border-gray-300 hover:border-[#051202] transition-colors group"
-          >
-            <span>View all sermons</span>
-            <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </div>
+        
 
         {/* Dark Sermon Card */}
         <div className="relative rounded-[32px] overflow-hidden bg-[#0c0f24] text-white p-8 sm:p-12 lg:p-14 shadow-2xl">
+          {/* Header */}
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+            <div>
+              <h2 className="font-sans font-bold text-3xl sm:text-4xl text-[#FFFFFF]">
+                Latest Sermons
+              </h2>
+              <div className="w-24 h-1 bg-[#F9BAB8] mt-3 rounded-full" />
+            </div>
+
+            <Link
+              href="/sermons"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold text-[#F5F5F5] border border-white/30 hover:border-[#F5F5F5] transition-colors group"
+            >
+              <span>View all sermons</span>
+              <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Left Column: Metadata */}
             <div className="lg:col-span-5 flex flex-col justify-between h-full space-y-6">

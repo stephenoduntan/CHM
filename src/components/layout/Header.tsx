@@ -45,7 +45,7 @@ export function Header({ variant }: HeaderProps) {
       >
         <Container>
           <div
-            className="flex items-center justify-between h-[124px] sm:h-[160px] relative w-full"
+            className="flex items-center justify-between h-[124px] sm:h-[124px] relative w-full"
             data-node-id={isDark ? "2070:1798" : "2086:1951"}
             data-name={isDark ? "header-dark" : "header-light"}
           >
