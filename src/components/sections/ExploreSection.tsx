@@ -217,7 +217,7 @@ export function ExploreSection() {
       </div>
 
       {/* Mobile / Tablet On-Scroll Accordion (< lg) */}
-      <div ref={mobileTrackRef} className="block lg:hidden relative h-[220vh]">
+      <div ref={mobileTrackRef} className="block lg:hidden relative h-auto">
         <div className="sticky top-0 h-[100dvh] flex flex-col justify-between py-4 px-4 sm:px-6 overflow-hidden">
           <Container className="h-full flex flex-col justify-between max-w-xl mx-auto w-full">
             {/* Mobile Section Heading */}

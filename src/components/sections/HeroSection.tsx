@@ -88,7 +88,7 @@ const HERO_VIDEO_NODES: VideoNode[] = [
     label: "Holy Communion",
     videoUrl: "./videos/hymnal sunday.webm",
     left: 12.29, // (136 + 100) / 1920
-    top: 36.47, // 480px / 1316
+    top: 33.5, // 480px / 1316
     width: 10.42, // 200px / 1920
     height: 27.05, // 356px / 1316
     aspect: "portrait",
@@ -100,7 +100,7 @@ const HERO_VIDEO_NODES: VideoNode[] = [
     label: "Sunday Celebration",
     videoUrl: "./videos/guest min..webm",
     left: 77.29, // (1384 + 100) / 1920
-    top: 36.47, // 480px / 1316
+    top: 33.5, // 480px / 1316
     width: 10.42, // 200px / 1920
     height: 27.05, // 356px / 1316
     aspect: "portrait",
@@ -114,7 +114,7 @@ const HERO_VIDEO_NODES: VideoNode[] = [
     label: "Sacred Harmonies",
     videoUrl: "./videos/ezzer women montage.webm",
     left: 17.5, // 336px / 1920
-    top: 70, // 1018px / 1316
+    top: 66, // 1018px / 1316
     width: 20.83, // 400px / 1920
     height: 18.24, // 240px / 1316
     aspect: "landscape",
@@ -126,7 +126,7 @@ const HERO_VIDEO_NODES: VideoNode[] = [
     label: "The Cross & Fellowship",
     videoUrl: "./videos/hymnal sunday.webm",
     left: 44.79, // 860px / 1920
-    top: 64.50, // 960px / 1316
+    top: 60.50, // 960px / 1316
     width: 10.42, // 200px / 1920
     height: 27.05, // 356px / 1316
     aspect: "portrait",
@@ -138,7 +138,7 @@ const HERO_VIDEO_NODES: VideoNode[] = [
     label: "Heritage & Vision",
     videoUrl: "./videos/Pst. Agu Irukwu.webm",
     left: 61.67, // 1184px / 1920
-    top: 70, // 1018px / 1316
+    top: 66, // 1018px / 1316
     width: 20.83, // 400px / 1920
     height: 18.24, // 240px / 1316
     aspect: "landscape",
