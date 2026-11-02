@@ -47,7 +47,7 @@ export function Header() {
               </nav>
             </div>
 
-            {/* Center Column: RCCG Court of His Majesty Official Logo (154px x 112px) */}
+            {/* Center Column: RCCG Court of His Majesty Official Logo (104px x 96px) */}
             <div
               className="flex items-center justify-center flex-1 shrink-0"
               data-node-id="2147:3013"
@@ -55,7 +55,7 @@ export function Header() {
             >
               <Link
                 href="/"
-                className="relative block h-[112px] w-[154px] transition-transform hover:scale-[1.02]"
+                className="relative block h-[96px] w-[104px] transition-transform hover:scale-[1.02]"
                 aria-label={SITE_CONFIG.fullName}
               >
                 <Image
