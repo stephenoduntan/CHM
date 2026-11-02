@@ -257,82 +257,6 @@ function Panel({
         }}
       />
 
-      {/* ── Floor Contact Shadow Line ── */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          top: "100%",
-          left: 0,
-          right: 0,
-          height: "4px",
-          background:
-            "radial-gradient(ellipse at center, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.2) 65%, transparent 100%)",
-          pointerEvents: "none",
-          zIndex: 3,
-        }}
-      />
-
-      {/* ── PROMINENT GLOSSY FLOOR REFLECTION (Directly underneath every card) ── */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          top: "100%",
-          left: 0,
-          right: 0,
-          height: panelHeight * 0.45,
-          overflow: "hidden",
-          pointerEvents: "none",
-          zIndex: 0,
-          marginTop: "1px",
-          maskImage:
-            "linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 25%, rgba(0,0,0,0.25) 65%, transparent 100%)",
-          WebkitMaskImage:
-            "linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 25%, rgba(0,0,0,0.25) 65%, transparent 100%)",
-          opacity: isCenter ? 0.85 : 0.6,
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: panelHeight,
-            transform: "scaleY(-1)",
-            transformOrigin: "top center",
-            filter: `blur(${isCenter ? 1.5 : 3}px)`,
-          }}
-        >
-          <video
-            src={slide.videoUrl}
-            autoPlay
-            loop
-            muted
-            playsInline
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              display: "block",
-            }}
-          />
-        </div>
-
-        {/* Side card dimming on reflection */}
-        {!isCenter && (
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              background: "#051202",
-              opacity: 0.55,
-            }}
-          />
-        )}
-      </div>
-
       {/* Audio Mute/Unmute Pill (Center Card Only) */}
       {isCenter && (
         <div className="absolute bottom-4 right-4 z-20">
@@ -360,6 +284,7 @@ function Panel({
 
 export function EventsSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isReflectionVisible, setIsReflectionVisible] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const [windowWidth, setWindowWidth] = useState(1440);
 
@@ -413,6 +338,7 @@ export function EventsSection() {
   const handleNext = useCallback(() => {
     if (isAnimatingRef.current) return;
     isAnimatingRef.current = true;
+    setIsReflectionVisible(false);
 
     animate(motionProgress, 1, springConfig).then(() => {
       flushSync(() => {
@@ -420,6 +346,7 @@ export function EventsSection() {
         motionProgress.set(0);
       });
       isAnimatingRef.current = false;
+      setTimeout(() => setIsReflectionVisible(true), 60);
     });
   }, [motionProgress, total]);
 
@@ -427,6 +354,7 @@ export function EventsSection() {
   const handlePrev = useCallback(() => {
     if (isAnimatingRef.current) return;
     isAnimatingRef.current = true;
+    setIsReflectionVisible(false);
 
     animate(motionProgress, -1, springConfig).then(() => {
       flushSync(() => {
@@ -434,6 +362,7 @@ export function EventsSection() {
         motionProgress.set(0);
       });
       isAnimatingRef.current = false;
+      setTimeout(() => setIsReflectionVisible(true), 60);
     });
   }, [motionProgress, total]);
 
@@ -467,8 +396,9 @@ export function EventsSection() {
   const handlePointerMove = (e: React.PointerEvent) => {
     if (!isDraggingRef.current) return;
     const deltaX = e.clientX - dragStartX.current;
-    if (Math.abs(deltaX) > 4) {
+    if (Math.abs(deltaX) > 6) {
       hasDragged.current = true;
+      setIsReflectionVisible(false);
     }
     const step = panelWidth + panelGap;
     // Normalized offset: dragging left (deltaX < 0) pushes progress positive (towards next)
@@ -492,6 +422,7 @@ export function EventsSection() {
           motionProgress.set(0);
         });
         isAnimatingRef.current = false;
+        setTimeout(() => setIsReflectionVisible(true), 60);
       });
     } else if (deltaX > threshold) {
       // Dragged right -> return to Prev
@@ -502,12 +433,14 @@ export function EventsSection() {
           motionProgress.set(0);
         });
         isAnimatingRef.current = false;
+        setTimeout(() => setIsReflectionVisible(true), 60);
       });
     } else {
       // Snap back to current
       isAnimatingRef.current = true;
       animate(motionProgress, 0, snapSpringConfig).then(() => {
         isAnimatingRef.current = false;
+        setIsReflectionVisible(true);
       });
     }
   };
@@ -518,6 +451,7 @@ export function EventsSection() {
     isAnimatingRef.current = true;
     animate(motionProgress, 0, snapSpringConfig).then(() => {
       isAnimatingRef.current = false;
+      setIsReflectionVisible(true);
     });
   };
 
@@ -565,6 +499,73 @@ export function EventsSection() {
             perspectiveOrigin: "50% 48%",
           }}
         >
+          {/* FLOOR REFLECTION (Only visible for the currently centered card in view) */}
+          <div
+            aria-hidden="true"
+            className="absolute left-0 right-0 pointer-events-none"
+            style={{
+              top: `calc(45% + ${panelHeight / 2}px + 4px)`,
+              height: "240px",
+              zIndex: 0,
+              maskImage:
+                "linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 22%, rgba(0,0,0,0.15) 55%, transparent 85%)",
+              WebkitMaskImage:
+                "linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 22%, rgba(0,0,0,0.15) 55%, transparent 85%)",
+              opacity: isReflectionVisible ? 0.85 : 0,
+              transition: isReflectionVisible
+                ? "opacity 700ms cubic-bezier(0.2, 0.8, 0.2, 1)"
+                : "opacity 300ms ease",
+            }}
+            data-name="reflection"
+          >
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                left: "50%",
+                width: panelWidth,
+                height: panelHeight,
+                marginLeft: -panelWidth / 2,
+                transformOrigin: "top center",
+                transform: "perspective(900px) rotateX(60deg)",
+              }}
+            >
+              {/* Subtle ground contact shadow */}
+              <div
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  height: "4px",
+                  background:
+                    "radial-gradient(ellipse at center, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 60%, transparent 100%)",
+                  zIndex: 2,
+                }}
+              />
+
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  transform: "scaleY(-1)",
+                  filter: "blur(3px)",
+                  opacity: 0.85,
+                }}
+              >
+                <video
+                  key={`refl-${currentEvent.id}`}
+                  src={currentEvent.videoUrl}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+          </div>
+
           {/* EXACT .panels-container WITH HARDWARE-ACCELERATED DRAG GESTURE */}
           <div
             className="panels-container w-full h-full absolute inset-0 cursor-grab active:cursor-grabbing"
@@ -638,7 +639,7 @@ export function EventsSection() {
         >
           <h3
             key={`title-${currentEvent.id}`}
-            className="font-sans font-semibold text-xl sm:text-2xl md:text-3xl lg:text-[36px] text-[#D61812] tracking-tight animate-fade-in"
+            className="font-display font-recursive-sans font-semibold text-xl sm:text-2xl md:text-3xl lg:text-[36px] text-[#D61812] tracking-tight animate-fade-in"
             data-node-id="2115:12623"
           >
             {currentEvent.title}

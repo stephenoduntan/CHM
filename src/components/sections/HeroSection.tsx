@@ -480,7 +480,7 @@ export function HeroSection() {
             {/* Title Block (Figma Frame 22) */}
             <div className="flex flex-col items-center gap-[8px]" data-node-id="2114:12590">
               <p
-                className="font-display font-recursive-mono font-medium italic text-[#242424] text-[24px] xl:text-[28px] leading-normal"
+                className="font-display font-recursive-sans font-medium italic text-[#242424] text-[24px] xl:text-[28px] leading-normal"
                 data-node-id="2114:12591"
                 style={{ fontVariationSettings: '"CASL" 0, "CRSV" 1, "MONO" 1' }}
               >
