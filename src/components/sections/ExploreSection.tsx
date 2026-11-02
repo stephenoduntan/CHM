@@ -343,9 +343,9 @@ export function ExploreSection() {
             </div>
 
             {/* Scroll hint helper at bottom */}
-            <div className="flex items-center justify-center shrink-0 pt-2 pb-1 text-black/40 text-[11px] font-sans tracking-wider uppercase">
+            {/* <div className="flex items-center justify-center shrink-0 pt-2 pb-1 text-black/40 text-[11px] font-sans tracking-wider uppercase">
               <span>Scroll to explore &bull; Tap any card to view</span>
-            </div>
+            </div> */}
           </Container>
         </div>
       </div>
