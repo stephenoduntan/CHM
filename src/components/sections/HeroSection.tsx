@@ -471,11 +471,11 @@ export function HeroSection() {
           data-node-id="2114:12589"
         >
           <div
-            className="flex flex-col items-center justify-center text-center p-[40px] w-[580px] xl:w-[620px] rounded-[32px] backdrop-blur-md border shadow-[0_20px_50px_rgba(0,0,0,0.06)]"
-            style={{
-              backgroundImage:
-                "radial-gradient(circle at center, rgba(255,255,255,0.96) 0%, rgba(248,248,248,0.72) 25%)",
-            }}
+            className="flex flex-col items-center justify-center text-center p-[40px] w-[580px] xl:w-[620px]  backdrop-blur-md"
+            // style={{
+            //   backgroundImage:
+            //     "radial-gradient(circle at center, rgba(255,255,255,0.96) 0%, rgba(248,248,248,0.72) 25%)",
+            // }}
           >
             {/* Title Block (Figma Frame 22) */}
             <div className="flex flex-col items-center gap-[8px]" data-node-id="2114:12590">

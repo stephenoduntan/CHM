@@ -8,21 +8,50 @@ import { X } from "lucide-react";
 import { NAV_LINKS, FOOTER_QUICK_LINKS, FOOTER_CONNECT_LINKS, SITE_CONFIG } from "@/lib/constants";
 import { Container } from "./Container";
 
-export function Header() {
+export interface HeaderProps {
+  variant?: "light" | "dark";
+}
+
+// Pages that feature the dark green (#051202) themed header variant
+const DARK_HEADER_ROUTES = [
+  "/new-here",
+  "/ministries",
+  "/give",
+  "/events",
+  "/services",
+  "/groups",
+];
+
+export function Header({ variant }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
 
+  // Determine variant: explicit prop takes precedence, otherwise auto-detect from route
+  const isDark =
+    variant === "dark" ||
+    (variant !== "light" &&
+      DARK_HEADER_ROUTES.some(
+        (route) => pathname === route || pathname?.startsWith(`${route}/`)
+      ));
+
   return (
     <>
-      <header className="w-full bg-white relative z-40 border-b border-gray-100/60">
+      <header
+        className={`w-full transition-colors duration-200 relative z-40 ${
+          isDark
+            ? "bg-[#051202] text-white border-b border-white/10"
+            : "bg-white text-[#242424] border-b border-gray-100/60"
+        }`}
+      >
         <Container>
           <div
-            className="flex items-center justify-between py-[24px] h-[160px] relative w-full"
-            data-node-id="2086:1951"
+            className="flex items-center justify-between py-[20px] h-[140px] sm:h-[160px] relative w-full"
+            data-node-id={isDark ? "2070:1798" : "2086:1951"}
+            data-name={isDark ? "header-dark" : "header-light"}
           >
             {/* Left Column: Navigation Links (Width: 287px to mirror right column and center logo perfectly) */}
             <div
-              className="flex items-center justify-start gap-[24px] w-[287px] shrink-0"
+              className="flex items-center justify-start gap-[24px] w-[240px] sm:w-[287px] shrink-0"
               data-node-id="2086:1942"
             >
               <nav className="hidden sm:flex items-center gap-[24px]">
@@ -32,8 +61,14 @@ export function Header() {
                     <Link
                       key={link.href}
                       href={link.href}
-                      className={`text-[#242424] text-[18px] font-semibold leading-normal whitespace-nowrap transition-colors hover:text-[#c8a96e] ${
-                        isActive ? "text-[#c8a96e]" : ""
+                      className={`text-[17px] sm:text-[18px] font-semibold leading-normal whitespace-nowrap transition-colors ${
+                        isDark
+                          ? isActive
+                            ? "text-[#c8a96e]"
+                            : "text-[#f5f5f5] hover:text-[#c8a96e]"
+                          : isActive
+                          ? "text-[#c8a96e]"
+                          : "text-[#242424] hover:text-[#c8a96e]"
                       }`}
                       style={{
                         fontFamily: "var(--font-recursive), monospace",
@@ -47,19 +82,19 @@ export function Header() {
               </nav>
             </div>
 
-            {/* Center Column: RCCG Court of His Majesty Official Logo (104px x 96px) */}
+            {/* Center Column: Official Logo */}
             <div
               className="flex items-center justify-center flex-1 shrink-0"
               data-node-id="2147:3013"
-              data-name="rccgchm logo2 (1) 2"
+              data-name="rccgchm logo"
             >
               <Link
                 href="/"
-                className="relative block h-[96px] w-[104px] transition-transform hover:scale-[1.02]"
+                className="relative block h-[90px] sm:h-[106px] w-[110px] sm:w-[130px] transition-transform hover:scale-[1.02]"
                 aria-label={SITE_CONFIG.fullName}
               >
                 <Image
-                  src="/images/rccgchm-logo.svg"
+                  src={isDark ? "/images/rccgchm-logo-dark.png" : "/images/rccgchm-logo.svg"}
                   alt={SITE_CONFIG.fullName}
                   fill
                   priority
@@ -70,13 +105,15 @@ export function Header() {
 
             {/* Right Column: Menu Button (Width: 287px, right-aligned) */}
             <div
-              className="flex items-center justify-end w-[287px] shrink-0"
+              className="flex items-center justify-end w-[240px] sm:w-[287px] shrink-0"
               data-node-id="2086:1948"
             >
               <button
                 type="button"
                 onClick={() => setIsMenuOpen(true)}
-                className="block cursor-pointer relative size-[40px] rounded-lg hover:bg-gray-100/80 transition-colors p-0 border-0 bg-transparent"
+                className={`block cursor-pointer relative size-[40px] rounded-lg transition-colors p-0 border-0 bg-transparent ${
+                  isDark ? "hover:bg-white/10" : "hover:bg-gray-100/80"
+                }`}
                 aria-label="Open menu"
                 data-node-id="2086:1949"
                 data-name="fluent:line-horizontal-3-24-filled"
@@ -85,7 +122,7 @@ export function Header() {
                   src="/images/fluent-menu.svg"
                   alt="Menu"
                   fill
-                  className="object-contain"
+                  className={`object-contain ${isDark ? "brightness-0 invert" : ""}`}
                 />
               </button>
             </div>
@@ -105,10 +142,10 @@ export function Header() {
             <div className="flex items-center justify-between pb-6 border-b border-white/10">
               <div className="relative h-[80px] w-[110px]">
                 <Image
-                  src="/images/rccgchm-logo.svg"
+                  src="/images/rccgchm-logo-dark.png"
                   alt={SITE_CONFIG.name}
                   fill
-                  className="object-contain brightness-0 invert"
+                  className="object-contain"
                 />
               </div>
               <button
@@ -148,6 +185,15 @@ export function Header() {
                       </Link>
                     </li>
                   ))}
+                  <li>
+                    <Link
+                      href="/groups"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="block hover:text-[#c8a96e] transition-colors"
+                    >
+                      Groups & Fellowships
+                    </Link>
+                  </li>
                 </ul>
               </div>
 
