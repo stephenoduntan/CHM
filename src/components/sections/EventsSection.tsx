@@ -548,7 +548,7 @@ export function EventsSection() {
       >
         {/* Carousel Viewport with 3D Perspective */}
         <div
-          className="relative w-full h-[520px] sm:h-[620px] md:h-[700px] lg:h-[720px] flex items-center justify-center overflow-hidden"
+          className="relative w-full h-[400px] md:h-[512px] lg:h-[720px] flex items-center justify-center overflow-hidden"
           style={{
             perspective: "1400px",
             perspectiveOrigin: "50% 48%",
@@ -690,7 +690,7 @@ export function EventsSection() {
 
         {/* ACTIVE EVENT TITLE & DATE (Matching Figma Frame 16 node 2115:12622) */}
         <div
-          className="w-full flex flex-col items-center justify-center text-center gap-1.5 sm:gap-2 pt-4 pb-2 px-4 transition-all duration-500 absolute bottom-[20px]"
+          className="w-full flex flex-col items-center justify-center text-center gap-1.5 sm:gap-2 pt-4 pb-2 px-4 transition-all duration-500 absolute bottom-0 sm:bottom-[20px]"
           data-node-id="2115:12622"
           data-name="Frame 16"
         >
