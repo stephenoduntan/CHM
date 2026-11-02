@@ -51,7 +51,7 @@ export function Header({ variant }: HeaderProps) {
           >
             {/* Left Column: Navigation Links (Width: 287px to mirror right column and center logo perfectly) */}
             <div
-              className="flex items-center justify-start gap-[24px] w-[240px] sm:w-[287px] shrink-0 hidden md:block"
+              className="flex items-center justify-start gap-[24px] w-[240px] sm:w-[287px] shrink-0 hidden lg:flex"
               data-node-id="2086:1942"
             >
               <nav className="items-center gap-[24px]">

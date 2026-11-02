@@ -519,7 +519,7 @@ export function HeroSection() {
       </div>
 
       {/* ─── MOBILE & TABLET RESPONSIVE VIEW (< lg) ─── */}
-      <div className="block lg:hidden relative w-full px-4 sm:px-8 py-10 z-10">
+      <div className="block lg:hidden relative w-full sm:px-8 py-10 z-10">
         {/* Central Hero Headline */}
         <div className="max-w-[500px] mx-auto text-center p-6 sm:p-8 rounded-[28px] backdrop-blur-md mb-8">
           <p
@@ -575,12 +575,12 @@ export function HeroSection() {
                 preload="metadata"
                 className="size-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex flex-col justify-end p-4">
+              {/* <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex flex-col justify-end p-4">
                 <span className="text-[10px] uppercase font-bold tracking-wider text-[#f0a505]">
                   {node.label}
                 </span>
                 <span className="text-xs font-semibold text-white truncate">{node.title}</span>
-              </div>
+              </div> */}
             </div>
           ))}
         </div>
