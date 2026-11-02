@@ -467,7 +467,7 @@ export function HeroSection() {
 
         {/* ─── Central Welcome Card (Figma Frame 5 / node 2114:12589) ─── */}
         <div
-          className="absolute left-1/2 top-1/3 pt-[64px] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto"
+          className="absolute left-1/2 top-1/3 mt-[96px] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto"
           data-node-id="2114:12589"
         >
           <div
@@ -487,7 +487,7 @@ export function HeroSection() {
                 Welcome to
               </p>
               <h1
-                className="font-sans font-bold text-[#0a0a0a] text-[34px] xl:text-[40px] tracking-tight leading-none whitespace-nowrap"
+                className="font-sans font-bold text-[#D61812] text-[34px] xl:text-[40px] tracking-tight leading-none whitespace-nowrap"
                 data-node-id="2114:12592"
               >
                 COURT OF HIS MAJESTY
@@ -528,12 +528,12 @@ export function HeroSection() {
           >
             Welcome to
           </p>
-          <h1 className="font-sans font-bold text-2xl sm:text-3xl text-[#0a0a0a] tracking-tight leading-tight">
+          <h1 className="font-sans font-bold text-2xl sm:text-3xl text-[#D61812] tracking-tight leading-tight">
             COURT OF HIS MAJESTY
           </h1>
-          <p className="mt-3 text-sm sm:text-base text-gray-600">
+          {/* <p className="mt-3 text-sm sm:text-base text-gray-600">
             A house of prayer, dynamic worship, and supernatural transformation for the whole family.
-          </p>
+          </p> */}
 
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
             <Link

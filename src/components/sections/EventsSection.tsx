@@ -531,8 +531,8 @@ export function EventsSection() {
       data-name="events"
     >
       {/* Section Header */}
-      <Container className="max-w-[1440px] mb-8">
-        <div className="flex items-center justify-between pb-4">
+      <Container className="max-w-[1440px]">
+        <div className="flex items-center justify-between">
           <div>
             <h2 className="font-display font-recursive-sans font-semibold text-2xl sm:text-3xl md:text-[40px] text-[#0a0a0a] tracking-tight">
               Upcoming Events
@@ -541,7 +541,7 @@ export function EventsSection() {
 
           <Link
             href="/events"
-            className="inline-flex items-center gap-2 font-sans italic font-medium text-base sm:text-xl lg:text-[24px] text-[#0a0a0a] hover:text-[#c8a96e] transition-colors group"
+            className="inline-flex items-center gap-2 font-sans italic font-medium text-base sm:text-xl lg:text-[24px] text-[#180C62] hover:text-[#c8a96e] transition-colors group"
           >
             <span>see all events</span>
             <span className="font-sans not-italic font-bold tracking-tighter text-lg sm:text-xl group-hover:translate-x-1.5 transition-transform duration-200">
@@ -559,7 +559,7 @@ export function EventsSection() {
       >
         {/* Carousel Viewport with 3D Perspective */}
         <div
-          className="relative w-full h-[520px] sm:h-[620px] md:h-[720px] lg:h-[820px] flex items-center justify-center overflow-hidden"
+          className="relative w-full h-[520px] sm:h-[620px] md:h-[700px] lg:h-[720px] flex items-center justify-center overflow-hidden"
           style={{
             perspective: "1400px",
             perspectiveOrigin: "50% 48%",
@@ -638,7 +638,7 @@ export function EventsSection() {
         >
           <h3
             key={`title-${currentEvent.id}`}
-            className="font-sans font-semibold text-xl sm:text-2xl md:text-3xl lg:text-[36px] text-[#0a0a0a] tracking-tight animate-fade-in"
+            className="font-sans font-semibold text-xl sm:text-2xl md:text-3xl lg:text-[36px] text-[#D61812] tracking-tight animate-fade-in"
             data-node-id="2115:12623"
           >
             {currentEvent.title}
@@ -654,7 +654,7 @@ export function EventsSection() {
 
           <Link
             href={currentEvent.link}
-            className="mt-1 inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold uppercase tracking-wider text-[#051202] hover:text-[#c8a96e] transition-colors"
+            className="mt-1 inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold uppercase tracking-wider text-[#180C62] hover:text-[#c8a96e] transition-colors"
           >
             <span>View Details</span>
             <ArrowRight className="size-3.5" />
