@@ -185,7 +185,7 @@ function Panel({
         width: panelWidth,
         height: panelHeight,
         left: "50%",
-        top: "50%",
+        top: "45%",
         marginLeft: -panelWidth / 2,
         marginTop: -panelHeight / 2,
         transformStyle: "preserve-3d",
@@ -256,6 +256,82 @@ function Panel({
           borderRadius: 0,
         }}
       />
+
+      {/* ── Floor Contact Shadow Line ── */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          top: "100%",
+          left: 0,
+          right: 0,
+          height: "4px",
+          background:
+            "radial-gradient(ellipse at center, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.2) 65%, transparent 100%)",
+          pointerEvents: "none",
+          zIndex: 3,
+        }}
+      />
+
+      {/* ── PROMINENT GLOSSY FLOOR REFLECTION (Directly underneath every card) ── */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          top: "100%",
+          left: 0,
+          right: 0,
+          height: panelHeight * 0.45,
+          overflow: "hidden",
+          pointerEvents: "none",
+          zIndex: 0,
+          marginTop: "1px",
+          maskImage:
+            "linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 25%, rgba(0,0,0,0.25) 65%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 25%, rgba(0,0,0,0.25) 65%, transparent 100%)",
+          opacity: isCenter ? 0.85 : 0.6,
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: panelHeight,
+            transform: "scaleY(-1)",
+            transformOrigin: "top center",
+            filter: `blur(${isCenter ? 1.5 : 3}px)`,
+          }}
+        >
+          <video
+            src={slide.videoUrl}
+            autoPlay
+            loop
+            muted
+            playsInline
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              display: "block",
+            }}
+          />
+        </div>
+
+        {/* Side card dimming on reflection */}
+        {!isCenter && (
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background: "#051202",
+              opacity: 0.55,
+            }}
+          />
+        )}
+      </div>
 
       {/* Audio Mute/Unmute Pill (Center Card Only) */}
       {isCenter && (
@@ -483,61 +559,12 @@ export function EventsSection() {
       >
         {/* Carousel Viewport with 3D Perspective */}
         <div
-          className="relative w-full h-[460px] sm:h-[560px] md:h-[640px] lg:h-[720px] flex items-center justify-center overflow-hidden"
+          className="relative w-full h-[520px] sm:h-[620px] md:h-[720px] lg:h-[820px] flex items-center justify-center overflow-hidden"
           style={{
             perspective: "1400px",
             perspectiveOrigin: "50% 48%",
           }}
         >
-          {/* FLOOR REFLECTION (Light theme on white background) */}
-          <div
-            aria-hidden="true"
-            className="absolute left-0 right-0 pointer-events-none"
-            style={{
-              top: `calc(50% + ${panelHeight / 2}px + 6px)`,
-              height: "220px",
-              zIndex: 0,
-              maskImage:
-                "linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.08) 35%, transparent 70%)",
-              WebkitMaskImage:
-                "linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.08) 35%, transparent 70%)",
-              opacity: 0.35,
-            }}
-            data-name="reflection"
-          >
-            <div
-              style={{
-                position: "absolute",
-                top: 0,
-                left: "50%",
-                width: panelWidth,
-                height: panelHeight,
-                marginLeft: -panelWidth / 2,
-                transformOrigin: "top center",
-                transform: "perspective(900px) rotateX(60deg)",
-              }}
-            >
-              <div
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  transform: "scaleY(-1)",
-                  filter: "blur(6px)",
-                  opacity: 0.5,
-                }}
-              >
-                <video
-                  src={currentEvent.videoUrl}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-          </div>
-
           {/* EXACT .panels-container WITH HARDWARE-ACCELERATED DRAG GESTURE */}
           <div
             className="panels-container w-full h-full absolute inset-0 cursor-grab active:cursor-grabbing"
