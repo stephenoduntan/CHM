@@ -51,10 +51,10 @@ export function Header({ variant }: HeaderProps) {
           >
             {/* Left Column: Navigation Links (Width: 287px to mirror right column and center logo perfectly) */}
             <div
-              className="flex items-center justify-start gap-[24px] w-[240px] sm:w-[287px] shrink-0 hidden lg:flex"
+              className="items-center justify-start gap-[24px] w-[240px] sm:w-[287px] shrink-0 hidden lg:block"
               data-node-id="2086:1942"
             >
-              <nav className="items-center gap-[24px]">
+              <nav className="flex items-center gap-[24px]">
                 {NAV_LINKS.map((link) => {
                   const isActive = pathname === link.href;
                   return (
@@ -84,7 +84,7 @@ export function Header({ variant }: HeaderProps) {
 
             {/* Center Column: Official Logo */}
             <div
-              className="flex items-center justify-center flex-1 shrink-0"
+              className="flex items-center justify-left lg:justify-center flex-1 shrink-0"
               data-node-id="2147:3013"
               data-name="rccgchm logo"
             >

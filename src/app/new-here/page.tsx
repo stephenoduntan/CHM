@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Play, Sparkles, Car, Clock, Baby, GraduationCap, ArrowRight } from "lucide-react";
+import { Sparkles, Car, Clock, Baby, GraduationCap, ArrowRight } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { SITE_CONFIG } from "@/lib/constants";
+import { NewHereHero } from "@/components/sections/NewHereHero";
 
 export const metadata = {
   title: "New Here",
@@ -106,30 +107,8 @@ const pastors = [
 export default function NewHerePage() {
   return (
     <div className="w-full bg-white pb-24">
-      {/* ─── Hero Section with Video Accent ───────────────────────── */}
-      <section className="relative min-h-[500px] lg:min-h-[580px] bg-[#051202] text-white flex items-center justify-center overflow-hidden">
-        <Image
-          src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&q=80&w=1920"
-          alt="Welcome to Court of His Majesty"
-          fill
-          className="object-cover opacity-35"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#051202] via-[#051202]/70 to-transparent" />
-
-        <Container className="relative z-10 text-center py-20">
-          <div className="inline-flex items-center justify-center size-20 md:size-24 rounded-full bg-white/20 hover:bg-[#c8a96e] backdrop-blur-md text-white transition-all cursor-pointer mb-8 group shadow-xl">
-            <Play className="size-8 md:size-10 fill-current translate-x-0.5 group-hover:scale-110 transition-transform" />
-          </div>
-
-          <h1 className="font-display font-recursive-sans text-2xl sm:text-4xl md:text-5xl font-extrabold max-w-3xl mx-auto leading-tight text-white mb-4">
-            Know God, Find Freedom, Discover Purpose, Make a Difference
-          </h1>
-          <p className="text-gray-300 text-base sm:text-lg max-w-xl mx-auto font-normal">
-            Whether you are exploring faith or looking for a church family to call home, there is a place for you here.
-          </p>
-        </Container>
-      </section>
+      {/* ─── Hero Section (Figma Node 2086:330) ─────────────────── */}
+      <NewHereHero />
 
       {/* ─── A Place Where You Belong ─────────────────────────────── */}
       <section className="py-16 lg:py-24 bg-white">

@@ -658,7 +658,8 @@ export function HeroSection() {
               Plan a Visit
             </Link>
             <Link
-              href="/services"
+              href="https://youtube.com/@rccgchm?si=JSIawZL2BpxMx_OW"
+              target="_blank"
               className="inline-flex items-center justify-center gap-1.5 px-6 py-3 rounded-full font-semibold text-[#180c62] border border-[#b2a1ed] bg-[#b2a1ed]/10 text-sm transition-all"
             >
               <span>Watch Online</span>
@@ -723,14 +724,14 @@ export function HeroSection() {
                 </div>
 
                 {/* Bottom title & label info */}
-                <div className="absolute bottom-0 inset-x-0 p-3.5 flex flex-col pointer-events-none">
+                {/* <div className="absolute bottom-0 inset-x-0 p-3.5 flex flex-col pointer-events-none">
                   <span className="text-[10px] uppercase font-bold tracking-wider text-[#f0a505]">
                     {node.label}
                   </span>
                   <span className="text-xs font-semibold text-white drop-shadow-sm truncate">
                     {node.title}
                   </span>
-                </div>
+                </div> */}
               </div>
             );
           })}
