@@ -126,7 +126,7 @@ const HERO_VIDEO_NODES: VideoNode[] = [
     label: "The Cross & Fellowship",
     videoUrl: "./videos/hymnal sunday.webm",
     left: 44.79, // 860px / 1920
-    top: 60.50, // 960px / 1316
+    top: 60.5, // 960px / 1316
     width: 10.42, // 200px / 1920
     height: 27.05, // 356px / 1316
     aspect: "portrait",
@@ -266,12 +266,17 @@ const VECTOR_BLOBS: VectorBlobConfig[] = [
 ];
 
 export function HeroSection() {
-  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const desktopVideoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const mobileVideoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const blobRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Hover & Audio State
+  // Desktop Hover & Audio State
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [unmutedId, setUnmutedId] = useState<string | null>(null);
+
+  // Mobile Audio State (Radio button selection)
+  const [mobileUnmutedId, setMobileUnmutedId] = useState<string | null>(null);
 
   // Background Vectors Random Motion Animation Loop
   useEffect(() => {
@@ -305,16 +310,15 @@ export function HeroSection() {
     return () => cancelAnimationFrame(animId);
   }, []);
 
-  // Card Mouse Enter: Unmute hovered video, mute all others
+  // Desktop Card Mouse Enter: Unmute hovered video, mute all others
   const handleMouseEnterCard = useCallback((id: string, index: number) => {
     setHoveredId(id);
     setUnmutedId(id);
 
-    videoRefs.current.forEach((vid, i) => {
+    desktopVideoRefs.current.forEach((vid, i) => {
       if (!vid) return;
       if (i === index) {
         vid.muted = false;
-        // Ensure playback continues with audio
         const p = vid.play();
         if (p !== undefined) {
           p.catch(() => {
@@ -327,28 +331,139 @@ export function HeroSection() {
     });
   }, []);
 
-  // Card Mouse Leave: Mute video immediately
+  // Desktop Card Mouse Leave: Mute video immediately
   const handleMouseLeaveCard = useCallback((index: number) => {
     setHoveredId(null);
     setUnmutedId(null);
 
-    const vid = videoRefs.current[index];
+    const vid = desktopVideoRefs.current[index];
     if (vid) {
       vid.muted = true;
     }
   }, []);
 
-  // Global mouse leave: ensure all videos are muted
+  // Desktop Global mouse leave: ensure all videos are muted
   const handleGlobalMouseLeave = useCallback(() => {
     setHoveredId(null);
     setUnmutedId(null);
-    videoRefs.current.forEach((vid) => {
+    desktopVideoRefs.current.forEach((vid) => {
       if (vid) vid.muted = true;
     });
   }, []);
 
+  // Mobile: Radio button audio selection
+  const handleMobileVideoTap = useCallback(
+    (nodeId: string, index: number, e: React.MouseEvent) => {
+      e.stopPropagation();
+
+      // If user taps the already unmuted video, toggle it back to muted
+      if (mobileUnmutedId === nodeId) {
+        setMobileUnmutedId(null);
+        mobileVideoRefs.current.forEach((vid) => {
+          if (vid) vid.muted = true;
+        });
+        return;
+      }
+
+      // Radio button: unmute newly selected video, mute all other videos
+      setMobileUnmutedId(nodeId);
+      mobileVideoRefs.current.forEach((vid, i) => {
+        if (!vid) return;
+        if (i === index) {
+          vid.muted = false;
+          const p = vid.play();
+          if (p !== undefined) {
+            p.catch(() => {
+              // Video plays muted if browser restricts unmuted autoplay
+            });
+          }
+        } else {
+          vid.muted = true;
+        }
+      });
+    },
+    [mobileUnmutedId]
+  );
+
+  // Mobile: Mute video when scrolling away from HeroSection or tapping anywhere else on the window
+  useEffect(() => {
+    if (!mobileUnmutedId) return;
+
+    // 1. Tap anywhere else on the window
+    const handleWindowTap = (e: MouseEvent | TouchEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (target && target.closest("[data-hero-video]")) {
+        return;
+      }
+      setMobileUnmutedId(null);
+      mobileVideoRefs.current.forEach((vid) => {
+        if (vid) vid.muted = true;
+      });
+    };
+
+    // 2. Scroll away from HeroSection
+    const handleScroll = () => {
+      if (!sectionRef.current) return;
+      const rect = sectionRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      // When hero section scrolls off top or off bottom
+      if (rect.bottom < 80 || rect.top > windowHeight - 80) {
+        setMobileUnmutedId(null);
+        mobileVideoRefs.current.forEach((vid) => {
+          if (vid) vid.muted = true;
+        });
+      }
+    };
+
+    // 3. Resize window (e.g. switching to desktop)
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setMobileUnmutedId(null);
+        mobileVideoRefs.current.forEach((vid) => {
+          if (vid) vid.muted = true;
+        });
+      }
+    };
+
+    window.addEventListener("click", handleWindowTap);
+    window.addEventListener("touchstart", handleWindowTap, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleResize, { passive: true });
+
+    return () => {
+      window.removeEventListener("click", handleWindowTap);
+      window.removeEventListener("touchstart", handleWindowTap);
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [mobileUnmutedId]);
+
+  // Mobile: IntersectionObserver as an additional robust guarantee when hero section exits viewport
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            setMobileUnmutedId(null);
+            mobileVideoRefs.current.forEach((vid) => {
+              if (vid) vid.muted = true;
+            });
+          }
+        });
+      },
+      { threshold: 0.05 }
+    );
+
+    observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section
+      ref={sectionRef}
       onMouseLeave={handleGlobalMouseLeave}
       className="relative w-full overflow-x-clip overflow-y-visible bg-white select-none pt-[20px] xl:pt-[24px] 2xl:pt-[40px]"
       data-node-id="2086:90"
@@ -400,7 +515,13 @@ export function HeroSection() {
                 top: `${node.top}%`,
                 width: `${node.width}%`,
                 height: `${node.height}%`,
-                zIndex: isHovered ? 35 : node.depth === "foreground" ? 20 : node.depth === "midground" ? 15 : 10,
+                zIndex: isHovered
+                  ? 35
+                  : node.depth === "foreground"
+                  ? 20
+                  : node.depth === "midground"
+                  ? 15
+                  : 10,
                 opacity: isDimmed ? 0.45 : 1,
               }}
               onMouseEnter={() => handleMouseEnterCard(node.id, index)}
@@ -417,7 +538,7 @@ export function HeroSection() {
                 {/* HTML5 Looping Autoplay Video (Muted on load, unmuted on hover) */}
                 <video
                   ref={(el) => {
-                    videoRefs.current[index] = el;
+                    desktopVideoRefs.current[index] = el;
                   }}
                   src={node.videoUrl}
                   autoPlay
@@ -470,13 +591,7 @@ export function HeroSection() {
           className="absolute left-1/2 top-1/3 mt-[96px] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto"
           data-node-id="2114:12589"
         >
-          <div
-            className="flex flex-col items-center justify-center text-center w-[580px] xl:w-[620px]  backdrop-blur-md"
-            // style={{
-            //   backgroundImage:
-            //     "radial-gradient(circle at center, rgba(255,255,255,0.96) 0%, rgba(248,248,248,0.72) 25%)",
-            // }}
-          >
+          <div className="flex flex-col items-center justify-center text-center w-[580px] xl:w-[620px] backdrop-blur-md">
             {/* Title Block (Figma Frame 22) */}
             <div className="flex flex-col items-center gap-[8px]" data-node-id="2114:12590">
               <p
@@ -495,7 +610,10 @@ export function HeroSection() {
             </div>
 
             {/* CTA Buttons (Figma Frame 24) */}
-            <div className="flex items-center justify-center gap-[16px] mt-[28px]" data-node-id="2114:12593">
+            <div
+              className="flex items-center justify-center gap-[16px] mt-[28px]"
+              data-node-id="2114:12593"
+            >
               <Link
                 href="/new-here"
                 className="inline-flex items-center justify-center px-[38px] py-[16px] rounded-[36px] bg-[#f0a505] hover:bg-[#d99404] text-[#0a0a0a] font-sans font-semibold text-[17px] shadow-sm hover:shadow-md transition-all active:scale-[0.98]"
@@ -531,9 +649,6 @@ export function HeroSection() {
           <h1 className="font-sans font-bold text-2xl sm:text-3xl text-[#D61812] tracking-tight leading-tight">
             COURT OF HIS MAJESTY
           </h1>
-          {/* <p className="mt-3 text-sm sm:text-base text-gray-600">
-            A house of prayer, dynamic worship, and supernatural transformation for the whole family.
-          </p> */}
 
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
             <Link
@@ -553,36 +668,72 @@ export function HeroSection() {
         </div>
 
         {/* Mobile Horizontal Video Stream */}
-        <div className="w-full flex gap-4 overflow-x-auto pb-4 pt-2 no-scrollbar snap-x snap-mandatory">
-          {HERO_VIDEO_NODES.slice(0, 6).map((node, mIdx) => (
-            <div
-              key={node.id}
-              className="relative shrink-0 snap-center w-[220px] sm:w-[260px] h-[320px] rounded-[16px] overflow-hidden shadow-lg border border-gray-100"
-              onClick={() => {
-                const vid = videoRefs.current[mIdx];
-                if (vid) {
-                  vid.muted = !vid.muted;
-                  setUnmutedId(vid.muted ? null : node.id);
-                }
-              }}
-            >
-              <video
-                src={node.videoUrl}
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="metadata"
-                className="size-full object-cover"
-              />
-              {/* <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex flex-col justify-end p-4">
-                <span className="text-[10px] uppercase font-bold tracking-wider text-[#f0a505]">
-                  {node.label}
-                </span>
-                <span className="text-xs font-semibold text-white truncate">{node.title}</span>
-              </div> */}
-            </div>
-          ))}
+        <div className="w-full flex gap-4 overflow-x-auto pb-4 pt-2 px-4 sm:px-6 no-scrollbar snap-x snap-mandatory">
+          {HERO_VIDEO_NODES.slice(0, 6).map((node, mIdx) => {
+            const isUnmuted = mobileUnmutedId === node.id;
+
+            return (
+              <div
+                key={node.id}
+                data-hero-video="true"
+                onClick={(e) => handleMobileVideoTap(node.id, mIdx, e)}
+                className={`relative shrink-0 snap-center w-[220px] sm:w-[260px] h-[320px] rounded-[16px] overflow-hidden shadow-lg border cursor-pointer select-none transition-all duration-300 ${
+                  isUnmuted
+                    ? "border-[#f0a505] ring-4 ring-[#f0a505]/40 shadow-[0px_12px_32px_rgba(240,165,5,0.30)] scale-[1.02]"
+                    : "border-gray-100 hover:border-gray-200"
+                }`}
+              >
+                <video
+                  ref={(el) => {
+                    mobileVideoRefs.current[mIdx] = el;
+                  }}
+                  src={node.videoUrl}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="metadata"
+                  className="size-full object-cover pointer-events-none"
+                />
+
+                {/* Subtle gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+
+                {/* Top Audio Indicator Badge */}
+                <div className="absolute top-3 right-3 z-10 pointer-events-none">
+                  <div
+                    className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold backdrop-blur-md transition-all duration-200 shadow-sm ${
+                      isUnmuted
+                        ? "bg-[#f0a505] text-[#0a0a0a] ring-2 ring-white/40"
+                        : "bg-black/55 text-white/80 border border-white/20"
+                    }`}
+                  >
+                    {isUnmuted ? (
+                      <>
+                        <Volume2 className="size-3.5 animate-pulse" />
+                        <span className="text-[10px] font-bold uppercase tracking-wider">Unmuted</span>
+                      </>
+                    ) : (
+                      <>
+                        <VolumeX className="size-3.5 opacity-70" />
+                        <span className="text-[10px] tracking-wider text-white/75">Tap to unmute</span>
+                      </>
+                    )}
+                  </div>
+                </div>
+
+                {/* Bottom title & label info */}
+                <div className="absolute bottom-0 inset-x-0 p-3.5 flex flex-col pointer-events-none">
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-[#f0a505]">
+                    {node.label}
+                  </span>
+                  <span className="text-xs font-semibold text-white drop-shadow-sm truncate">
+                    {node.title}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
