@@ -7,7 +7,7 @@ import { Container } from "@/components/layout/Container";
 
 export function NewHereHero() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
 
   const togglePlayAudio = () => {
@@ -18,7 +18,7 @@ export function NewHereHero() {
       videoRef.current.muted = false;
       setIsMuted(false);
       videoRef.current.play().catch(() => {});
-      setIsPlaying(true);
+      setIsPlaying(false);
     } else {
       // If already unmuted, toggle pause/play
       if (videoRef.current.paused) {
@@ -39,13 +39,13 @@ export function NewHereHero() {
     setIsMuted(nextMuted);
     if (!nextMuted && videoRef.current.paused) {
       videoRef.current.play().catch(() => {});
-      setIsPlaying(true);
+      setIsPlaying(false);
     }
   };
 
   return (
     <section
-      className="relative w-full h-[560px] sm:h-[680px] lg:h-[840px] xl:h-[940px] bg-black text-white flex flex-col justify-end overflow-hidden select-none"
+      className="relative w-full h-[600px] bg-black text-white flex flex-col justify-end overflow-hidden select-none"
       data-node-id="2086:330"
       data-name="hero"
     >

@@ -110,38 +110,97 @@ export default function NewHerePage() {
       {/* ─── Hero Section (Figma Node 2086:330) ─────────────────── */}
       <NewHereHero />
 
-      {/* ─── A Place Where You Belong ─────────────────────────────── */}
-      <section className="py-16 lg:py-24 bg-white">
-        <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <div className="lg:col-span-5 relative h-[420px] sm:h-[500px] rounded-[32px] overflow-hidden shadow-2xl">
+      {/* ─── A Place Where You Belong (Figma Node 2086:334) ─────── */}
+      <section
+        className="w-full bg-white py-16 sm:py-20 lg:pt-[124px] lg:pb-[84px]"
+        data-node-id="2086:334"
+        data-name="explore"
+      >
+        <Container className="max-w-[1440px]">
+          <div
+            className="flex flex-col lg:flex-row gap-10 lg:gap-[40px] items-stretch w-full"
+            data-node-id="2086:336"
+            data-name="Frame 17"
+          >
+            {/* Left Photo Column (Figma Frame 2085668955) */}
+            <div
+              className="w-full lg:w-[560px] min-h-[380px] sm:min-h-[480px] lg:min-h-[766px] relative shrink-0 rounded-2xl lg:rounded-none overflow-hidden self-stretch"
+              data-node-id="2086:337"
+              data-name="Frame 2085668955"
+            >
               <Image
-                src="https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&q=80&w=1000"
-                alt="Church Family"
+                src="/images/explore/communities.jpg"
+                alt="Church family fellowship and community at Court of His Majesty"
                 fill
-                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 560px"
+                className="object-cover object-center pointer-events-none"
+                priority
               />
             </div>
 
-            <div className="lg:col-span-7">
-              <p className="font-display font-recursive-mono italic text-lg sm:text-xl text-[#c8a96e] mb-2">
-                A Place Where You Belong
-              </p>
-              <h2 className="font-sans font-bold text-3xl sm:text-4xl lg:text-5xl text-[#051202] leading-tight mb-6">
-                We&apos;re so glad you&apos;re thinking about visiting Court of His Majesty
-              </h2>
-              <div className="space-y-4 text-gray-700 text-base sm:text-lg leading-relaxed">
-                <p>
-                  We know that if this is your first time in church, you may be wondering what it will feel like:
-                  <em className="text-gray-900 font-medium"> &apos;Will I fit in?&apos;, &apos;I won&apos;t know what to do&apos;, &apos;What if I get ignored?&apos;</em>
+            {/* Right Text Column (Figma Frame 2085668914) */}
+            <div
+              className="flex-1 max-w-[840px] flex flex-col gap-6 lg:gap-[24px] items-start justify-center text-left"
+              data-node-id="2086:338"
+              data-name="Frame 2085668914"
+            >
+              {/* Header block (Figma Frame 2085668901) */}
+              <div
+                className="flex flex-col gap-3 lg:gap-[16px] items-start w-full"
+                data-node-id="2086:339"
+                data-name="Frame 2085668901"
+              >
+                <p
+                  className="font-sans font-semibold text-lg sm:text-xl lg:text-[24px] text-[#3d3d3d] uppercase tracking-wide"
+                  data-node-id="2086:340"
+                >
+                  A Place Where You Belong
                 </p>
-                <p>
-                  You might feel shy or anxious, but there is no need to worry—you are guaranteed a warm, loving welcome!
-                  Our ministers and hospitality team will guide you, nothing will be asked of you, and you can engage at your own pace.
-                </p>
-                <p className="font-medium text-[#051202]">
-                  We believe church is family. Our passion is to show people God&apos;s love and create an environment where you can experience His transformative power!
-                </p>
+                <h2
+                  className="font-display font-recursive-sans font-semibold text-2xl sm:text-3xl md:text-4xl lg:text-[48px] text-[#0a0a0a] leading-[1.15] tracking-tight"
+                  data-node-id="2086:341"
+                >
+                  <span>We&apos;re so glad you&apos;re thinking about visiting </span>
+                  <span className="uppercase">Court of His Majesty</span>
+                </h2>
+              </div>
+
+              {/* Body text & Signature (Figma Frame 2085668955) */}
+              <div
+                className="flex flex-col gap-8 lg:gap-[40px] items-start w-full"
+                data-node-id="2086:342"
+              >
+                <div
+                  className="flex flex-col gap-5 text-[#242424] text-base sm:text-lg lg:text-[20px] xl:text-[22px] leading-[1.65] font-normal"
+                  data-node-id="2086:343"
+                >
+                  <p>
+                    We know that if this is your first time in church, you may be feeling and thinking all kinds of things like: &lsquo;Will I fit in?&rsquo;, &lsquo;I won&rsquo;t know what to do&rsquo;, &lsquo;what will people say to me&rsquo;, &lsquo;what if I get ignored.&rsquo; You may feel anxious, nervous, scared or shy.
+                  </p>
+                  <p>
+                    There is no need to worry; you will be guaranteed a warm welcome. The preacher will lead the service, nothing will be asked of you. This page will hopefully give you an idea of what to expect at Sunday morning worship.
+                  </p>
+                  <p>
+                    We believe the church is a family. We love welcoming people home and inviting them to become part of the family. Our passion is to show people God&rsquo;s love and create an environment where they can experience His power, because we know there is no limit to what God can do!
+                  </p>
+                </div>
+
+                {/* Pastor Fred Signature (Figma pic-5 1) */}
+                <div
+                  className="pt-2 sm:pt-4"
+                  data-node-id="2086:344"
+                  data-name="pic-5 1"
+                >
+                  <div className="relative w-[220px] sm:w-[263px] h-[88px] sm:h-[106px]">
+                    <Image
+                      src="/images/pastor-fred-signature.png"
+                      alt="Pastor Fred Signature"
+                      fill
+                      sizes="263px"
+                      className="object-contain object-left pointer-events-none"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -329,4 +388,3 @@ export default function NewHerePage() {
     </div>
   );
 }
-
