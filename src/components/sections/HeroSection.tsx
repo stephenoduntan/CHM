@@ -24,7 +24,7 @@ const HERO_VIDEO_NODES: VideoNode[] = [
     id: "node-top-1",
     title: "Congregation in Worship",
     label: "Worship Service",
-    videoUrl: "https://cdn.coverr.co/videos/coverr-congregation-in-a-church-service-8925/1080p.mp4",
+    videoUrl: "./videos/Pst. Agu Irukwu.webm",
     left: 0.62, // 12px / 1920
     top: 0.0, // 0px
     width: 10.42, // 200px / 1920
@@ -36,7 +36,7 @@ const HERO_VIDEO_NODES: VideoNode[] = [
     id: "node-top-2",
     title: "Choose Life Conference",
     label: "29 Years Festival",
-    videoUrl: "https://cdn.coverr.co/videos/coverr-church-service-3829/1080p.mp4",
+    videoUrl: "./videos/men conf..webm",
     left: 17.5, // 336px / 1920
     top: 4.41, // 58px / 1316
     width: 20.83, // 400px / 1920
@@ -48,7 +48,7 @@ const HERO_VIDEO_NODES: VideoNode[] = [
     id: "node-top-3",
     title: "Word of Faith Ministration",
     label: "Pulpit Message",
-    videoUrl: "https://cdn.coverr.co/videos/coverr-priest-preaching-from-the-pulpit-8921/1080p.mp4",
+    videoUrl: "./videos/guest min..webm",
     left: 44.79, // 860px / 1920
     top: 0.0, // 0px
     width: 10.42, // 200px / 1920
@@ -60,7 +60,7 @@ const HERO_VIDEO_NODES: VideoNode[] = [
     id: "node-top-4",
     title: "Sunlight of His Glory",
     label: "Cathedral Grace",
-    videoUrl: "https://cdn.coverr.co/videos/coverr-sunlight-streaming-through-church-windows-3830/1080p.mp4",
+    videoUrl: "./videos/choose life action.webm",
     left: 61.67, // 1184px / 1920
     top: 4.41, // 58px / 1316
     width: 20.83, // 400px / 1920
@@ -72,7 +72,7 @@ const HERO_VIDEO_NODES: VideoNode[] = [
     id: "node-top-5",
     title: "Gospel Choir Ministration",
     label: "Voices of Praise",
-    videoUrl: "https://cdn.coverr.co/videos/coverr-gospel-choir-singing-in-church-8924/1080p.mp4",
+    videoUrl: "./videos/Pst. Agu Irukwu.webm",
     left: 88.96, // 1708px / 1920
     top: 0.0, // 0px
     width: 10.42, // 200px / 1920
@@ -86,7 +86,7 @@ const HERO_VIDEO_NODES: VideoNode[] = [
     id: "node-mid-left",
     title: "Altar of Prayer & Intercession",
     label: "Holy Communion",
-    videoUrl: "https://cdn.coverr.co/videos/coverr-lighting-candles-in-a-church-3746/1080p.mp4",
+    videoUrl: "./videos/hymnal sunday.webm",
     left: 12.29, // (136 + 100) / 1920
     top: 36.47, // 480px / 1316
     width: 10.42, // 200px / 1920
@@ -98,7 +98,7 @@ const HERO_VIDEO_NODES: VideoNode[] = [
     id: "node-mid-right",
     title: "Joyful Praise & Adoration",
     label: "Sunday Celebration",
-    videoUrl: "https://cdn.coverr.co/videos/coverr-people-raising-their-hands-in-a-concert-6047/1080p.mp4",
+    videoUrl: "./videos/guest min..webm",
     left: 77.29, // (1384 + 100) / 1920
     top: 36.47, // 480px / 1316
     width: 10.42, // 200px / 1920
@@ -112,7 +112,7 @@ const HERO_VIDEO_NODES: VideoNode[] = [
     id: "node-bot-1",
     title: "Choral Hymns of Old",
     label: "Sacred Harmonies",
-    videoUrl: "https://cdn.coverr.co/videos/coverr-choir-singing-hymns-8923/1080p.mp4",
+    videoUrl: "./videos/ezzer women montage.webm",
     left: 17.5, // 336px / 1920
     top: 77.36, // 1018px / 1316
     width: 20.83, // 400px / 1920
@@ -124,7 +124,7 @@ const HERO_VIDEO_NODES: VideoNode[] = [
     id: "node-bot-2",
     title: "Sanctuary of Faith",
     label: "The Cross & Fellowship",
-    videoUrl: "https://cdn.coverr.co/videos/coverr-church-exterior-and-cross-8920/1080p.mp4",
+    videoUrl: "./videos/hymnal sunday.webm",
     left: 44.79, // 860px / 1920
     top: 72.95, // 960px / 1316
     width: 10.42, // 200px / 1920
@@ -136,7 +136,7 @@ const HERO_VIDEO_NODES: VideoNode[] = [
     id: "node-bot-3",
     title: "Stained Glass Radiance",
     label: "Heritage & Vision",
-    videoUrl: "https://cdn.coverr.co/videos/coverr-stained-glass-window-in-a-church-8922/1080p.mp4",
+    videoUrl: "./videos/Pst. Agu Irukwu.webm",
     left: 61.67, // 1184px / 1920
     top: 77.36, // 1018px / 1316
     width: 20.83, // 400px / 1920
@@ -384,7 +384,7 @@ export function HeroSection() {
       </div>
 
       {/* ─── DESKTOP CANVAS (Figma 1920x1316 Layout Geometry) ─── */}
-      <div className="hidden lg:block relative w-full h-[1080px] xl:h-[1200px] 2xl:h-[1316px] max-w-[1920px] mx-auto z-10">
+      <div className="hidden lg:block relative w-full h-[1080px] xl:h-[1200px] 2xl:h-[1316px] max-w-[1920px] mx-auto z-10 pt-[20px] xl:pt-[24px] 2xl:pt-[40px]">
         {/* Fixed Video Cards (NO translate3d transform) */}
         {HERO_VIDEO_NODES.map((node, index) => {
           const isHovered = hoveredId === node.id;
@@ -434,7 +434,7 @@ export function HeroSection() {
                 {/* Video Info Badge & Audio Status */}
                 <div
                   className={`absolute bottom-0 inset-x-0 p-3 flex items-center justify-between transition-opacity duration-300 ${
-                    isHovered ? "opacity-100" : "opacity-0"
+                    isHovered ? "opacity-0" : "opacity-0"
                   }`}
                 >
                   <div className="flex flex-col text-left">
