@@ -20,7 +20,7 @@ export function ImpactSection() {
 
           {/* Content */}
           <div className="relative z-10 px-8 sm:px-14 lg:px-20 py-16 max-w-3xl text-white">
-            <h2 className="font-sans font-extrabold text-3xl sm:text-5xl lg:text-6xl tracking-tight leading-tight mb-6">
+            <h2 className="font-display font-recursive-mono text-3xl sm:text-5xl lg:text-6xl tracking-tight leading-tight mb-6">
               Impacted Lives <br />
               <span className="text-white/90">Changing Community</span>
             </h2>

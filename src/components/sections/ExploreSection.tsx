@@ -3,103 +3,224 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { SITE_CONFIG } from "@/lib/constants";
 
-const exploreCards = [
+interface ExploreCard {
+  id: string;
+  title: string;
+  description: string;
+  link: string;
+  image: string;
+  alt: string;
+}
+
+const exploreCards: ExploreCard[] = [
   {
     id: "ministries",
     title: "Ministries",
-    description: "Explore over 20 active departments serving children, youth, men, women, and the community.",
+    description:
+      "Explore active ministries and departments serving children, youth, men, women, and our community with purpose and passion.",
     link: "/ministries",
-    bgImage: "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&q=80&w=800",
+    image: "/images/explore/ministries.jpg",
+    alt: "RCCG Court of His Majesty Church Choir ministering passionately in church robes",
   },
   {
     id: "teachings",
     title: "Teachings",
-    description: "In-depth Bible study, Sunday School, and discipleship tracks designed to deepen your roots in Christ.",
+    description:
+      "In-depth Bible study, Sunday sermon series, and discipleship tracks designed to anchor your heart and deepen your roots in Christ.",
     link: "/sermons",
-    bgImage: "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&q=80&w=800",
+    image: "/images/explore/teachings.jpg",
+    alt: "African pastor preaching God's Word with open Bible at the pulpit",
   },
   {
     id: "communities",
     title: "Communities",
-    description: "Small group fellowships and regional house fellowships connecting members across Lagos and beyond.",
-    link: "/connect",
-    bgImage: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=800",
+    description:
+      "Find life-giving fellowship through small groups, regional house fellowships, and vibrant family circles across Lagos and beyond.",
+    link: "/groups",
+    image: "/images/explore/communities.jpg",
+    alt: "African church community fellowship and youth worship team gathered together",
   },
   {
     id: "get-involved",
     title: "Get Involved",
-    description: "Find your place of service, volunteer with purpose, and make an eternal difference in our community.",
-    link: "/ministries#join",
-    bgImage: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&q=80&w=800",
+    description:
+      "Find your place of service, volunteer with purpose, touch lives, and make an eternal difference in the Kingdom of God.",
+    link: "/connect",
+    image: "/images/explore/get-involved.jpg",
+    alt: "Church congregation and worshippers passionately lifting hands in praise and service",
   },
 ];
 
 export function ExploreSection() {
-  const [activeCard, setActiveCard] = useState<string>("ministries");
+  const [activeId, setActiveId] = useState<string>("ministries");
 
   return (
-    <section className="w-full py-16 lg:py-24 bg-white">
-      <Container>
-        {/* Section Heading */}
-        <div className="text-center mb-12 lg:mb-16">
-          <p className="font-display font-recursive-mono italic text-lg sm:text-xl text-[#051202] mb-2">
+    <section className="w-full py-16 lg:py-24 bg-white relative overflow-hidden" data-name="explore">
+      <Container className="max-w-[1440px]">
+        {/* Section Heading matching Figma */}
+        <div className="flex flex-col items-center text-center gap-3 mb-10 lg:mb-12">
+          <p className="font-display font-recursive-mono italic text-xl md:text-2xl text-[#242424] tracking-tight">
             Explore What&apos;s On At
           </p>
-          <h2 className="font-sans font-extrabold text-3xl sm:text-4xl lg:text-5xl text-[#051202] tracking-wide uppercase">
+          <h2 className="font-sans font-extrabold text-2xl sm:text-3xl md:text-4xl text-[#0a0a0a] tracking-wide uppercase">
             {SITE_CONFIG.name}
           </h2>
         </div>
 
-        {/* 4 Cards Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Desktop Horizontal Expanding Accordion (lg+) */}
+        <div className="hidden lg:flex gap-4 h-[420px] w-full items-center relative">
           {exploreCards.map((card) => {
-            const isFeatured = activeCard === card.id;
+            const isActive = activeId === card.id;
 
             return (
               <div
                 key={card.id}
-                onMouseEnter={() => setActiveCard(card.id)}
-                className={`group relative rounded-[28px] overflow-hidden min-h-[420px] transition-all duration-500 cursor-pointer flex flex-col justify-end p-8 ${
-                  isFeatured
-                    ? "ring-2 ring-[#c8a96e] shadow-2xl scale-[1.02]"
-                    : "bg-[#051202] shadow-md hover:shadow-xl"
+                onClick={() => setActiveId(card.id)}
+                onMouseEnter={() => setActiveId(card.id)}
+                className={`group relative h-full rounded-[20px] overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] cursor-pointer select-none ${
+                  isActive
+                    ? "flex-[1_0_0] min-w-[340px]"
+                    : "w-[160px] xl:w-[200px] shrink-0 hover:brightness-110"
+                }`}
+                aria-label={card.title}
+              >
+                {/* Background Image Layer */}
+                <Image
+                  src={card.image}
+                  alt={card.alt}
+                  fill
+                  priority={isActive}
+                  sizes={isActive ? "(min-width: 1024px) 700px" : "(min-width: 1024px) 200px"}
+                  className={`object-cover object-center transition-transform duration-700 ${
+                    isActive ? "scale-100" : "scale-105 group-hover:scale-110"
+                  }`}
+                />
+
+                {/* Overlays */}
+                <div
+                  className={`absolute inset-0 transition-opacity duration-500 ${
+                    isActive
+                      ? "bg-gradient-to-t from-black/85 via-black/45 to-black/20"
+                      : "bg-black/60 group-hover:bg-black/50"
+                  }`}
+                />
+
+                {/* ACTIVE CARD CONTENT (Horizontal Layout) */}
+                <div
+                  className={`absolute inset-0 p-8 flex flex-col justify-end items-start transition-all duration-500 ${
+                    isActive
+                      ? "opacity-100 pointer-events-auto translate-y-0"
+                      : "opacity-0 pointer-events-none translate-y-4"
+                  }`}
+                >
+                  <div className="relative z-10 flex flex-col gap-3 max-w-xl text-left">
+                    <h3 className="font-display font-recursive-sans font-semibold text-3xl sm:text-4xl xl:text-[48px] text-white leading-[1.1] tracking-tight">
+                      {card.title}
+                    </h3>
+                    <p className="font-sans font-normal text-sm sm:text-base text-white/90 leading-relaxed">
+                      {card.description}
+                    </p>
+                  </div>
+
+                  <Link
+                    href={card.link}
+                    onClick={(e) => e.stopPropagation()}
+                    className="relative z-10 mt-6 inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[rgba(247,248,250,0.2)] hover:bg-white text-white hover:text-[#051202] border border-[#9b9ea3]/80 backdrop-blur-md text-[15px] font-medium tracking-wide transition-all duration-200 shadow-md group/btn"
+                  >
+                    <span>Learn more</span>
+                    <ArrowUpRight className="size-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+                  </Link>
+                </div>
+
+                {/* INACTIVE CARD CONTENT (Rotated Vertical Title) */}
+                <div
+                  className={`absolute inset-0 flex items-center justify-center transition-all duration-500 pointer-events-none ${
+                    isActive
+                      ? "opacity-0 scale-95"
+                      : "opacity-100 scale-100"
+                  }`}
+                >
+                  <div className="-rotate-90 whitespace-nowrap flex items-center justify-center">
+                    <p className="font-display font-recursive-sans font-semibold text-3xl xl:text-[40px] text-white tracking-wider leading-none">
+                      {card.title}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Mobile / Tablet Accordion (< lg) */}
+        <div className="flex lg:hidden flex-col gap-3 w-full">
+          {exploreCards.map((card) => {
+            const isActive = activeId === card.id;
+
+            return (
+              <div
+                key={card.id}
+                onClick={() => setActiveId(card.id)}
+                className={`relative rounded-[20px] overflow-hidden transition-all duration-500 cursor-pointer ${
+                  isActive ? "min-h-[380px]" : "h-[90px]"
                 }`}
               >
                 {/* Background Image Layer */}
                 <Image
-                  src={card.bgImage}
-                  alt={card.title}
+                  src={card.image}
+                  alt={card.alt}
                   fill
-                  className={`object-cover transition-all duration-700 ${
-                    isFeatured ? "opacity-40 scale-105" : "opacity-15 group-hover:opacity-30"
+                  sizes="100vw"
+                  className={`object-cover object-center transition-transform duration-700 ${
+                    isActive ? "scale-100" : "scale-105"
                   }`}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#051202] via-[#051202]/70 to-transparent" />
 
-                {/* Content */}
-                <div className="relative z-10 text-white">
-                  <h3 className="font-display font-recursive-sans text-2xl lg:text-3xl font-bold mb-3 tracking-wide text-white">
+                {/* Overlays */}
+                <div
+                  className={`absolute inset-0 transition-opacity duration-300 ${
+                    isActive
+                      ? "bg-gradient-to-t from-black/90 via-black/55 to-black/25"
+                      : "bg-black/60"
+                  }`}
+                />
+
+                {/* Collapsed Header Bar */}
+                <div
+                  className={`relative z-10 h-[90px] px-6 flex items-center justify-between transition-opacity duration-300 ${
+                    isActive ? "opacity-0 pointer-events-none hidden" : "opacity-100"
+                  }`}
+                >
+                  <h3 className="font-display font-recursive-sans font-semibold text-2xl text-white">
                     {card.title}
                   </h3>
+                  <span className="text-xs uppercase tracking-widest text-white/75 font-semibold px-3 py-1 rounded-full border border-white/30 bg-white/10">
+                    Tap to expand
+                  </span>
+                </div>
 
-                  <p
-                    className={`text-sm text-gray-300 leading-relaxed transition-all duration-300 ${
-                      isFeatured ? "opacity-100 max-h-24 mb-6" : "opacity-80 max-h-16 mb-4 line-clamp-2"
-                    }`}
-                  >
+                {/* Expanded Content */}
+                <div
+                  className={`relative z-10 p-6 sm:p-8 h-full flex flex-col justify-end items-start transition-all duration-300 ${
+                    isActive ? "opacity-100 flex" : "opacity-0 hidden"
+                  }`}
+                >
+                  <h3 className="font-display font-recursive-sans font-semibold text-3xl sm:text-4xl text-white mb-2 leading-tight">
+                    {card.title}
+                  </h3>
+                  <p className="font-sans text-sm sm:text-base text-white/90 leading-relaxed mb-6 max-w-md">
                     {card.description}
                   </p>
-
                   <Link
                     href={card.link}
-                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-white/20 hover:bg-white text-white hover:text-[#051202] backdrop-blur-sm transition-all"
+                    onClick={(e) => e.stopPropagation()}
+                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[rgba(247,248,250,0.2)] hover:bg-white text-white hover:text-[#051202] border border-[#9b9ea3] backdrop-blur-md text-sm font-medium transition-all"
                   >
                     <span>Learn more</span>
-                    <ArrowRight className="size-3.5" />
+                    <ArrowUpRight className="size-4" />
                   </Link>
                 </div>
               </div>
@@ -110,4 +231,3 @@ export function ExploreSection() {
     </section>
   );
 }
-

@@ -350,7 +350,7 @@ export function HeroSection() {
   return (
     <section
       onMouseLeave={handleGlobalMouseLeave}
-      className="relative w-full overflow-x-clip overflow-y-visible bg-white select-none"
+      className="relative w-full overflow-x-clip overflow-y-visible bg-white select-none pt-[20px] xl:pt-[24px] 2xl:pt-[40px]"
       data-node-id="2086:90"
       data-name="hero"
     >
@@ -384,7 +384,7 @@ export function HeroSection() {
       </div>
 
       {/* ─── DESKTOP CANVAS (Figma 1920x1316 Layout Geometry) ─── */}
-      <div className="hidden lg:block relative w-full h-[1080px] xl:h-[1200px] 2xl:h-[1316px] max-w-[1920px] mx-auto z-10 pt-[20px] xl:pt-[24px] 2xl:pt-[40px]">
+      <div className="hidden lg:block relative w-full h-[1080px] xl:h-[1200px] 2xl:h-[1316px] max-w-[1920px] mx-auto z-10">
         {/* Fixed Video Cards (NO translate3d transform) */}
         {HERO_VIDEO_NODES.map((node, index) => {
           const isHovered = hoveredId === node.id;
@@ -505,7 +505,7 @@ export function HeroSection() {
               </Link>
 
               <Link
-                href="/services"
+                href="https://youtube.com/@rccgchm?si=JSIawZL2BpxMx_OW"
                 className="inline-flex items-center justify-center gap-[8px] px-[36px] py-[15px] rounded-[28px] border border-[#b2a1ed] bg-[#b2a1ed]/10 hover:bg-[#b2a1ed]/20 text-[#180c62] font-sans font-semibold text-[17px] transition-all group"
                 data-node-id="2114:12596"
               >
