@@ -35,7 +35,7 @@ export function CountdownSection() {
   }, []);
 
   return (
-    <section className="py-20 lg:py-28 w-full bg-white relative overflow-hidden">
+    <section className="py-20 lg:py-28 w-full bg-transparent relative overflow-x-clip z-10">
       <Container>
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
           {/* Event Details Text */}

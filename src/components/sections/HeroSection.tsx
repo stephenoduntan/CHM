@@ -3,7 +3,6 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
 import { ArrowUpRight, Volume2, VolumeX } from "lucide-react";
-import { SITE_CONFIG } from "@/lib/constants";
 
 interface VideoNode {
   id: string;
@@ -16,11 +15,6 @@ interface VideoNode {
   height: number; // % in 1316 canvas
   aspect: "portrait" | "landscape";
   depth: "foreground" | "midground" | "background";
-  phase: number;
-  freqX: number;
-  freqY: number;
-  ampX: number;
-  ampY: number;
 }
 
 // 10 Video Nodes precisely matched to Figma node 2086:90 / 2114:12576 geometry
@@ -37,11 +31,6 @@ const HERO_VIDEO_NODES: VideoNode[] = [
     height: 27.05, // 356px / 1316
     aspect: "portrait",
     depth: "foreground",
-    phase: 0.2,
-    freqX: 0.7,
-    freqY: 0.8,
-    ampX: 10,
-    ampY: 14,
   },
   {
     id: "node-top-2",
@@ -54,11 +43,6 @@ const HERO_VIDEO_NODES: VideoNode[] = [
     height: 18.24, // 240px / 1316
     aspect: "landscape",
     depth: "midground",
-    phase: 1.4,
-    freqX: 0.5,
-    freqY: 0.6,
-    ampX: 8,
-    ampY: 10,
   },
   {
     id: "node-top-3",
@@ -71,11 +55,6 @@ const HERO_VIDEO_NODES: VideoNode[] = [
     height: 27.05, // 356px / 1316
     aspect: "portrait",
     depth: "foreground",
-    phase: 2.7,
-    freqX: 0.8,
-    freqY: 0.9,
-    ampX: 12,
-    ampY: 16,
   },
   {
     id: "node-top-4",
@@ -88,11 +67,6 @@ const HERO_VIDEO_NODES: VideoNode[] = [
     height: 18.24, // 240px / 1316
     aspect: "landscape",
     depth: "background",
-    phase: 3.9,
-    freqX: 0.4,
-    freqY: 0.5,
-    ampX: 6,
-    ampY: 8,
   },
   {
     id: "node-top-5",
@@ -105,11 +79,6 @@ const HERO_VIDEO_NODES: VideoNode[] = [
     height: 27.05, // 356px / 1316
     aspect: "portrait",
     depth: "background",
-    phase: 5.1,
-    freqX: 0.6,
-    freqY: 0.7,
-    ampX: 9,
-    ampY: 12,
   },
 
   // Middle Row Sides (2 cards)
@@ -124,11 +93,6 @@ const HERO_VIDEO_NODES: VideoNode[] = [
     height: 27.05, // 356px / 1316
     aspect: "portrait",
     depth: "midground",
-    phase: 1.8,
-    freqX: 0.65,
-    freqY: 0.75,
-    ampX: 11,
-    ampY: 15,
   },
   {
     id: "node-mid-right",
@@ -141,11 +105,6 @@ const HERO_VIDEO_NODES: VideoNode[] = [
     height: 27.05, // 356px / 1316
     aspect: "portrait",
     depth: "midground",
-    phase: 4.5,
-    freqX: 0.7,
-    freqY: 0.85,
-    ampX: 11,
-    ampY: 14,
   },
 
   // Bottom Row (3 cards)
@@ -160,11 +119,6 @@ const HERO_VIDEO_NODES: VideoNode[] = [
     height: 18.24, // 240px / 1316
     aspect: "landscape",
     depth: "background",
-    phase: 2.2,
-    freqX: 0.45,
-    freqY: 0.55,
-    ampX: 7,
-    ampY: 9,
   },
   {
     id: "node-bot-2",
@@ -177,11 +131,6 @@ const HERO_VIDEO_NODES: VideoNode[] = [
     height: 27.05, // 356px / 1316
     aspect: "portrait",
     depth: "foreground",
-    phase: 3.4,
-    freqX: 0.75,
-    freqY: 0.95,
-    ampX: 13,
-    ampY: 17,
   },
   {
     id: "node-bot-3",
@@ -194,144 +143,249 @@ const HERO_VIDEO_NODES: VideoNode[] = [
     height: 18.24, // 240px / 1316
     aspect: "landscape",
     depth: "background",
-    phase: 5.7,
-    freqX: 0.5,
-    freqY: 0.6,
-    ampX: 7,
-    ampY: 10,
   },
 ];
 
-const DEPTH_MULTIPLIERS = {
-  foreground: 1.0,
-  midground: 0.55,
-  background: 0.25,
-};
+// Vector motion definitions for the 3 requested colors: #B3FFE0, #FCDFDE, #FCF6E8
+interface VectorBlobConfig {
+  id: string;
+  color: string;
+  initialX: string;
+  initialY: string;
+  width: string;
+  height: string;
+  blur: string;
+  opacity: number;
+  // Multi-frequency harmonic motion parameters for organic random drift
+  fx1: number;
+  fy1: number;
+  fx2: number;
+  fy2: number;
+  phaseX: number;
+  phaseY: number;
+  ampX: number;
+  ampY: number;
+}
+
+const VECTOR_BLOBS: VectorBlobConfig[] = [
+  // 1. #B3FFE0 - Mint pastel (top-right drifting down towards center)
+  {
+    id: "blob-mint-top",
+    color: "#B3FFE0",
+    initialX: "60%",
+    initialY: "2%",
+    width: "820px",
+    height: "640px",
+    blur: "120px",
+    opacity: 0.65,
+    fx1: 0.28,
+    fy1: 0.32,
+    fx2: 0.17,
+    fy2: 0.22,
+    phaseX: 0.5,
+    phaseY: 1.2,
+    ampX: 90,
+    ampY: 110,
+  },
+  // 2. #FCDFDE - Soft blush rose (mid-left drifting down across hero & countdown)
+  {
+    id: "blob-rose-left",
+    color: "#FCDFDE",
+    initialX: "2%",
+    initialY: "30%",
+    width: "780px",
+    height: "680px",
+    blur: "130px",
+    opacity: 0.75,
+    fx1: 0.22,
+    fy1: 0.27,
+    fx2: 0.14,
+    fy2: 0.19,
+    phaseX: 2.3,
+    phaseY: 0.8,
+    ampX: 110,
+    ampY: 130,
+  },
+  // 3. #FCF6E8 - Warm cream/peach (center & lower seam bleeding directly into CountdownSection)
+  {
+    id: "blob-cream-center",
+    color: "#FCF6E8",
+    initialX: "32%",
+    initialY: "58%",
+    width: "880px",
+    height: "720px",
+    blur: "110px",
+    opacity: 0.85,
+    fx1: 0.25,
+    fy1: 0.21,
+    fx2: 0.18,
+    fy2: 0.15,
+    phaseX: 4.1,
+    phaseY: 3.2,
+    ampX: 85,
+    ampY: 120,
+  },
+  // 4. #B3FFE0 - Mint pastel lower blob (bleeding deeply into CountdownSection)
+  {
+    id: "blob-mint-bottom",
+    color: "#B3FFE0",
+    initialX: "55%",
+    initialY: "78%",
+    width: "760px",
+    height: "620px",
+    blur: "130px",
+    opacity: 0.6,
+    fx1: 0.19,
+    fy1: 0.24,
+    fx2: 0.12,
+    fy2: 0.16,
+    phaseX: 1.7,
+    phaseY: 4.8,
+    ampX: 100,
+    ampY: 95,
+  },
+  // 5. #FCDFDE - Secondary blush rose (bleeding into bottom right countdown area)
+  {
+    id: "blob-rose-bottom",
+    color: "#FCDFDE",
+    initialX: "78%",
+    initialY: "72%",
+    width: "720px",
+    height: "590px",
+    blur: "120px",
+    opacity: 0.65,
+    fx1: 0.26,
+    fy1: 0.23,
+    fx2: 0.15,
+    fy2: 0.18,
+    phaseX: 3.5,
+    phaseY: 2.1,
+    ampX: 95,
+    ampY: 115,
+  },
+];
 
 export function HeroSection() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const cardElementsRef = useRef<(HTMLDivElement | null)[]>([]);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const blobRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Interaction State
+  // Hover & Audio State
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [unmutedId, setUnmutedId] = useState<string | null>(null);
 
-  // Mouse Parallax Physics (lerped)
-  const mousePos = useRef({ targetX: 0, targetY: 0, currentX: 0, currentY: 0 });
-  const animFrameRef = useRef<number | null>(null);
-  const startTimeRef = useRef<number>(Date.now());
-
-  // Mouse Move Handler
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 2 - 1; // -1 to 1
-    const y = ((e.clientY - rect.top) / rect.height) * 2 - 1; // -1 to 1
-    mousePos.current.targetX = Math.max(-1, Math.min(1, x));
-    mousePos.current.targetY = Math.max(-1, Math.min(1, y));
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    mousePos.current.targetX = 0;
-    mousePos.current.targetY = 0;
-    setHoveredId(null);
-  }, []);
-
-  // Animation Loop: Drift Inertia + Mouse Parallax (Reference from dirty-jobs-event-memory-graph)
+  // Background Vectors Random Motion Animation Loop
   useEffect(() => {
-    const loop = () => {
-      const elapsed = (Date.now() - startTimeRef.current) / 1000;
+    let animId: number;
+    const start = Date.now();
 
-      // Lerp mouse coordinates smoothly
-      mousePos.current.currentX += (mousePos.current.targetX - mousePos.current.currentX) * 0.05;
-      mousePos.current.currentY += (mousePos.current.targetY - mousePos.current.currentY) * 0.05;
+    const animateBlobs = () => {
+      const elapsed = (Date.now() - start) / 1000;
 
-      HERO_VIDEO_NODES.forEach((node, index) => {
-        const el = cardElementsRef.current[index];
+      VECTOR_BLOBS.forEach((blob, idx) => {
+        const el = blobRefs.current[idx];
         if (!el) return;
 
-        const depthFactor = DEPTH_MULTIPLIERS[node.depth];
+        // Organic multi-harmonic random drift
+        const dx =
+          Math.sin(elapsed * blob.fx1 + blob.phaseX) * blob.ampX +
+          Math.cos(elapsed * blob.fx2 + blob.phaseY) * (blob.ampX * 0.45);
+        const dy =
+          Math.cos(elapsed * blob.fy1 + blob.phaseY) * blob.ampY +
+          Math.sin(elapsed * blob.fy2 + blob.phaseX) * (blob.ampY * 0.45);
+        const scale = 1 + Math.sin(elapsed * 0.18 + blob.phaseX) * 0.08;
 
-        // 1. Organic Drift / Harmonic Float
-        const driftX = Math.sin(elapsed * node.freqX + node.phase) * node.ampX;
-        const driftY = Math.cos(elapsed * node.freqY + node.phase) * node.ampY;
-        const tilt = Math.sin(elapsed * 0.4 + node.phase) * (node.depth === "foreground" ? 1.2 : 0.6);
-
-        // 2. Parallax Shift from Mouse
-        const parallaxX = mousePos.current.currentX * 36 * depthFactor;
-        const parallaxY = mousePos.current.currentY * 36 * depthFactor;
-
-        const totalX = driftX + parallaxX;
-        const totalY = driftY + parallaxY;
-
-        // Apply smooth 3D translation & rotation
-        el.style.transform = `translate3d(${totalX.toFixed(2)}px, ${totalY.toFixed(2)}px, 0px) rotate(${tilt.toFixed(2)}deg)`;
+        // Animate the background blur vector smoothly
+        el.style.transform = `translate(${dx.toFixed(2)}px, ${dy.toFixed(2)}px) scale(${scale.toFixed(3)})`;
       });
 
-      animFrameRef.current = requestAnimationFrame(loop);
+      animId = requestAnimationFrame(animateBlobs);
     };
 
-    animFrameRef.current = requestAnimationFrame(loop);
-
-    return () => {
-      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
-    };
+    animId = requestAnimationFrame(animateBlobs);
+    return () => cancelAnimationFrame(animId);
   }, []);
 
-  // Toggle Video Sound on Click
-  const toggleSound = (nodeId: string, index: number, e: React.MouseEvent) => {
-    e.stopPropagation();
-    const vid = videoRefs.current[index];
-    if (!vid) return;
+  // Card Mouse Enter: Unmute hovered video, mute all others
+  const handleMouseEnterCard = useCallback((id: string, index: number) => {
+    setHoveredId(id);
+    setUnmutedId(id);
 
-    if (unmutedId === nodeId) {
+    videoRefs.current.forEach((vid, i) => {
+      if (!vid) return;
+      if (i === index) {
+        vid.muted = false;
+        // Ensure playback continues with audio
+        const p = vid.play();
+        if (p !== undefined) {
+          p.catch(() => {
+            // Autoplay with audio was restricted; video continues muted
+          });
+        }
+      } else {
+        vid.muted = true;
+      }
+    });
+  }, []);
+
+  // Card Mouse Leave: Mute video immediately
+  const handleMouseLeaveCard = useCallback((index: number) => {
+    setHoveredId(null);
+    setUnmutedId(null);
+
+    const vid = videoRefs.current[index];
+    if (vid) {
       vid.muted = true;
-      setUnmutedId(null);
-    } else {
-      // Mute any previously unmuted video
-      videoRefs.current.forEach((v) => {
-        if (v) v.muted = true;
-      });
-      vid.muted = false;
-      setUnmutedId(nodeId);
     }
-  };
+  }, []);
+
+  // Global mouse leave: ensure all videos are muted
+  const handleGlobalMouseLeave = useCallback(() => {
+    setHoveredId(null);
+    setUnmutedId(null);
+    videoRefs.current.forEach((vid) => {
+      if (vid) vid.muted = true;
+    });
+  }, []);
 
   return (
     <section
-      ref={containerRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className="relative w-full overflow-hidden bg-white select-none"
+      onMouseLeave={handleGlobalMouseLeave}
+      className="relative w-full overflow-x-clip overflow-y-visible bg-white select-none"
       data-node-id="2086:90"
       data-name="hero"
     >
-      {/* ─── Ambient Glow Blobs (Figma Frame 7 / node 2104:9688) ─── */}
+      {/* ─── Blurred Vectors (#B3FFE0, #FCDFDE, #FCF6E8) ─── */}
+      {/* Bleeds out beyond HeroSection down into CountdownSection */}
       <div
-        className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+        className="pointer-events-none absolute inset-x-0 top-0 h-[145%] min-h-[1600px] z-0 overflow-visible"
+        aria-hidden="true"
         data-node-id="2104:9688"
       >
-        {/* Vector 130: Top-Right Cyan/Emerald Glow */}
-        <div
-          className="absolute -top-[10%] right-[5%] w-[820px] h-[590px] rounded-full blur-[130px] opacity-25"
-          style={{ background: "radial-gradient(circle, #0bcc12 0%, #00e5ff 70%, transparent 100%)" }}
-        />
-        {/* Vector 131: Bottom-Right Mint Glow */}
-        <div
-          className="absolute top-[40%] right-[0%] w-[810px] h-[480px] rounded-full blur-[120px] opacity-20"
-          style={{ background: "radial-gradient(circle, #05d5a5 0%, #b2a1ed 80%, transparent 100%)" }}
-        />
-        {/* Vector 132: Bottom-Left Rose/Peach Glow */}
-        <div
-          className="absolute top-[35%] left-[5%] w-[650px] h-[610px] rounded-full blur-[110px] opacity-25"
-          style={{ background: "radial-gradient(circle, #ff6b8b 0%, #f0a505 75%, transparent 100%)" }}
-        />
+        {VECTOR_BLOBS.map((blob, idx) => (
+          <div
+            key={blob.id}
+            ref={(el) => {
+              blobRefs.current[idx] = el;
+            }}
+            className="absolute rounded-full will-change-transform"
+            style={{
+              left: blob.initialX,
+              top: blob.initialY,
+              width: blob.width,
+              height: blob.height,
+              backgroundColor: blob.color,
+              filter: `blur(${blob.blur})`,
+              opacity: blob.opacity,
+              transformOrigin: "center center",
+              transition: "opacity 1s ease",
+            }}
+          />
+        ))}
       </div>
 
-      {/* ─── DESKTOP CANVAS (Scaled Interactive Memory Graph Stage) ─── */}
+      {/* ─── DESKTOP CANVAS (Figma 1920x1316 Layout Geometry) ─── */}
       <div className="hidden lg:block relative w-full h-[1080px] xl:h-[1200px] 2xl:h-[1316px] max-w-[1920px] mx-auto z-10">
-        {/* Floating Video Cards */}
+        {/* Fixed Video Cards (NO translate3d transform) */}
         {HERO_VIDEO_NODES.map((node, index) => {
           const isHovered = hoveredId === node.id;
           const isDimmed = hoveredId !== null && !isHovered;
@@ -340,7 +394,7 @@ export function HeroSection() {
           return (
             <div
               key={node.id}
-              className="absolute pointer-events-auto transition-opacity duration-500 ease-out"
+              className="absolute pointer-events-auto transition-opacity duration-300 ease-out"
               style={{
                 left: `${node.left}%`,
                 top: `${node.top}%`,
@@ -349,23 +403,18 @@ export function HeroSection() {
                 zIndex: isHovered ? 35 : node.depth === "foreground" ? 20 : node.depth === "midground" ? 15 : 10,
                 opacity: isDimmed ? 0.45 : 1,
               }}
-              onMouseEnter={() => setHoveredId(node.id)}
+              onMouseEnter={() => handleMouseEnterCard(node.id, index)}
+              onMouseLeave={() => handleMouseLeaveCard(index)}
             >
+              {/* Static Card Container without translate3d */}
               <div
-                ref={(el) => {
-                  cardElementsRef.current[index] = el;
-                }}
-                className={`relative size-full rounded-[10px] overflow-hidden transition-shadow duration-300 ${
+                className={`relative size-full rounded-[10px] overflow-hidden transition-all duration-300 ${
                   isHovered
-                    ? "shadow-[0px_16px_40px_rgba(4,4,4,0.30)] ring-2 ring-[#f0a505]/80 scale-[1.05]"
-                    : "drop-shadow-[0px_0px_10px_rgba(4,4,4,0.15)] shadow-md"
+                    ? "scale-[1.04] shadow-[0px_20px_45px_rgba(4,4,4,0.30)] ring-2 ring-[#f0a505]"
+                    : "drop-shadow-[0px_0px_8px_rgba(4,4,4,0.15)] shadow-md"
                 }`}
-                style={{
-                  transformOrigin: "center center",
-                  transition: "transform 0.15s ease-out, box-shadow 0.3s ease-out, filter 0.3s ease-out",
-                }}
               >
-                {/* HTML5 Looping Background Video */}
+                {/* HTML5 Looping Autoplay Video (Muted on load, unmuted on hover) */}
                 <video
                   ref={(el) => {
                     videoRefs.current[index] = el;
@@ -379,10 +428,10 @@ export function HeroSection() {
                   className="size-full object-cover pointer-events-none"
                 />
 
-                {/* Subtle Cinematic Gradient Overlay */}
+                {/* Subtle Cinematic Gradient */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent pointer-events-none" />
 
-                {/* Video Info Badge & Audio Toggle on Hover */}
+                {/* Video Info Badge & Audio Status */}
                 <div
                   className={`absolute bottom-0 inset-x-0 p-3 flex items-center justify-between transition-opacity duration-300 ${
                     isHovered ? "opacity-100" : "opacity-0"
@@ -397,14 +446,19 @@ export function HeroSection() {
                     </span>
                   </div>
 
-                  <button
-                    onClick={(e) => toggleSound(node.id, index, e)}
-                    className="p-1.5 rounded-full bg-black/60 hover:bg-black/80 text-white backdrop-blur-md transition-transform hover:scale-110"
-                    title={isUnmuted ? "Mute video" : "Listen with sound"}
-                    aria-label="Toggle sound"
+                  <div
+                    className="p-1.5 rounded-full bg-black/60 text-white backdrop-blur-md flex items-center gap-1"
+                    title={isUnmuted ? "Playing with sound" : "Muted"}
                   >
-                    {isUnmuted ? <Volume2 className="size-3.5 text-[#f0a505]" /> : <VolumeX className="size-3.5" />}
-                  </button>
+                    {isUnmuted ? (
+                      <>
+                        <Volume2 className="size-3.5 text-[#f0a505] animate-pulse" />
+                        <span className="text-[10px] font-bold text-[#f0a505] pr-1">Audio On</span>
+                      </>
+                    ) : (
+                      <VolumeX className="size-3.5 text-white/80" />
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -420,7 +474,7 @@ export function HeroSection() {
             className="flex flex-col items-center justify-center text-center p-[40px] w-[580px] xl:w-[620px] rounded-[32px] bg-white/85 backdrop-blur-md border border-white/90 shadow-[0_20px_50px_rgba(0,0,0,0.06)]"
             style={{
               backgroundImage:
-                "radial-gradient(circle at center, rgba(255,255,255,0.95) 0%, rgba(248,248,248,0.7) 100%)",
+                "radial-gradient(circle at center, rgba(255,255,255,0.96) 0%, rgba(248,248,248,0.72) 100%)",
             }}
           >
             {/* Title Block (Figma Frame 22) */}
@@ -497,12 +551,19 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* Mobile Horizontal Video Stream with Gentle Floating Cards */}
+        {/* Mobile Horizontal Video Stream */}
         <div className="w-full flex gap-4 overflow-x-auto pb-4 pt-2 no-scrollbar snap-x snap-mandatory">
-          {HERO_VIDEO_NODES.slice(0, 6).map((node) => (
+          {HERO_VIDEO_NODES.slice(0, 6).map((node, mIdx) => (
             <div
               key={node.id}
               className="relative shrink-0 snap-center w-[220px] sm:w-[260px] h-[320px] rounded-[16px] overflow-hidden shadow-lg border border-gray-100"
+              onClick={() => {
+                const vid = videoRefs.current[mIdx];
+                if (vid) {
+                  vid.muted = !vid.muted;
+                  setUnmutedId(vid.muted ? null : node.id);
+                }
+              }}
             >
               <video
                 src={node.videoUrl}
