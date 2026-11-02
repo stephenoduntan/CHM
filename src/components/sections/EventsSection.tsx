@@ -133,6 +133,8 @@ interface PanelProps {
   motionProgress: MotionValue<number>;
   isMuted: boolean;
   toggleMute: () => void;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
   centerVideoRef: React.MutableRefObject<HTMLVideoElement | null>;
   onSelect: () => void;
   hasDragged: React.MutableRefObject<boolean>;
@@ -148,6 +150,8 @@ function Panel({
   motionProgress,
   isMuted,
   toggleMute,
+  onMouseEnter,
+  onMouseLeave,
   centerVideoRef,
   onSelect,
   hasDragged,
@@ -173,6 +177,12 @@ function Panel({
   return (
     <motion.div
       data-panel-offset={offset}
+      onMouseEnter={() => {
+        if (isCenter) onMouseEnter?.();
+      }}
+      onMouseLeave={() => {
+        if (isCenter) onMouseLeave?.();
+      }}
       onClick={(e) => {
         if (hasDragged.current) return;
         if (!isCenter) {
@@ -259,7 +269,7 @@ function Panel({
         }}
       />
 
-      {/* Audio Mute/Unmute Pill (Center Card Only) */}
+      {/* Audio Mute/Hover Pill (Center Card Only) */}
       {isCenter && (
         <div className="absolute bottom-4 right-4 z-20 pointer-events-auto">
           <button
@@ -269,13 +279,13 @@ function Panel({
               toggleMute();
             }}
             className="flex items-center gap-2 px-3 py-2 rounded-full bg-black/65 hover:bg-black/85 backdrop-blur-md text-white border border-white/20 transition-all cursor-pointer shadow-lg group/mute"
-            aria-label={isMuted ? "Unmute audio" : "Mute audio"}
-            title={isMuted ? "Click to unmute" : "Click to mute"}
+            aria-label={isMuted ? "Hover to unmute" : "Sound on"}
+            title={isMuted ? "Hover for sound" : "Sound on"}
           >
             {isMuted ? (
               <>
                 <VolumeX className="size-4 text-white/80 group-hover/mute:text-white" />
-                <span className="text-xs font-medium tracking-wide text-white/90 pr-0.5">Click for sound</span>
+                <span className="text-xs font-medium tracking-wide text-white/90 pr-0.5">Hover for sound</span>
               </>
             ) : (
               <>
@@ -346,6 +356,7 @@ export function EventsSection() {
   const handleNext = useCallback(() => {
     if (isAnimatingRef.current) return;
     isAnimatingRef.current = true;
+    setIsMuted(true);
     setIsReflectionVisible(false);
 
     animate(motionProgress, 1, springConfig).then(() => {
@@ -362,6 +373,7 @@ export function EventsSection() {
   const handlePrev = useCallback(() => {
     if (isAnimatingRef.current) return;
     isAnimatingRef.current = true;
+    setIsMuted(true);
     setIsReflectionVisible(false);
 
     animate(motionProgress, -1, springConfig).then(() => {
@@ -374,7 +386,34 @@ export function EventsSection() {
     });
   }, [motionProgress, total]);
 
-  // Toggle audio on mouse click
+  // Hover volume handling (matching HeroSection.tsx)
+  const handleMouseEnterCard = useCallback(() => {
+    setIsMuted(false);
+    if (centerVideoRef.current) {
+      centerVideoRef.current.muted = false;
+      centerVideoRef.current.volume = 1;
+      const p = centerVideoRef.current.play();
+      if (p !== undefined) {
+        p.catch(() => {});
+      }
+    }
+  }, []);
+
+  const handleMouseLeaveCard = useCallback(() => {
+    setIsMuted(true);
+    if (centerVideoRef.current) {
+      centerVideoRef.current.muted = true;
+    }
+  }, []);
+
+  const handleGlobalMouseLeave = useCallback(() => {
+    setIsMuted(true);
+    if (centerVideoRef.current) {
+      centerVideoRef.current.muted = true;
+    }
+  }, []);
+
+  // Manual toggle fallback
   const toggleMute = useCallback(() => {
     setIsMuted((prev) => {
       const nextMuted = !prev;
@@ -475,6 +514,7 @@ export function EventsSection() {
 
   return (
     <section
+      onMouseLeave={handleGlobalMouseLeave}
       className="w-full py-16 lg:py-24 bg-white relative overflow-hidden select-none"
       data-node-id="2110:11239"
       data-name="events"
@@ -613,6 +653,8 @@ export function EventsSection() {
                   motionProgress={motionProgress}
                   isMuted={isMuted}
                   toggleMute={toggleMute}
+                  onMouseEnter={handleMouseEnterCard}
+                  onMouseLeave={handleMouseLeaveCard}
                   centerVideoRef={centerVideoRef}
                   hasDragged={hasDragged}
                   onSelect={() => {
@@ -648,7 +690,7 @@ export function EventsSection() {
 
         {/* ACTIVE EVENT TITLE & DATE (Matching Figma Frame 16 node 2115:12622) */}
         <div
-          className="w-full flex flex-col items-center justify-center text-center gap-1.5 sm:gap-2 pt-4 pb-2 px-4 transition-all duration-500 absolute bottom-[24px]"
+          className="w-full flex flex-col items-center justify-center text-center gap-1.5 sm:gap-2 pt-4 pb-2 px-4 transition-all duration-500 absolute bottom-[20px]"
           data-node-id="2115:12622"
           data-name="Frame 16"
         >
