@@ -21,7 +21,6 @@ const DARK_HEADER_ROUTES = [
   "/services",
   "/groups",
   "/connect",
-  "/sermons",
 ];
 
 export function Header({ variant }: HeaderProps) {

@@ -10,24 +10,24 @@ export default function SermonsPage() {
   return (
     <div className="w-full bg-white pb-24">
       {/* ─── Hero ─────────────────────────────────────────────────── */}
-      <section className="relative h-[720px] bg-[#051202] text-white flex items-center justify-center overflow-hidden">
-        <Image
+      <section className="relative h-auto pt-[140px] bg-[#051202] text-[white] flex items-center justify-center overflow-hidden">
+        {/* <Image
           src="https://images.unsplash.com/photo-1510590337019-5ef8d3d32116?auto=format&fit=crop&q=80&w=1920"
           alt="Sermons Archive"
           fill
           className="object-cover opacity-20"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#051202] via-[#051202]/70 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#051202] via-[#051202]/70 to-transparent" /> */}
 
         <Container className="relative z-10 text-center py-20">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-[#c8a96e]/20 border border-[#c8a96e]/40 text-[#c8a96e] text-xs font-semibold uppercase tracking-wider mb-4">
+          {/* <span className="inline-block px-4 py-1.5 rounded-full bg-[#c8a96e]/20 border border-[#c8a96e]/40 text-[#c8a96e] text-xs font-semibold uppercase tracking-wider mb-4">
             Word of Life
-          </span>
-          <h1 className="font-display font-recursive-sans text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-4 uppercase tracking-tight">
+          </span> */}
+          <h1 className="font-display font-recursive-sans text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#0a0a0a] mb-4 uppercase tracking-tight">
             Sermons & Teachings
           </h1>
-          <p className="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto">
+          <p className="text-gray-200 text-base sm:text-lg max-w-2xl mx-auto">
             Faith comes by hearing, and hearing by the Word of God. Catch up on our latest Sunday messages and series.
           </p>
         </Container>
