@@ -194,6 +194,15 @@ export function Header({ variant }: HeaderProps) {
                       Groups & Fellowships
                     </Link>
                   </li>
+                  <li>
+                    <Link
+                      href="/our-beliefs"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="block hover:text-[#c8a96e] transition-colors"
+                    >
+                      Our Beliefs
+                    </Link>
+                  </li>
                 </ul>
               </div>
 

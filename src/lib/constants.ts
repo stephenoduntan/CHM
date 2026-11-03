@@ -24,6 +24,7 @@ export const NAV_LINKS = [
 export const FOOTER_QUICK_LINKS = [
   { label: "Give", href: "/give" },
   { label: "New Here", href: "/new-here" },
+  { label: "Our Beliefs", href: "/our-beliefs" },
   { label: "Events", href: "/events" },
   { label: "Sermons", href: "/sermons" },
   { label: "Watch Live", href: "/watch-live" },
