@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Sparkles, Car, Clock, Baby, GraduationCap, ArrowRight } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { SITE_CONFIG } from "@/lib/constants";
 import { NewHereHero } from "@/components/sections/NewHereHero";
@@ -60,39 +59,64 @@ const missionLocations = [
   { name: "Lafenwa", region: "Ogun State Mission Field" },
   { name: "Ipatira", region: "Community Outreach Center" },
   { name: "Ilogbo", region: "Community Outreach Center" },
-  { name: "Salala", region: "Rural Evangelism Field" },
+  { name: "Salala", region: "Rural Evangelism Field, Oman" },
 ];
 
-const expectations = [
+interface ExpectationItem {
+  icon: string;
+  title: string;
+  desc: string;
+  nodeId: string;
+  iconNodeId: string;
+  titleNodeId: string;
+  descNodeId: string;
+}
+
+const EXPECTATIONS: ExpectationItem[] = [
   {
-    icon: Sparkles,
+    icon: "/images/icons/coat-fill.svg",
     title: "Come as you are",
-    description:
-      "Dress how you feel is most comfortable. You'll see people dressed casually as well as in traditional or formal attire.",
+    desc: "Dress how you feel is most comfortable. You’ll see people dressed casually as well as dressy.",
+    nodeId: "2086:480",
+    iconNodeId: "2092:3554",
+    titleNodeId: "2086:483",
+    descNodeId: "2086:485",
   },
   {
-    icon: Car,
+    icon: "/images/icons/car-fill.svg",
     title: "Parking",
-    description:
-      "Our Parking & Traffic team will guide you to an available space safely to make your arrival stress-free.",
+    desc: "Our Parking team will help guide you to a space to make your experience as easy as possible.",
+    nodeId: "2086:486",
+    iconNodeId: "2092:3556",
+    titleNodeId: "2086:489",
+    descNodeId: "2086:491",
   },
   {
-    icon: Clock,
+    icon: "/images/icons/clock-fill.svg",
     title: "Service Flow",
-    description:
-      "Our services start with vibrant praise and worship, followed by an inspiring, practical message from God's Word.",
+    desc: "Our services start with worship, followed by a message from God's Word.",
+    nodeId: "2086:492",
+    iconNodeId: "2092:3552",
+    titleNodeId: "2086:495",
+    descNodeId: "2086:497",
   },
   {
-    icon: Baby,
+    icon: "/images/icons/baby-fill.svg",
     title: "For Your Kids",
-    description:
-      "Age-appropriate, safe, and fun Bible services are available for children from 6 weeks to 12 years of age.",
+    desc: "Age-appropriate services are available for kids 6 weeks to 12 years of age.",
+    nodeId: "2086:498",
+    iconNodeId: "2092:3558",
+    titleNodeId: "2086:501",
+    descNodeId: "2086:503",
   },
   {
-    icon: GraduationCap,
-    title: "For Students & Teens",
-    description:
-      "Weekly meetings, discipleship sessions, and vibrant fellowship designed for middle school, high school, and varsity students.",
+    icon: "/images/icons/hat-graduation-fill.svg",
+    title: "For Students",
+    desc: "We offer weekly meetings for Middle and High School students on Wednesday evenings.",
+    nodeId: "2086:509",
+    iconNodeId: "2092:3560",
+    titleNodeId: "2086:512",
+    descNodeId: "2086:514",
   },
 ];
 
@@ -244,7 +268,7 @@ export default function NewHerePage() {
                 Our Mission & Vision
               </h2>
               <p
-                className="font-sans font-normal text-base sm:text-lg lg:text-[28px] text-[#242424] leading-relaxed"
+                className="font-sans font-normal text-base sm:text-lg lg:text-[24px] text-[#242424] leading-relaxed"
                 data-node-id="2086:350"
               >
                 As received by the General Overseer (G.O.), Pastor E. A. Adeboye,
@@ -280,7 +304,7 @@ export default function NewHerePage() {
 
                   {/* Foreground Content */}
                   <div className="relative z-10 w-full">
-                    <p className="font-sans font-medium text-lg sm:text-xl lg:text-[28px] text-[#0a0a0a] leading-normal tracking-normal">
+                    <p className="font-sans font-medium text-lg sm:text-xl lg:text-[24px] text-[#0a0a0a] leading-normal tracking-normal">
                       {item.text}
                     </p>
                   </div>
@@ -367,40 +391,94 @@ export default function NewHerePage() {
         </Container>
       </section>
 
-      {/* ─── What to Expect ───────────────────────────────────────── */}
-      <section className="py-16 lg:py-24 bg-white">
-        <Container>
-          <div className="text-center max-w-xl mx-auto mb-14">
-            <h2 className="font-sans font-bold text-3xl sm:text-4xl text-[#051202] mb-3">
+      {/* ─── What to Expect Section (Figma Node 2086:475) ───────────── */}
+      <section
+        className="relative w-full py-20 lg:py-[84px] px-6 sm:px-8 lg:px-[24px] overflow-hidden bg-black text-white"
+        data-node-id="2086:475"
+        data-name="card 1"
+      >
+        {/* Background Image with Subtle Dark Radial & Linear Gradient Overlay */}
+        <div className="absolute inset-0 pointer-events-none">
+          <Image
+            src="/images/new-here/what-to-expect-bg.jpg"
+            alt="Court of His Majesty congregation worship service"
+            fill
+            className="object-cover object-center"
+            sizes="100vw"
+          />
+          {/* Subtle dark shade overlay combining radial vignette and linear gradient */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse at center, rgba(5, 18, 2, 0.76) 0%, rgba(5, 18, 2, 0.90) 65%, #051202 100%), linear-gradient(180deg, rgba(5, 18, 2, 0.88) 0%, rgba(5, 18, 2, 0.72) 45%, rgba(5, 18, 2, 0.92) 100%)",
+            }}
+          />
+        </div>
+
+        <div className="relative z-10 max-w-[1440px] mx-auto flex flex-col gap-12 lg:gap-[40px] items-center">
+          {/* Section Heading */}
+          <div
+            className="flex items-center justify-center w-full text-center"
+            data-node-id="2086:477"
+          >
+            <h2
+              className="font-display font-recursive-sans font-semibold text-3xl sm:text-4xl lg:text-[48px] text-white tracking-tight leading-normal"
+              data-node-id="2086:478"
+              style={{ fontVariationSettings: '"CASL" 0, "CRSV" 0.5, "MONO" 0' }}
+            >
               What to Expect
             </h2>
-            <p className="text-gray-600 text-base">
-              Here is what a typical Sunday morning looks like at Court of His Majesty.
-            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {expectations.map((item) => {
-              const Icon = item.icon;
-              return (
+          {/* 5 Expectation Cards: 3 in Row 1, 2 Centered in Row 2 */}
+          <div
+            className="flex flex-wrap gap-8 lg:gap-[40px] items-start justify-center w-full"
+            data-node-id="2086:479"
+          >
+            {EXPECTATIONS.map((item) => (
+              <div
+                key={item.title}
+                className="flex flex-col gap-5 sm:gap-[24px] items-start w-full md:w-[calc(50%-20px)] lg:w-[calc(33.333%-27px)] shrink-0 text-left"
+                data-node-id={item.nodeId}
+              >
                 <div
-                  key={item.title}
-                  className="p-8 rounded-[24px] bg-gray-50 border border-gray-100 hover:border-gray-300 transition-colors"
+                  className="relative size-10 shrink-0"
+                  data-node-id={item.iconNodeId}
                 >
-                  <div className="size-12 rounded-2xl bg-[#051202] text-[#c8a96e] flex items-center justify-center mb-6 shadow-sm">
-                    <Icon className="size-6" />
-                  </div>
-                  <h3 className="font-sans font-bold text-xl text-[#051202] mb-3">
+                  <Image
+                    src={item.icon}
+                    alt=""
+                    width={40}
+                    height={40}
+                    className="object-contain size-10"
+                  />
+                </div>
+
+                <div
+                  className="flex items-center w-full"
+                  data-node-id={item.titleNodeId}
+                >
+                  <h3
+                    className="font-display font-recursive-sans font-semibold text-2xl sm:text-3xl lg:text-[36px] text-white leading-normal"
+                    style={{ fontVariationSettings: '"CASL" 0, "CRSV" 0.5, "MONO" 0' }}
+                  >
                     {item.title}
                   </h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">
-                    {item.description}
+                </div>
+
+                <div
+                  className="flex items-start w-full"
+                  data-node-id={item.descNodeId}
+                >
+                  <p className="font-sans font-normal text-base sm:text-lg lg:text-[24px] text-[#f5f5f5] leading-[1.4] opacity-90">
+                    {item.desc}
                   </p>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
-        </Container>
+        </div>
       </section>
 
       {/* ─── See You Next Sunday CTA ──────────────────────────────── */}
