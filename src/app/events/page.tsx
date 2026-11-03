@@ -324,9 +324,9 @@ export default function EventsPage() {
             data-node-id="2086:1293"
           >
             <div data-node-id="2086:1294">
-              <span className="inline-block px-3.5 py-1 rounded-full text-xs font-semibold bg-[#180C62]/10 text-[#180C62] border border-[#180C62]/20 uppercase tracking-wider mb-2">
+              {/* <span className="inline-block px-3.5 py-1 rounded-full text-xs font-semibold bg-[#180C62]/10 text-[#180C62] border border-[#180C62]/20 uppercase tracking-wider mb-2">
                 Calendar of Gatherings
-              </span>
+              </span> */}
               <h2
                 className="font-display font-recursive-sans font-semibold text-3xl sm:text-4xl lg:text-[48px] text-[#0a0a0a] tracking-tight leading-tight"
                 data-node-id="2086:1295"
@@ -425,9 +425,9 @@ export default function EventsPage() {
                       data-node-id="2086:1306"
                     >
                       {/* Category Badge */}
-                      <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-[#180C62]/10 text-[#180C62] border border-[#180C62]/20">
+                      {/* <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-[#180C62]/10 text-[#180C62] border border-[#180C62]/20">
                         {event.badge}
-                      </span>
+                      </span> */}
 
                       {/* Event Title (Node 2086:1307) */}
                       <h3
@@ -457,7 +457,7 @@ export default function EventsPage() {
 
                       {/* Time with Clock Icon */}
                       <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
-                        <Clock className="size-4 text-[#c8a96e] shrink-0" />
+                        <Clock className="size-4 text-[#d61812] shrink-0" />
                         <span>{event.time}</span>
                       </div>
 
@@ -465,9 +465,9 @@ export default function EventsPage() {
                       <div className="mt-2 flex flex-wrap items-center gap-3">
                         <Link
                           href={`/events/${event.id}`}
-                          className="inline-flex items-center gap-2 px-7 py-3 rounded-full font-semibold text-white bg-[#051202] hover:bg-[#c8a96e] hover:text-[#051202] transition-colors text-xs uppercase tracking-wider shadow-sm cursor-pointer group"
+                          className="inline-flex items-center gap-inline-flex items-center justify-center gap-2 px-7 py-3 rounded-full border border-[#b2a1ed] bg-[#b2a1ed]/10 hover:bg-[#b2a1ed]/20 text-[#180c62] font-sans font-semibold text-[17px] transition-all group2 px-7 py-3 rounded-full font-semibold text-white bg-[#051202] hover:bg-[#c8a96e] hover:text-[#051202] transition-colors text-xs uppercase tracking-wider shadow-sm cursor-pointer group"
                         >
-                          <span>View Event Details</span>
+                          <span>View event details</span>
                           <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
                         </Link>
                       </div>
@@ -526,12 +526,12 @@ export default function EventsPage() {
           {/* Section Header */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16 lg:mb-20 pb-4 border-b border-gray-100">
             <div>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-700 border border-gray-200 uppercase tracking-wider mb-2">
+              {/* <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-700 border border-gray-200 uppercase tracking-wider mb-2">
                 <History className="size-3.5 text-gray-500" />
                 <span>Last 6 Months Archive (May 2026 – Nov 2026)</span>
-              </div>
+              </div> */}
               <h2 className="font-display font-recursive-sans font-semibold text-3xl sm:text-4xl lg:text-[48px] text-[#0a0a0a] tracking-tight leading-tight">
-                Past Latest Events
+                Past Events
               </h2>
               <p className="text-[#606060] text-sm sm:text-base max-w-2xl mt-2 font-sans">
                 Explore highlights, themes, and recordings from our recent gatherings and conferences over the last six months.
@@ -586,7 +586,7 @@ export default function EventsPage() {
                     {/* Foreground Info */}
                     <div className="relative z-10 flex flex-col items-start lg:items-end justify-center h-full text-left lg:text-right gap-3.5 sm:gap-4 lg:pb-[24px] lg:pr-6">
                       {/* Concluded Badge */}
-                      <div className="flex items-center gap-2">
+                      {/* <div className="flex items-center gap-2">
                         <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-700 border border-gray-200">
                           {event.badge}
                         </span>
@@ -594,7 +594,7 @@ export default function EventsPage() {
                           <Sparkles className="size-3" />
                           <span>Concluded</span>
                         </span>
-                      </div>
+                      </div> */}
 
                       {/* Event Title */}
                       <h3 className="font-display font-recursive-sans font-semibold text-2xl sm:text-3xl lg:text-[28px] text-[#0a0a0a] tracking-tight leading-snug">
@@ -603,13 +603,13 @@ export default function EventsPage() {
 
                       {/* Date with Calendar Icon */}
                       <div className="flex items-center gap-2 text-base sm:text-lg lg:text-[22px] font-medium text-[#0a0a0a]">
-                        <Calendar className="size-5 text-[#c8a96e] shrink-0" />
+                        <Calendar className="size-5 text-gray-400 shrink-0" />
                         <span>{event.date}</span>
                       </div>
 
                       {/* Venue with MapPin Icon */}
                       <div className="flex items-center gap-2 text-base sm:text-lg lg:text-[22px] font-medium text-[#0a0a0a]">
-                        <MapPin className="size-5 text-[#c8a96e] shrink-0" />
+                        <MapPin className="size-5 text-gray-400 shrink-0" />
                         <span>{event.location}</span>
                       </div>
 
@@ -623,19 +623,19 @@ export default function EventsPage() {
                       <div className="mt-2 flex flex-wrap items-center gap-3">
                         <Link
                           href={`/events/${event.id}`}
-                          className="inline-flex items-center gap-2 px-7 py-3 rounded-full font-semibold text-white bg-[#051202] hover:bg-[#c8a96e] hover:text-[#051202] transition-colors text-xs uppercase tracking-wider shadow-sm cursor-pointer group"
+                          className="inline-flex items-center gap-inline-flex items-center justify-center gap-2 px-7 py-3 rounded-full border border-[#b2a1ed] bg-[#b2a1ed]/10 hover:bg-[#b2a1ed]/20 text-[#180c62] font-sans font-semibold text-[17px] transition-all group2 px-7 py-3 rounded-full font-semibold text-white bg-[#051202] hover:bg-[#c8a96e] hover:text-[#051202] transition-colors text-xs uppercase tracking-wider shadow-sm cursor-pointer group"
                         >
                           <span>View Recap & Details</span>
                           <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
                         </Link>
 
-                        <Link
+                        {/* <Link
                           href="/sermons"
                           className="inline-flex items-center gap-1.5 px-5 py-3 rounded-full font-semibold text-xs text-[#180C62] hover:text-[#c8a96e] hover:bg-gray-100 transition-colors uppercase tracking-wider"
                         >
                           <span>Listen to Sermons</span>
                           <ExternalLink className="size-3" />
-                        </Link>
+                        </Link> */}
                       </div>
                     </div>
                   </div>

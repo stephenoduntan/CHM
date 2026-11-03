@@ -72,7 +72,7 @@ export default function SermonsPage() {
   return (
     <div className="w-full bg-white pb-24">
       {/* ─── Hero ─────────────────────────────────────────────────── */}
-      <section className="relative min-h-[420px] lg:min-h-[480px] bg-[#051202] text-white flex items-center justify-center overflow-hidden">
+      <section className="relative h-[720px] bg-[#051202] text-white flex items-center justify-center overflow-hidden">
         <Image
           src="https://images.unsplash.com/photo-1510590337019-5ef8d3d32116?auto=format&fit=crop&q=80&w=1920"
           alt="Sermons Archive"
