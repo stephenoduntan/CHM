@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronLeft, Check } from "lucide-react";
+import { ChevronLeft, Check, BookOpen, FileText, Search, Copy, Clock } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { Sermon, getRelatedSermons } from "@/lib/sermons-data";
 
@@ -15,9 +15,36 @@ export function SermonWatchDetailView({ sermon }: SermonWatchDetailViewProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [playbackSpeed, setPlaybackSpeed] = useState<"1x" | "1.25x" | "1.5x" | "2x">("1x");
   const [isCopied, setIsCopied] = useState(false);
+  const [activeTab, setActiveTab] = useState<"about" | "transcript">("about");
+  const [transcriptSearch, setTranscriptSearch] = useState("");
+  const [isTranscriptCopied, setIsTranscriptCopied] = useState(false);
   const videoRef = useRef<HTMLDivElement>(null);
 
   const relatedSermons = getRelatedSermons(sermon.id, 3);
+
+  const handleCopyTranscript = async () => {
+    if (!sermon.transcript || sermon.transcript.length === 0) return;
+    const fullText = sermon.transcript
+      .map((s) => `[${s.timestamp}] ${s.speaker}:\n${s.text}`)
+      .join("\n\n");
+    if (navigator.clipboard) {
+      await navigator.clipboard.writeText(fullText);
+      setIsTranscriptCopied(true);
+      setTimeout(() => setIsTranscriptCopied(false), 2500);
+    }
+  };
+
+  const filteredTranscript = useMemo(() => {
+    if (!sermon.transcript) return [];
+    const q = transcriptSearch.trim().toLowerCase();
+    if (!q) return sermon.transcript;
+    return sermon.transcript.filter(
+      (s) =>
+        s.text.toLowerCase().includes(q) ||
+        s.speaker.toLowerCase().includes(q) ||
+        s.timestamp.toLowerCase().includes(q)
+    );
+  }, [sermon.transcript, transcriptSearch]);
 
   const handleShare = async () => {
     const url = typeof window !== "undefined" ? window.location.href : "";
@@ -361,37 +388,290 @@ export function SermonWatchDetailView({ sermon }: SermonWatchDetailViewProps) {
             </button>
           </div>
 
-          {/* About This Sermon (Figma node 2096:6056) */}
-          <div
-            className="border-t border-[#d0d2d6] flex flex-col lg:flex-row gap-6 sm:gap-10 lg:gap-[64px] items-start pt-6 sm:pt-[32px] w-full"
-            data-node-id="2096:6056"
-            data-name="About this sermon"
-          >
-            <h2
-              className="font-sans font-semibold text-xl sm:text-2xl lg:text-[28px] text-[#0a0a0a] w-full lg:w-[360px] shrink-0"
-              data-node-id="2096:6057"
-            >
-              About this sermon
-            </h2>
+          {/* Mini Navigation on Description Section */}
+          <div className="border-t border-[#d0d2d6] pt-6 sm:pt-8 w-full flex flex-col gap-6">
+            {/* Tab Navigation Header Bar */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#e5e5e5] pb-px">
+              <nav
+                className="flex items-center gap-3 sm:gap-8"
+                role="tablist"
+                aria-label="Sermon details navigation"
+              >
+                {/* Tab 1: About the sermon */}
+                <button
+                  type="button"
+                  role="tab"
+                  id="tab-about"
+                  aria-selected={activeTab === "about"}
+                  aria-controls="panel-about"
+                  onClick={() => setActiveTab("about")}
+                  className={`group relative flex items-center gap-2 pb-3.5 pt-1 text-sm sm:text-base lg:text-[18px] font-sans font-medium transition-colors cursor-pointer ${
+                    activeTab === "about"
+                      ? "text-[#180c62] font-semibold"
+                      : "text-[#616161] hover:text-[#0a0a0a]"
+                  }`}
+                >
+                  <BookOpen
+                    className={`size-4 sm:size-5 transition-colors ${
+                      activeTab === "about" ? "text-[#180c62]" : "text-[#737373] group-hover:text-[#0a0a0a]"
+                    }`}
+                  />
+                  <span>About the sermon</span>
+                  {activeTab === "about" && (
+                    <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#180c62] rounded-full" />
+                  )}
+                </button>
 
-            <div
-              className="flex-1 flex flex-col font-sans font-normal gap-3 sm:gap-[12px] text-[#616161]"
-              data-node-id="2096:6058"
-              data-name="Description"
-            >
-              <p
-                className="text-base sm:text-lg lg:text-[20px] leading-relaxed text-[#404040]"
-                data-node-id="2096:6059"
-              >
-                {sermon.description}
-              </p>
-              <p
-                className="text-sm sm:text-base lg:text-[18px] leading-relaxed text-[#737373]"
-                data-node-id="2096:6060"
-              >
-                {sermon.supportingCopy}
-              </p>
+                {/* Tab 2: Sermon transcription */}
+                <button
+                  type="button"
+                  role="tab"
+                  id="tab-transcript"
+                  aria-selected={activeTab === "transcript"}
+                  aria-controls="panel-transcript"
+                  onClick={() => setActiveTab("transcript")}
+                  className={`group relative flex items-center gap-2 pb-3.5 pt-1 text-sm sm:text-base lg:text-[18px] font-sans font-medium transition-colors cursor-pointer ${
+                    activeTab === "transcript"
+                      ? "text-[#180c62] font-semibold"
+                      : "text-[#616161] hover:text-[#0a0a0a]"
+                  }`}
+                >
+                  <FileText
+                    className={`size-4 sm:size-5 transition-colors ${
+                      activeTab === "transcript" ? "text-[#180c62]" : "text-[#737373] group-hover:text-[#0a0a0a]"
+                    }`}
+                  />
+                  <span>Sermon transcription</span>
+                  {sermon.transcript && sermon.transcript.length > 0 && (
+                    <span
+                      className={`text-xs px-2 py-0.5 rounded-full font-medium transition-colors ${
+                        activeTab === "transcript"
+                          ? "bg-[#180c62]/10 text-[#180c62]"
+                          : "bg-[#f3f4f6] text-[#737373]"
+                      }`}
+                    >
+                      {sermon.transcript.length}
+                    </span>
+                  )}
+                  {activeTab === "transcript" && (
+                    <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#180c62] rounded-full" />
+                  )}
+                </button>
+              </nav>
+
+              {/* Action button on transcript view */}
+              {activeTab === "transcript" && sermon.transcript && sermon.transcript.length > 0 && (
+                <button
+                  type="button"
+                  onClick={handleCopyTranscript}
+                  className="inline-flex items-center self-start sm:self-auto gap-1.5 px-3.5 py-1.5 text-xs sm:text-sm font-sans font-medium text-[#180c62] bg-[#b2a1ed]/15 hover:bg-[#b2a1ed]/25 border border-[#b2a1ed]/40 rounded-full transition-colors cursor-pointer mb-2 sm:mb-1.5"
+                >
+                  {isTranscriptCopied ? (
+                    <>
+                      <Check className="size-3.5 text-emerald-600" />
+                      <span className="text-emerald-700">Transcript copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="size-3.5 text-[#180c62]" />
+                      <span>Copy full transcript</span>
+                    </>
+                  )}
+                </button>
+              )}
             </div>
+
+            {/* Tab Panel 1: About the sermon */}
+            {activeTab === "about" && (
+              <div
+                id="panel-about"
+                role="tabpanel"
+                aria-labelledby="tab-about"
+                className="flex flex-col lg:flex-row gap-6 sm:gap-10 lg:gap-[64px] items-start pt-2 sm:pt-4 w-full"
+                data-node-id="2096:6056"
+                data-name="About this sermon"
+              >
+                {/* Left Column (Figma node 2096:6057) */}
+                <div className="w-full lg:w-[360px] shrink-0 flex flex-col gap-4">
+                  <h2
+                    className="font-sans font-semibold text-xl sm:text-2xl lg:text-[28px] text-[#0a0a0a]"
+                    data-node-id="2096:6057"
+                  >
+                    About this sermon
+                  </h2>
+
+                  {sermon.biblePassage && (
+                    <div className="bg-[#f8f9fa] border border-[#e5e7eb] rounded-2xl p-4 sm:p-5 flex flex-col gap-1.5">
+                      <span className="text-xs uppercase tracking-wider font-semibold text-[#180c62]">
+                        Anchor Scripture
+                      </span>
+                      <span className="font-display font-recursive-sans font-semibold text-base sm:text-lg text-[#0a0a0a]">
+                        {sermon.biblePassage}
+                      </span>
+                    </div>
+                  )}
+
+                  <div className="flex flex-col gap-2 pt-1 text-sm text-[#737373]">
+                    <div className="flex items-center gap-2">
+                      <span className="font-medium text-[#404040]">Series:</span>
+                      <span>{sermon.series}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-medium text-[#404040]">Preacher:</span>
+                      <span>{sermon.speaker}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-medium text-[#404040]">Delivered on:</span>
+                      <span>{sermon.date}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Column: Description & Key Highlights (Figma node 2096:6058) */}
+                <div
+                  className="flex-1 flex flex-col font-sans font-normal gap-5 sm:gap-6 text-[#616161]"
+                  data-node-id="2096:6058"
+                  data-name="Description"
+                >
+                  <p
+                    className="text-base sm:text-lg lg:text-[20px] leading-relaxed text-[#404040]"
+                    data-node-id="2096:6059"
+                  >
+                    {sermon.description}
+                  </p>
+
+                  {sermon.keyPoints && sermon.keyPoints.length > 0 && (
+                    <div className="flex flex-col gap-3 pt-2">
+                      <h3 className="font-sans font-semibold text-base sm:text-lg text-[#0a0a0a]">
+                        Key Message Highlights
+                      </h3>
+                      <ul className="flex flex-col gap-3">
+                        {sermon.keyPoints.map((point, idx) => (
+                          <li
+                            key={idx}
+                            className="flex items-start gap-3 text-sm sm:text-base text-[#4b5563] leading-relaxed"
+                          >
+                            <span className="size-5 rounded-full bg-[#180c62]/10 text-[#180c62] flex items-center justify-center shrink-0 mt-0.5 text-xs font-semibold">
+                              {idx + 1}
+                            </span>
+                            <span>{point}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  <p
+                    className="text-sm sm:text-base lg:text-[18px] leading-relaxed text-[#737373] pt-2 border-t border-[#f0f0f0]"
+                    data-node-id="2096:6060"
+                  >
+                    {sermon.supportingCopy}
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* Tab Panel 2: Sermon transcription */}
+            {activeTab === "transcript" && (
+              <div
+                id="panel-transcript"
+                role="tabpanel"
+                aria-labelledby="tab-transcript"
+                className="flex flex-col gap-6 pt-2 sm:pt-4 w-full"
+              >
+                {/* Search & Metadata Bar */}
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pb-2">
+                  <div>
+                    <h2 className="font-sans font-semibold text-xl sm:text-2xl text-[#0a0a0a]">
+                      Sermon Transcription
+                    </h2>
+                    <p className="text-xs sm:text-sm text-[#737373] mt-0.5">
+                      Read along or search specific excerpts spoken during this sermon.
+                    </p>
+                  </div>
+
+                  {sermon.transcript && sermon.transcript.length > 0 && (
+                    <div className="relative w-full sm:w-[280px]">
+                      <Search className="size-4 text-[#9ca3af] absolute left-3.5 top-1/2 -translate-y-1/2" />
+                      <input
+                        type="text"
+                        value={transcriptSearch}
+                        onChange={(e) => setTranscriptSearch(e.target.value)}
+                        placeholder="Search transcript..."
+                        className="w-full pl-9 pr-8 py-2 text-sm bg-[#f9fafb] border border-[#e5e7eb] rounded-full focus:outline-none focus:ring-2 focus:ring-[#180c62]/20 focus:border-[#180c62] text-[#0a0a0a] placeholder:text-[#9ca3af] transition-all"
+                      />
+                      {transcriptSearch && (
+                        <button
+                          type="button"
+                          onClick={() => setTranscriptSearch("")}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[#9ca3af] hover:text-[#0a0a0a]"
+                        >
+                          Clear
+                        </button>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                {/* Transcript Segments List */}
+                {filteredTranscript.length > 0 ? (
+                  <div className="flex flex-col gap-4">
+                    {filteredTranscript.map((segment, idx) => (
+                      <div
+                        key={idx}
+                        className="bg-[#f9fafb] hover:bg-[#f3f4f6] transition-colors border border-[#e5e7eb] rounded-2xl p-4 sm:p-6 flex flex-col sm:flex-row gap-3 sm:gap-6 items-start"
+                      >
+                        {/* Timestamp & Speaker Tag */}
+                        <div className="flex sm:flex-col items-center sm:items-start gap-2 sm:gap-1.5 shrink-0 sm:w-[160px]">
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white border border-[#e5e7eb] text-xs font-mono font-medium text-[#180c62] shadow-2xs">
+                            <Clock className="size-3 text-[#180c62]" />
+                            {segment.timestamp}
+                          </span>
+                          <span className="text-xs font-medium text-[#4b5563] truncate">
+                            {segment.speaker}
+                          </span>
+                        </div>
+
+                        {/* Spoken Text */}
+                        <p className="text-sm sm:text-base lg:text-[17px] text-[#374151] leading-relaxed font-sans flex-1">
+                          {segment.text}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-12 px-4 bg-[#f9fafb] border border-[#e5e7eb] rounded-2xl">
+                    {transcriptSearch ? (
+                      <>
+                        <p className="text-base text-[#0a0a0a] font-medium">
+                          No matching transcript segments found
+                        </p>
+                        <p className="text-sm text-[#737373] mt-1">
+                          We couldn&apos;t find anything matching &ldquo;{transcriptSearch}&rdquo;. Try another keyword.
+                        </p>
+                        <button
+                          type="button"
+                          onClick={() => setTranscriptSearch("")}
+                          className="mt-3 text-xs font-medium text-[#180c62] hover:underline cursor-pointer"
+                        >
+                          Reset search
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <FileText className="size-8 text-[#9ca3af] mx-auto mb-2" />
+                        <p className="text-base text-[#0a0a0a] font-medium">
+                          Transcription in progress
+                        </p>
+                        <p className="text-sm text-[#737373] mt-1 max-w-md mx-auto">
+                          The full timestamped transcript for this sermon is currently being generated. Check back shortly!
+                        </p>
+                      </>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </section>
 

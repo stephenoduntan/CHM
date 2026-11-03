@@ -86,7 +86,7 @@ export default function ServicesPage() {
   return (
     <div className="w-full bg-white pb-24">
       {/* ─── Hero ─────────────────────────────────────────────────── */}
-      <section className="relative h-[720px] bg-[#051202] text-white flex items-center justify-center overflow-hidden">
+      <section className="relative h-[640px] sm:h-[720px] bg-[#051202] text-white flex items-center justify-center overflow-hidden">
         <Image
           src="https://images.unsplash.com/photo-1544427920-c49ccfb85579?auto=format&fit=crop&q=80&w=1920"
           alt="Church Services at Court of His Majesty"
