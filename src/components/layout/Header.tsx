@@ -37,7 +37,7 @@ export function Header({ variant }: HeaderProps) {
   return (
     <>
       <header
-        className={`w-full transition-colors duration-200 relative z-40 ${
+        className={`w-full transition-colors duration-200 absolute z-40 ${
           isDark
             ? "bg-[#051202] text-white border-b border-white/10"
             : "bg-white text-[#242424] border-b border-gray-100/60"

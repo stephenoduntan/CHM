@@ -465,7 +465,7 @@ export function HeroSection() {
     <section
       ref={sectionRef}
       onMouseLeave={handleGlobalMouseLeave}
-      className="relative w-full overflow-x-clip overflow-y-visible bg-white select-none pt-[20px] xl:pt-[24px] 2xl:pt-[40px]"
+      className="relative w-full overflow-x-clip overflow-y-visible bg-white select-none pt-[140px]"
       data-node-id="2086:90"
       data-name="hero"
     >

@@ -16,7 +16,7 @@ export default function NextLevelCathedralPage() {
     <div className="w-full bg-white select-none">
       {/* ── Background Architectural Render & Gradient Spanning Hero & Project Vision ── */}
       <div
-        className="relative w-full overflow-hidden bg-[#f5f5f5]"
+        className="relative w-full overflow-hidden bg-[#f5f5f5] pt-[140px]"
         data-node-id="2111:11263"
         data-name="cathedral-hero-vision-wrapper"
       >
@@ -235,7 +235,7 @@ export default function NextLevelCathedralPage() {
             >
               {/* Pillar 1: Gather in worship */}
               <div
-                className="border border-[#d0d2d6] rounded-[16px] p-8 flex flex-col gap-6 bg-white/70 backdrop-blur-sm hover:border-[#180c62]/30 hover:shadow-md transition-all duration-300"
+                className="border border-[#d0d2d6] rounded-[16px] p-8 flex flex-col gap-6 bg-white/5 hover:border-[#180c62]/30 hover:shadow-md transition-all duration-300"
                 data-node-id="2103:9460"
                 data-name="Vision pillar"
               >
@@ -269,7 +269,7 @@ export default function NextLevelCathedralPage() {
 
               {/* Pillar 2: Grow in community */}
               <div
-                className="border border-[#d0d2d6] rounded-[16px] p-8 flex flex-col gap-6 bg-white/70 backdrop-blur-sm hover:border-[#180c62]/30 hover:shadow-md transition-all duration-300"
+                className="border border-[#d0d2d6] rounded-[16px] p-8 flex flex-col gap-6 bg-white/5 hover:border-[#180c62]/30 hover:shadow-md transition-all duration-300"
                 data-node-id="2103:9465"
                 data-name="Vision pillar"
               >
@@ -303,7 +303,7 @@ export default function NextLevelCathedralPage() {
 
               {/* Pillar 3: Make a difference */}
               <div
-                className="border border-[#d0d2d6] rounded-[16px] p-8 flex flex-col gap-6 bg-white/70 backdrop-blur-sm hover:border-[#180c62]/30 hover:shadow-md transition-all duration-300"
+                className="border border-[#d0d2d6] rounded-[16px] p-8 flex flex-col gap-6 bg-white/5 hover:border-[#180c62]/30 hover:shadow-md transition-all duration-300"
                 data-node-id="2103:9470"
                 data-name="Vision pillar"
               >

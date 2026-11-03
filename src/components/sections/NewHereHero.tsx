@@ -45,7 +45,7 @@ export function NewHereHero() {
 
   return (
     <section
-      className="relative w-full h-[600px] bg-black text-white flex flex-col justify-end overflow-hidden select-none"
+      className="relative w-full h-[720px] bg-black text-white flex flex-col justify-end overflow-hidden select-none"
       data-node-id="2086:330"
       data-name="hero"
     >
