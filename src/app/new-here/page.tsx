@@ -547,13 +547,13 @@ export default function NewHerePage() {
               className="flex flex-wrap gap-4 sm:gap-6 items-center justify-center mt-6 sm:mt-8 lg:mt-[35px]"
               data-node-id="2086:536"
             >
-              <a
-                href="#pastors"
+              <Link
+                href="/leadership"
                 className="inline-flex items-center justify-center rounded-[28px] px-[25px] py-[15px] bg-[#b2a1ed]/10 hover:bg-[#b2a1ed]/20 border border-[#b2a1ed] text-[#180c62] font-sans font-medium text-[16px] transition-all shadow-sm hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
                 data-node-id="2086:537"
               >
                 Meet Our Leadership
-              </a>
+              </Link>
 
               <Link
                 href="/our-beliefs"

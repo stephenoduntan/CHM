@@ -395,13 +395,21 @@ export default function BlogPage() {
                         >
                           {post.category}
                         </span>
-                        <h3
-                          className="font-sans font-semibold text-xl sm:text-[26px] text-[#0a0a0a] leading-[1.3] group-hover:text-[#D61812] transition-colors min-h-[56px] sm:min-h-[68px]"
+
+                        <Link
+                        href={`/blog/${post.slug}`}
+                          className="font-sans font-semibold text-xl sm:text-[26px] text-[#0a0a0a] leading-[1.3] group-hover:text-[#D61812] transition-colors min-h-[56px] sm:min-h-[68px] group/link"
                           data-node-id="2102:5352"
                           data-name="Article title"
                         >
-                          {post.title}
-                        </h3>
+                          <h3
+                            data-node-id="2102:5352"
+                            data-name="Article title"
+                          >
+                            {post.title}
+                          </h3>
+                        </Link>
+
                         <p
                           className="font-sans font-normal text-sm sm:text-base lg:text-[18px] text-[#616161] leading-[1.5] min-h-[60px] sm:min-h-[81px]"
                           data-node-id="2102:5353"
@@ -427,7 +435,7 @@ export default function BlogPage() {
                         >
                           <Link
                             href={`/blog/${post.slug}`}
-                            className="inline-flex items-center gap-2.5 font-sans font-semibold text-base sm:text-[18px] text-[#180c62] group/link cursor-pointer hover:gap-3.5 transition-all"
+                            className="inline-flex items-center gap-2.5 font-sans font-semibold text-base sm:text-[18px] text-[#180c62] group-hover:text-[#D61812] group/link cursor-pointer hover:gap-3.5 transition-all"
                           >
                             <span data-node-id="2102:5356" data-name="Link label">
                               Read article
@@ -551,7 +559,7 @@ export default function BlogPage() {
                 data-node-id="2102:5426"
                 data-name="Label"
               >
-                Plan a Visit
+                Connect with us
               </span>
               <div
                 className="relative size-5 shrink-0 transition-transform group-hover:translate-x-1"

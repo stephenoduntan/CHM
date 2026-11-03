@@ -233,7 +233,7 @@ export default function GroupsPage() {
                 Connect with our pastoral care team to locate the nearest house fellowship center to your residence or workplace in Lagos.
               </p>
               <Link
-                href="/connect?subject=house-fellowship"
+                href="/house-fellowship"
                 className="inline-flex items-center justify-center px-8 py-3.5 rounded-full font-semibold text-[#051202] bg-[#c8a96e] hover:bg-[#b59556] shadow-md transition-all text-sm uppercase tracking-wider cursor-pointer"
               >
                 Find Nearest Center
