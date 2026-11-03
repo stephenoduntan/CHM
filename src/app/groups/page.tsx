@@ -34,7 +34,7 @@ const groupsList: GroupItem[] = [
     image: "/images/explore/community.webp",
     imageAlt: "House fellowship gathering at RCCG Court of His Majesty",
     isImageLeft: false,
-    link: "/connect?subject=house-fellowship",
+    link: "/house-fellowship",
   },
   {
     id: "men-of-valor",
@@ -47,7 +47,7 @@ const groupsList: GroupItem[] = [
     image: "https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&q=80&w=1200",
     imageAlt: "Men of Valor fellowship at RCCG Court of His Majesty",
     isImageLeft: true,
-    link: "/connect?subject=men-of-valor",
+    link: "#",
   },
   {
     id: "good-women",
@@ -60,7 +60,7 @@ const groupsList: GroupItem[] = [
     image: "https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&q=80&w=1200",
     imageAlt: "Good Women fellowship at RCCG Court of His Majesty",
     isImageLeft: false,
-    link: "/connect?subject=good-women",
+    link: "#",
   },
   {
     id: "yaya",
@@ -69,11 +69,11 @@ const groupsList: GroupItem[] = [
     watermark: ["YOUTH", "IGNITE"],
     description:
       "Empowering students, young professionals, and creatives through relevant doctrine, career networking, and spirit-filled praise.",
-    schedule: "Every 2nd & 4th Saturday, 4:00 PM",
+    schedule: "",
     image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=1200",
     imageAlt: "Youth and Young Adults ministry at RCCG Court of His Majesty",
     isImageLeft: true,
-    link: "/connect?subject=yaya",
+    link: "#",
   },
   {
     id: "teens-church",
@@ -86,20 +86,20 @@ const groupsList: GroupItem[] = [
     image: "https://images.unsplash.com/photo-1485546246426-74dc88dec4d9?auto=format&fit=crop&q=80&w=1200",
     imageAlt: "Teens and Junior Church at RCCG Court of His Majesty",
     isImageLeft: false,
-    link: "/connect?subject=teens-church",
+    link: "#",
   },
   {
-    id: "discipleship-cells",
-    name: "Believers & Discipleship Cells",
-    tagline: "Growing deep in the Word",
-    watermark: ["ROOTS IN", "CHRIST"],
+    id: "women-on-their-knees",
+    name: "Women on Their Knees",
+    tagline: "Prayer and spiritual growth",
+    watermark: ["WOMEN", "ON THEIR KNEES"],
     description:
-      "Foundational Christian living classes, baptismal preparation, and workers-in-training cohorts to build strong biblical roots.",
-    schedule: "Weekly cohorts available online and on-site",
+      "A dedicated group for women to gather in prayer, study the Word, and support one another in their faith journey.",
+    schedule: "Weekly cohorts available on Mondays (11:30 PM) online",
     image: "/images/explore/teachings.webp",
-    imageAlt: "Discipleship and spiritual growth cells at RCCG Court of His Majesty",
+    imageAlt: "Women on Their Knees at RCCG Court of His Majesty",
     isImageLeft: true,
-    link: "/connect?subject=discipleship",
+    link: "https://facebook.com/womenontheirkneespraying",
   },
 ];
 
@@ -125,7 +125,7 @@ export default function GroupsPage() {
             Groups & Fellowships
           </h1>
           <p className="text-gray-300 text-base sm:text-xl max-w-2xl mx-auto leading-relaxed">
-            Church doesn&apos;t just happen in rows on Sunday — it flourishes in circles throughout the week. Find your community here.
+            Church doesn&apos;t just happen in rows on Sunday. It flourishes in circles throughout the week. Find your community here.
           </p>
         </Container>
       </section>
@@ -172,9 +172,9 @@ export default function GroupsPage() {
                   {/* Foreground Group Details */}
                   <div className="relative z-10 flex flex-col items-start lg:items-end text-left lg:text-right w-full gap-3 sm:gap-4">
                     {/* Tagline Badge */}
-                    <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-[#180C62]/10 text-[#180C62] border border-[#180C62]/20">
+                    {/* <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-[#180C62]/10 text-[#180C62] border border-[#180C62]/20">
                       {group.tagline}
-                    </span>
+                    </span> */}
 
                     {/* Group Title */}
                     <h3 className="font-display font-recursive-sans font-semibold text-2xl sm:text-3xl lg:text-[32px] text-[#0a0a0a] tracking-tight leading-snug">
@@ -211,7 +211,7 @@ export default function GroupsPage() {
                     src={group.image}
                     alt={group.imageAlt}
                     fill
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 opacity-90 group-hover:opacity-100"
+                    className="object-cover transition-transform duration-700 ease-out h-[260px] sm:h-[320px] md:h-full group-hover:scale-105 opacity-90 group-hover:opacity-100"
                     sizes="(max-width: 1024px) 100vw, 700px"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent pointer-events-none" />

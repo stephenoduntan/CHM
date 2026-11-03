@@ -173,7 +173,7 @@ export default function ServicesPage() {
                     src={item.image}
                     alt={item.imageAlt}
                     fill
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 opacity-90 group-hover:opacity-100"
+                    className="object-cover transition-transform duration-700 h-[260px] sm:h-[320px] md:h-full ease-out group-hover:scale-105 opacity-90 group-hover:opacity-100"
                     sizes="(max-width: 1024px) 100vw, 700px"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent pointer-events-none" />
