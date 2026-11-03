@@ -346,7 +346,7 @@ export default function NewHerePage() {
       </section>
 
       {/* ─── Our Pastors ──────────────────────────────────────────── */}
-      <section className="py-16 lg:py-24 bg-gray-50/70 border-t border-gray-200/70">
+      <section id="pastors" className="py-16 lg:py-24 bg-gray-50/70 border-t border-gray-200/70 scroll-mt-12">
         <Container>
           <div className="text-center max-w-2xl mx-auto mb-14">
             <h2 className="font-sans font-bold text-3xl sm:text-4xl text-[#051202] mb-3">
@@ -400,7 +400,7 @@ export default function NewHerePage() {
         {/* Background Image with Subtle Dark Radial & Linear Gradient Overlay */}
         <div className="absolute inset-0 pointer-events-none">
           <Image
-            src="/images/new-here/what-to-expect-bg.jpg"
+            src="/images/new-here/what-to-expect-bg.webp"
             alt="Court of His Majesty congregation worship service"
             fill
             className="object-cover object-center"
@@ -481,33 +481,98 @@ export default function NewHerePage() {
         </div>
       </section>
 
-      {/* ─── See You Next Sunday CTA ──────────────────────────────── */}
-      <section className="py-20 bg-[#051202] text-white">
-        <Container>
-          <div className="text-center max-w-3xl mx-auto">
-            <h2 className="font-sans font-extrabold text-3xl sm:text-5xl text-white mb-6">
-              See You Next Sunday
-            </h2>
-            <p className="text-gray-300 text-base sm:text-lg leading-relaxed mb-8">
-              If you have any questions about who we are as a church, want to know more about Sunday services, or are planning to visit this Sunday, our team would love to welcome you!
-            </p>
+      {/* ─── See You Next Sunday & More About Us (Figma Node 2086:522) ─ */}
+      <section
+        className="w-full bg-white py-16 sm:py-20 lg:py-[64px] px-6 sm:px-8 lg:px-[64px]"
+        data-node-id="2086:522"
+        data-name="card 1"
+      >
+        <div
+          className="max-w-[1440px] mx-auto w-full flex flex-col gap-12 lg:gap-[40px] items-center text-center"
+          data-node-id="2086:523"
+        >
+          {/* Top Block: See You Next Sunday (Node 2086:524) */}
+          <div
+            className="flex flex-col items-center w-full"
+            data-node-id="2086:524"
+          >
+            <div data-node-id="2086:525">
+              <h2
+                className="font-display font-recursive-sans font-bold text-3xl sm:text-4xl lg:text-[48px] text-[#0a0a0a] leading-tight lg:leading-[56px] text-center tracking-tight"
+                data-node-id="2086:526"
+                style={{ fontVariationSettings: '"CASL" 0, "CRSV" 0.5, "MONO" 0' }}
+              >
+                See You Next Sunday
+              </h2>
+            </div>
 
-            <div className="flex flex-wrap justify-center gap-4">
+            <div
+              className="max-w-[1086px] mx-auto mt-4 sm:mt-6 lg:mt-[35px]"
+              data-node-id="2086:527"
+            >
+              <p className="font-sans font-normal text-lg sm:text-xl lg:text-[28px] text-[#3d3d3d] leading-relaxed">
+                If you have any questions about who we are as a church, want to
+                know more about Sunday services, or are planning to visit this
+                Sunday, our team would be happy to connect with you!
+              </p>
+            </div>
+
+            <div className="mt-6 sm:mt-8 lg:mt-[35px]" data-node-id="2086:528">
               <Link
                 href="/connect"
-                className="px-8 py-3.5 rounded-full font-semibold text-[#051202] bg-[#c8a96e] hover:bg-[#b8985c] shadow-md transition-all text-base"
+                className="inline-flex items-center justify-center rounded-[28px] px-[25px] py-[15px] bg-[#b2a1ed]/10 hover:bg-[#b2a1ed]/20 border border-[#b2a1ed] text-[#180c62] font-sans font-medium text-[16px] transition-all shadow-sm hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                data-node-id="2086:531"
               >
                 Contact Us
               </Link>
+            </div>
+          </div>
+
+          {/* Bottom Block: More About Us (Node 2086:533) */}
+          <div
+            className="flex flex-col items-center w-full pt-4 lg:pt-[10px]"
+            data-node-id="2086:533"
+          >
+            <div data-node-id="2086:534">
+              <h3
+                className="font-display font-recursive-sans font-bold text-3xl sm:text-4xl lg:text-[48px] text-[#0a0a0a] leading-tight lg:leading-[56px] text-center tracking-tight"
+                data-node-id="2086:535"
+                style={{ fontVariationSettings: '"CASL" 0, "CRSV" 0.5, "MONO" 0' }}
+              >
+                More About Us
+              </h3>
+            </div>
+
+            <div
+              className="flex flex-wrap gap-4 sm:gap-6 items-center justify-center mt-6 sm:mt-8 lg:mt-[35px]"
+              data-node-id="2086:536"
+            >
+              <a
+                href="#pastors"
+                className="inline-flex items-center justify-center rounded-[28px] px-[25px] py-[15px] bg-[#b2a1ed]/10 hover:bg-[#b2a1ed]/20 border border-[#b2a1ed] text-[#180c62] font-sans font-medium text-[16px] transition-all shadow-sm hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                data-node-id="2086:537"
+              >
+                Meet Our Leadership
+              </a>
+
+              <Link
+                href="/our-beliefs"
+                className="inline-flex items-center justify-center rounded-[28px] px-[25px] py-[15px] bg-[#b2a1ed]/10 hover:bg-[#b2a1ed]/20 border border-[#b2a1ed] text-[#180c62] font-sans font-medium text-[16px] transition-all shadow-sm hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                data-node-id="2086:542"
+              >
+                Our Belief
+              </Link>
+
               <Link
                 href="/events"
-                className="px-8 py-3.5 rounded-full font-semibold text-white bg-white/10 hover:bg-white/20 border border-white/20 transition-all text-base"
+                className="inline-flex items-center justify-center rounded-[28px] px-[25px] py-[15px] bg-[#b2a1ed]/10 hover:bg-[#b2a1ed]/20 border border-[#b2a1ed] text-[#180c62] font-sans font-medium text-[16px] transition-all shadow-sm hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                data-node-id="2086:547"
               >
-                Upcoming Programs
+                Events
               </Link>
             </div>
           </div>
-        </Container>
+        </div>
       </section>
     </div>
   );
