@@ -209,7 +209,7 @@ export default function ConnectPage() {
 
                     <button
                       type="submit"
-                      className="w-full py-4 rounded-full font-semibold text-white bg-[#051202] hover:bg-[#c8a96e] hover:text-[#051202] shadow-md transition-all text-sm uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer"
+                      className="inline-flex items-center width-full justify-center py-4 rounded-full bg-[#f0a505] hover:bg-[#d99404] text-[#0a0a0a] font-sans font-semibold text-[14px] uppercase shadow-sm hover:shadow-md transition-all active:scale-[0.98]"
                     >
                       <Send className="size-4" />
                       <span>Submit Message</span>

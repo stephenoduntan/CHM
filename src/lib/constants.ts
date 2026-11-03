@@ -42,11 +42,11 @@ export const FOOTER_CONNECT_LINKS = [
 ] as const;
 
 export const SOCIAL_LINKS = [
-  { platform: "youtube", href: "https://youtube.com/@courtofhismajesty", icon: "/images/youtube.svg" },
-  { platform: "facebook", href: "https://facebook.com/courtofhismajesty", icon: "/images/facebook.svg" },
-  { platform: "instagram", href: "https://instagram.com/courtofhismajesty", icon: "/images/instagram.svg" },
-  { platform: "tiktok", href: "https://tiktok.com/@courtofhismajesty", icon: "/images/tiktok.svg" },
-  { platform: "x", href: "https://x.com/courtofhismajesty", icon: "/images/x-twitter.svg" },
+  { platform: "youtube", href: "https://youtube.com/@rccgchm", icon: "/images/youtube.svg" },
+  { platform: "facebook", href: "https://www.facebook.com/rccgchm", icon: "/images/facebook.svg" },
+  { platform: "instagram", href: "https://instagram.com/rccgchm", icon: "/images/instagram.svg" },
+  { platform: "tiktok", href: "https://tiktok.com/@rccg_chm", icon: "/images/tiktok.svg" },
+  { platform: "x", href: "https://x.com/rccgchm", icon: "/images/x-twitter.svg" },
 ] as const;
 
 export const SUNDAY_SERVICES = [

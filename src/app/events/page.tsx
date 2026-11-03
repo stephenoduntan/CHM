@@ -406,7 +406,7 @@ export default function EventsPage() {
                     {/* Giant Red Theme Watermark (Figma node 2086:1304 & 2086:1305) */}
                     <div
                       aria-hidden="true"
-                      className="absolute bottom-0 left-0 opacity-20 sm:opacity-25 pointer-events-none select-none z-0 max-w-[500px]"
+                      className="absolute bottom-0 left-0 opacity-15 pointer-events-none select-none z-0 max-w-[500px]"
                       data-node-id="2086:1304"
                     >
                       <div

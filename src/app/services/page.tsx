@@ -55,7 +55,7 @@ const scheduleServices: ServiceSchedule[] = [
     id: "faith-meeting",
     nodeId: "2086:904",
     cardName: "card 5",
-    watermark: ["FAITH", "MEETING"],
+    watermark: ["FAITH", "CLINIC"],
     details: [
       "Thursday",
       "6:00 pm to 7:30 pm",
@@ -148,7 +148,7 @@ export default function ServicesPage() {
                 <div className="flex-1 relative flex flex-col justify-center items-end min-w-0 h-full min-h-[280px] lg:min-h-[400px] pb-6 lg:pb-[64px] pt-4 px-2 sm:px-4 lg:px-0 overflow-hidden">
                   {/* Giant Background Watermark */}
                   <div
-                    className="absolute bottom-0 left-0 opacity-25 select-none pointer-events-none z-0 max-w-full lg:max-w-[700px]"
+                    className="absolute bottom-0 left-0 opacity-15 select-none pointer-events-none z-0 max-w-full lg:max-w-[700px]"
                     aria-hidden="true"
                   >
                     <div className="font-display font-recursive-sans font-extrabold text-[#d61812] text-5xl sm:text-7xl lg:text-[84px] xl:text-[96px] leading-[0.95] tracking-tight">
@@ -243,7 +243,7 @@ export default function ServicesPage() {
                   href="https://maps.google.com/?q=163+Ipaja+Road,+Abesan+Estate+Gate,+Lagos,+Nigeria"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-semibold text-white bg-[#051202] hover:bg-[#c8a96e] hover:text-[#051202] shadow-md transition-all text-sm uppercase tracking-wider"
+                  className="inline-flex items-center justify-center rounded-full gap-2 px-7 py-3 bg-[#b2a1ed]/10 hover:bg-[#b2a1ed]/20 border border-[#b2a1ed] text-[#180c62] font-sans font-medium text-[16px] transition-all shadow-sm hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
                 >
                   <Navigation className="size-4" />
                   <span>Open in Google Maps</span>
