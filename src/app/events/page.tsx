@@ -465,7 +465,7 @@ export default function EventsPage() {
                       <div className="mt-2 flex flex-wrap items-center gap-3">
                         <Link
                           href={`/events/${event.id}`}
-                          className="inline-flex items-center gap-inline-flex items-center justify-center gap-2 px-7 py-3 rounded-full border border-[#b2a1ed] bg-[#b2a1ed]/10 hover:bg-[#b2a1ed]/20 text-[#180c62] font-sans font-semibold text-[17px] transition-all group2 px-7 py-3 rounded-full font-semibold text-white bg-[#051202] hover:bg-[#c8a96e] hover:text-[#051202] transition-colors text-xs uppercase tracking-wider shadow-sm cursor-pointer group"
+                          className="inline-flex items-center justify-center rounded-full gap-2 px-7 py-3 bg-[#b2a1ed]/10 hover:bg-[#b2a1ed]/20 border border-[#b2a1ed] text-[#180c62] font-sans font-medium text-[16px] transition-all shadow-sm hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
                         >
                           <span>View event details</span>
                           <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
@@ -623,9 +623,9 @@ export default function EventsPage() {
                       <div className="mt-2 flex flex-wrap items-center gap-3">
                         <Link
                           href={`/events/${event.id}`}
-                          className="inline-flex items-center gap-inline-flex items-center justify-center gap-2 px-7 py-3 rounded-full border border-[#b2a1ed] bg-[#b2a1ed]/10 hover:bg-[#b2a1ed]/20 text-[#180c62] font-sans font-semibold text-[17px] transition-all group2 px-7 py-3 rounded-full font-semibold text-white bg-[#051202] hover:bg-[#c8a96e] hover:text-[#051202] transition-colors text-xs uppercase tracking-wider shadow-sm cursor-pointer group"
+                          className="inline-flex items-center justify-center rounded-full gap-2 px-7 py-3 bg-[#b2a1ed]/10 hover:bg-[#b2a1ed]/20 border border-[#b2a1ed] text-[#180c62] font-sans font-medium text-[16px] transition-all shadow-sm hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
                         >
-                          <span>View Recap & Details</span>
+                          <span>View recap & details</span>
                           <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
                         </Link>
 
