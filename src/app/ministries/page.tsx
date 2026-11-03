@@ -209,7 +209,7 @@ export default function MinistriesPage() {
                 </div>
 
                 <div className="w-full">
-                  <h3 className="font-display font-recursive-sans font-semibold text-2xl sm:text-3xl lg:text-[36px] text-[#0a0a0a] tracking-tight leading-snug">
+                  <h3 className="font-display font-recursive-sans font-semibold text-xl sm:text-2xl lg:text-[32px] text-[#0a0a0a] tracking-tight leading-snug">
                     {dept.name}
                   </h3>
                 </div>
@@ -230,18 +230,18 @@ export default function MinistriesPage() {
         <Container className="max-w-[1440px]">
           <div className="bg-[#f2f2f2] rounded-[16px] p-8 sm:p-10 lg:p-[48px] flex flex-col md:flex-row items-start md:items-center justify-between gap-8 md:gap-[64px]">
             <div className="flex-1 flex flex-col gap-3 sm:gap-[16px] items-start">
-              <h2 className="font-sans font-semibold text-2xl sm:text-3xl lg:text-[40px] text-[#0a0a0a] leading-[1.2] tracking-tight">
-                You don’t have to walk alone
+              <h2 className="font-sans font-semibold text-xl sm:text-3xl lg:text-[40px] text-[#0a0a0a] leading-[1.2] tracking-tight">
+                Ready to Make an Eternal Impact?
               </h2>
               <p className="font-sans font-normal text-base sm:text-lg lg:text-[20px] text-[#616161] leading-[1.6]">
-                Come as you are. Find encouragement, prayer and community at Court of His Majesty.
+                Step into leadership and service. Speak with a department leader after Sunday service.
               </p>
             </div>
             <Link
-              href="/new-here"
+              href="/connect"
               className="inline-flex items-center justify-center gap-2 px-6 py-3.5 sm:px-[24px] sm:py-[16px] rounded-[28px] bg-[rgba(178,161,237,0.1)] hover:bg-[rgba(178,161,237,0.2)] border border-[#b2a1ed] text-[#180c62] text-base sm:text-[18px] font-semibold transition-all duration-200 shrink-0 group"
             >
-              <span>Plan a Visit</span>
+              <span>Connect with us</span>
               <div className="relative size-5 shrink-0">
                 <Image
                   src="/images/action-arrow.svg"

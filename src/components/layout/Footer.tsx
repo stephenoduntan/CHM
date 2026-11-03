@@ -56,7 +56,7 @@ export function Footer() {
         <Container>
           <div className="pt-[84px] pb-[48px]">
             {/* 4 Columns Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 pb-16 border-b border-[#bfbfbf]">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 pb-16 border-b border-[#bfbfbf]/25">
               {/* Column 1: Church Info & Contact */}
               <div className="flex flex-col gap-6">
                 <div className="text-[18px] lg:text-[20px] font-normal leading-relaxed text-[#f5f5f5]">
