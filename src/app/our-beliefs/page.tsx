@@ -12,7 +12,7 @@ export default function OurBeliefsPage() {
   return (
     <div className="w-full bg-white min-h-screen">
       <section
-        className="w-full py-16 sm:py-20 lg:pt-[84px] lg:pb-[100px]"
+        className="w-full pt-32 sm:pt-36 lg:pt-[140px] pb-16 lg:pb-[100px]"
         data-node-id="2086:1640"
         data-name="explore"
       >

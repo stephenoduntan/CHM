@@ -138,6 +138,7 @@ interface PanelProps {
   centerVideoRef: React.MutableRefObject<HTMLVideoElement | null>;
   onSelect: () => void;
   hasDragged: React.MutableRefObject<boolean>;
+  variant?: "light" | "solid";
 }
 
 function Panel({
@@ -155,7 +156,9 @@ function Panel({
   centerVideoRef,
   onSelect,
   hasDragged,
+  variant = "light",
 }: PanelProps) {
+  const isSolid = variant === "solid";
   const x = useTransform(motionProgress, (p) => getPanelStyle(offset - p, panelWidth, gap).x);
   const rotateY = useTransform(motionProgress, (p) => getPanelStyle(offset - p, panelWidth, gap).rotateY);
   const scale = useTransform(motionProgress, (p) => getPanelStyle(offset - p, panelWidth, gap).scale);
@@ -261,7 +264,7 @@ function Panel({
         style={{
           position: "absolute",
           inset: 0,
-          background: "#051202",
+          background: isSolid ? "#000000" : "#051202",
           opacity: overlayOpacity,
           pointerEvents: "none",
           zIndex: 1,
@@ -300,7 +303,19 @@ function Panel({
   );
 }
 
-export function EventsSection() {
+export interface EventsSectionProps {
+  variant?: "light" | "solid";
+  showSectionHeader?: boolean;
+  className?: string;
+}
+
+export function EventsSection({
+  variant = "light",
+  showSectionHeader,
+  className,
+}: EventsSectionProps = {}) {
+  const isSolid = variant === "solid";
+  const shouldShowHeader = showSectionHeader !== undefined ? showSectionHeader : !isSolid;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isReflectionVisible, setIsReflectionVisible] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
@@ -515,40 +530,49 @@ export function EventsSection() {
   return (
     <section
       onMouseLeave={handleGlobalMouseLeave}
-      className="w-full py-16 lg:py-24 bg-white relative overflow-hidden select-none"
-      data-node-id="2110:11239"
-      data-name="events"
+      className={`w-full relative overflow-hidden select-none ${
+        isSolid
+          ? "bg-black text-white pt-28 sm:pt-36 lg:pt-40 pb-16 lg:pb-24"
+          : "py-16 lg:py-24 bg-white text-[#0a0a0a]"
+      } ${className || ""}`}
+      data-node-id={isSolid ? "2086:1269" : "2110:11239"}
+      data-name={isSolid ? "upcoming" : "events"}
     >
-      {/* Section Header */}
-      <Container className="max-w-[1440px]">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="font-display font-recursive-sans font-semibold text-2xl sm:text-3xl md:text-[40px] text-[#0a0a0a] tracking-tight">
-              Upcoming Events
-            </h2>
-          </div>
+      {/* Section Header (Homepage only, omitted on standalone Hero) */}
+      {shouldShowHeader && (
+        <Container className="max-w-[1440px] mb-8">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="font-display font-recursive-sans font-semibold text-2xl sm:text-3xl md:text-[40px] text-[#0a0a0a] tracking-tight">
+                Upcoming Events
+              </h2>
+            </div>
 
-          <Link
-            href="/events"
-            className="inline-flex items-center gap-2 font-sans italic font-medium text-base sm:text-xl lg:text-[24px] text-[#180C62] hover:text-[#c8a96e] transition-colors group"
-          >
-            <span>see all events</span>
-            <span className="font-sans not-italic font-bold tracking-tighter text-lg sm:text-xl group-hover:translate-x-1.5 transition-transform duration-200">
-              →
-            </span>
-          </Link>
-        </div>
-      </Container>
+            <Link
+              href="/events"
+              className="inline-flex items-center gap-2 font-sans italic font-medium text-base sm:text-xl lg:text-[24px] text-[#180C62] hover:text-[#c8a96e] transition-colors group"
+            >
+              <span>see all events</span>
+              <span className="font-sans not-italic font-bold tracking-tighter text-lg sm:text-xl group-hover:translate-x-1.5 transition-transform duration-200">
+                →
+              </span>
+            </Link>
+          </div>
+        </Container>
+      )}
 
       {/* FULL-WINDOW WIDTH EVENT CAROUSEL (Bleeds to window edges) */}
       <div
-        className="w-full relative overflow-hidden bg-white"
-        data-node-id="2111:11848"
+        className={`w-full relative overflow-hidden ${isSolid ? "bg-black" : "bg-white"}`}
+        data-node-id={isSolid ? "2111:11976" : "2111:11848"}
         data-name="event carousel"
       >
         {/* Carousel Viewport with 3D Perspective */}
         <div
-          className="relative w-full h-[400px] md:h-[512px] lg:h-[720px] flex items-center justify-center overflow-hidden"
+          className={`relative w-full ${
+            isSolid ? "h-[440px] md:h-[560px] lg:h-[760px]" : "h-[400px] md:h-[512px] lg:h-[720px]"
+          } flex items-center justify-center overflow-hidden`}
+          data-node-id={isSolid ? "2086:1270" : undefined}
           style={{
             perspective: "1400px",
             perspectiveOrigin: "50% 48%",
@@ -647,6 +671,7 @@ export function EventsSection() {
                   offset={offset}
                   slide={slide}
                   isCenter={isCenter}
+                  variant={variant}
                   panelWidth={panelWidth}
                   panelHeight={panelHeight}
                   gap={panelGap}
@@ -666,53 +691,71 @@ export function EventsSection() {
             })}
           </div>
 
-          {/* Navigation Pill Buttons (Light Theme, high visibility) */}
+          {/* Navigation Controls (Figma node I2111:11976;2115:12625 & I2111:11976;2115:12627) */}
           <button
             type="button"
             onClick={handlePrev}
-            className="absolute left-4 lg:left-10 top-1/2 -translate-y-1/2 z-30 flex items-center gap-2 px-4 sm:px-5 py-3 rounded-full bg-white/95 hover:bg-white text-gray-900 border border-gray-200/90 shadow-xl backdrop-blur-md font-semibold text-xs sm:text-sm tracking-wide transition-all cursor-pointer hover:scale-105 active:scale-95"
+            className={`absolute left-0 top-1/2 -translate-y-1/2 z-30 flex items-center gap-2 pl-4 sm:pl-6 lg:pl-10 pr-6 py-6 transition-all cursor-pointer group ${
+              isSolid
+                ? "text-[#f5f5f5] hover:text-white"
+                : "px-4 sm:px-5 py-3 rounded-full bg-white/95 hover:bg-white text-gray-900 border border-gray-200/90 shadow-xl backdrop-blur-md left-4 lg:left-10"
+            }`}
             aria-label="Previous Event"
           >
-            <ChevronLeft className="size-4 sm:size-5" />
-            <span className="hidden sm:inline">Previous</span>
+            <ChevronLeft className={`size-5 sm:size-6 transition-transform duration-200 group-hover:-translate-x-1 ${isSolid ? "text-white" : ""}`} />
+            <span className="font-sans font-bold text-sm sm:text-base md:text-[18px] tracking-wide hidden sm:inline">
+              Previous
+            </span>
           </button>
 
           <button
             type="button"
             onClick={handleNext}
-            className="absolute right-4 lg:right-10 top-1/2 -translate-y-1/2 z-30 flex items-center gap-2 px-4 sm:px-5 py-3 rounded-full bg-white/95 hover:bg-white text-gray-900 border border-gray-200/90 shadow-xl backdrop-blur-md font-semibold text-xs sm:text-sm tracking-wide transition-all cursor-pointer hover:scale-105 active:scale-95"
+            className={`absolute right-0 top-1/2 -translate-y-1/2 z-30 flex items-center gap-2 pr-4 sm:pr-6 lg:pr-10 pl-6 py-6 transition-all cursor-pointer group ${
+              isSolid
+                ? "text-[#f5f5f5] hover:text-white"
+                : "px-4 sm:px-5 py-3 rounded-full bg-white/95 hover:bg-white text-gray-900 border border-gray-200/90 shadow-xl backdrop-blur-md right-4 lg:right-10"
+            }`}
             aria-label="Next Event"
           >
-            <span className="hidden sm:inline">Next</span>
-            <ChevronRight className="size-4 sm:size-5" />
+            <span className="font-sans font-bold text-sm sm:text-base md:text-[18px] tracking-wide hidden sm:inline">
+              Next
+            </span>
+            <ChevronRight className={`size-5 sm:size-6 transition-transform duration-200 group-hover:translate-x-1 ${isSolid ? "text-white" : ""}`} />
           </button>
         </div>
 
         {/* ACTIVE EVENT TITLE & DATE (Matching Figma Frame 16 node 2115:12622) */}
         <div
-          className="w-full flex flex-col items-center justify-center text-center gap-1.5 sm:gap-2 pt-4 pb-2 px-4 transition-all duration-500 absolute bottom-0 sm:bottom-[20px]"
-          data-node-id="2115:12622"
+          className="w-full flex flex-col items-center justify-center text-center gap-1.5 sm:gap-2 pt-4 pb-2 px-4 transition-all duration-500 absolute bottom-0 sm:bottom-[20px] z-20 pointer-events-auto"
+          data-node-id={isSolid ? "I2111:11976;2115:12622" : "2115:12622"}
           data-name="Frame 16"
         >
           <h3
             key={`title-${currentEvent.id}`}
-            className="font-display font-recursive-sans font-semibold text-xl sm:text-2xl md:text-3xl lg:text-[36px] text-[#D61812] tracking-tight animate-fade-in"
-            data-node-id="2115:12623"
+            className={`font-display font-recursive-sans font-semibold text-xl sm:text-2xl md:text-3xl lg:text-[36px] tracking-tight animate-fade-in ${
+              isSolid ? "text-white" : "text-[#D61812]"
+            }`}
+            data-node-id={isSolid ? "I2111:11976;2115:12623" : "2115:12623"}
           >
             {currentEvent.title}
           </h3>
 
           <p
             key={`date-${currentEvent.id}`}
-            className="font-sans font-medium text-sm sm:text-base md:text-[18px] text-[#444444] tracking-normal"
-            data-node-id="2115:12624"
+            className={`font-sans font-medium text-sm sm:text-base md:text-[18px] tracking-normal ${
+              isSolid ? "text-[#e8e8e8]" : "text-[#444444]"
+            }`}
+            data-node-id={isSolid ? "I2111:11976;2115:12624" : "2115:12624"}
           >
             {currentEvent.date}
           </p>
 
           <Link
-            href={currentEvent.link}
-            className="mt-1 inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold uppercase tracking-wider text-[#180C62] hover:text-[#c8a96e] transition-colors"
+            href={isSolid ? `#${currentEvent.id}` : currentEvent.link}
+            className={`mt-1 inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold uppercase tracking-wider transition-colors ${
+              isSolid ? "text-[#c8a96e] hover:text-white" : "text-[#180C62] hover:text-[#c8a96e]"
+            }`}
           >
             <span>View Details</span>
             <ArrowRight className="size-3.5" />

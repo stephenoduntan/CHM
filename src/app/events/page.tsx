@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Calendar, Clock, MapPin, ArrowRight } from "lucide-react";
 import { Container } from "@/components/layout/Container";
+import { EventsSection } from "@/components/sections/EventsSection";
 
 const events = [
   {
@@ -13,9 +14,50 @@ const events = [
     date: "November 8th - 15th, 2026",
     time: "6:00 PM Daily (Grand Finale: 8:00 AM Sunday)",
     location: "Main Auditorium, Court of His Majesty",
-    description: "Our signature annual convention celebrating 29 years of God's faithfulness with international guest speakers, prophetic worship, and signs and wonders.",
-    image: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=1200",
-    badge: "Annual Conference",
+    description:
+      "Our signature annual convention celebrating 29 years of God's faithfulness with international guest speakers, prophetic worship, and signs and wonders.",
+    image:
+      "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=1200",
+    badge: "Annual Convention",
+  },
+  {
+    id: "mens-annual-conference",
+    title: "Men’s Annual Conference",
+    theme: "Kingdom Men of Impact",
+    date: "October 18th - 20th, 2026",
+    time: "9:00 AM & 5:00 PM",
+    location: "Main Sanctuary, RCCG CHM",
+    description:
+      "A strategic gathering of men to discover biblical leadership, career excellence, spiritual authority, and strong family foundations.",
+    image:
+      "https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&q=80&w=1200",
+    badge: "Men Fellowship",
+  },
+  {
+    id: "ezzer-women-conference",
+    title: "Ezzer Women Annual Conference",
+    theme: "Women of Grace & Glory",
+    date: "September 12th - 14th, 2026",
+    time: "10:00 AM & 6:00 PM",
+    location: "RCCG Court of His Majesty",
+    description:
+      "Empowering women across marriage, spiritual warfare, family, and enterprise through prayer, teachings, and sisterhood.",
+    image:
+      "https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&q=80&w=1200",
+    badge: "Women Fellowship",
+  },
+  {
+    id: "choose-life-encounter",
+    title: "Choose Life Conference",
+    theme: "Living Above Limits",
+    date: "August 22nd - 24th, 2026",
+    time: "5:30 PM",
+    location: "Court of His Majesty & Livestream",
+    description:
+      "A powerful weekend of intensive prayer, deliverance, divine healing, and breakthrough encounters in God's presence.",
+    image:
+      "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=1200",
+    badge: "Spiritual Encounter",
   },
   {
     id: "holy-ghost-service",
@@ -24,8 +66,10 @@ const events = [
     date: "First Friday of Every Month",
     time: "7:00 PM till Dawn",
     location: "RCCG Redemption City & Live in Sanctuary",
-    description: "A night of extraordinary miracles, salvation, healing, and prophetic declarations with the General Overseer, Pastor E.A. Adeboye.",
-    image: "https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&q=80&w=1200",
+    description:
+      "A night of extraordinary miracles, salvation, healing, and prophetic declarations with the General Overseer, Pastor E.A. Adeboye.",
+    image:
+      "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=1200",
     badge: "Monthly Gathering",
   },
   {
@@ -35,58 +79,41 @@ const events = [
     date: "November 28th, 2026",
     time: "4:00 PM",
     location: "Youth Arena, Court of His Majesty",
-    description: "Vibrant worship, breakout career and relationship masterclasses, and an altar encounter specifically for teenagers, students, and young professionals.",
-    image: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=1200",
+    description:
+      "Vibrant worship, breakout career and relationship masterclasses, and an altar encounter specifically for teenagers, students, and young professionals.",
+    image:
+      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=1200",
     badge: "Youth Ministry",
-  },
-  {
-    id: "good-women-fellowship",
-    title: "Good Women Annual Convention",
-    theme: "Women of Grace & Valour",
-    date: "December 5th, 2026",
-    time: "10:00 AM",
-    location: "Fellowship Hall, Court of His Majesty",
-    description: "Empowering women across marriage, spiritual warfare, family, and enterprise through prayer, teachings, and sisterhood.",
-    image: "https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&q=80&w=1200",
-    badge: "Women Fellowship",
   },
 ];
 
 export default function EventsPage() {
   return (
     <div className="w-full bg-white pb-24">
-      {/* ─── Hero ─────────────────────────────────────────────────── */}
-      <section className="relative h-[720px] bg-[#051202] text-white flex items-center justify-center overflow-hidden">
-        <Image
-          src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=1920"
-          alt="Church Events"
-          fill
-          className="object-cover opacity-25"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#051202] via-[#051202]/70 to-transparent" />
-
-        <Container className="relative z-10 text-center py-20">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-[#c8a96e]/20 border border-[#c8a96e]/40 text-[#c8a96e] text-xs font-semibold uppercase tracking-wider mb-4">
-            Gatherings & Encounters
-          </span>
-          <h1 className="font-display font-recursive-sans text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-4 uppercase tracking-tight">
-            Upcoming Events
-          </h1>
-          <p className="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto">
-            Mark your calendar and prepare your heart for supernatural encounters with God.
-          </p>
-        </Container>
-      </section>
+      {/* ─── Hero: Event Carousel with Solid Background (Figma node 2086:1269) ─── */}
+      <EventsSection variant="solid" />
 
       {/* ─── Events List ──────────────────────────────────────────── */}
-      <section className="py-16 lg:py-24 bg-white">
+      <section id="events-list" className="py-16 lg:py-24 bg-white scroll-mt-24">
         <Container>
+          <div className="mb-12">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-[#c8a96e]/20 border border-[#c8a96e]/40 text-[#c8a96e] text-xs font-semibold uppercase tracking-wider mb-3">
+              Gatherings & Encounters
+            </span>
+            <h2 className="font-display font-recursive-sans text-3xl sm:text-4xl lg:text-5xl font-bold text-[#051202] tracking-tight">
+              Calendar of Events
+            </h2>
+            <p className="text-gray-600 text-sm sm:text-base max-w-2xl mt-2">
+              Mark your calendar and prepare your heart for supernatural encounters with God at RCCG Court of His Majesty.
+            </p>
+          </div>
+
           <div className="space-y-10">
             {events.map((event) => (
               <div
                 key={event.id}
-                className="bg-gray-50/70 border border-gray-200/90 rounded-[32px] overflow-hidden p-6 sm:p-10 hover:border-[#c8a96e] hover:shadow-xl transition-all duration-300 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
+                id={event.id}
+                className="scroll-mt-32 bg-gray-50/70 border border-gray-200/90 rounded-[32px] overflow-hidden p-6 sm:p-10 hover:border-[#c8a96e] hover:shadow-xl transition-all duration-300 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
               >
                 <div className="lg:col-span-5 relative h-[260px] sm:h-[320px] rounded-[24px] overflow-hidden shadow-md">
                   <Image
