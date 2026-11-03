@@ -752,7 +752,7 @@ export function EventsSection({
           </p>
 
           <Link
-            href={isSolid ? `#${currentEvent.id}` : currentEvent.link}
+            href={`/events/${currentEvent.id}`}
             className={`mt-1 inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold uppercase tracking-wider transition-colors ${
               isSolid ? "text-[#c8a96e] hover:text-white" : "text-[#180C62] hover:text-[#c8a96e]"
             }`}

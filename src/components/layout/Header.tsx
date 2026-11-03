@@ -20,6 +20,7 @@ const DARK_HEADER_ROUTES = [
   "/events",
   "/services",
   "/groups",
+  "/connect"
 ];
 
 export function Header({ variant }: HeaderProps) {
@@ -46,12 +47,15 @@ export function Header({ variant }: HeaderProps) {
   const pathname = usePathname();
 
   // Determine variant: explicit prop takes precedence, otherwise auto-detect from route
+  // Note: /events (root) has a solid black hero (dark header), but /events/[slug] has a white background (light header)
   const isDark =
     variant === "dark" ||
     (variant !== "light" &&
-      DARK_HEADER_ROUTES.some(
-        (route) => pathname === route || pathname?.startsWith(`${route}/`)
-      ));
+      (pathname === "/events"
+        ? true
+        : DARK_HEADER_ROUTES.filter((r) => r !== "/events").some(
+            (route) => pathname === route || pathname?.startsWith(`${route}/`)
+          )));
 
   return (
     <>

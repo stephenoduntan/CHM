@@ -156,15 +156,14 @@ export default function EventsPage() {
                     </p>
                   </div>
 
-                  <div className="flex items-center gap-4">
-                    <button
-                      type="button"
-                      onClick={() => alert(`Registration form for ${event.title} will open here.`)}
+                  <div className="flex flex-wrap items-center gap-4">
+                    <Link
+                      href={`/events/${event.id}`}
                       className="inline-flex items-center gap-2 px-8 py-3 rounded-full font-semibold text-white bg-[#051202] hover:bg-[#c8a96e] hover:text-[#051202] transition-colors text-xs uppercase tracking-wider shadow-sm cursor-pointer"
                     >
-                      <span>Register for Event</span>
+                      <span>View Event Details</span>
                       <ArrowRight className="size-3.5" />
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
