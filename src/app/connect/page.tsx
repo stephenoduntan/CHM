@@ -18,7 +18,7 @@ export default function ConnectPage() {
   return (
     <div className="w-full bg-white pb-24">
       {/* ─── Hero ─────────────────────────────────────────────────── */}
-      <section className="relative min-h-[420px] lg:min-h-[480px] bg-[#051202] text-white flex items-center justify-center overflow-hidden">
+      <section className="relative h-[720px] bg-[#051202] text-white flex items-center justify-center overflow-hidden">
         <Image
           src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&q=80&w=1920"
           alt="Connect with Church Family"
@@ -29,9 +29,9 @@ export default function ConnectPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-[#051202] via-[#051202]/70 to-transparent" />
 
         <Container className="relative z-10 text-center py-20">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-[#c8a96e]/20 border border-[#c8a96e]/40 text-[#c8a96e] text-xs font-semibold uppercase tracking-wider mb-4">
+          {/* <span className="inline-block px-4 py-1.5 rounded-full bg-[#c8a96e]/20 border border-[#c8a96e]/40 text-[#c8a96e] text-xs font-semibold uppercase tracking-wider mb-4">
             Fellowship & Care
-          </span>
+          </span> */}
           <h1 className="font-display font-recursive-sans text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-4 uppercase tracking-tight">
             Connect With Us
           </h1>
@@ -60,7 +60,7 @@ export default function ConnectPage() {
 
                 <div className="space-y-6">
                   <div className="flex items-start gap-4">
-                    <div className="size-12 rounded-2xl bg-[#051202] text-[#c8a96e] flex items-center justify-center shrink-0">
+                    <div className="size-12 text-[#D61812] flex items-center justify-center shrink-0">
                       <MapPin className="size-6" />
                     </div>
                     <div>
@@ -70,7 +70,7 @@ export default function ConnectPage() {
                   </div>
 
                   <div className="flex items-start gap-4">
-                    <div className="size-12 rounded-2xl bg-[#051202] text-[#c8a96e] flex items-center justify-center shrink-0">
+                    <div className="size-12 text-[#D61812] flex items-center justify-center shrink-0">
                       <Phone className="size-6" />
                     </div>
                     <div>
@@ -80,7 +80,7 @@ export default function ConnectPage() {
                   </div>
 
                   <div className="flex items-start gap-4">
-                    <div className="size-12 rounded-2xl bg-[#051202] text-[#c8a96e] flex items-center justify-center shrink-0">
+                    <div className="size-12 text-[#D61812] flex items-center justify-center shrink-0">
                       <Mail className="size-6" />
                     </div>
                     <div>
@@ -110,7 +110,7 @@ export default function ConnectPage() {
                     { id: "general", label: "General Inquiry" },
                     { id: "prayer", label: "Prayer Request" },
                     { id: "testimony", label: "Share Testimony" },
-                    { id: "volunteer", label: "Join a Team" },
+                    // { id: "volunteer", label: "Join a Team" },
                   ].map((tab) => (
                     <button
                       key={tab.id}

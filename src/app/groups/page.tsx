@@ -64,7 +64,7 @@ export default function GroupsPage() {
   return (
     <div className="w-full bg-white pb-24">
       {/* ─── Hero Section with Dark Green ─────────────────────────── */}
-      <section className="relative min-h-[440px] lg:min-h-[500px] bg-[#051202] text-white flex items-center justify-center overflow-hidden">
+      <section className="relative h-[720px] bg-[#051202] text-white flex items-center justify-center overflow-hidden">
         <Image
           src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&q=80&w=1920"
           alt="Groups and Community"

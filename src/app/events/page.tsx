@@ -230,9 +230,9 @@ export default function EventsPage() {
                       data-node-id="2086:1306"
                     >
                       {/* Category Badge */}
-                      <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-[#180C62]/10 text-[#180C62] border border-[#180C62]/20">
+                      {/* <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-[#180C62]/10 text-[#180C62] border border-[#180C62]/20">
                         {event.badge}
-                      </span>
+                      </span> */}
 
                       {/* Event Title (Node 2086:1307) */}
                       <h3
@@ -262,7 +262,7 @@ export default function EventsPage() {
 
                       {/* Time with Clock Icon */}
                       <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
-                        <Clock className="size-4 text-[#c8a96e] shrink-0" />
+                        <Clock className="size-4 text-[#d61812] shrink-0" />
                         <span>{event.time}</span>
                       </div>
 
@@ -270,7 +270,7 @@ export default function EventsPage() {
                       <div className="mt-2 flex flex-wrap items-center gap-3">
                         <Link
                           href={`/events/${event.id}`}
-                          className="inline-flex items-center gap-2 px-7 py-3 rounded-full font-semibold text-white bg-[#051202] hover:bg-[#c8a96e] hover:text-[#051202] transition-colors text-xs uppercase tracking-wider shadow-sm cursor-pointer group"
+                          className="bg-[#b2a1ed]/10 border border-[#b2a1ed] text-[#180c62] hover:bg-[#b2a1ed]/20 transition-all rounded-[28px] px-6 py-3.5 sm:px-7 sm:py-4 font-semibold text-base sm:text-[18px] flex items-center gap-2 group cursor-pointer shadow-sm hover:scale-[1.02] active:scale-[0.98]"
                         >
                           <span>View Event Details</span>
                           <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
