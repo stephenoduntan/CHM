@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -11,6 +11,9 @@ import {
   Share2,
   ArrowUpRight,
   Check,
+  ChevronDown,
+  Download,
+  ExternalLink,
 } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { EventDetail } from "@/lib/events-data";
@@ -22,6 +25,35 @@ export interface EventDetailsViewProps {
 export function EventDetailsView({ event }: EventDetailsViewProps) {
   const [copied, setCopied] = useState(false);
   const [calendarDownloaded, setCalendarDownloaded] = useState(false);
+  const [isCalendarMenuOpen, setIsCalendarMenuOpen] = useState(false);
+  const calendarMenuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        calendarMenuRef.current &&
+        !calendarMenuRef.current.contains(e.target as Node)
+      ) {
+        setIsCalendarMenuOpen(false);
+      }
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsCalendarMenuOpen(false);
+      }
+    };
+
+    if (isCalendarMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("keydown", handleKeyDown);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isCalendarMenuOpen]);
 
   const handleShare = async () => {
     const url = typeof window !== "undefined" ? window.location.href : "https://courtofhismajesty.org/events";
@@ -85,12 +117,29 @@ export function EventDetailsView({ event }: EventDetailsViewProps) {
     setTimeout(() => setCalendarDownloaded(false), 3500);
   };
 
+  // Format dates for Google Calendar (YYYYMMDDTHHmmssZ)
+  const gStart = event.calendarEvent.startDate.replace(/[-:]/g, "").split(".")[0] + "Z";
+  const gEnd = event.calendarEvent.endDate.replace(/[-:]/g, "").split(".")[0] + "Z";
+
   const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
     event.calendarEvent.title
-  )}&dates=${event.calendarEvent.startDate.replace(/[-:]/g, "")}/${event.calendarEvent.endDate.replace(
-    /[-:]/g,
-    ""
-  )}&details=${encodeURIComponent(
+  )}&dates=${gStart}/${gEnd}&details=${encodeURIComponent(
+    event.calendarEvent.description
+  )}&location=${encodeURIComponent(event.calendarEvent.location)}`;
+
+  const outlookLiveUrl = `https://outlook.live.com/calendar/0/deeplink/compose?path=/calendar/action/compose&rru=addevent&subject=${encodeURIComponent(
+    event.calendarEvent.title
+  )}&startdt=${encodeURIComponent(event.calendarEvent.startDate)}&enddt=${encodeURIComponent(
+    event.calendarEvent.endDate
+  )}&body=${encodeURIComponent(
+    event.calendarEvent.description
+  )}&location=${encodeURIComponent(event.calendarEvent.location)}`;
+
+  const office365Url = `https://outlook.office.com/calendar/0/deeplink/compose?path=/calendar/action/compose&rru=addevent&subject=${encodeURIComponent(
+    event.calendarEvent.title
+  )}&startdt=${encodeURIComponent(event.calendarEvent.startDate)}&enddt=${encodeURIComponent(
+    event.calendarEvent.endDate
+  )}&body=${encodeURIComponent(
     event.calendarEvent.description
   )}&location=${encodeURIComponent(event.calendarEvent.location)}`;
 
@@ -220,43 +269,163 @@ export function EventDetailsView({ event }: EventDetailsViewProps) {
               </div>
             </div>
 
-            {/* Add to Calendar Action (Node 2096:6858) */}
-            <div className="mt-8 sm:mt-10 flex flex-wrap items-center gap-3">
+            {/* Add to Calendar Action with Dropdown (Node 2096:6858) */}
+            <div className="mt-8 sm:mt-10 relative inline-block text-left" ref={calendarMenuRef}>
               <button
                 type="button"
-                onClick={handleAddToCalendar}
+                onClick={() => setIsCalendarMenuOpen((prev) => !prev)}
                 className="bg-[#180C62] hover:bg-[#13005A] active:scale-95 text-[#f5f5f5] px-7 sm:px-8 py-3.5 sm:py-[18px] rounded-[36px] flex items-center gap-3 shadow-md hover:shadow-lg transition-all cursor-pointer group"
                 data-node-id="2096:6858"
                 data-name="Add to calendar"
                 aria-label="Add event to calendar"
+                aria-expanded={isCalendarMenuOpen}
+                aria-haspopup="true"
               >
                 <div
                   className="size-6 shrink-0 flex items-center justify-center"
                   data-node-id="2096:6859"
                   data-name="calendar-plus"
                 >
-                  {calendarDownloaded ? (
-                    <Check className="size-5 text-[#c8a96e] animate-bounce" />
-                  ) : (
-                    <CalendarPlus className="size-5 group-hover:scale-110 transition-transform" />
-                  )}
+                  <CalendarPlus className="size-5 group-hover:scale-110 transition-transform text-[#f5f5f5]" />
                 </div>
                 <span
                   className="font-sans font-semibold text-base lg:text-[18px] text-[#f5f5f5] whitespace-nowrap"
                   data-node-id="2096:6861"
                 >
-                  {calendarDownloaded ? "Calendar File Added" : "Add to calendar"}
+                  Add to calendar
                 </span>
+                <ChevronDown
+                  className={`size-4 sm:size-5 text-[#f5f5f5]/80 transition-transform duration-200 ${
+                    isCalendarMenuOpen ? "rotate-180" : ""
+                  }`}
+                />
               </button>
 
-              <a
-                href={googleCalendarUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs sm:text-sm font-medium text-[#180C62] hover:text-[#c8a96e] underline underline-offset-4 px-2 py-1 transition-colors"
-              >
-                (Google Calendar)
-              </a>
+              {/* Dropdown Menu */}
+              {isCalendarMenuOpen && (
+                <div
+                  className="absolute left-0 mt-2.5 w-72 sm:w-80 rounded-2xl bg-white shadow-2xl border border-gray-100 p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
+                  role="menu"
+                  aria-orientation="vertical"
+                >
+                  <div className="px-3 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                    Select your calendar
+                  </div>
+
+                  {/* 1. Google Calendar */}
+                  <a
+                    href={googleCalendarUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setIsCalendarMenuOpen(false)}
+                    className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-800 hover:bg-gray-50 hover:text-[#180C62] transition-colors group/item"
+                    role="menuitem"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="size-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xs shrink-0">
+                        G
+                      </div>
+                      <div>
+                        <p className="font-semibold text-[#0a0a0a] group-hover/item:text-[#180C62]">Google Calendar</p>
+                        <p className="text-xs text-gray-400">Web / Android / iOS</p>
+                      </div>
+                    </div>
+                    <ExternalLink className="size-3.5 text-gray-400 group-hover/item:text-[#180C62] transition-colors" />
+                  </a>
+
+                  {/* 2. Apple Calendar */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      handleAddToCalendar();
+                      setIsCalendarMenuOpen(false);
+                    }}
+                    className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-800 hover:bg-gray-50 hover:text-[#180C62] transition-colors text-left group/item cursor-pointer"
+                    role="menuitem"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="size-7 rounded-lg bg-gray-100 text-gray-700 flex items-center justify-center font-bold text-xs shrink-0">
+                        
+                      </div>
+                      <div>
+                        <p className="font-semibold text-[#0a0a0a] group-hover/item:text-[#180C62]">Apple Calendar</p>
+                        <p className="text-xs text-gray-400">Mac / iPhone / iPad</p>
+                      </div>
+                    </div>
+                    <span className="text-xs text-gray-400 group-hover/item:text-[#180C62]">.ics</span>
+                  </button>
+
+                  {/* 3. Outlook.com */}
+                  <a
+                    href={outlookLiveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setIsCalendarMenuOpen(false)}
+                    className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-800 hover:bg-gray-50 hover:text-[#180C62] transition-colors group/item"
+                    role="menuitem"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="size-7 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center font-bold text-xs shrink-0">
+                        O
+                      </div>
+                      <div>
+                        <p className="font-semibold text-[#0a0a0a] group-hover/item:text-[#180C62]">Outlook (Live / Hotmail)</p>
+                        <p className="text-xs text-gray-400">Personal Microsoft account</p>
+                      </div>
+                    </div>
+                    <ExternalLink className="size-3.5 text-gray-400 group-hover/item:text-[#180C62] transition-colors" />
+                  </a>
+
+                  {/* 4. Microsoft 365 */}
+                  <a
+                    href={office365Url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setIsCalendarMenuOpen(false)}
+                    className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-800 hover:bg-gray-50 hover:text-[#180C62] transition-colors group/item"
+                    role="menuitem"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="size-7 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-xs shrink-0">
+                        M
+                      </div>
+                      <div>
+                        <p className="font-semibold text-[#0a0a0a] group-hover/item:text-[#180C62]">Microsoft 365</p>
+                        <p className="text-xs text-gray-400">Work / School account</p>
+                      </div>
+                    </div>
+                    <ExternalLink className="size-3.5 text-gray-400 group-hover/item:text-[#180C62] transition-colors" />
+                  </a>
+
+                  <div className="my-1.5 border-t border-gray-100" />
+
+                  {/* 5. Download .ICS File */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      handleAddToCalendar();
+                      setIsCalendarMenuOpen(false);
+                    }}
+                    className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-800 hover:bg-gray-50 hover:text-[#180C62] transition-colors text-left group/item cursor-pointer"
+                    role="menuitem"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="size-7 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center font-bold text-xs shrink-0">
+                        <Download className="size-4" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-[#0a0a0a] group-hover/item:text-[#180C62]">Download Calendar File</p>
+                        <p className="text-xs text-gray-400">Standard .ics file</p>
+                      </div>
+                    </div>
+                    {calendarDownloaded ? (
+                      <Check className="size-4 text-emerald-600" />
+                    ) : (
+                      <span className="text-xs text-gray-400">.ics</span>
+                    )}
+                  </button>
+                </div>
+              )}
             </div>
           </div>
 
