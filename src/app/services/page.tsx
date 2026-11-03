@@ -140,7 +140,7 @@ export default function ServicesPage() {
                 key={item.id}
                 className={`flex flex-col ${
                   item.isImageLeft ? "lg:flex-row-reverse" : "lg:flex-row"
-                } gap-6 sm:gap-8 lg:gap-[40px] items-stretch w-full min-h-[380px] lg:h-[400px]`}
+                } gap-6 sm:gap-8 lg:gap-[40px] items-stretch w-full h-[520px] sm:h-[600px] lg:h-[400px]`}
                 data-node-id={item.nodeId}
                 data-name={item.cardName}
               >

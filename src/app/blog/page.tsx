@@ -72,13 +72,13 @@ export default function BlogPage() {
             className="flex flex-col gap-4 sm:gap-[20px] items-center max-w-[1100px] w-full"
             data-node-id="2111:12514"
           >
-            <p
+            {/* <p
               className="font-serif italic text-base sm:text-[20px] text-[#616161]"
               data-node-id="2102:5312"
               data-name="Eyebrow"
             >
               Encouragement for the journey
-            </p>
+            </p> */}
             <h1
               className="font-display font-recursive-sans font-bold text-4xl sm:text-5xl lg:text-[56px] text-[#0a0a0a] leading-[1.2] tracking-tight"
               data-node-id="2102:5313"
@@ -158,7 +158,7 @@ export default function BlogPage() {
               </span>
 
               <Link
-                href={`#${FEATURED_ARTICLE.slug}`}
+                href={`/blog/${FEATURED_ARTICLE.slug}`}
                 className="bg-[#f0a505] hover:bg-[#d99404] transition-colors rounded-[36px] px-6 sm:px-[28px] py-3.5 sm:py-[16px] inline-flex items-center justify-center gap-3 text-[#0a0a0a] font-sans font-semibold text-base sm:text-[18px] cursor-pointer shrink-0 shadow-xs group w-fit"
                 data-node-id="2102:5322"
                 data-name="Action"
@@ -396,7 +396,7 @@ export default function BlogPage() {
                           {post.category}
                         </span>
                         <h3
-                          className="font-sans font-semibold text-xl sm:text-[26px] text-[#0a0a0a] leading-[1.3] group-hover:text-[#180c62] transition-colors min-h-[56px] sm:min-h-[68px]"
+                          className="font-sans font-semibold text-xl sm:text-[26px] text-[#0a0a0a] leading-[1.3] group-hover:text-[#D61812] transition-colors min-h-[56px] sm:min-h-[68px]"
                           data-node-id="2102:5352"
                           data-name="Article title"
                         >
@@ -426,7 +426,7 @@ export default function BlogPage() {
                           data-name="Read article"
                         >
                           <Link
-                            href={`#${post.slug}`}
+                            href={`/blog/${post.slug}`}
                             className="inline-flex items-center gap-2.5 font-sans font-semibold text-base sm:text-[18px] text-[#180c62] group/link cursor-pointer hover:gap-3.5 transition-all"
                           >
                             <span data-node-id="2102:5356" data-name="Link label">

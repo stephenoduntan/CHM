@@ -153,11 +153,11 @@ export default function GroupsPage() {
                 key={group.id}
                 className={`flex flex-col ${
                   group.isImageLeft ? "lg:flex-row-reverse" : "lg:flex-row"
-                } gap-6 sm:gap-8 lg:gap-[40px] items-stretch w-full min-h-[380px] lg:h-[400px]`}
+                } gap-6 sm:gap-8 lg:gap-[40px] items-stretch w-full h-[520px] sm:h-[600px] lg:h-[400px]`}
                 data-name={group.id}
               >
                 {/* Content Box (Text + Watermark + CTA) */}
-                <div className="flex-1 relative flex flex-col justify-center items-start lg:items-end text-left lg:text-right min-w-0 h-full min-h-[280px] lg:min-h-[400px] pb-6 lg:pb-[40px] pt-4 px-2 sm:px-4 lg:px-0 overflow-hidden">
+                <div className="flex-1 relative flex flex-col justify-center items-start lg:items-end text-left lg:text-right min-w-0 h-full pb-6 lg:pb-[40px] pt-4 px-2 sm:px-4 lg:px-0 overflow-hidden">
                   {/* Giant Background Watermark */}
                   <div
                     className="absolute bottom-0 left-0 opacity-15 select-none pointer-events-none z-0 max-w-full lg:max-w-[700px]"
