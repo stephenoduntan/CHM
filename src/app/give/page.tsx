@@ -214,7 +214,7 @@ export default function GivePage() {
                         e.stopPropagation();
                         setIsModalOpen(true);
                       }}
-                      className="bg-[#c88a04] hover:bg-[#b07903] text-white font-sans font-semibold text-base sm:text-[18px] px-8 sm:px-[40px] py-3.5 sm:py-[16px] rounded-[36px] transition-all cursor-pointer shadow-sm hover:shadow-md"
+                      className="bg-[#c88a04] hover:bg-[#b07903] text-[#0a0a0a] font-sans font-semibold text-base sm:text-[18px] px-8 sm:px-[40px] py-3.5 sm:py-[16px] rounded-[36px] transition-all cursor-pointer shadow-sm hover:shadow-md"
                     >
                       Click here to Give
                     </button>
@@ -259,6 +259,96 @@ export default function GivePage() {
                       Checks can be written for RCCG City of David, Lagos Nigeria, given during any of our services or sent to RCCG Court of His Majesty, 163 Ipaja Road, Abesan Estate Gate, Lagos, Nigeria
                     </p>
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* ─── Next Level Cathedral Card (Figma node 2111:11886) ──────── */}
+      <section className="relative w-full overflow-hidden min-h-[580px] lg:min-h-[640px] flex items-end py-16 sm:py-20 lg:py-24">
+        {/* Background Architectural Render & Gradient Overlay */}
+        <div aria-hidden className="absolute inset-0 pointer-events-none">
+          <Image
+            src="/images/cathedral-give-bg.png"
+            alt="Next Level Cathedral"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[rgba(255,255,255,0.5)] via-[rgba(191,191,191,0.85)] to-[#f5f5f5]" />
+        </div>
+
+        {/* Card Content (node 2111:11886) */}
+        <Container className="relative z-10 max-w-[1440px] w-full">
+          <div className="flex flex-col lg:flex-row gap-10 lg:gap-[64px] items-start lg:items-end justify-between w-full">
+            {/* Left Column */}
+            <div className="flex-1 flex flex-col gap-6 lg:gap-[35px] items-start max-w-2xl">
+              <div className="flex flex-col gap-3 sm:gap-[16px] items-start">
+                <p className="font-sans font-medium text-xl sm:text-2xl lg:text-[28px] text-[#242424] leading-normal">
+                  Be a part of the
+                </p>
+                <h2 className="font-display font-recursive-sans font-bold text-3xl sm:text-4xl lg:text-[48px] text-[#0a0a0a] leading-tight lg:leading-[56px] tracking-tight">
+                  NEXT LEVEL CATHEDRAL
+                </h2>
+                <div className="w-[124px] h-[6px] shrink-0">
+                  <Image
+                    src="/images/line-accent.svg"
+                    alt=""
+                    width={124}
+                    height={6}
+                    className="w-[124px] h-[6px]"
+                  />
+                </div>
+              </div>
+
+              <p className="font-sans font-normal text-lg sm:text-xl lg:text-[24px] text-[#242424] leading-relaxed">
+                To give towards the Next Level Cathedral Project (Naira), Please use the details on the side.
+              </p>
+            </div>
+
+            {/* Right Column: Vision statement box */}
+            <div className="bg-white/35 backdrop-blur-md border border-white/60 p-6 sm:p-8 lg:p-[40px] rounded-[16px] w-full lg:w-[560px] shrink-0 shadow-sm flex flex-col gap-4 sm:gap-[24px] items-start">
+              <span className="font-sans font-semibold text-xs sm:text-[16px] tracking-[0.64px] uppercase text-[#242424]">
+                Support the cause
+              </span>
+
+              <div className="font-sans font-bold text-base sm:text-lg lg:text-[24px] text-[#0a0a0a] leading-relaxed lg:leading-[43px] w-full space-y-1">
+                <p className="text-xs sm:text-sm lg:text-[16px] font-medium text-gray-700">Account Name:</p>
+                <p className="font-bold mb-2">RCCG NEXT LEVEL PROJECT PARTNERS ACCOUNT</p>
+
+                <p className="text-xs sm:text-sm lg:text-[16px] font-medium text-gray-700">Bank Name:</p>
+                <p className="font-bold mb-2">Polaris Bank</p>
+
+                <div className="flex items-center justify-between gap-3 pt-2">
+                  <div>
+                    <p className="text-xs sm:text-sm lg:text-[16px] font-medium text-gray-700">Account Number:</p>
+                    <p className="font-display font-recursive-mono font-bold text-2xl sm:text-3xl text-[#0a0a0a] tracking-wider">
+                      4092011875
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => copyToClipboard("4092011875")}
+                    className={`inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer shrink-0 shadow-sm ${
+                      copiedAccount === "4092011875"
+                        ? "bg-emerald-600 text-white"
+                        : "bg-[#051202] text-white hover:bg-[#c88a04]"
+                    }`}
+                  >
+                    {copiedAccount === "4092011875" ? (
+                      <>
+                        <Check className="size-4" />
+                        <span>Copied</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="size-4" />
+                        <span>Copy</span>
+                      </>
+                    )}
+                  </button>
                 </div>
               </div>
             </div>
