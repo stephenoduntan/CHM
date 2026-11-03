@@ -56,7 +56,7 @@ export default function SermonsPage() {
                       href={`/sermons/${sermon.id}`}
                       className="absolute inset-0 flex items-center justify-center cursor-pointer"
                     >
-                      <div className="size-14 rounded-full bg-[#c8a96e] text-[#051202] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                      <div className="size-14 rounded-full bg-[#f5f5f5] text-[#051202] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                         <Play className="size-6 fill-current translate-x-0.5" />
                       </div>
                     </Link>
@@ -70,7 +70,7 @@ export default function SermonsPage() {
                     <span className="text-xs uppercase tracking-wider font-semibold text-[#c8a96e] block mb-2">
                       {sermon.series}
                     </span>
-                    <h3 className="font-sans font-bold text-xl text-[#051202] mb-3 group-hover:text-[#c8a96e] transition-colors leading-snug">
+                    <h3 className="font-sans font-bold text-xl text-[#051202] mb-3 group-hover:text-[##D61812] transition-colors leading-snug">
                       <Link href={`/sermons/${sermon.id}`}>
                         {sermon.title}
                       </Link>
@@ -89,21 +89,21 @@ export default function SermonsPage() {
                   </div>
                 </div>
 
-                <div className="p-6 pt-0 border-t border-gray-100 mt-4 flex items-center justify-between">
+                <div className="p-6 pt-2 border-t border-gray-100 mt-4 flex items-center justify-start">
                   <Link
                     href={`/sermons/${sermon.id}`}
-                    className="text-xs font-semibold uppercase tracking-wider text-[#051202] hover:text-[#c8a96e] transition-colors"
+                    className="text-xs font-semibold uppercase tracking-wider text-[#051202] hover:text-[#D61812] transition-colors"
                   >
                     Watch Video →
                   </Link>
-                  <button
+                  {/* <button
                     type="button"
                     onClick={() => alert("Audio podcast streaming will be connected with your Sanity CMS uploaded sermons.")}
                     className="text-xs font-semibold text-gray-500 hover:text-[#051202] flex items-center gap-1 cursor-pointer"
                   >
                     <Headphones className="size-3.5" />
                     <span>Audio</span>
-                  </button>
+                  </button> */}
                 </div>
               </div>
             ))}

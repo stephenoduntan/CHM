@@ -194,9 +194,9 @@ export default function ServicesPage() {
             </div>
 
             <div
-              className="flex flex-wrap gap-4 items-center pt-2"
+              className="flex flex-wrap gap-4 items-center content-center justify-center sm:items-center sm:content-center sm:justify-end"
               data-node-id="2103:9295"
-              data-name="Project actions"
+              data-name="Holy Ghost Service actions"
             >
               <Link
               href="/holy-ghost-service"
@@ -209,7 +209,7 @@ export default function ServicesPage() {
               <a
                 href="https://maps.app.goo.gl/b2mYFzQjLYv3qjBt5" target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[#b2a1ed]/10 border border-[#b2a1ed] text-[#180c62] hover:bg-[#b2a1ed]/20 transition-all rounded-[28px] px-6 py-3.5 sm:px-7 sm:py-4 font-semibold text-base sm:text-[18px] flex items-center gap-2 group cursor-pointer shadow-sm hover:scale-[1.02] active:scale-[0.98]"
+                className="bg-[#b2a1ed]/10 border border-[#b2a1ed] text-[#180c62] hover:bg-[#b2a1ed]/20 transition-all rounded-full gap-2 px-6 py-3 font-semibold text-sm flex items-center gap-2 group cursor-pointer shadow-sm hover:scale-[1.02] active:scale-[0.98]"
                 data-node-id="2103:9299"
                 data-name="Action"
               >
