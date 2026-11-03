@@ -658,11 +658,10 @@ export function HeroSection() {
               Plan a Visit
             </Link>
             <Link
-              href="https://youtube.com/@rccgchm?si=JSIawZL2BpxMx_OW"
-              target="_blank"
+              href="/watch-live"
               className="inline-flex items-center justify-center gap-1.5 px-6 py-3 rounded-full font-semibold text-[#180c62] border border-[#b2a1ed] bg-[#b2a1ed]/10 text-sm transition-all"
             >
-              <span>Watch Online</span>
+              <span>Watch Live</span>
               <ArrowUpRight className="size-4" />
             </Link>
           </div>

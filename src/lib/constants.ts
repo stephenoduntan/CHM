@@ -27,7 +27,7 @@ export const FOOTER_QUICK_LINKS = [
   { label: "Our Beliefs", href: "/our-beliefs" },
   { label: "Events", href: "/events" },
   { label: "Sermons", href: "/sermons" },
-  { label: "Watch Live", href: "/watch-live" },
+  { label: "Watch Live", href: "/watch-live", target: "_blank" },
   { label: "Holy Ghost Service", href: "/holy-ghost-service" },
   { label: "Next Level Cathedral", href: "/next-level-cathedral" },
 ] as const;

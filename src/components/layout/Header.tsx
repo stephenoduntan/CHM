@@ -203,6 +203,15 @@ export function Header({ variant }: HeaderProps) {
                       Our Beliefs
                     </Link>
                   </li>
+                  <li>
+                    <Link
+                      href="/next-level-cathedral"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="block hover:text-[#c8a96e] transition-colors"
+                    >
+                      Next Level Cathedral
+                    </Link>
+                  </li>
                 </ul>
               </div>
 

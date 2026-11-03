@@ -19,6 +19,11 @@ const nextConfig: NextConfig = {
         destination: "/our-beliefs",
         permanent: true,
       },
+      {
+        source: "/cathedral",
+        destination: "/next-level-cathedral",
+        permanent: true,
+      },
     ];
   },
 };
