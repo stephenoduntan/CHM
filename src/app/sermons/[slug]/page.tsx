@@ -40,3 +40,4 @@ export default async function SermonWatchPage({ params }: PageProps) {
 
   return <SermonWatchDetailView sermon={sermon} />;
 }
+

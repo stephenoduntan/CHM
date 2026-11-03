@@ -115,3 +115,4 @@ export function getSermonBySlug(slug: string): Sermon {
 export function getRelatedSermons(currentId: string, count = 3): Sermon[] {
   return SERMONS_DATA.filter((s) => s.id !== currentId).slice(0, count);
 }
+

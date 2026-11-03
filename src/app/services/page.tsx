@@ -192,19 +192,43 @@ export default function ServicesPage() {
                 Every 1st Friday of the month (7:00 PM till Dawn) at RCCG Redemption City, broadcast live in our sanctuary and online.
               </p>
             </div>
-            <Link
-              href="/connect"
+
+            <div
+              className="flex flex-wrap gap-4 items-center pt-2"
+              data-node-id="2103:9295"
+              data-name="Project actions"
+            >
+              <Link
+              href="/holy-ghost-service"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#180c62] hover:bg-[#251394] text-white text-sm font-semibold transition-all shadow-md shrink-0 cursor-pointer"
             >
-              <span>Plan Your Visit</span>
+              <span>Watch Online</span>
               <ArrowRight className="size-4" />
             </Link>
+
+              <a
+                href="https://maps.app.goo.gl/b2mYFzQjLYv3qjBt5" target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#b2a1ed]/10 border border-[#b2a1ed] text-[#180c62] hover:bg-[#b2a1ed]/20 transition-all rounded-[28px] px-6 py-3.5 sm:px-7 sm:py-4 font-semibold text-base sm:text-[18px] flex items-center gap-2 group cursor-pointer shadow-sm hover:scale-[1.02] active:scale-[0.98]"
+                data-node-id="2103:9299"
+                data-name="Action"
+              >
+                <span data-node-id="2103:9300">Attend Live</span>
+                <div
+                  className="relative size-5 shrink-0 transition-transform group-hover:translate-x-1"
+                  data-node-id="2103:9301"
+                >
+                  <ArrowUpRight className="size-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </div>
+              </a>
+            </div>
+
           </div>
         </Container>
       </section>
 
       {/* ─── Location & Driving Directions ────────────────────────── */}
-      <section className="py-16 lg:py-24 bg-gray-50 border-t border-gray-200">
+      <section className="py-16 lg:py-24">
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-6">

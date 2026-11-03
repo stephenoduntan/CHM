@@ -22,3 +22,4 @@ export const metadata: Metadata = {
 export default function SermonDetailsPage() {
   return <SermonWatchDetailView sermon={DEFAULT_SERMON} />;
 }
+

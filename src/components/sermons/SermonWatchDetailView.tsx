@@ -530,3 +530,4 @@ export function SermonWatchDetailView({ sermon }: SermonWatchDetailViewProps) {
     </div>
   );
 }
+
