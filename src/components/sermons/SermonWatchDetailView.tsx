@@ -49,7 +49,7 @@ export function SermonWatchDetailView({ sermon }: SermonWatchDetailViewProps) {
       data-node-id="2096:6013"
       data-name="Sermon watch and detail"
     >
-      <Container className="max-w-[1440px] w-full pt-6 pb-20 sm:pb-24">
+      <Container className="max-w-[1440px] w-full pt-140 pb-20 sm:pb-24">
         {/* ─── Watch Sermon Section (Figma node 2096:6015) ────────────── */}
         <section
           className="flex flex-col gap-6 sm:gap-[32px] items-start pt-6 sm:pt-[40px] relative w-full"

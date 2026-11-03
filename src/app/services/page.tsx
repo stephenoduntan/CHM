@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { MapPin, Navigation, ArrowRight } from "lucide-react";
+import { ArrowUpRight, MapPin, Navigation, ArrowRight } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { SITE_CONFIG } from "@/lib/constants";
 
