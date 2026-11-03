@@ -10,36 +10,49 @@ export const metadata = {
   description: "Welcome to RCCG Court of His Majesty. Here is what to expect on your first visit.",
 };
 
-const missionVisionPoints = [
+interface MissionVisionItem {
+  num: string;
+  text: string;
+  nodeId: string;
+  orderClass: string;
+}
+
+const MISSION_VISION_POINTS: MissionVisionItem[] = [
   {
     num: "01",
-    title: "To make heaven",
-    desc: "Our primary objective as followers of Christ.",
-  },
-  {
-    num: "02",
-    title: "To take as many people with us",
-    desc: "Fulfilling the great commission through passionate evangelism.",
-  },
-  {
-    num: "03",
-    title: "To have a member of RCCG in every family of all nations",
-    desc: "Impacting households everywhere with the gospel of hope.",
+    text: "To make heaven",
+    nodeId: "2086:352",
+    orderClass: "order-1 lg:order-1",
   },
   {
     num: "04",
-    title: "Holiness as a lifestyle",
-    desc: "To accomplish No. 1 above, holiness will be our lifestyle in all conduct.",
+    text: "To accomplish No. 1 above, holiness will be our lifestyle.",
+    nodeId: "2086:357",
+    orderClass: "order-4 lg:order-2",
+  },
+  {
+    num: "02",
+    text: "To take as many people with us.",
+    nodeId: "2086:362",
+    orderClass: "order-2 lg:order-3",
   },
   {
     num: "05",
-    title: "Planting churches in every city and community",
-    desc: "Planting churches within five minutes walking distance in developing nations and five minutes driving distance in developed countries.",
+    text: "To accomplish No. 2 and 3 above, we will plant churches within five minutes walking distance in every city and town of developing countries and within five minutes driving distance in every city and town of developed countries.",
+    nodeId: "2086:367",
+    orderClass: "order-5 lg:order-4",
+  },
+  {
+    num: "03",
+    text: "To have a member of RCCG in every family of all nations.",
+    nodeId: "2086:372",
+    orderClass: "order-3 lg:order-5",
   },
   {
     num: "06",
-    title: "Global Kingdom Reach",
-    desc: "We will pursue these objectives until every Nation in the world is reached for the Lord Jesus Christ.",
+    text: "We will pursue these objectives until every Nation in the world is reached for the Lord Jesus Christ.",
+    nodeId: "2086:377",
+    orderClass: "order-6 lg:order-6",
   },
 ];
 
@@ -207,40 +220,73 @@ export default function NewHerePage() {
         </Container>
       </section>
 
-      {/* ─── Mission & Vision (6 Numbered Points) ─────────────────── */}
-      <section className="py-16 lg:py-24 bg-gray-50/70 border-y border-gray-200/70">
-        <Container>
-          <div className="max-w-3xl mb-14">
-            <h2 className="font-sans font-bold text-3xl sm:text-4xl text-[#051202] mb-3">
-              Our Mission & Vision
-            </h2>
-            <p className="text-gray-600 text-base sm:text-lg leading-relaxed">
-              As received by the General Overseer, Pastor E. A. Adeboye, and communicated to the leaders of RCCG, our vision and mission statement remain unwavering:
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {missionVisionPoints.map((item) => (
-              <div
-                key={item.num}
-                className="bg-white rounded-[24px] p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group"
+      {/* ─── Mission & Vision Section (Figma Node 2086:345) ───────── */}
+      <section
+        className="w-full bg-white py-16 sm:py-20 lg:py-[64px]"
+        data-node-id="2086:345"
+        data-name="explore"
+      >
+        <Container className="max-w-[1440px]">
+          <div
+            className="flex flex-col gap-8 lg:gap-[40px] items-start w-full"
+            data-node-id="2086:346"
+          >
+            {/* Heading & Subtitle Block (Figma Node 2086:347) */}
+            <div
+              className="flex flex-col gap-4 lg:gap-[16px] items-start w-full"
+              data-node-id="2086:347"
+            >
+              <h2
+                className="font-display font-recursive-sans font-semibold text-2xl sm:text-3xl lg:text-[36px] text-[#0a0a0a] leading-tight"
+                data-node-id="2086:349"
+                style={{ fontVariationSettings: '"CASL" 0, "CRSV" 0.5, "MONO" 0' }}
               >
-                <span className="font-display font-recursive-mono font-bold text-6xl text-gray-100 group-hover:text-[#c8a96e]/20 transition-colors absolute top-4 right-6 pointer-events-none">
-                  {item.num}
-                </span>
-                <div className="relative z-10">
-                  <span className="inline-block px-3 py-1 rounded-full bg-[#051202]/5 text-[#051202] font-semibold text-xs tracking-wider uppercase mb-4">
-                    Pillar {item.num}
-                  </span>
-                  <h3 className="font-sans font-bold text-xl text-[#051202] mb-2 leading-snug">
-                    {item.title}
-                  </h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">
-                    {item.desc}
-                  </p>
+                Our Mission & Vision
+              </h2>
+              <p
+                className="font-sans font-normal text-base sm:text-lg lg:text-[28px] text-[#242424] leading-relaxed"
+                data-node-id="2086:350"
+              >
+                As received by the General Overseer (G.O.), Pastor E. A. Adeboye,
+                and communicated to the Headquarters leaders, our vision and
+                mission statement shall remain intact. They are as follows:
+              </p>
+            </div>
+
+            {/* How It Works Row / 6 Numbered Cards (Figma Node 2086:351) */}
+            <div
+              className="grid grid-cols-1 lg:grid-cols-2 gap-x-[40px] gap-y-10 lg:gap-y-[40px] w-full"
+              data-node-id="2086:351"
+              data-name="How it works row"
+            >
+              {MISSION_VISION_POINTS.map((item) => (
+                <div
+                  key={item.num}
+                  className={`border-t-4 border-[#d61812] relative flex flex-col justify-start min-h-[160px] sm:min-h-[180px] lg:h-[210px] w-full pt-[40px] sm:pt-[48px] pl-0 sm:pl-[24px] lg:pl-[48px] ${item.orderClass}`}
+                  data-node-id={item.nodeId}
+                >
+                  {/* Background Watermark Number (Figma Node: 01, 02, etc.) */}
+                  <div
+                    className="absolute top-[-4px] left-0 pointer-events-none select-none opacity-25 flex items-center justify-center"
+                    aria-hidden="true"
+                  >
+                    <span
+                      className="font-display font-recursive-sans font-semibold text-[80px] sm:text-[96px] text-[#8b72e3] leading-none"
+                      style={{ fontVariationSettings: '"CASL" 0, "CRSV" 0.5, "MONO" 0' }}
+                    >
+                      {item.num}
+                    </span>
+                  </div>
+
+                  {/* Foreground Content */}
+                  <div className="relative z-10 w-full">
+                    <p className="font-sans font-medium text-lg sm:text-xl lg:text-[28px] text-[#0a0a0a] leading-normal tracking-normal">
+                      {item.text}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </Container>
       </section>
