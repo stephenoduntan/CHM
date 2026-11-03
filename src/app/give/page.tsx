@@ -15,9 +15,9 @@ const bankAccounts = [
   },
   {
     category: "Next Level Cathedral Project",
-    bank: "Guaranty Trust Bank (GTBank)",
-    accountNumber: "0123456789",
-    accountName: "RCCG CHM Building Project",
+    bank: "Polaris Bank",
+    accountNumber: "4092011875",
+    accountName: "RCCG NEXT LEVEL PROJECT PARTNERS ACCOUNT",
     icon: Building2,
   },
   {
@@ -41,7 +41,8 @@ export default function GivePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [copiedAccount, setCopiedAccount] = useState<string | null>(null);
 
-  // Modal form states
+  // Modal states
+  const [modalTab, setModalTab] = useState<"online" | "bank">("online");
   const [amount, setAmount] = useState("");
   const [currency, setCurrency] = useState("NGN");
   const [givingType, setGivingType] = useState("");
@@ -50,7 +51,6 @@ export default function GivePage() {
   const [email, setEmail] = useState("");
   const [country, setCountry] = useState("Nigeria");
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [showBankAccounts, setShowBankAccounts] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   // Close modal on Escape key and prevent background scroll
@@ -112,7 +112,7 @@ export default function GivePage() {
   const resetModal = () => {
     setIsModalOpen(false);
     setIsSubmitted(false);
-    setShowBankAccounts(false);
+    setModalTab("online");
     setErrorMessage("");
   };
 
@@ -391,15 +391,43 @@ export default function GivePage() {
             data-node-id="2086:1821"
             data-name="Give"
           >
-            {/* Pinned Top Header with Close Button */}
-            <div className="flex items-center justify-between px-6 sm:px-8 pt-5 pb-3 shrink-0 border-b border-gray-100 bg-white z-10" data-node-id="2094:5813">
-              <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">
-                Online Giving
-              </span>
+            {/* Pinned Top Header with Segmented Tab Switcher & Close Button */}
+            <div className="flex items-center justify-between px-4 sm:px-8 pt-4 pb-3.5 shrink-0 border-b border-gray-100 bg-white z-10 gap-2 sm:gap-3" data-node-id="2094:5813">
+              {/* Segmented Switcher */}
+              <div className="inline-flex p-1 bg-gray-100 rounded-full" role="tablist" aria-label="Giving Method">
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={modalTab === "online"}
+                  onClick={() => setModalTab("online")}
+                  className={`px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+                    modalTab === "online"
+                      ? "bg-[#180c62] text-white shadow-sm"
+                      : "text-gray-600 hover:text-black"
+                  }`}
+                >
+                  Online Giving
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={modalTab === "bank"}
+                  onClick={() => setModalTab("bank")}
+                  className={`px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+                    modalTab === "bank"
+                      ? "bg-[#180c62] text-white shadow-sm"
+                      : "text-gray-600 hover:text-black"
+                  }`}
+                >
+                  Direct Bank Transfer
+                </button>
+              </div>
+
+              {/* Close Button */}
               <button
                 type="button"
                 onClick={resetModal}
-                className="size-9 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center justify-center transition-colors cursor-pointer"
+                className="size-9 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center justify-center transition-colors cursor-pointer shrink-0"
                 data-node-id="2094:5814"
                 data-name="fluent:dismiss-16-filled"
                 aria-label="Close modal"
@@ -408,282 +436,323 @@ export default function GivePage() {
               </button>
             </div>
 
-            {/* Scrollable Form Body */}
+            {/* Scrollable Content Body */}
             <div className="flex-1 overflow-y-auto px-6 sm:px-8 py-5" data-node-id="2086:1824">
-              {!isSubmitted ? (
-                <form id="give-form" onSubmit={handlePaymentSubmit} className="w-full flex flex-col gap-5 sm:gap-6">
-                  {/* Header Title */}
-                  <div className="w-full" data-node-id="2086:1825">
-                    <h3 className="font-sans font-bold text-sm sm:text-base text-black leading-tight text-center sm:text-left">
-                      GOD WILL SURELY BLESS THE FRUITS OF YOUR LABOUR IN JESUS NAME
+              {modalTab === "online" ? (
+                /* ─── Online Giving Form View ─── */
+                !isSubmitted ? (
+                  <form id="give-form" onSubmit={handlePaymentSubmit} className="w-full flex flex-col gap-5 sm:gap-6">
+                    {/* Header Title */}
+                    <div className="w-full" data-node-id="2086:1825">
+                      <h3 className="font-sans font-bold text-sm sm:text-base text-black leading-tight text-center sm:text-left">
+                        GOD WILL SURELY BLESS THE FRUITS OF YOUR LABOUR IN JESUS NAME
+                      </h3>
+                    </div>
+
+                    {errorMessage && (
+                      <div className="w-full p-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg">
+                        {errorMessage}
+                      </div>
+                    )}
+
+                    {/* Amount Field */}
+                    <div className="flex flex-col gap-1.5 items-start w-full" data-node-id="2086:1826">
+                      <label className="font-sans font-normal text-sm sm:text-base text-black">
+                        Amount
+                      </label>
+                      <div className="border-b border-[#d0d2d6] flex items-center justify-center py-2 w-full" data-node-id="2086:1828">
+                        <input
+                          type="number"
+                          step="any"
+                          min="0"
+                          value={amount}
+                          onChange={(e) => setAmount(e.target.value)}
+                          placeholder="0"
+                          required
+                          className="w-full text-center font-sans font-normal text-3xl sm:text-4xl text-black outline-none bg-transparent placeholder:text-gray-300"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Currency Dropdown */}
+                    <div className="flex flex-col gap-1.5 items-start w-full" data-node-id="2086:1830">
+                      <label className="font-sans font-normal text-sm sm:text-base text-black">
+                        Currency <span className="text-red-500">*</span>
+                      </label>
+                      <div className="relative w-full" data-node-id="2086:1832">
+                        <select
+                          value={currency}
+                          onChange={(e) => setCurrency(e.target.value)}
+                          required
+                          className="w-full appearance-none border border-[#d0d2d6] rounded-[8px] p-3 text-sm sm:text-base text-black bg-white outline-none focus:border-[#180c62] pr-10 cursor-pointer"
+                        >
+                          <option value="NGN">NGN (₦) - Nigerian Naira</option>
+                          <option value="USD">USD ($) - US Dollar</option>
+                          <option value="GBP">GBP (£) - British Pound</option>
+                          <option value="EUR">EUR (€) - Euro</option>
+                          <option value="CAD">CAD ($) - Canadian Dollar</option>
+                        </select>
+                        <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-400" data-name="fluent:chevron-down-20-filled">
+                          <Image
+                            src="/images/fluent-chevron-down.svg"
+                            alt=""
+                            width={24}
+                            height={24}
+                            className="size-5"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Type Dropdown */}
+                    <div className="flex flex-col gap-1.5 items-start w-full" data-node-id="2086:1836">
+                      <label className="font-sans font-normal text-sm sm:text-base text-black">
+                        Type <span className="text-red-500">*</span>
+                      </label>
+                      <div className="relative w-full" data-node-id="2086:1838">
+                        <select
+                          value={givingType}
+                          onChange={(e) => setGivingType(e.target.value)}
+                          required
+                          className={`w-full appearance-none border border-[#d0d2d6] rounded-[8px] p-3 text-sm sm:text-base bg-white outline-none focus:border-[#180c62] pr-10 cursor-pointer ${
+                            givingType ? "text-black" : "text-[#a8a8a8]"
+                          }`}
+                        >
+                          <option value="" disabled>Select option</option>
+                          <option value="Tithe">Tithe</option>
+                          <option value="Offering">Offering</option>
+                          <option value="Thanksgiving">Thanksgiving</option>
+                          <option value="Cathedral Project">Next Level Cathedral Project</option>
+                          <option value="Missions">Missions & Evangelism</option>
+                          <option value="Welfare">Welfare & Benevolence</option>
+                          <option value="First Fruit">First Fruit</option>
+                          <option value="Seed Faith">Seed Faith</option>
+                        </select>
+                        <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-400" data-name="fluent:chevron-down-20-filled">
+                          <Image
+                            src="/images/fluent-chevron-down.svg"
+                            alt=""
+                            width={24}
+                            height={24}
+                            className="size-5"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* First Name Field */}
+                    <div className="flex flex-col gap-1.5 items-start w-full" data-node-id="2086:1842">
+                      <label className="font-sans font-normal text-sm sm:text-base text-black">
+                        First Name <span className="text-red-500">*</span>
+                      </label>
+                      <div className="border border-[#d0d2d6] rounded-[8px] p-3 w-full" data-node-id="2086:1844">
+                        <input
+                          type="text"
+                          value={firstName}
+                          onChange={(e) => setFirstName(e.target.value)}
+                          placeholder="Enter first name"
+                          required
+                          className="w-full text-sm sm:text-base text-black outline-none bg-transparent placeholder:text-[#a8a8a8]"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Last Name Field */}
+                    <div className="flex flex-col gap-1.5 items-start w-full" data-node-id="2086:1848">
+                      <label className="font-sans font-normal text-sm sm:text-base text-black">
+                        Last Name <span className="text-red-500">*</span>
+                      </label>
+                      <div className="border border-[#d0d2d6] rounded-[8px] p-3 w-full" data-node-id="2086:1850">
+                        <input
+                          type="text"
+                          value={lastName}
+                          onChange={(e) => setLastName(e.target.value)}
+                          placeholder="Enter last name"
+                          required
+                          className="w-full text-sm sm:text-base text-black outline-none bg-transparent placeholder:text-[#a8a8a8]"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Email Field */}
+                    <div className="flex flex-col gap-1.5 items-start w-full" data-node-id="2086:1854">
+                      <label className="font-sans font-normal text-sm sm:text-base text-black">
+                        Email
+                      </label>
+                      <div className="border border-[#d0d2d6] rounded-[8px] p-3 w-full" data-node-id="2086:1856">
+                        <input
+                          type="email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          placeholder="Enter email address"
+                          className="w-full text-sm sm:text-base text-black outline-none bg-transparent placeholder:text-[#a8a8a8]"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Country Dropdown */}
+                    <div className="flex flex-col gap-1.5 items-start w-full" data-node-id="2086:1860">
+                      <label className="font-sans font-normal text-sm sm:text-base text-black">
+                        Country <span className="text-red-500">*</span>
+                      </label>
+                      <div className="relative w-full" data-node-id="2086:1862">
+                        <select
+                          value={country}
+                          onChange={(e) => setCountry(e.target.value)}
+                          required
+                          className="w-full appearance-none border border-[#d0d2d6] rounded-[8px] p-3 text-sm sm:text-base text-black bg-white outline-none focus:border-[#180c62] pr-10 cursor-pointer"
+                        >
+                          <option value="Nigeria">Nigeria</option>
+                          <option value="United Kingdom">United Kingdom</option>
+                          <option value="United States">United States</option>
+                          <option value="Canada">Canada</option>
+                          <option value="Ghana">Ghana</option>
+                          <option value="South Africa">South Africa</option>
+                          <option value="Other">Other</option>
+                        </select>
+                        <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-400" data-name="fluent:chevron-down-20-filled">
+                          <Image
+                            src="/images/fluent-chevron-down.svg"
+                            alt=""
+                            width={24}
+                            height={24}
+                            className="size-5"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Quick switch to Direct Bank Transfer */}
+                    <div className="text-center pt-2">
+                      <button
+                        type="button"
+                        onClick={() => setModalTab("bank")}
+                        className="text-xs sm:text-sm font-semibold text-[#180c62] hover:underline cursor-pointer inline-flex items-center gap-1.5"
+                      >
+                        <span>Prefer direct bank transfer?</span>
+                        <span className="underline">View Bank Transfer Accounts →</span>
+                      </button>
+                    </div>
+                  </form>
+                ) : (
+                  /* Success / Payment Gateway State */
+                  <div className="w-full flex flex-col items-center text-center gap-5 py-4">
+                    <div className="size-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shadow-sm">
+                      <Check className="size-7" />
+                    </div>
+                    <div>
+                      <h4 className="font-display font-recursive-sans font-bold text-xl sm:text-2xl text-[#0a0a0a] mb-1.5">
+                        Payment Gateway Initiated
+                      </h4>
+                      <p className="text-gray-600 text-sm max-w-md mx-auto">
+                        Thank you, <span className="font-semibold text-black">{firstName}</span>! Your giving of{" "}
+                        <span className="font-bold text-black">{currency} {amount}</span> for{" "}
+                        <span className="font-semibold text-black">{givingType}</span> has been logged.
+                      </p>
+                    </div>
+
+                    <div className="p-3.5 rounded-xl bg-gray-50 border border-gray-200 w-full text-left text-xs sm:text-sm space-y-1.5">
+                      <p><span className="text-gray-500">Name:</span> <span className="font-medium text-black">{firstName} {lastName}</span></p>
+                      {email && <p><span className="text-gray-500">Email:</span> <span className="font-medium text-black">{email}</span></p>}
+                      <p><span className="text-gray-500">Country:</span> <span className="font-medium text-black">{country}</span></p>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row gap-3 w-full pt-2">
+                      <button
+                        type="button"
+                        onClick={() => setIsSubmitted(false)}
+                        className="flex-1 py-2.5 px-5 rounded-full border border-gray-300 hover:bg-gray-50 font-semibold text-gray-700 text-xs sm:text-sm transition-colors cursor-pointer"
+                      >
+                        Back to form
+                      </button>
+                      <button
+                        type="button"
+                        onClick={resetModal}
+                        className="flex-1 py-2.5 px-5 rounded-full bg-[#180c62] hover:bg-[#251394] text-white font-semibold text-xs sm:text-sm transition-colors cursor-pointer shadow-md"
+                      >
+                        Done
+                      </button>
+                    </div>
+                  </div>
+                )
+              ) : (
+                /* ─── Direct Bank Transfer View ─── */
+                <div className="w-full flex flex-col gap-4">
+                  <div className="flex flex-col gap-1">
+                    <h3 className="font-sans font-bold text-sm sm:text-base text-black uppercase tracking-wide">
+                      Direct Bank Transfer Accounts
                     </h3>
+                    <p className="text-xs sm:text-sm text-gray-600">
+                      Transfer directly using any of our dedicated church accounts below. Click the copy button to quickly copy the account number.
+                    </p>
                   </div>
 
-                  {errorMessage && (
-                    <div className="w-full p-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg">
-                      {errorMessage}
-                    </div>
-                  )}
-
-                  {/* Amount Field */}
-                  <div className="flex flex-col gap-1.5 items-start w-full" data-node-id="2086:1826">
-                    <label className="font-sans font-normal text-sm sm:text-base text-black">
-                      Amount
-                    </label>
-                    <div className="border-b border-[#d0d2d6] flex items-center justify-center py-2 w-full" data-node-id="2086:1828">
-                      <input
-                        type="number"
-                        step="any"
-                        min="0"
-                        value={amount}
-                        onChange={(e) => setAmount(e.target.value)}
-                        placeholder="0"
-                        required
-                        className="w-full text-center font-sans font-normal text-3xl sm:text-4xl text-black outline-none bg-transparent placeholder:text-gray-300"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Currency Dropdown */}
-                  <div className="flex flex-col gap-1.5 items-start w-full" data-node-id="2086:1830">
-                    <label className="font-sans font-normal text-sm sm:text-base text-black">
-                      Currency <span className="text-red-500">*</span>
-                    </label>
-                    <div className="relative w-full" data-node-id="2086:1832">
-                      <select
-                        value={currency}
-                        onChange={(e) => setCurrency(e.target.value)}
-                        required
-                        className="w-full appearance-none border border-[#d0d2d6] rounded-[8px] p-3 text-sm sm:text-base text-black bg-white outline-none focus:border-[#180c62] pr-10 cursor-pointer"
-                      >
-                        <option value="NGN">NGN (₦) - Nigerian Naira</option>
-                        <option value="USD">USD ($) - US Dollar</option>
-                        <option value="GBP">GBP (£) - British Pound</option>
-                        <option value="EUR">EUR (€) - Euro</option>
-                        <option value="CAD">CAD ($) - Canadian Dollar</option>
-                      </select>
-                      <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-400" data-name="fluent:chevron-down-20-filled">
-                        <Image
-                          src="/images/fluent-chevron-down.svg"
-                          alt=""
-                          width={24}
-                          height={24}
-                          className="size-5"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Type Dropdown */}
-                  <div className="flex flex-col gap-1.5 items-start w-full" data-node-id="2086:1836">
-                    <label className="font-sans font-normal text-sm sm:text-base text-black">
-                      Type <span className="text-red-500">*</span>
-                    </label>
-                    <div className="relative w-full" data-node-id="2086:1838">
-                      <select
-                        value={givingType}
-                        onChange={(e) => setGivingType(e.target.value)}
-                        required
-                        className={`w-full appearance-none border border-[#d0d2d6] rounded-[8px] p-3 text-sm sm:text-base bg-white outline-none focus:border-[#180c62] pr-10 cursor-pointer ${
-                          givingType ? "text-black" : "text-[#a8a8a8]"
-                        }`}
-                      >
-                        <option value="" disabled>Select option</option>
-                        <option value="Tithe">Tithe</option>
-                        <option value="Offering">Offering</option>
-                        <option value="Thanksgiving">Thanksgiving</option>
-                        <option value="Cathedral Project">Next Level Cathedral Project</option>
-                        <option value="Missions">Missions & Evangelism</option>
-                        <option value="Welfare">Welfare & Benevolence</option>
-                        <option value="First Fruit">First Fruit</option>
-                        <option value="Seed Faith">Seed Faith</option>
-                      </select>
-                      <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-400" data-name="fluent:chevron-down-20-filled">
-                        <Image
-                          src="/images/fluent-chevron-down.svg"
-                          alt=""
-                          width={24}
-                          height={24}
-                          className="size-5"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* First Name Field */}
-                  <div className="flex flex-col gap-1.5 items-start w-full" data-node-id="2086:1842">
-                    <label className="font-sans font-normal text-sm sm:text-base text-black">
-                      First Name <span className="text-red-500">*</span>
-                    </label>
-                    <div className="border border-[#d0d2d6] rounded-[8px] p-3 w-full" data-node-id="2086:1844">
-                      <input
-                        type="text"
-                        value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)}
-                        placeholder="Enter first name"
-                        required
-                        className="w-full text-sm sm:text-base text-black outline-none bg-transparent placeholder:text-[#a8a8a8]"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Last Name Field */}
-                  <div className="flex flex-col gap-1.5 items-start w-full" data-node-id="2086:1848">
-                    <label className="font-sans font-normal text-sm sm:text-base text-black">
-                      Last Name <span className="text-red-500">*</span>
-                    </label>
-                    <div className="border border-[#d0d2d6] rounded-[8px] p-3 w-full" data-node-id="2086:1850">
-                      <input
-                        type="text"
-                        value={lastName}
-                        onChange={(e) => setLastName(e.target.value)}
-                        placeholder="Enter last name"
-                        required
-                        className="w-full text-sm sm:text-base text-black outline-none bg-transparent placeholder:text-[#a8a8a8]"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Email Field */}
-                  <div className="flex flex-col gap-1.5 items-start w-full" data-node-id="2086:1854">
-                    <label className="font-sans font-normal text-sm sm:text-base text-black">
-                      Email
-                    </label>
-                    <div className="border border-[#d0d2d6] rounded-[8px] p-3 w-full" data-node-id="2086:1856">
-                      <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Enter email address"
-                        className="w-full text-sm sm:text-base text-black outline-none bg-transparent placeholder:text-[#a8a8a8]"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Country Dropdown */}
-                  <div className="flex flex-col gap-1.5 items-start w-full" data-node-id="2086:1860">
-                    <label className="font-sans font-normal text-sm sm:text-base text-black">
-                      Country <span className="text-red-500">*</span>
-                    </label>
-                    <div className="relative w-full" data-node-id="2086:1862">
-                      <select
-                        value={country}
-                        onChange={(e) => setCountry(e.target.value)}
-                        required
-                        className="w-full appearance-none border border-[#d0d2d6] rounded-[8px] p-3 text-sm sm:text-base text-black bg-white outline-none focus:border-[#180c62] pr-10 cursor-pointer"
-                      >
-                        <option value="Nigeria">Nigeria</option>
-                        <option value="United Kingdom">United Kingdom</option>
-                        <option value="United States">United States</option>
-                        <option value="Canada">Canada</option>
-                        <option value="Ghana">Ghana</option>
-                        <option value="South Africa">South Africa</option>
-                        <option value="Other">Other</option>
-                      </select>
-                      <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-400" data-name="fluent:chevron-down-20-filled">
-                        <Image
-                          src="/images/fluent-chevron-down.svg"
-                          alt=""
-                          width={24}
-                          height={24}
-                          className="size-5"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Bank transfer toggle */}
-                  <div className="text-center pt-1">
-                    <button
-                      type="button"
-                      onClick={() => setShowBankAccounts(!showBankAccounts)}
-                      className="text-xs sm:text-sm font-semibold text-[#180c62] hover:underline cursor-pointer"
-                    >
-                      {showBankAccounts ? "Hide bank transfer accounts" : "Prefer direct bank transfer? View account numbers"}
-                    </button>
-                  </div>
-
-                  {showBankAccounts && (
-                    <div className="space-y-2.5 pt-1">
-                      {bankAccounts.map((item) => {
-                        const Icon = item.icon;
-                        const isCopied = copiedAccount === item.accountNumber;
-                        return (
-                          <div
-                            key={item.category}
-                            className="p-3.5 rounded-xl bg-gray-50 border border-gray-200 flex items-center justify-between gap-3"
-                          >
-                            <div className="flex items-center gap-2.5">
-                              <div className="size-8 rounded-lg bg-[#051202] text-[#f0a505] flex items-center justify-center shrink-0">
-                                <Icon className="size-4" />
-                              </div>
-                              <div>
-                                <p className="text-xs text-gray-500 font-semibold">{item.bank} • {item.category}</p>
-                                <p className="font-display font-recursive-mono font-bold text-sm text-[#0a0a0a]">{item.accountNumber}</p>
-                              </div>
+                  <div className="space-y-3 pt-1">
+                    {bankAccounts.map((item) => {
+                      const Icon = item.icon;
+                      const isCopied = copiedAccount === item.accountNumber;
+                      return (
+                        <div
+                          key={item.category}
+                          className="p-3.5 sm:p-4 rounded-xl bg-gray-50 border border-gray-200 hover:border-[#180c62]/30 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 shadow-sm"
+                        >
+                          <div className="flex items-start gap-3">
+                            <div className="size-10 rounded-xl bg-[#051202] text-[#f0a505] flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
+                              <Icon className="size-5" />
                             </div>
+                            <div className="space-y-0.5">
+                              <span className="inline-block text-[11px] font-bold uppercase tracking-wider text-[#180c62] bg-[#180c62]/10 px-2 py-0.5 rounded-md">
+                                {item.category}
+                              </span>
+                              <p className="text-xs font-semibold text-gray-700 pt-0.5">
+                                {item.bank} • <span className="font-normal text-gray-500">{item.accountName}</span>
+                              </p>
+                              <p className="font-display font-recursive-mono font-bold text-lg sm:text-xl text-[#0a0a0a] tracking-wider pt-0.5">
+                                {item.accountNumber}
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="flex justify-end sm:justify-center shrink-0">
                             <button
                               type="button"
                               onClick={() => copyToClipboard(item.accountNumber)}
-                              className={`px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer ${
+                              className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer shadow-sm ${
                                 isCopied
                                   ? "bg-emerald-600 text-white"
                                   : "bg-[#051202] text-white hover:bg-[#c88a04]"
                               }`}
                             >
-                              {isCopied ? "Copied" : "Copy"}
+                              {isCopied ? (
+                                <>
+                                  <Check className="size-3.5" />
+                                  <span>Copied</span>
+                                </>
+                              ) : (
+                                <>
+                                  <Copy className="size-3.5" />
+                                  <span>Copy</span>
+                                </>
+                              )}
                             </button>
                           </div>
-                        );
-                      })}
-                    </div>
-                  )}
-                </form>
-              ) : (
-                /* Success / Payment Gateway State */
-                <div className="w-full flex flex-col items-center text-center gap-5 py-4">
-                  <div className="size-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shadow-sm">
-                    <Check className="size-7" />
+                        </div>
+                      );
+                    })}
                   </div>
-                  <div>
-                    <h4 className="font-display font-recursive-sans font-bold text-xl sm:text-2xl text-[#0a0a0a] mb-1.5">
-                      Payment Gateway Initiated
-                    </h4>
-                    <p className="text-gray-600 text-sm max-w-md mx-auto">
-                      Thank you, <span className="font-semibold text-black">{firstName}</span>! Your giving of{" "}
-                      <span className="font-bold text-black">{currency} {amount}</span> for{" "}
-                      <span className="font-semibold text-black">{givingType}</span> has been logged.
+
+                  <div className="p-3.5 rounded-xl bg-blue-50/70 border border-blue-100 text-xs text-blue-900 flex items-start gap-2.5 mt-1">
+                    <span className="font-bold shrink-0 text-blue-700">Note:</span>
+                    <p className="leading-relaxed">
+                      Please include the purpose (e.g. &ldquo;Tithe&rdquo;, &ldquo;Cathedral Project&rdquo;, &ldquo;Offering&rdquo;) in your transfer narration. For receipts or confirmation, please contact the church administration.
                     </p>
-                  </div>
-
-                  <div className="p-3.5 rounded-xl bg-gray-50 border border-gray-200 w-full text-left text-xs sm:text-sm space-y-1.5">
-                    <p><span className="text-gray-500">Name:</span> <span className="font-medium text-black">{firstName} {lastName}</span></p>
-                    {email && <p><span className="text-gray-500">Email:</span> <span className="font-medium text-black">{email}</span></p>}
-                    <p><span className="text-gray-500">Country:</span> <span className="font-medium text-black">{country}</span></p>
-                  </div>
-
-                  <div className="flex flex-col sm:flex-row gap-3 w-full pt-2">
-                    <button
-                      type="button"
-                      onClick={() => setIsSubmitted(false)}
-                      className="flex-1 py-2.5 px-5 rounded-full border border-gray-300 hover:bg-gray-50 font-semibold text-gray-700 text-xs sm:text-sm transition-colors cursor-pointer"
-                    >
-                      Back to form
-                    </button>
-                    <button
-                      type="button"
-                      onClick={resetModal}
-                      className="flex-1 py-2.5 px-5 rounded-full bg-[#180c62] hover:bg-[#251394] text-white font-semibold text-xs sm:text-sm transition-colors cursor-pointer shadow-md"
-                    >
-                      Done
-                    </button>
                   </div>
                 </div>
               )}
             </div>
 
-            {/* Bottom Fixed Footer with Make Payment button (when not submitted) */}
-            {!isSubmitted && (
+            {/* Bottom Fixed Footer */}
+            {modalTab === "online" && !isSubmitted && (
               <div className="px-6 sm:px-8 py-3.5 shrink-0 border-t border-gray-100 bg-white w-full">
                 <button
                   type="submit"
@@ -692,6 +761,25 @@ export default function GivePage() {
                   data-node-id="2086:1866"
                 >
                   Make Payment
+                </button>
+              </div>
+            )}
+
+            {modalTab === "bank" && (
+              <div className="px-6 sm:px-8 py-3.5 shrink-0 border-t border-gray-100 bg-white w-full flex items-center justify-between gap-3">
+                <button
+                  type="button"
+                  onClick={() => setModalTab("online")}
+                  className="text-xs sm:text-sm font-semibold text-[#180c62] hover:underline cursor-pointer"
+                >
+                  ← Switch to Online Giving
+                </button>
+                <button
+                  type="button"
+                  onClick={resetModal}
+                  className="px-6 py-2.5 rounded-full bg-[#180c62] hover:bg-[#251394] text-white text-xs sm:text-sm font-semibold transition-all cursor-pointer shadow-md"
+                >
+                  Done
                 </button>
               </div>
             )}
