@@ -149,7 +149,7 @@ export function EventDetailsView({ event }: EventDetailsViewProps) {
 
   return (
     <div
-      className="w-full bg-white min-h-screen text-[#0a0a0a] pt-28 sm:pt-36 lg:pt-[150px] pb-16 lg:pb-24"
+      className="w-full bg-white min-h-screen text-[#0a0a0a] pt-[140px] pb-24 overflow-x-hidden"
       data-node-id="2096:6833"
       data-name="Event details"
     >
