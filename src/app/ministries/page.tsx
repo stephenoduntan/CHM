@@ -1,26 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import {
-  Users,
-  Music,
-  Heart,
-  BookOpen,
-  Shield,
-  Sparkles,
-  Baby,
-  HandHeart,
-  Cross,
-  Radio,
-  Settings,
-  GraduationCap,
-  Lightbulb,
-  Crown,
-  Home,
-  Droplet,
-  Megaphone,
-} from "lucide-react";
 import { Container } from "@/components/layout/Container";
-import { SITE_CONFIG } from "@/lib/constants";
 
 export const metadata = {
   title: "Ministries & Departments",
@@ -30,172 +10,155 @@ export const metadata = {
 const departments = [
   {
     name: "Children & Teens",
-    icon: Baby,
-    category: "Generations",
+    icon: "/images/departments/mingcute-baby-line.svg",
     description:
       "We nurture children and teens through Bible teaching, discipleship, and age-specific activities that help them grow in faith and community.",
   },
   {
     name: "Good Women",
-    icon: Heart,
-    category: "Fellowship",
+    icon: "/images/departments/ion-woman-outline.svg",
     description:
       "Good Women supports women through prayer, fellowship, discipleship, and outreach, helping them live out their faith in practical ways.",
   },
   {
     name: "Youth & Singles",
-    icon: Users,
-    category: "Generations",
+    icon: "/images/departments/foundation-torsos-male-female.svg",
     description:
       "Youth & Singles creates spaces for young adults to connect, grow in faith, and serve together through community, discipleship, and outreach.",
   },
   {
-    name: "Choir (Praise Team)",
-    icon: Music,
-    category: "Worship & Arts",
-    description:
-      "Choir leads the congregation in worship through music, preparing hearts to receive God's Word and celebrate His presence.",
-  },
-  {
     name: "Evangelism",
-    icon: Megaphone,
-    category: "Outreach",
+    icon: "/images/departments/fluent-megaphone-loud.svg",
     description:
-      "Evangelism equips members to share the gospel, reach new people, and invite the community to experience God's love through practical outreach.",
+      "Evangelism equips members to share the gospel, reach new people, and invite the community to experience God’s love through practical outreach.",
   },
   {
     name: "Counselling & Follow-Up",
-    icon: HandHeart,
-    category: "Care",
+    icon: "/images/departments/fluent-people-chat.svg",
     description:
-      "Counselling & Follow-Up provides care, support, and spiritual guidance for new believers and members navigating life's challenges.",
+      "Counselling & Follow-Up provides care, support, and spiritual guidance for new believers and members navigating life’s challenges.",
+  },
+  {
+    name: "Choir",
+    icon: "/images/departments/fluent-music-note.svg",
+    description:
+      "Choir leads the congregation in worship through music, preparing hearts to receive God’s Word and celebrate His presence.",
   },
   {
     name: "Hospital Ministry",
-    icon: Heart,
-    category: "Outreach",
+    icon: "/images/departments/fluent-briefcase-medical.svg",
     description:
-      "Hospital Ministry visits and prays for the sick, bringing comfort, hope, and spiritual care to those in medical centers and homes.",
+      "Hospital Ministry visits and prays for the sick, bringing comfort, hope, and spiritual care to those in need.",
   },
   {
     name: "Prison Ministry",
-    icon: Shield,
-    category: "Outreach",
+    icon: "/images/departments/circle-x.svg",
     description:
-      "Prison Ministry shares the gospel, provides support, and demonstrates God's love to those in correctional facilities.",
+      "Prison Ministry shares the gospel, provides support, and demonstrates God’s love to those in correctional facilities.",
   },
   {
     name: "Sunday School",
-    icon: BookOpen,
-    category: "Discipleship",
+    icon: "/images/departments/book-open.svg",
     description:
-      "Sunday School teaches biblical foundations, doctrine, and practical living to help members deepen their understanding of God's Word.",
+      "Sunday School teaches biblical foundations, doctrine, and practical living to help members deepen their understanding of God’s Word.",
   },
   {
     name: "Tracts & Publications",
-    icon: BookOpen,
-    category: "Media",
+    icon: "/images/departments/book.svg",
     description:
       "Tracts & Publications distributes resources that help people learn about Jesus, grow in faith, and share the gospel with others.",
   },
   {
     name: "Ushering",
-    icon: Users,
-    category: "Service",
+    icon: "/images/departments/users.svg",
     description:
       "Ushering serves the congregation by creating a welcoming environment, guiding guests, and supporting the smooth flow of services.",
   },
   {
-    name: "Engineering & Technical",
-    icon: Settings,
-    category: "Media",
+    name: "Engineering",
+    icon: "/images/departments/settings.svg",
     description:
-      "Engineering supports the technical aspects of worship, ensuring sound, lighting, live broadcasts, and media systems serve effectively.",
+      "Engineering supports the technical aspects of worship, ensuring sound, lighting, and media systems serve the congregation effectively.",
   },
   {
     name: "Prayer Champions",
-    icon: Sparkles,
-    category: "Spiritual",
+    icon: "/images/departments/mingcute-pray-line.svg",
     description:
-      "Prayer Champions leads the church in intercession, fasting, and corporate prayer, standing in the gap for the church and the nation.",
+      "Prayer Champions leads the church in intercession, fasting, and corporate prayer, seeking God’s presence and guidance.",
   },
   {
     name: "Welfare",
-    icon: HandHeart,
-    category: "Care",
+    icon: "/images/departments/heart.svg",
     description:
       "Welfare cares for members in need, providing practical support and connecting them with resources for spiritual and material well-being.",
   },
   {
     name: "House Fellowship",
-    icon: Home,
-    category: "Fellowship",
+    icon: "/images/departments/home.svg",
     description:
-      "House Fellowship gathers members in neighborhood groups for Bible study, prayer, and community, connecting beyond Sunday services.",
+      "House Fellowship gathers members in smaller groups for Bible study, prayer, and community, helping people connect beyond Sunday services.",
   },
   {
-    name: "Believers' Class",
-    icon: BookOpen,
-    category: "Discipleship",
+    name: "Believers’ Class",
+    icon: "/images/departments/book.svg",
     description:
-      "Believers' Class prepares new converts for baptism and membership, grounding them in foundational Christian doctrine and practice.",
+      "Believers’ Class prepares new converts for baptism and membership, grounding them in foundational Christian doctrine and practice.",
   },
   {
     name: "Baptismal Class",
-    icon: Droplet,
-    category: "Discipleship",
+    icon: "/images/departments/droplet.svg",
     description:
-      "Baptismal Class prepares candidates for water baptism, teaching the biblical meaning and significance of this public declaration of faith.",
+      "Baptismal Class prepares candidates for water baptism, teaching the meaning and significance of this public declaration of faith.",
   },
   {
     name: "Sanitation",
-    icon: Sparkles,
-    category: "Service",
+    icon: "/images/departments/sparkles.svg",
     description:
-      "Sanitation maintains a clean, safe, and dignified environment for worship, ensuring the church facilities reflect God's beauty and order.",
+      "Sanitation maintains a clean, safe, and dignified environment for worship, ensuring the church facilities reflect God’s beauty and order.",
   },
   {
     name: "Protocol",
-    icon: Shield,
-    category: "Service",
+    icon: "/images/departments/shield.svg",
     description:
-      "Protocol supports the church's hospitality and guest services, especially for visiting ministers, dignitaries, and special events.",
+      "Protocol supports the church’s hospitality and guest services, especially for visiting ministers, dignitaries, and special events.",
   },
   {
     name: "Security",
-    icon: Shield,
-    category: "Service",
+    icon: "/images/departments/mingcute-umbrella-line.svg",
     description:
-      "Security provides a safe and orderly environment for members and guests during services, events, and church activities.",
+      "Security provides a safe and secure environment for members and guests during services, events, and church activities.",
+  },
+  {
+    name: "Elders",
+    icon: "/images/departments/users.svg",
+    description:
+      "Elders provide spiritual leadership, guidance, and pastoral care, helping members navigate life and faith with wisdom.",
   },
   {
     name: "Workers in Training",
-    icon: GraduationCap,
-    category: "Leadership",
+    icon: "/images/departments/graduation-cap.svg",
     description:
-      "Workers in Training equips new volunteers with the skills, doctrine, and servant heart needed to serve effectively across church ministries.",
+      "Workers in Training equips new volunteers with the skills, doctrine, and heart needed to serve effectively across church ministries.",
   },
   {
     name: "Wisdom Club",
-    icon: Lightbulb,
-    category: "Fellowship",
+    icon: "/images/departments/lightbulb.svg",
     description:
-      "Wisdom Club disciples and mentors senior members, helping them apply biblical wisdom to family, legacy, and community impact.",
+      "Wisdom Club disciples and mentors older adults, helping them apply biblical wisdom to life, family, and community.",
   },
   {
-    name: "King's Diadem",
-    icon: Crown,
-    category: "Leadership",
+    name: "King’s Diadem",
+    icon: "/images/departments/crown.svg",
     description:
-      "King's Diadem supports women in leadership and ministry, helping them grow in confidence, character, and royal purpose.",
+      "King’s Diadem supports women in leadership and ministry, helping them grow in confidence, character, and service to God.",
   },
 ];
 
 export default function MinistriesPage() {
   return (
-    <div className="w-full bg-white pb-24">
+    <div className="w-full bg-white">
       {/* ─── Hero ─────────────────────────────────────────────────── */}
-      <section className="relative h-[720px] bg-[#051202] text-white flex items-center justify-center overflow-hidden">
+      <section className="relative h-[640px] sm:h-[720px] bg-[#051202] text-white flex items-center justify-center overflow-hidden">
         <Image
           src="https://images.unsplash.com/photo-1510590337019-5ef8d3d32116?auto=format&fit=crop&q=80&w=1920"
           alt="Ministries and Departments"
@@ -218,66 +181,46 @@ export default function MinistriesPage() {
         </Container>
       </section>
 
-      {/* ─── Invitation Banner ────────────────────────────────────── */}
-      <section className="py-12 bg-gray-50 border-b border-gray-200">
-        <Container>
-          <div className="p-8 sm:p-10 rounded-[28px] bg-white border border-gray-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="max-w-2xl">
-              <h2 className="font-sans font-bold text-2xl text-[#051202] mb-2">
-                Serve in God&apos;s House
-              </h2>
-              <p className="text-gray-600 text-base leading-relaxed">
-                You are welcome to join any of the following departments as a worker in RCCG Court of His Majesty. Simply ask any of our ushers on Sunday or connect with our team online.
-              </p>
-            </div>
-            <Link
-              href="#join"
-              className="px-8 py-3.5 rounded-full font-semibold text-white bg-[#051202] hover:bg-[#c8a96e] hover:text-[#051202] transition-colors whitespace-nowrap text-sm uppercase tracking-wider shadow-md"
-            >
-              Sign Up as Worker
-            </Link>
+      {/* ─── Invitation Banner & Department Grid (Figma node 2086:638) ──────── */}
+      <section className="pt-16 sm:pt-20 lg:pt-[84px] pb-20 sm:pb-24 lg:pb-[124px] bg-white">
+        <Container className="max-w-[1440px]">
+          {/* Invitation Banner (node 2086:639 & 2086:640) */}
+          <div className="mb-14 sm:mb-16 lg:mb-[64px]">
+            <p className="font-sans font-normal text-lg sm:text-xl lg:text-[24px] text-[#3d3d3d] leading-relaxed text-justify sm:text-left">
+              You are welcome to join any of the following departments as a worker in RCCG Court of His Majesty. Simply ask any of our ushers to guide you on what to do.
+            </p>
           </div>
-        </Container>
-      </section>
 
-      {/* ─── Departments Grid ─────────────────────────────────────── */}
-      <section className="py-16 lg:py-24 bg-white">
-        <Container>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {departments.map((dept) => {
-              const Icon = dept.icon;
-              return (
-                <div
-                  key={dept.name}
-                  className="p-8 rounded-[28px] bg-gray-50/70 border border-gray-200/80 hover:border-[#c8a96e] hover:bg-white hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
-                >
-                  <div>
-                    <div className="flex items-center justify-between mb-6">
-                      <div className="size-14 rounded-2xl bg-[#051202] text-[#c8a96e] flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
-                        <Icon className="size-7" />
-                      </div>
-                      <span className="text-xs font-semibold uppercase tracking-wider text-gray-500 bg-gray-200/60 px-3 py-1 rounded-full">
-                        {dept.category}
-                      </span>
-                    </div>
-
-                    <h3 className="font-sans font-bold text-2xl text-[#051202] mb-3 group-hover:text-[#c8a96e] transition-colors">
-                      {dept.name}
-                    </h3>
-                    <p className="text-gray-600 text-sm leading-relaxed mb-6">
-                      {dept.description}
-                    </p>
-                  </div>
-
-                  <Link
-                    href={`/connect?department=${encodeURIComponent(dept.name)}`}
-                    className="inline-flex items-center text-sm font-semibold text-[#051202] group-hover:text-[#c8a96e] underline underline-offset-4"
-                  >
-                    Join this team →
-                  </Link>
+          {/* Department Grid (node 2086:641) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 sm:gap-x-10 lg:gap-x-12 gap-y-12 sm:gap-y-14 lg:gap-y-16">
+            {departments.map((dept) => (
+              <div
+                key={dept.name}
+                className="flex flex-col items-start gap-4 sm:gap-6 group"
+              >
+                <div className="size-12 shrink-0 relative flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                  <Image
+                    src={dept.icon}
+                    alt={dept.name}
+                    width={48}
+                    height={48}
+                    className="size-12 object-contain"
+                  />
                 </div>
-              );
-            })}
+
+                <div className="w-full">
+                  <h3 className="font-display font-recursive-sans font-semibold text-2xl sm:text-3xl lg:text-[36px] text-[#0a0a0a] tracking-tight leading-snug">
+                    {dept.name}
+                  </h3>
+                </div>
+
+                <div className="w-full">
+                  <p className="font-sans font-normal text-base sm:text-lg lg:text-[20px] text-[#0a0a0a] leading-relaxed">
+                    {dept.description}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </Container>
       </section>
@@ -312,4 +255,3 @@ export default function MinistriesPage() {
     </div>
   );
 }
-
