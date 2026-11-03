@@ -56,7 +56,7 @@ export default function EventsPage() {
   return (
     <div className="w-full bg-white pb-24">
       {/* ─── Hero ─────────────────────────────────────────────────── */}
-      <section className="relative min-h-[420px] lg:min-h-[480px] bg-[#051202] text-white flex items-center justify-center overflow-hidden">
+      <section className="relative h-[720px] bg-[#051202] text-white flex items-center justify-center overflow-hidden">
         <Image
           src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=1920"
           alt="Church Events"

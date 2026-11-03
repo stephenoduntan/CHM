@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -24,6 +24,25 @@ const DARK_HEADER_ROUTES = [
 
 export function Header({ variant }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const headerHeight = headerRef.current ? headerRef.current.offsetHeight : 124;
+
+      if (scrollY > headerHeight) {
+        setIsSticky(true);
+      } else if (scrollY <= 20) {
+        setIsSticky(false);
+      }
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   const pathname = usePathname();
 
   // Determine variant: explicit prop takes precedence, otherwise auto-detect from route
@@ -37,12 +56,18 @@ export function Header({ variant }: HeaderProps) {
   return (
     <>
       <header
-        className={`w-full transition-colors duration-200 absolute z-40 ${
-          isDark
-            ? "bg-[#051202] text-white border-b border-white/10"
-            : "bg-white text-[#242424] border-b border-gray-100/60"
-        }`}
-      >
+        ref={headerRef}
+        className={`w-full transition-all duration-300 ${
+          isSticky
+            ? `fixed top-0 left-0 z-50 animate-header-slide-down shadow-md ${
+                isDark
+                  ? "bg-[#051202]/95 backdrop-blur-md text-white border-b border-white/10"
+                  : "bg-white/95 backdrop-blur-md text-[#242424] border-b border-gray-100/80"
+              }`
+            : `absolute top-0 left-0 z-40 bg-transparent border-b border-transparent ${
+                isDark ? "text-white" : "text-[#242424]"
+              }`
+        }`}>
         <Container>
           <div
             className="flex items-center justify-between h-[124px] sm:h-[124px] relative w-full"
