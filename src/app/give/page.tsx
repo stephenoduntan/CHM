@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { Check, Copy, Heart, Building2, Gift, Globe, X } from "lucide-react";
+import { Check, Copy, Heart, Building2, Gift, Globe, ArrowLeft } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 
 const bankAccounts = [
@@ -41,10 +41,24 @@ export default function GivePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [copiedAccount, setCopiedAccount] = useState<string | null>(null);
 
+  // Modal form states
+  const [amount, setAmount] = useState("");
+  const [currency, setCurrency] = useState("NGN");
+  const [givingType, setGivingType] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [country, setCountry] = useState("Nigeria");
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showBankAccounts, setShowBankAccounts] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
   // Close modal on Escape key and prevent background scroll
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setIsModalOpen(false);
+      if (e.key === "Escape") {
+        setIsModalOpen(false);
+      }
     };
     if (isModalOpen) {
       document.body.style.overflow = "hidden";
@@ -62,6 +76,44 @@ export default function GivePage() {
     navigator.clipboard.writeText(accountNum);
     setCopiedAccount(accountNum);
     setTimeout(() => setCopiedAccount(null), 2500);
+  };
+
+  const handlePaymentSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!amount || parseFloat(amount) <= 0) {
+      setErrorMessage("Please enter a valid amount.");
+      return;
+    }
+    if (!currency) {
+      setErrorMessage("Please select a currency.");
+      return;
+    }
+    if (!givingType) {
+      setErrorMessage("Please select a giving type.");
+      return;
+    }
+    if (!firstName.trim()) {
+      setErrorMessage("Please enter your first name.");
+      return;
+    }
+    if (!lastName.trim()) {
+      setErrorMessage("Please enter your last name.");
+      return;
+    }
+    if (!country) {
+      setErrorMessage("Please select your country.");
+      return;
+    }
+
+    setErrorMessage("");
+    setIsSubmitted(true);
+  };
+
+  const resetModal = () => {
+    setIsModalOpen(false);
+    setIsSubmitted(false);
+    setShowBankAccounts(false);
+    setErrorMessage("");
   };
 
   return (
@@ -214,92 +266,317 @@ export default function GivePage() {
         </Container>
       </section>
 
-      {/* ─── Giving Modal (Opens on "Click here to Give") ────────────── */}
+      {/* ─── Give CTA Modal (Figma node 2086:1821) ────────────────── */}
       {isModalOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
-          onClick={() => setIsModalOpen(false)}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200 overflow-y-auto"
+          onClick={resetModal}
         >
           <div
-            className="bg-white rounded-[28px] max-w-2xl w-full p-6 sm:p-8 relative shadow-2xl overflow-y-auto max-h-[90vh] animate-in zoom-in-95 duration-200"
+            className="bg-white rounded-[16px] max-w-[680px] w-full p-6 sm:p-10 relative shadow-2xl overflow-hidden my-8 animate-in zoom-in-95 duration-200 flex flex-col gap-6 sm:gap-[40px] items-center"
             onClick={(e) => e.stopPropagation()}
+            data-node-id="2086:1821"
+            data-name="Give"
           >
-            <div className="flex items-center justify-between pb-4 border-b border-gray-100 mb-6">
-              <div>
-                <h3 className="font-display font-recursive-sans font-bold text-2xl sm:text-3xl text-[#0a0a0a]">
-                  Direct Bank Transfer
-                </h3>
-                <p className="text-sm text-gray-500 mt-1">
-                  Click any account number to copy it to your banking app.
-                </p>
-              </div>
+            {/* Top Dismiss Button */}
+            <div className="flex items-center justify-end w-full" data-node-id="2094:5813">
               <button
                 type="button"
-                onClick={() => setIsModalOpen(false)}
-                className="size-10 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 flex items-center justify-center transition-colors cursor-pointer"
-                aria-label="Close modal"
+                onClick={resetModal}
+                className="size-10 rounded-full hover:bg-gray-100 flex items-center justify-center transition-colors cursor-pointer"
+                data-node-id="2094:5814"
+                data-name="fluent:dismiss-16-filled"
+                aria-label="Close"
               >
-                <X className="size-5" />
+                <Image
+                  src="/images/fluent-dismiss.svg"
+                  alt="Close"
+                  width={40}
+                  height={40}
+                  className="size-8 sm:size-10 object-contain"
+                />
               </button>
             </div>
 
-            <div className="space-y-4">
-              {bankAccounts.map((item) => {
-                const Icon = item.icon;
-                const isCopied = copiedAccount === item.accountNumber;
+            {!isSubmitted ? (
+              <form onSubmit={handlePaymentSubmit} className="w-full flex flex-col gap-6 sm:gap-[24px]">
+                {/* Header Title */}
+                <div className="w-full" data-node-id="2086:1825">
+                  <h3 className="font-sans font-bold text-base sm:text-[18px] text-black leading-tight text-center sm:text-left">
+                    GOD WILL SURELY BLESS THE FRUITS OF YOUR LABOUR IN JESUS NAME
+                  </h3>
+                </div>
 
-                return (
-                  <div
-                    key={item.category}
-                    className="p-5 sm:p-6 rounded-2xl bg-gray-50 border border-gray-200 hover:border-[#f0a505] transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4"
-                  >
-                    <div className="flex items-center gap-3.5">
-                      <div className="size-11 rounded-xl bg-[#051202] text-[#f0a505] flex items-center justify-center shrink-0">
-                        <Icon className="size-5" />
-                      </div>
-                      <div>
-                        <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">
-                          {item.bank}
-                        </span>
-                        <h4 className="font-sans font-bold text-base sm:text-lg text-[#0a0a0a]">
-                          {item.category}
-                        </h4>
-                        <p className="text-xs text-gray-500 mt-0.5">
-                          {item.accountName}
-                        </p>
-                      </div>
-                    </div>
+                {errorMessage && (
+                  <div className="w-full p-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg">
+                    {errorMessage}
+                  </div>
+                )}
 
-                    <div className="flex items-center justify-between sm:justify-end gap-3 pt-3 sm:pt-0 border-t sm:border-t-0 border-gray-200">
-                      <span className="font-display font-recursive-mono font-bold text-lg sm:text-xl text-[#0a0a0a]">
-                        {item.accountNumber}
-                      </span>
-                      <button
-                        type="button"
-                        onClick={() => copyToClipboard(item.accountNumber)}
-                        className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer ${
-                          isCopied
-                            ? "bg-emerald-600 text-white"
-                            : "bg-[#051202] text-white hover:bg-[#c88a04]"
-                        }`}
-                      >
-                        {isCopied ? (
-                          <>
-                            <Check className="size-3.5" />
-                            <span>Copied</span>
-                          </>
-                        ) : (
-                          <>
-                            <Copy className="size-3.5" />
-                            <span>Copy</span>
-                          </>
-                        )}
-                      </button>
+                {/* Amount Field */}
+                <div className="flex flex-col gap-2 items-start w-full" data-node-id="2086:1826">
+                  <label className="font-sans font-normal text-base sm:text-[18px] text-black">
+                    Amount
+                  </label>
+                  <div className="border-b border-[#d0d2d6] flex items-center justify-center py-2 sm:py-[16px] w-full" data-node-id="2086:1828">
+                    <input
+                      type="number"
+                      step="any"
+                      min="0"
+                      value={amount}
+                      onChange={(e) => setAmount(e.target.value)}
+                      placeholder="0"
+                      required
+                      className="w-full text-center font-sans font-normal text-3xl sm:text-[48px] text-black outline-none bg-transparent placeholder:text-gray-300"
+                    />
+                  </div>
+                </div>
+
+                {/* Currency Dropdown */}
+                <div className="flex flex-col gap-2 items-start w-full" data-node-id="2086:1830">
+                  <label className="font-sans font-normal text-base sm:text-[18px] text-black">
+                    Currency <span className="text-red-500">*</span>
+                  </label>
+                  <div className="relative w-full" data-node-id="2086:1832">
+                    <select
+                      value={currency}
+                      onChange={(e) => setCurrency(e.target.value)}
+                      required
+                      className="w-full appearance-none border border-[#d0d2d6] rounded-[8px] p-3.5 sm:p-[16px] text-base sm:text-[20px] text-black bg-white outline-none focus:border-[#180c62] pr-12 cursor-pointer"
+                    >
+                      <option value="NGN">NGN (₦) - Nigerian Naira</option>
+                      <option value="USD">USD ($) - US Dollar</option>
+                      <option value="GBP">GBP (£) - British Pound</option>
+                      <option value="EUR">EUR (€) - Euro</option>
+                      <option value="CAD">CAD ($) - Canadian Dollar</option>
+                    </select>
+                    <div className="pointer-events-none absolute inset-y-0 right-3 sm:right-4 flex items-center" data-name="fluent:chevron-down-20-filled">
+                      <Image
+                        src="/images/fluent-chevron-down.svg"
+                        alt=""
+                        width={32}
+                        height={32}
+                        className="size-6 sm:size-8"
+                      />
                     </div>
                   </div>
-                );
-              })}
-            </div>
+                </div>
+
+                {/* Type Dropdown */}
+                <div className="flex flex-col gap-2 items-start w-full" data-node-id="2086:1836">
+                  <label className="font-sans font-normal text-base sm:text-[18px] text-black">
+                    Type <span className="text-red-500">*</span>
+                  </label>
+                  <div className="relative w-full" data-node-id="2086:1838">
+                    <select
+                      value={givingType}
+                      onChange={(e) => setGivingType(e.target.value)}
+                      required
+                      className={`w-full appearance-none border border-[#d0d2d6] rounded-[8px] p-3.5 sm:p-[16px] text-base sm:text-[20px] bg-white outline-none focus:border-[#180c62] pr-12 cursor-pointer ${
+                        givingType ? "text-black" : "text-[#a8a8a8]"
+                      }`}
+                    >
+                      <option value="" disabled>Select option</option>
+                      <option value="Tithe">Tithe</option>
+                      <option value="Offering">Offering</option>
+                      <option value="Thanksgiving">Thanksgiving</option>
+                      <option value="Cathedral Project">Next Level Cathedral Project</option>
+                      <option value="Missions">Missions & Evangelism</option>
+                      <option value="Welfare">Welfare & Benevolence</option>
+                      <option value="First Fruit">First Fruit</option>
+                      <option value="Seed Faith">Seed Faith</option>
+                    </select>
+                    <div className="pointer-events-none absolute inset-y-0 right-3 sm:right-4 flex items-center" data-name="fluent:chevron-down-20-filled">
+                      <Image
+                        src="/images/fluent-chevron-down.svg"
+                        alt=""
+                        width={32}
+                        height={32}
+                        className="size-6 sm:size-8"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* First Name Field */}
+                <div className="flex flex-col gap-2 items-start w-full" data-node-id="2086:1842">
+                  <label className="font-sans font-normal text-base sm:text-[18px] text-black">
+                    First Name <span className="text-red-500">*</span>
+                  </label>
+                  <div className="border border-[#d0d2d6] rounded-[8px] p-3.5 sm:p-[16px] w-full" data-node-id="2086:1844">
+                    <input
+                      type="text"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      placeholder="Enter first name"
+                      required
+                      className="w-full text-base sm:text-[20px] text-black outline-none bg-transparent placeholder:text-[#a8a8a8]"
+                    />
+                  </div>
+                </div>
+
+                {/* Last Name Field */}
+                <div className="flex flex-col gap-2 items-start w-full" data-node-id="2086:1848">
+                  <label className="font-sans font-normal text-base sm:text-[18px] text-black">
+                    Last Name <span className="text-red-500">*</span>
+                  </label>
+                  <div className="border border-[#d0d2d6] rounded-[8px] p-3.5 sm:p-[16px] w-full" data-node-id="2086:1850">
+                    <input
+                      type="text"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      placeholder="Enter last name"
+                      required
+                      className="w-full text-base sm:text-[20px] text-black outline-none bg-transparent placeholder:text-[#a8a8a8]"
+                    />
+                  </div>
+                </div>
+
+                {/* Email Field */}
+                <div className="flex flex-col gap-2 items-start w-full" data-node-id="2086:1854">
+                  <label className="font-sans font-normal text-base sm:text-[18px] text-black">
+                    Email
+                  </label>
+                  <div className="border border-[#d0d2d6] rounded-[8px] p-3.5 sm:p-[16px] w-full" data-node-id="2086:1856">
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Enter email address"
+                      className="w-full text-base sm:text-[20px] text-black outline-none bg-transparent placeholder:text-[#a8a8a8]"
+                    />
+                  </div>
+                </div>
+
+                {/* Country Dropdown */}
+                <div className="flex flex-col gap-2 items-start w-full" data-node-id="2086:1860">
+                  <label className="font-sans font-normal text-base sm:text-[18px] text-black">
+                    Country <span className="text-red-500">*</span>
+                  </label>
+                  <div className="relative w-full" data-node-id="2086:1862">
+                    <select
+                      value={country}
+                      onChange={(e) => setCountry(e.target.value)}
+                      required
+                      className="w-full appearance-none border border-[#d0d2d6] rounded-[8px] p-3.5 sm:p-[16px] text-base sm:text-[20px] text-black bg-white outline-none focus:border-[#180c62] pr-12 cursor-pointer"
+                    >
+                      <option value="Nigeria">Nigeria</option>
+                      <option value="United Kingdom">United Kingdom</option>
+                      <option value="United States">United States</option>
+                      <option value="Canada">Canada</option>
+                      <option value="Ghana">Ghana</option>
+                      <option value="South Africa">South Africa</option>
+                      <option value="Other">Other</option>
+                    </select>
+                    <div className="pointer-events-none absolute inset-y-0 right-3 sm:right-4 flex items-center" data-name="fluent:chevron-down-20-filled">
+                      <Image
+                        src="/images/fluent-chevron-down.svg"
+                        alt=""
+                        width={32}
+                        height={32}
+                        className="size-6 sm:size-8"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Make Payment CTA Button */}
+                <button
+                  type="submit"
+                  className="bg-[#180c62] hover:bg-[#251394] text-white font-sans font-semibold text-base sm:text-[18px] h-[56px] sm:h-[60px] rounded-[36px] w-full flex items-center justify-center transition-all cursor-pointer shadow-md hover:shadow-lg mt-2 shrink-0"
+                  data-node-id="2086:1866"
+                >
+                  Make Payment
+                </button>
+
+                {/* Option to toggle direct bank transfer accounts */}
+                <div className="text-center pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowBankAccounts(!showBankAccounts)}
+                    className="text-sm font-semibold text-[#180c62] hover:underline cursor-pointer"
+                  >
+                    {showBankAccounts ? "Hide bank transfer accounts" : "Prefer direct bank transfer? View account numbers"}
+                  </button>
+                </div>
+
+                {showBankAccounts && (
+                  <div className="space-y-3 pt-2">
+                    {bankAccounts.map((item) => {
+                      const Icon = item.icon;
+                      const isCopied = copiedAccount === item.accountNumber;
+                      return (
+                        <div
+                          key={item.category}
+                          className="p-4 rounded-xl bg-gray-50 border border-gray-200 flex items-center justify-between gap-3"
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className="size-9 rounded-lg bg-[#051202] text-[#f0a505] flex items-center justify-center shrink-0">
+                              <Icon className="size-4" />
+                            </div>
+                            <div>
+                              <p className="text-xs text-gray-500 font-semibold">{item.bank} • {item.category}</p>
+                              <p className="font-display font-recursive-mono font-bold text-sm text-[#0a0a0a]">{item.accountNumber}</p>
+                            </div>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => copyToClipboard(item.accountNumber)}
+                            className={`px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer ${
+                              isCopied
+                                ? "bg-emerald-600 text-white"
+                                : "bg-[#051202] text-white hover:bg-[#c88a04]"
+                            }`}
+                          >
+                            {isCopied ? "Copied" : "Copy"}
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </form>
+            ) : (
+              /* Success / Payment Gateway State */
+              <div className="w-full flex flex-col items-center text-center gap-6 py-6">
+                <div className="size-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shadow-sm">
+                  <Check className="size-8" />
+                </div>
+                <div>
+                  <h4 className="font-display font-recursive-sans font-bold text-2xl text-[#0a0a0a] mb-2">
+                    Payment Gateway Initiated
+                  </h4>
+                  <p className="text-gray-600 text-base max-w-md mx-auto">
+                    Thank you, <span className="font-semibold text-black">{firstName}</span>! Your giving of{" "}
+                    <span className="font-bold text-black">{currency} {amount}</span> for{" "}
+                    <span className="font-semibold text-black">{givingType}</span> has been logged.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-gray-50 border border-gray-200 w-full text-left text-sm space-y-2">
+                  <p><span className="text-gray-500">Name:</span> <span className="font-medium text-black">{firstName} {lastName}</span></p>
+                  {email && <p><span className="text-gray-500">Email:</span> <span className="font-medium text-black">{email}</span></p>}
+                  <p><span className="text-gray-500">Country:</span> <span className="font-medium text-black">{country}</span></p>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-3 w-full">
+                  <button
+                    type="button"
+                    onClick={() => setIsSubmitted(false)}
+                    className="flex-1 py-3 px-6 rounded-full border border-gray-300 hover:bg-gray-50 font-semibold text-gray-700 text-sm transition-colors cursor-pointer"
+                  >
+                    Back to form
+                  </button>
+                  <button
+                    type="button"
+                    onClick={resetModal}
+                    className="flex-1 py-3 px-6 rounded-full bg-[#180c62] hover:bg-[#251394] text-white font-semibold text-sm transition-colors cursor-pointer shadow-md"
+                  >
+                    Done
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
