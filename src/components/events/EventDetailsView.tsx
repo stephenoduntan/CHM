@@ -440,3 +440,4 @@ export function EventDetailsView({ event }: EventDetailsViewProps) {
     </div>
   );
 }
+

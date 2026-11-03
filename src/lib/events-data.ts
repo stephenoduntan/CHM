@@ -40,7 +40,7 @@ export const EVENTS_DETAILS: Record<string, EventDetail> = {
     churchName: "RCCG Court of His Majesty",
     addressLine1: "163 Ipaja Road, Abesan Estate Gate,",
     addressLine2: "Lagos, Nigeria",
-    posterImage: "/images/events/fod-2026-poster.png",
+    posterImage: "/images/events/fod-2026-poster.webp",
     aboutTitle: "About the conference",
     overviewParagraph1:
       "Join RCCG Court of His Majesty for the 2026 Festival of Destiny Conference, themed “CHOOSE LIFE”.",
@@ -72,7 +72,7 @@ export const EVENTS_DETAILS: Record<string, EventDetail> = {
     churchName: "RCCG Court of His Majesty",
     addressLine1: "163 Ipaja Road, Abesan Estate Gate,",
     addressLine2: "Lagos, Nigeria",
-    posterImage: "/images/events/fod-2026-poster.png",
+    posterImage: "/images/events/fod-2026-poster.webp",
     aboutTitle: "About the conference",
     overviewParagraph1:
       "Join RCCG Court of His Majesty for the Men’s Annual Conference, themed “Kingdom Men of Impact”.",
@@ -227,3 +227,4 @@ export function getEventBySlug(slug?: string): EventDetail {
   if (!slug) return DEFAULT_EVENT;
   return EVENTS_DETAILS[slug] || DEFAULT_EVENT;
 }
+

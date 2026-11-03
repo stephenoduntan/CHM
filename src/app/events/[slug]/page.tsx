@@ -38,3 +38,4 @@ export default async function EventDetailPage({ params }: PageProps) {
 
   return <EventDetailsView event={event} />;
 }
+

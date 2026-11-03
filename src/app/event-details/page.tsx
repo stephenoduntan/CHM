@@ -22,3 +22,4 @@ export const metadata: Metadata = {
 export default function EventDetailsPage() {
   return <EventDetailsView event={DEFAULT_EVENT} />;
 }
+
