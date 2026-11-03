@@ -23,7 +23,7 @@ const exploreCards: ExploreCard[] = [
     description:
       "Explore active ministries and departments serving children, youth, men, women, and our community with purpose and passion.",
     link: "/ministries",
-    image: "/images/explore/ministries.jpg",
+    image: "/images/explore/ministries.webp",
     alt: "RCCG Court of His Majesty Church Choir ministering passionately in church robes",
   },
   {
@@ -32,7 +32,7 @@ const exploreCards: ExploreCard[] = [
     description:
       "In-depth Bible study, Sunday sermon series, and discipleship tracks designed to anchor your heart and deepen your roots in Christ.",
     link: "/sermons",
-    image: "/images/explore/teachings.jpg",
+    image: "/images/explore/teachings.webp",
     alt: "African pastor preaching God's Word with open Bible at the pulpit",
   },
   {
@@ -41,7 +41,7 @@ const exploreCards: ExploreCard[] = [
     description:
       "Find life-giving fellowship through small groups, regional house fellowships, and vibrant family circles across Lagos and beyond.",
     link: "/groups",
-    image: "/images/explore/communities.jpg",
+    image: "/images/explore/community.webp",
     alt: "African church community fellowship and youth worship team gathered together",
   },
   {
@@ -50,7 +50,7 @@ const exploreCards: ExploreCard[] = [
     description:
       "Find your place of service, volunteer with purpose, touch lives, and make an eternal difference in the Kingdom of God.",
     link: "/connect",
-    image: "/images/explore/get-involved.jpg",
+    image: "/images/explore/get-involved.webp",
     alt: "Church congregation and worshippers passionately lifting hands in praise and service",
   },
 ];
