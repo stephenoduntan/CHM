@@ -171,14 +171,18 @@ export default function GivePage() {
               </h2>
             </div>
 
-            {/* How It Works Steps Showcase */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 lg:gap-[64px] items-center w-full">
+            {/* How It Works Steps Showcase (Figma node 2111:12078) */}
+            <div
+              className="flex flex-col lg:flex-row gap-10 lg:gap-[64px] items-center w-full"
+              data-node-id="2111:12078"
+              data-name="how it works steps"
+            >
               {/* Left: Step Image */}
-              <div className="lg:col-span-5 flex justify-center">
-                <div className="relative w-full max-w-[581px] h-[380px] sm:h-[500px] lg:h-[671px] rounded-[20px] overflow-hidden shadow-lg bg-[#0a0a0a]">
+              <div className="w-full lg:w-[581px] shrink-0 flex justify-center">
+                <div className="relative w-full h-[380px] sm:h-[500px] lg:h-[671px] rounded-[20px] overflow-hidden shadow-lg bg-[#0a0a0a]">
                   <Image
                     src="/images/give-step-image.png"
-                    alt="Ways to Give"
+                    alt="How It Works Steps"
                     fill
                     className="object-cover rounded-[20px]"
                     priority
@@ -187,19 +191,21 @@ export default function GivePage() {
               </div>
 
               {/* Right: 3 Steps */}
-              <div className="lg:col-span-7 flex flex-col gap-10 sm:gap-12 lg:gap-[64px] w-full">
+              <div className="w-full lg:w-[795px] flex flex-col gap-10 sm:gap-12 lg:gap-[64px]">
                 {/* Step 1: Give Online */}
                 <div
-                  className="flex gap-4 sm:gap-[16px] items-stretch cursor-pointer group"
+                  className="flex gap-4 sm:gap-[16px] items-start cursor-pointer group w-full"
                   onClick={() => setActiveStep(0)}
                 >
                   <div
                     className={`w-[3px] rounded-full shrink-0 transition-colors duration-300 ${
-                      activeStep === 0 ? "bg-[#d61812]" : "bg-[#e6e8eb]"
+                      activeStep === 0
+                        ? "bg-[#d61812] h-[216px]"
+                        : "bg-[#e6e8eb] h-[216px]"
                     }`}
                   />
-                  <div className="flex-1 flex flex-col gap-6 sm:gap-[24px] items-start justify-center pl-2">
-                    <div className="flex flex-col gap-3 sm:gap-[24px] items-start w-full">
+                  <div className="flex-1 flex flex-col gap-8 sm:gap-[40px] items-start justify-center">
+                    <div className="flex flex-col gap-4 sm:gap-[24px] items-start w-full">
                       <h3 className="font-display font-recursive-sans font-semibold text-2xl sm:text-[28px] text-[#0a0a0a] tracking-tight">
                         Give Online
                       </h3>
@@ -214,7 +220,7 @@ export default function GivePage() {
                         e.stopPropagation();
                         setIsModalOpen(true);
                       }}
-                      className="bg-[#c88a04] hover:bg-[#b07903] text-[#0a0a0a] font-sans font-semibold text-base sm:text-[18px] px-8 sm:px-[40px] py-3.5 sm:py-[16px] rounded-[36px] transition-all cursor-pointer shadow-sm hover:shadow-md"
+                      className="bg-[#c88a04] hover:bg-[#b07903] text-white font-sans font-semibold text-base sm:text-[18px] px-8 sm:px-[40px] py-3.5 sm:py-[16px] rounded-[36px] transition-all cursor-pointer shadow-sm hover:shadow-md shrink-0"
                     >
                       Click here to Give
                     </button>
@@ -223,15 +229,17 @@ export default function GivePage() {
 
                 {/* Step 2: Give In Person */}
                 <div
-                  className="flex gap-4 sm:gap-[16px] items-stretch cursor-pointer group"
+                  className="flex gap-4 sm:gap-[16px] items-start cursor-pointer group w-full"
                   onClick={() => setActiveStep(1)}
                 >
                   <div
                     className={`w-[3px] rounded-full shrink-0 transition-colors duration-300 ${
-                      activeStep === 1 ? "bg-[#d61812]" : "bg-[#e6e8eb]"
+                      activeStep === 1
+                        ? "bg-[#d61812] h-[87px]"
+                        : "bg-[#e6e8eb] h-[87px]"
                     }`}
                   />
-                  <div className="flex-1 flex flex-col gap-3 sm:gap-[24px] items-start justify-center pl-2">
+                  <div className="flex-1 flex flex-col gap-4 sm:gap-[24px] items-start justify-center">
                     <h3 className="font-display font-recursive-sans font-semibold text-2xl sm:text-[28px] text-[#0a0a0a] tracking-tight">
                       Give In Person
                     </h3>
@@ -243,15 +251,17 @@ export default function GivePage() {
 
                 {/* Step 3: Mail A Cheque */}
                 <div
-                  className="flex gap-4 sm:gap-[16px] items-stretch cursor-pointer group"
+                  className="flex gap-4 sm:gap-[16px] items-start cursor-pointer group w-full"
                   onClick={() => setActiveStep(2)}
                 >
                   <div
                     className={`w-[3px] rounded-full shrink-0 transition-colors duration-300 ${
-                      activeStep === 2 ? "bg-[#d61812]" : "bg-[#e6e8eb]"
+                      activeStep === 2
+                        ? "bg-[#d61812] h-[145px]"
+                        : "bg-[#e6e8eb] h-[145px]"
                     }`}
                   />
-                  <div className="flex-1 flex flex-col gap-3 sm:gap-[24px] items-start justify-center pl-2">
+                  <div className="flex-1 flex flex-col gap-4 sm:gap-[24px] items-start">
                     <h3 className="font-display font-recursive-sans font-semibold text-2xl sm:text-[28px] text-[#0a0a0a] tracking-tight">
                       Mail A Cheque
                     </h3>
@@ -278,6 +288,19 @@ export default function GivePage() {
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[rgba(255,255,255,0.5)] via-[rgba(191,191,191,0.85)] to-[#f5f5f5]" />
+
+          {/* Top Accent Stripe */}
+          <div
+            className="absolute top-0 left-0 right-0 h-6 opacity-80"
+            data-node-id="2111:12543"
+          >
+            <Image
+              src="/images/cathedral/cathedral-accent.png"
+              alt=""
+              fill
+              className="object-cover"
+            />
+          </div>
         </div>
 
         {/* Card Content (node 2111:11886) */}
