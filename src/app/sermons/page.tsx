@@ -64,7 +64,7 @@ export default function SermonsPage() {
     <div className="w-full bg-white pb-24">
       {/* ─── Hero Section (Figma node 2086:1095) ───────────────────── */}
       <section
-        className="relative h-auto pt-[120px] sm:pt-[140px] pb-12 sm:pb-16 bg-white text-[#0a0a0a] flex items-center justify-center overflow-hidden"
+        className="relative h-auto pt-[140px] pb-12 sm:pb-16 bg-white text-[#0a0a0a] flex items-center justify-center overflow-hidden"
         data-node-id="2086:1095"
         data-name="hero"
       >
@@ -302,13 +302,13 @@ export default function SermonsPage() {
                   <div className="p-5 sm:p-[24px] flex flex-col gap-3 sm:gap-[16px] w-full flex-1 justify-between">
                     <div className="flex flex-col gap-3 sm:gap-[16px] w-full">
                       {/* Date */}
-                      <span className="font-sans font-normal text-xs sm:text-[16px] uppercase tracking-wider text-[#616161]">
+                      <span className="font-sans font-normal text-sm uppercase tracking-wider text-[#616161]">
                         {sermon.date}
                       </span>
 
                       {/* Title & Convener */}
-                      <div className="border-b border-[#d0d2d6] pb-4 flex flex-col gap-2 sm:gap-[16px] w-full">
-                        <h2 className="font-display font-recursive-sans font-medium text-lg sm:text-[22px] lg:text-[24px] text-[#0a0a0a] uppercase leading-snug line-clamp-2 group-hover:text-[#180c62] transition-colors">
+                      <div className="pb-2 flex flex-col gap-2 min-h-[136px] sm:gap-[16px] w-full">
+                        <h2 className="font-display font-recursive-sans font-medium text-lg sm:text-[22px] lg:text-[24px] text-[#0a0a0a] leading-snug line-clamp-2 group-hover:text-[#D61812] transition-colors">
                           {sermon.title}
                         </h2>
                         <p className="font-sans font-medium text-sm sm:text-base lg:text-[18px] text-[#404040]">
@@ -318,11 +318,11 @@ export default function SermonsPage() {
                     </div>
 
                     {/* Duration & Watch CTA */}
-                    <div className="pt-1 flex items-center justify-between text-xs sm:text-sm">
-                      <span className="font-sans font-normal text-[#616161]">
+                    <div className="pt-2 border-t border-[#d0d2d6] flex items-center justify-between text-xs sm:text-sm">
+                      {/* <span className="font-sans font-normal text-[#616161]">
                         {sermon.series}
-                      </span>
-                      <span className="font-semibold uppercase tracking-wider text-[#180c62] group-hover:underline">
+                      </span> */}
+                      <span className="font-semibold uppercase tracking-wider text-[#D61812] group-hover:underline">
                         Watch Sermon →
                       </span>
                     </div>
