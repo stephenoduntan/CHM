@@ -19,12 +19,17 @@ export function Footer() {
           <div className="flex flex-col sm:flex-row items-center justify-between py-5 gap-6">
             {/* Logo */}
             <div className="relative size-[100px] md:size-[100px]">
-              <Image
-                src="/images/rccgchm-logo.svg"
-                alt={SITE_CONFIG.fullName}
-                fill
-                className="object-contain"
-              />
+              <Link
+                href="/"
+                aria-label={SITE_CONFIG.fullName}
+              >
+                <Image
+                  src="/images/rccgchm-logo.svg"
+                  alt={SITE_CONFIG.fullName}
+                  fill
+                  className="object-contain"
+                />
+              </Link>
             </div>
 
             {/* Social Media Links */}
