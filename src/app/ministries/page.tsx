@@ -182,7 +182,7 @@ export default function MinistriesPage() {
       </section>
 
       {/* ─── Invitation Banner & Department Grid (Figma node 2086:638) ──────── */}
-      <section className="pt-16 sm:pt-20 lg:pt-[84px] pb-20 sm:pb-24 lg:pb-[124px] bg-white">
+      <section className="pt-16 sm:pt-20 lg:pt-[84px] pb-16 sm:pb-20 lg:pb-[96px] bg-white">
         <Container className="max-w-[1440px]">
           {/* Invitation Banner (node 2086:639 & 2086:640) */}
           <div className="mb-14 sm:mb-16 lg:mb-[64px]">
@@ -225,30 +225,33 @@ export default function MinistriesPage() {
         </Container>
       </section>
 
-      {/* ─── Call to Action / Worker Enrollment ────────────────────── */}
-      <section id="join" className="py-20 bg-[#051202] text-white">
-        <Container>
-          <div className="max-w-2xl mx-auto text-center">
-            <h2 className="font-sans font-extrabold text-3xl sm:text-4xl text-white mb-4">
-              Ready to Make an Eternal Impact?
-            </h2>
-            <p className="text-gray-300 text-base sm:text-lg mb-8 leading-relaxed">
-              Step into leadership and service. Fill out the volunteer form or speak with a department leader after Sunday service.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link
-                href="/connect"
-                className="px-8 py-3.5 rounded-full font-semibold text-[#051202] bg-[#c8a96e] hover:bg-[#b8985c] shadow-md transition-all text-base"
-              >
-                Volunteer Now
-              </Link>
-              <Link
-                href="/services"
-                className="px-8 py-3.5 rounded-full font-semibold text-white bg-white/10 hover:bg-white/20 border border-white/20 transition-all text-base"
-              >
-                View Service Times
-              </Link>
+      {/* ─── Call to Action / Community Invitation (Figma node 2102:5421) ──── */}
+      <section id="join" className="pb-20 sm:pb-24 lg:pb-[124px] bg-white">
+        <Container className="max-w-[1440px]">
+          <div className="bg-[#f2f2f2] rounded-[16px] p-8 sm:p-10 lg:p-[48px] flex flex-col md:flex-row items-start md:items-center justify-between gap-8 md:gap-[64px]">
+            <div className="flex-1 flex flex-col gap-3 sm:gap-[16px] items-start">
+              <h2 className="font-sans font-semibold text-2xl sm:text-3xl lg:text-[40px] text-[#0a0a0a] leading-[1.2] tracking-tight">
+                You don’t have to walk alone
+              </h2>
+              <p className="font-sans font-normal text-base sm:text-lg lg:text-[20px] text-[#616161] leading-[1.6]">
+                Come as you are. Find encouragement, prayer and community at Court of His Majesty.
+              </p>
             </div>
+            <Link
+              href="/new-here"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 sm:px-[24px] sm:py-[16px] rounded-[28px] bg-[rgba(178,161,237,0.1)] hover:bg-[rgba(178,161,237,0.2)] border border-[#b2a1ed] text-[#180c62] text-base sm:text-[18px] font-semibold transition-all duration-200 shrink-0 group"
+            >
+              <span>Plan a Visit</span>
+              <div className="relative size-5 shrink-0">
+                <Image
+                  src="/images/action-arrow.svg"
+                  alt=""
+                  width={20}
+                  height={20}
+                  className="size-5 shrink-0 transition-transform duration-200 group-hover:translate-x-1"
+                />
+              </div>
+            </Link>
           </div>
         </Container>
       </section>
