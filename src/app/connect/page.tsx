@@ -18,24 +18,24 @@ export default function ConnectPage() {
   return (
     <div className="w-full bg-white pb-24">
       {/* ─── Hero ─────────────────────────────────────────────────── */}
-      <section className="relative h-[720px] bg-[#051202] text-white flex items-center justify-center overflow-hidden">
-        <Image
+      <section className="relative h-auto pt-[140px] pb-16 text-white flex items-center justify-center overflow-hidden">
+        {/* <Image
           src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&q=80&w=1920"
           alt="Connect with Church Family"
           fill
           className="object-cover opacity-20"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#051202] via-[#051202]/70 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#051202] via-[#051202]/70 to-transparent" /> */}
 
         <Container className="relative z-10 text-center py-20">
           {/* <span className="inline-block px-4 py-1.5 rounded-full bg-[#c8a96e]/20 border border-[#c8a96e]/40 text-[#c8a96e] text-xs font-semibold uppercase tracking-wider mb-4">
             Fellowship & Care
           </span> */}
-          <h1 className="font-display font-recursive-sans text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-4 uppercase tracking-tight">
+          <h1 className="font-display font-recursive-sans text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#0a0a0a] mb-4 uppercase tracking-tight">
             Connect With Us
           </h1>
-          <p className="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto">
+          <p className="text-gray-200 text-base sm:text-lg max-w-2xl mx-auto">
             We are here to pray with you, celebrate what God is doing in your life, and help you find your community.
           </p>
         </Container>

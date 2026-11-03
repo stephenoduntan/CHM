@@ -35,7 +35,7 @@ export const FOOTER_QUICK_LINKS = [
 
 export const FOOTER_CONNECT_LINKS = [
   { label: "Join a Group", href: "/connect" },
-  { label: "House Fellowship", href: "/connect" },
+  { label: "House Fellowship", href: "/house-fellowship" },
   { label: "Services", href: "/services" },
   { label: "Prayer Request", href: "/connect" },
   { label: "Testify", href: "/connect" },

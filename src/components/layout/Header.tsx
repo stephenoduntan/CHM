@@ -20,7 +20,6 @@ const DARK_HEADER_ROUTES = [
   "/events",
   "/services",
   "/groups",
-  "/connect",
 ];
 
 export function Header({ variant }: HeaderProps) {
