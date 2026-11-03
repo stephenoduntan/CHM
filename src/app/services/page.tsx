@@ -1,56 +1,84 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Clock, Calendar, MapPin, Sparkles, Navigation, ArrowRight } from "lucide-react";
+import { MapPin, Navigation, ArrowRight } from "lucide-react";
 import { Container } from "@/components/layout/Container";
-import { SITE_CONFIG, SUNDAY_SERVICES, MIDWEEK_SERVICES } from "@/lib/constants";
+import { SITE_CONFIG } from "@/lib/constants";
 
 export const metadata = {
   title: "Services & Worship Times",
   description: "Join us for Sunday worship, midweek Bible study, and Holy Ghost services at RCCG Court of His Majesty.",
 };
 
-const services = [
+interface ServiceSchedule {
+  id: string;
+  nodeId: string;
+  cardName: string;
+  watermark: [string, string];
+  details: string[];
+  image: string;
+  imageAlt: string;
+  isImageLeft: boolean;
+}
+
+const scheduleServices: ServiceSchedule[] = [
   {
-    day: "Every Sunday",
-    title: "First Worship Service",
-    time: "7:45 AM - 9:45 AM",
-    description: "An early morning encounter with exuberant praise, prayer, and life-applicable teachings from God's Word.",
-    highlight: "Early Bird Worship",
+    id: "sunday-services",
+    nodeId: "2086:887",
+    cardName: "card 1",
+    watermark: ["SUNDAY", "SERVICES"],
+    details: [
+      "7:45 am First Service",
+      "10:00 am Sunday School",
+      "10:30 am Second Service",
+      "Church Auditorium",
+    ],
+    image: "/images/explore/community.webp",
+    imageAlt: "Sunday Worship Services at RCCG Court of His Majesty",
+    isImageLeft: false,
   },
   {
-    day: "Every Sunday",
-    title: "Sunday School Discipleship",
-    time: "9:45 AM - 10:15 AM",
-    description: "Interactive biblical study and questions in small groups to build sound spiritual foundations.",
-    highlight: "Discipleship Class",
+    id: "digging-deep",
+    nodeId: "2086:897",
+    cardName: "card 3",
+    watermark: ["DIGGING", "DEEP"],
+    details: [
+      "Tuesday",
+      "6:00 pm to 7:30 pm",
+      "Bible Study Service",
+      "Church Auditorium",
+    ],
+    image: "/images/explore/teachings.webp",
+    imageAlt: "Digging Deep Bible Study Service",
+    isImageLeft: true,
   },
   {
-    day: "Every Sunday",
-    title: "Second Worship Service",
-    time: "10:15 AM - 12:30 PM",
-    description: "Dynamic family celebration featuring our choir, youth ministration, and prophetic prayers.",
-    highlight: "Family Celebration",
+    id: "faith-meeting",
+    nodeId: "2086:904",
+    cardName: "card 5",
+    watermark: ["FAITH", "MEETING"],
+    details: [
+      "Thursday",
+      "6:00 pm to 7:30 pm",
+      "Prayer Meeting",
+      "Church Auditorium",
+    ],
+    image: "/images/explore/get-involved.webp",
+    imageAlt: "Faith Meeting Prayer Service",
+    isImageLeft: false,
   },
   {
-    day: "Every Tuesday",
-    title: "Digging Deep (Bible Study)",
-    time: "6:00 PM - 7:15 PM",
-    description: "Verse-by-verse exploration of Scripture to understand doctrine and practical Christian living.",
-    highlight: "Mid-week Word",
-  },
-  {
-    day: "Every Thursday",
-    title: "Faith Clinic (Prayer Meeting)",
-    time: "6:00 PM - 7:15 PM",
-    description: "Intense intercession, healing prayers, and spiritual warfare for breakthrough in every sphere of life.",
-    highlight: "Mid-week Prayer",
-  },
-  {
-    day: "1st Friday of the Month",
-    title: "Holy Ghost Service",
-    time: "7:00 PM till Dawn",
-    description: "Corporate gathering of believers at RCCG Redemption City and broadcast worldwide with Pastor E.A. Adeboye.",
-    highlight: "Monthly Power Night",
+    id: "holy-communion",
+    nodeId: "2086:911",
+    cardName: "card 7",
+    watermark: ["HOLY", "COMMUNION"],
+    details: [
+      "First Wednesday of every month",
+      "6:00 pm to 7:30 pm",
+      "Church Auditorium",
+    ],
+    image: "/images/explore/ministries.webp",
+    imageAlt: "Holy Communion Service",
+    isImageLeft: true,
   },
 ];
 
@@ -81,59 +109,96 @@ export default function ServicesPage() {
         </Container>
       </section>
 
-      {/* ─── Schedule List ────────────────────────────────────────── */}
-      <section className="py-16 lg:py-24 bg-white">
-        <Container>
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="font-sans font-bold text-3xl sm:text-4xl text-[#051202] mb-3">
-              Weekly Service Schedule
+      {/* ─── Schedule List (Figma node 2086:884) ──────────────────── */}
+      <section
+        className="pb-[100px] lg:pb-[124px] pt-[60px] lg:pt-[84px] bg-white relative w-full overflow-hidden"
+        data-node-id="2086:884"
+        data-name="explore"
+      >
+        <Container className="max-w-[1440px] w-full">
+          {/* Section Header */}
+          <div className="text-center max-w-2xl mx-auto mb-14 lg:mb-16">
+            <span className="text-xs font-semibold uppercase tracking-wider text-[#d61812] bg-[#d61812]/10 px-3.5 py-1.5 rounded-full inline-block mb-3">
+              Weekly Gatherings
+            </span>
+            <h2 className="font-display font-recursive-sans font-bold text-3xl sm:text-4xl lg:text-5xl text-[#0a0a0a] tracking-tight">
+              Service Schedule
             </h2>
-            <p className="text-gray-600 text-base sm:text-lg">
-              Join us physically at the sanctuary or stream live across all our digital platforms.
+            <p className="text-gray-600 text-base sm:text-lg mt-3">
+              Join us in worship, discipleship, and prayer at Court of His Majesty.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((s, idx) => (
+          {/* How it works row (Figma node 2086:886) */}
+          <div
+            className="flex flex-col gap-12 sm:gap-14 lg:gap-[64px] items-start w-full"
+            data-node-id="2086:886"
+            data-name="How it works row"
+          >
+            {scheduleServices.map((item) => (
               <div
-                key={idx}
-                className="p-8 rounded-[28px] bg-gray-50/70 border border-gray-200 hover:border-[#c8a96e] hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
+                key={item.id}
+                className={`flex flex-col ${
+                  item.isImageLeft ? "lg:flex-row-reverse" : "lg:flex-row"
+                } gap-6 sm:gap-8 lg:gap-[40px] items-stretch w-full min-h-[380px] lg:h-[400px]`}
+                data-node-id={item.nodeId}
+                data-name={item.cardName}
               >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-xs font-semibold uppercase tracking-wider text-[#051202] bg-[#c8a96e]/20 px-3 py-1 rounded-full">
-                      {s.highlight}
-                    </span>
-                    <span className="text-xs font-medium text-gray-500">
-                      {s.day}
-                    </span>
+                {/* Content Box (Text + Watermark) */}
+                <div className="flex-1 relative flex flex-col justify-center items-end min-w-0 h-full min-h-[280px] lg:min-h-[400px] pb-6 lg:pb-[64px] pt-4 px-2 sm:px-4 lg:px-0 overflow-hidden">
+                  {/* Giant Background Watermark */}
+                  <div
+                    className="absolute bottom-0 left-0 opacity-25 select-none pointer-events-none z-0 max-w-full lg:max-w-[700px]"
+                    aria-hidden="true"
+                  >
+                    <div className="font-display font-recursive-sans font-extrabold text-[#d61812] text-5xl sm:text-7xl lg:text-[84px] xl:text-[96px] leading-[0.95] tracking-tight">
+                      <p className="mb-0">{item.watermark[0]}</p>
+                      <p>{item.watermark[1]}</p>
+                    </div>
                   </div>
 
-                  <h3 className="font-sans font-bold text-2xl text-[#051202] mb-2 group-hover:text-[#c8a96e] transition-colors">
-                    {s.title}
-                  </h3>
-
-                  <div className="flex items-center gap-2 text-[#051202] font-semibold text-sm mb-4">
-                    <Clock className="size-4 text-[#c8a96e]" />
-                    <span>{s.time}</span>
+                  {/* Foreground Service Details */}
+                  <div className="relative z-10 flex flex-col items-end text-right font-sans font-medium text-lg sm:text-xl lg:text-[24px] text-[#0a0a0a] gap-2 lg:gap-[16px] leading-relaxed lg:leading-[40px] w-full">
+                    {item.details.map((detail, idx) => (
+                      <p key={idx} className="leading-snug lg:leading-[40px]">
+                        {detail}
+                      </p>
+                    ))}
                   </div>
-
-                  <p className="text-gray-600 text-sm leading-relaxed mb-6">
-                    {s.description}
-                  </p>
                 </div>
 
-                <div className="pt-4 border-t border-gray-200/70 flex items-center justify-between text-xs font-medium text-gray-500">
-                  <span>Physical & Online</span>
-                  <Link
-                    href="/watch-live"
-                    className="text-[#051202] group-hover:text-[#c8a96e] font-semibold"
-                  >
-                    Watch Live →
-                  </Link>
+                {/* Media / Image Container (Figma node 2086:896) */}
+                <div className="bg-[#1f1f1f] flex-1 w-full lg:w-auto h-[260px] sm:h-[320px] lg:h-full relative rounded-[16px] overflow-hidden group shadow-sm">
+                  <Image
+                    src={item.image}
+                    alt={item.imageAlt}
+                    fill
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 opacity-90 group-hover:opacity-100"
+                    sizes="(max-width: 1024px) 100vw, 700px"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent pointer-events-none" />
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Monthly Service Note & CTA */}
+          <div className="mt-14 lg:mt-20 p-6 sm:p-8 rounded-[20px] bg-gray-50 border border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div className="space-y-1 text-center sm:text-left">
+              <h4 className="font-sans font-bold text-lg sm:text-xl text-[#0a0a0a]">
+                Monthly Holy Ghost Service
+              </h4>
+              <p className="text-sm text-gray-600 max-w-xl">
+                Every 1st Friday of the month (7:00 PM till Dawn) at RCCG Redemption City, broadcast live in our sanctuary and online.
+              </p>
+            </div>
+            <Link
+              href="/connect"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#180c62] hover:bg-[#251394] text-white text-sm font-semibold transition-all shadow-md shrink-0 cursor-pointer"
+            >
+              <span>Plan Your Visit</span>
+              <ArrowRight className="size-4" />
+            </Link>
           </div>
         </Container>
       </section>
@@ -152,7 +217,7 @@ export default function ServicesPage() {
 
               <div className="space-y-6 text-gray-700 text-base leading-relaxed">
                 <div className="flex items-start gap-4">
-                  <div className="size-10 rounded-xl bg-[#051202] text-[#c8a96e] flex items-center justify-center shrink-0">
+                  <div className="size-10 text-[#D61812] flex items-center justify-center shrink-0">
                     <MapPin className="size-5" />
                   </div>
                   <div>
@@ -163,7 +228,7 @@ export default function ServicesPage() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="size-10 rounded-xl bg-[#051202] text-[#c8a96e] flex items-center justify-center shrink-0">
+                  <div className="size-10 text-[#D61812] flex items-center justify-center shrink-0">
                     <Navigation className="size-5" />
                   </div>
                   <div>
@@ -195,7 +260,7 @@ export default function ServicesPage() {
                 className="object-cover opacity-20"
               />
               <div className="relative z-10 max-w-sm">
-                <div className="size-16 rounded-full bg-[#c8a96e]/20 border border-[#c8a96e] mx-auto flex items-center justify-center text-[#c8a96e] mb-4">
+                <div className="size-16 rounded-full bg-[#D61812]/20 border border-[#D61812] mx-auto flex items-center justify-center text-[#D61812] mb-4">
                   <MapPin className="size-8" />
                 </div>
                 <h3 className="font-sans font-bold text-2xl mb-2 text-white">
