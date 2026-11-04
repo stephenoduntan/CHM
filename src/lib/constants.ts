@@ -21,6 +21,40 @@ export const NAV_LINKS = [
   { label: "Give", href: "/give" },
 ] as const;
 
+export interface MenuItem {
+  label: string;
+  href: string;
+  target?: string;
+}
+
+export const MENU_MAIN_NAVIGATION: MenuItem[] = [
+  { label: "Home", href: "/" },
+  { label: "Give", href: "/give" },
+  { label: "New Here", href: "/new-here" },
+  { label: "Ministries", href: "/ministries" },
+  { label: "Our Beliefs", href: "/our-beliefs" },
+  { label: "Our Leadership", href: "/leadership" },
+  { label: "Events", href: "/events" },
+  { label: "Watch Online", href: "/watch-online" },
+  { label: "Next Level Cathedral", href: "/next-level-cathedral" },
+];
+
+export const MENU_CONNECT_FELLOWSHIP: MenuItem[] = [
+  { label: "Connect with Us", href: "/connect" },
+  { label: "Services", href: "/services" },
+  { label: "Groups", href: "/groups" },
+  { label: "House Fellowship Centers", href: "/house-fellowship" },
+  { label: "Prayer Request", href: "/connect" },
+  { label: "Testify", href: "/connect" },
+  { label: "Holy Ghost Service", href: "https://www.youtube.com/@rccglive/streams", target: "_blank" },
+];
+
+export const MENU_RESOURCES: MenuItem[] = [
+  { label: "Sermons", href: "/sermons" },
+  { label: "Photo Gallery", href: "/gallery" },
+  { label: "Blogs", href: "/blog" },
+];
+
 export const FOOTER_QUICK_LINKS = [
   { label: "Give", href: "/give" },
   { label: "New Here", href: "/new-here" },

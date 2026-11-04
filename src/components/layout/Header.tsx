@@ -5,7 +5,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { X } from "lucide-react";
-import { NAV_LINKS, FOOTER_QUICK_LINKS, FOOTER_CONNECT_LINKS, SITE_CONFIG } from "@/lib/constants";
+import {
+  NAV_LINKS,
+  SITE_CONFIG,
+  MENU_MAIN_NAVIGATION,
+  MENU_CONNECT_FELLOWSHIP,
+  MENU_RESOURCES,
+} from "@/lib/constants";
 import { Container } from "./Container";
 
 export interface HeaderProps {
@@ -189,97 +195,89 @@ export function Header({ variant }: HeaderProps) {
             </div>
 
             {/* Drawer Navigation Links */}
-            <div className="py-8 space-y-8">
+            <div className="py-6 space-y-7">
+              {/* Main Navigation */}
               <div>
-                <h3 className="text-xs uppercase tracking-widest text-[#a8a8a8] mb-4 font-display font-recursive-mono">
+                <h3 className="text-xs uppercase tracking-widest text-[#c8a96e] mb-3.5 font-display font-recursive-mono font-semibold">
                   Main Navigation
                 </h3>
-                <ul className="space-y-3 font-display font-recursive-sans text-xl">
-                  <li>
-                    <Link
-                      href="/"
-                      onClick={() => setIsMenuOpen(false)}
-                      className="block hover:text-[#c8a96e] transition-colors"
-                    >
-                      Home
-                    </Link>
-                  </li>
-                  {NAV_LINKS.map((link) => (
-                    <li key={link.href}>
-                      <Link
-                        href={link.href}
-                        onClick={() => setIsMenuOpen(false)}
-                        className="block hover:text-[#c8a96e] transition-colors"
-                      >
-                        {link.label}
-                      </Link>
-                    </li>
-                  ))}
-                  <li>
-                    <Link
-                      href="/groups"
-                      onClick={() => setIsMenuOpen(false)}
-                      className="block hover:text-[#c8a96e] transition-colors"
-                    >
-                      Groups & Fellowships
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/our-beliefs"
-                      onClick={() => setIsMenuOpen(false)}
-                      className="block hover:text-[#c8a96e] transition-colors"
-                    >
-                      Our Beliefs
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/next-level-cathedral"
-                      onClick={() => setIsMenuOpen(false)}
-                      className="block hover:text-[#c8a96e] transition-colors"
-                    >
-                      Next Level Cathedral
-                    </Link>
-                  </li>
+                <ul className="space-y-2 font-display font-recursive-sans text-lg">
+                  {MENU_MAIN_NAVIGATION.map((link) => {
+                    const isActive = pathname === link.href;
+                    return (
+                      <li key={link.label}>
+                        <Link
+                          href={link.href}
+                          onClick={() => setIsMenuOpen(false)}
+                          className={`block transition-colors py-0.5 ${
+                            isActive
+                              ? "text-[#c8a96e] font-semibold"
+                              : "text-white/90 hover:text-[#c8a96e]"
+                          }`}
+                        >
+                          {link.label}
+                        </Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
 
-              <div>
-                <h3 className="text-xs uppercase tracking-widest text-[#a8a8a8] mb-4 font-display font-recursive-mono">
-                  Quick Links
-                </h3>
-                <ul className="grid grid-cols-2 gap-3 text-sm text-[#f5f5f5]">
-                  {FOOTER_QUICK_LINKS.map((link) => (
-                    <li key={link.href}>
-                      <Link
-                        href={link.href}
-                        onClick={() => setIsMenuOpen(false)}
-                        className="hover:text-[#c8a96e] transition-colors"
-                      >
-                        {link.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div>
-                <h3 className="text-xs uppercase tracking-widest text-[#a8a8a8] mb-4 font-display font-recursive-mono">
+              {/* Connect & Fellowship */}
+              <div className="pt-4 border-t border-white/10">
+                <h3 className="text-xs uppercase tracking-widest text-[#c8a96e] mb-3.5 font-display font-recursive-mono font-semibold">
                   Connect & Fellowship
                 </h3>
-                <ul className="grid grid-cols-2 gap-3 text-sm text-[#f5f5f5]">
-                  {FOOTER_CONNECT_LINKS.map((link) => (
-                    <li key={link.href}>
-                      <Link
-                        href={link.href}
-                        onClick={() => setIsMenuOpen(false)}
-                        className="hover:text-[#c8a96e] transition-colors"
-                      >
-                        {link.label}
-                      </Link>
-                    </li>
-                  ))}
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-[#f5f5f5]">
+                  {MENU_CONNECT_FELLOWSHIP.map((link) => {
+                    const isActive = pathname === link.href;
+                    const isExternal = link.target === "_blank" || link.href.startsWith("http");
+                    return (
+                      <li key={link.label}>
+                        <Link
+                          href={link.href}
+                          target={link.target}
+                          rel={isExternal ? "noopener noreferrer" : undefined}
+                          onClick={() => setIsMenuOpen(false)}
+                          className={`inline-flex items-center gap-1.5 transition-colors py-1 ${
+                            isActive
+                              ? "text-[#c8a96e] font-medium"
+                              : "hover:text-[#c8a96e]"
+                          }`}
+                        >
+                          <span>{link.label}</span>
+                          {isExternal && <span className="text-[10px] opacity-70">↗</span>}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+
+              {/* Resources */}
+              <div className="pt-4 border-t border-white/10">
+                <h3 className="text-xs uppercase tracking-widest text-[#c8a96e] mb-3.5 font-display font-recursive-mono font-semibold">
+                  Resources
+                </h3>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-[#f5f5f5]">
+                  {MENU_RESOURCES.map((link) => {
+                    const isActive = pathname === link.href;
+                    return (
+                      <li key={link.label}>
+                        <Link
+                          href={link.href}
+                          onClick={() => setIsMenuOpen(false)}
+                          className={`inline-flex items-center gap-1.5 transition-colors py-1 ${
+                            isActive
+                              ? "text-[#c8a96e] font-medium"
+                              : "hover:text-[#c8a96e]"
+                          }`}
+                        >
+                          <span>{link.label}</span>
+                        </Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             </div>

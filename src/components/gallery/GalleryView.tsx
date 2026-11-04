@@ -169,7 +169,7 @@ export function GalleryView() {
       </section>
 
       {/* ─── Filter & Search Bar Section ───────────────────────────── */}
-      <section className="sticky top-20 z-30 bg-white/95 backdrop-blur-md border-b border-gray-200 py-4 shadow-sm">
+      <section className="sticky top-28 z-30 bg-white/95 backdrop-blur-md border-b border-gray-200 py-4 shadow-sm">
         <Container>
           <div className="flex flex-col gap-4">
             {/* Top row: Search input & Date dropdowns */}
