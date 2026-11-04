@@ -7,7 +7,7 @@
 [![Netlify Status](https://img.shields.io/badge/Netlify-Monorepo_Deploys-00C7B7?style=flat&logo=netlify)](https://www.netlify.com)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=flat&logo=typescript)](https://www.typescriptlang.org/)
 
-Official monorepo platform and content ecosystem for **The Redeemed Christian Church of God (RCCG), Court of His Majesty** — Lagos Province 37 Headquarters.
+Official monorepo platform and content ecosystem for **The Redeemed Christian Church of God (RCCG), Court of His Majesty** — Lagos Province 94 Headquarters.
 
 This repository (`chm-platform`) is structured as an npm workspaces monorepo containing two decoupled, purpose-built applications:
 1. **`apps/web`**: The public-facing church website powered by **Next.js 15 (App Router)** and **Tailwind CSS v4**.
@@ -269,12 +269,12 @@ The admin portal defines rich, typed content models in `apps/admin/schemas/`:
 Because Sanity Studio and the Website run on distinct domains, you must register your production and local URLs in the Sanity management console:
 
 1. Visit [https://manage.sanity.io](https://manage.sanity.io)
-2. Select project **`d3m2i6v1`** (or your designated project)
+2. Select project **`ct660z6u`** (or your designated project)
 3. Navigate to **API** → **CORS Origins** → **Add CORS origin**:
    * `http://localhost:3000` (Local Web App) — **Credentials: Yes**
    * `http://localhost:3333` (Local Sanity Studio) — **Credentials: Yes**
-   * `https://yourchurch.org` (Production Web App) — **Credentials: Yes**
-   * `https://admin.yourchurch.org` (Production Admin Studio) — **Credentials: Yes**
+   * `https://rccgchm.org` (Production Web App) — **Credentials: Yes**
+   * `https://admin.rccgchm.org` (Production Admin Studio) — **Credentials: Yes**
    * `https://rccgchm.netlify.app` (Netlify Preview) — **Credentials: Yes**
 
 ### Read-Only Sanity Client in Web App
@@ -356,7 +356,7 @@ NEXT_PUBLIC_SANITY_API_VERSION=2024-01-01
 SANITY_API_READ_TOKEN=your_sanity_read_token
 
 # Canonical URL
-NEXT_PUBLIC_SITE_URL=https://yourchurch.org
+NEXT_PUBLIC_SITE_URL=https://rccgchm.org
 ```
 
 ### 2. Admin Portal (`apps/admin/.env`)
@@ -392,8 +392,8 @@ The user interface strictly adheres to the official Figma specifications:
 
 ## License & Church Information
 
-This project is proprietary and maintained for **The Redeemed Christian Church of God (RCCG), Court of His Majesty (Lagos Province 37 Headquarters)**.
+This project is proprietary and maintained for **The Redeemed Christian Church of God (RCCG), Court of His Majesty (Lagos Province 94 Headquarters)**.
 
-* **Address:** RCCG Court of His Majesty, Lagos Province 37 Headquarters, Lagos, Nigeria
+* **Address:** RCCG Court of His Majesty, Lagos Province 94 Headquarters, Lagos, Nigeria
 * **Online Church:** [rccgchm.netlify.app](https://rccgchm.netlify.app)
 * **All rights reserved.**
