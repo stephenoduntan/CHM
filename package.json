@@ -1,36 +1,21 @@
 {
-  "name": "chm-church-website",
-  "version": "0.1.0",
+  "name": "chm-platform",
+  "version": "1.0.0",
   "private": true,
+  "description": "RCCG Court of His Majesty — Monorepo Platform for Website & Admin Studio",
+  "workspaces": [
+    "apps/*"
+  ],
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
-  },
-  "dependencies": {
-    "@portabletext/react": "^4.0.3",
-    "@sanity/image-url": "^2.1.1",
-    "clsx": "^2.1.1",
-    "date-fns": "^4.4.0",
-    "framer-motion": "^14.9.0",
-    "lucide-react": "^1.66.0",
-    "next": "^15.1.7",
-    "next-sanity": "^10.1.4",
-    "react": "19.3.0",
-    "react-dom": "19.3.0",
-    "tailwind-merge": "^3.7.0"
-  },
-  "devDependencies": {
-    "@tailwindcss/postcss": "^4.3.3",
-    "@tailwindcss/turbopack": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "^15.1.7",
-    "postcss": "^8.5.32",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "dev": "npm run dev --workspace=web",
+    "dev:web": "npm run dev --workspace=web",
+    "dev:admin": "npm run dev --workspace=admin",
+    "build": "npm run build --workspace=web",
+    "build:web": "npm run build --workspace=web",
+    "build:admin": "npm run build --workspace=admin",
+    "start": "npm run start --workspace=web",
+    "start:web": "npm run start --workspace=web",
+    "start:admin": "npm run start --workspace=admin",
+    "lint": "npm run lint --workspace=web"
   }
 }

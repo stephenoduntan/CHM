@@ -1,178 +1,297 @@
-# RCCG Court of His Majesty (CHM) — Official Web Portal
+# RCCG Court of His Majesty (CHM) — Monorepo Platform
 
 [![Next.js](https://img.shields.io/badge/Next.js-15.1.7-black?style=flat&logo=next.js)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-19.3.0-blue?style=flat&logo=react)](https://react.dev/)
+[![React](https://img.shields.io/badge/React-19.0.0-blue?style=flat&logo=react)](https://react.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38bdf8?style=flat&logo=tailwindcss)](https://tailwindcss.com/)
-[![Sanity CMS](https://img.shields.io/badge/Sanity-v3-f03e2f?style=flat&logo=sanity)](https://www.sanity.io/)
-[![Netlify Status](https://img.shields.io/badge/Netlify-Deployed-00C7B7?style=flat&logo=netlify)](https://rccgchm.netlify.app)
+[![Sanity CMS](https://img.shields.io/badge/Sanity_Studio-v3-f03e2f?style=flat&logo=sanity)](https://www.sanity.io/)
+[![Netlify Status](https://img.shields.io/badge/Netlify-Monorepo_Deploys-00C7B7?style=flat&logo=netlify)](https://www.netlify.com)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=flat&logo=typescript)](https://www.typescriptlang.org/)
 
-Official web portal and content management ecosystem for **The Redeemed Christian Church of God (RCCG), Court of His Majesty** — Lagos Province 37 Headquarters. 
+Official monorepo platform and content ecosystem for **The Redeemed Christian Church of God (RCCG), Court of His Majesty** — Lagos Province 37 Headquarters.
 
-* **Live Deployment:** [https://rccgchm.netlify.app](https://rccgchm.netlify.app)
-* **GitHub Repository:** [https://github.com/stephenoduntan/CHM](https://github.com/stephenoduntan/CHM)
-* **Design Reference:** Figma (`Prod-Studio`, Node `2086:76` / `2086:1951`)
+This repository (`chm-platform`) is structured as an npm workspaces monorepo containing two decoupled, purpose-built applications:
+1. **`apps/web`**: The public-facing church website powered by **Next.js 15 (App Router)** and **Tailwind CSS v4**.
+2. **`apps/admin`**: The administrative management portal powered by **Sanity Studio v3** for managing sermons, events, leadership, blog devotionals, announcements, and photo galleries.
 
 ---
 
 ## Table of Contents
-- [Overview](#overview)
-- [Key Features & Pages](#key-features--pages)
-- [Design System & Typography](#design-system--typography)
-- [Tech Stack](#tech-stack)
-- [Project Architecture](#project-architecture)
+
+- [Repository Architecture](#repository-architecture)
+- [Monorepo Directory Structure](#monorepo-directory-structure)
+- [Applications Overview](#applications-overview)
+  - [1. Web App (`apps/web`)](#1-web-app-appsweb)
+  - [2. Admin Management Portal (`apps/admin`)](#2-admin-management-portal-appsadmin)
+- [Netlify Deployment Guide (Two Separate Projects)](#netlify-deployment-guide-two-separate-projects)
+  - [Project 1: Main Church Website (`yourchurch.org`)](#project-1-main-church-website-yourchurchorg)
+  - [Project 2: Admin Management Portal (`admin.yourchurch.org`)](#project-2-admin-management-portal-adminyourchurchorg)
+- [Sanity Studio & Schemas Configuration](#sanity-studio--schemas-configuration)
+  - [Content Schemas](#content-schemas)
+  - [Sanity CORS Origins](#sanity-cors-origins)
+  - [Read-Only Sanity Client in Web App](#read-only-sanity-client-in-web-app)
 - [Getting Started & Local Development](#getting-started--local-development)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Workspace NPM Scripts](#workspace-npm-scripts)
 - [Environment Variables](#environment-variables)
-- [Content Management & CMS](#content-management--cms)
-- [Deployment (Netlify)](#deployment-netlify)
-- [License](#license)
+- [Design System & Branding](#design-system--branding)
+- [License & Church Information](#license--church-information)
 
 ---
 
-## Overview
+## Repository Architecture
 
-The RCCG Court of His Majesty web portal is engineered to provide a seamless, modern, and spiritually engaging experience for members, first-time visitors, and the global church community. 
-
-Built with **Next.js 15 (App Router)** and **Tailwind CSS v4**, the application is fully responsive, highly performant, accessible, and connected to a dedicated media management suite and Sanity CMS schemas for publishing church sermons, events, devotionals, and podcasts.
-
----
-
-## Key Features & Pages
-
-### 1. Global Navigation & Layout
-* **Header (`Header.tsx`)**: Replicates the exact 3-column Figma geometry:
-  * **Left Navigation:** Direct links to `New Here`, `Ministries`, and `Give`.
-  * **Center:** Official RCCG CHM Church Crest Logo (`154px × 112px`).
-  * **Right Action:** Responsive hamburger trigger activating a full-featured slide-over drawer on mobile and tablet screens.
-* **Footer (`Footer.tsx`)**: Dual-tone design system:
-  * **Upper Bar (`#e8e8e8`):** Crest logo and official social media channels (YouTube, Facebook, Instagram, TikTok, X).
-  * **Dark Footer (`#051202`):** Location address with direct Google Maps navigation, Sunday and Midweek service schedules, Quick Links, and Connect directory.
-
-### 2. Landing Page (`/`)
-* **Hero Section:** Dynamic mosaic gallery grid, pastoral welcome card, and call-to-action buttons (`Plan a Visit`, `Watch Live`).
-* **Festival of Destiny Countdown:** Live interactive countdown ticker to the upcoming flagship conference (*"Choose Life"* — November 8, 2026).
-* **Impact Section:** Highlighting community transformation and testimonies (*"Impacted Lives, Changing Community"*).
-* **Explore Grid:** Modular access cards for Ministries, Teachings, Communities, and Church Involvement.
-* **Events Section:** Carousel card previewing upcoming calendar dates, venues, and registration links.
-* **Latest Sermon Section:** Featured high-definition sermon video preview card with convener details and playback controls.
-* **Next Level Cathedral:** Architectural visualization of the ongoing cathedral project, pledge progress, direct giving triggers, and QR donation code.
-
-### 3. Dedicated Inner Pages
-* **New Here (`/new-here`)**: Complete guide for first-time guests featuring:
-  * The 6 core RCCG Mission & Vision pillars.
-  * Rural and community mission fields (*Lafenwa, Ipatira, Ilogbo, Salala*).
-  * Pastoral leadership welcome and Sunday service expectations.
-* **Ministries (`/ministries`)**: Comprehensive directory of all 21 church departments structured into 3 operational divisions:
-  1. *Worship & Creative Arts* (Choir, Media & Sound, Technical, Drama)
-  2. *Hospitality & Operations* (Ushering, Protocol, Sanctuary Keepers, Security, Medical)
-  3. *Discipleship & Age-Grade Ministries* (Men of Valor, Good Women, Teens, Children, Follow-up, Evangelism)
-  * Includes an interactive worker sign-up modal.
-* **Services & Times (`/services`)**: Comprehensive schedule for Sunday Celebrations, Midweek Holy Communion, and Faith Clinic/Digging Deep services with interactive map links.
-* **Give & Online Giving (`/give`)**: Secure online card donation button alongside copyable Nigerian bank account details categorized for:
-  * *Tithe & Offering*
-  * *Cathedral Building Project*
-  * *Missions & Evangelism*
-  * *Welfare & Benevolence*
-* **Sermons & Messages (`/sermons` & `/sermons/[slug]`)**: Searchable video archive with sermon filters (topic, speaker, date) and audio podcast triggers.
-* **Church Events (`/events` & `/events/[slug]`)**: Program calendar with event registration forms and downloadable schedules.
-* **Blog & Devotionals (`/blog` & `/blog/[slug]`)**: Faith articles, pastor's desk devotionals, and testimonies with read times and categories.
-* **Podcasts (`/podcasts` & `/podcasts/[slug]`)**: "Voice of Majesty" audio streaming player with playlist controls and episode details.
-* **Connect & Inquiries (`/connect`)**: Interactive forms for general inquiries, prayer requests, testimonies, and counseling.
-
-### 4. Management Suite (`/management`)
-* Built-in administrative dashboard providing instant content creation, viewing, and deletion capabilities for:
-  * Sermons (Video URL, preacher, scripture, date)
-  * Events (Theme, dates, venue, registration toggle)
-  * Blog Posts (Title, excerpt, category, author)
-  * Podcasts (Audio file/URL, speaker, duration)
+```text
+chm-platform/
+├── apps/
+│   ├── web/                     # Main Church Website (Netlify Project 1 -> yourchurch.org)
+│   │   ├── src/
+│   │   │   └── lib/sanity.ts    # Read-only Sanity client (CDN enabled)
+│   │   └── package.json
+│   │
+│   └── admin/                   # Admin Management Portal (Netlify Project 2 -> admin.yourchurch.org)
+│       ├── schemas/             # Content schemas (Sermons, Events, Leadership, Announcements)
+│       ├── netlify.toml         # SPA redirect rules & build settings for Netlify
+│       ├── sanity.config.ts     # Studio workspace & branding config
+│       └── package.json
+└── package.json
+```
 
 ---
 
-## Design System & Typography
+## Monorepo Directory Structure
 
-Extracted directly from the official Figma design files:
-
-### Colors
-| Name | Hex Code | Purpose |
-| :--- | :--- | :--- |
-| **Primary Dark** | `#051202` | Deep church forest green used for dark sections, text, and footers |
-| **Secondary Green** | `#1a3a1e` | Accents, badges, and active state highlights |
-| **Accent Gold** | `#c8a96e` | Call-to-action highlights, badges, and countdown borders |
-| **Light Gray** | `#e8e8e8` | Header and footer separator bands, card backgrounds |
-| **Off-White** | `#f5f5f5` | Page backgrounds and subtle card fills |
-| **Charcoal** | `#242424` | Primary body typography color |
-| **Border Gray** | `#bfbfbf` | Neutral card dividers and inputs |
-
-### Typography
-* **Display / Headings / Navigation:** `Recursive` (Google Fonts variable font with casual and monospace variation settings).
-* **Body / Paragraphs / UI:** `Inter` (Clean, legible sans-serif for reading and forms).
+```text
+chm-platform/
+├── apps/
+│   ├── admin/                         # Sanity Studio v3 Application
+│   │   ├── dist/                      # Static Studio production bundle (built by sanity build)
+│   │   ├── schemas/                   # Content modeling schemas
+│   │   │   ├── announcement.ts        # Emergency banners, alert bars, modal bulletins
+│   │   │   ├── author.ts              # Contributing pastors and ministry writers
+│   │   │   ├── blog.ts                # Devotionals, pastor's desk, faith articles
+│   │   │   ├── event.ts               # Church calendar, conferences, FOD 2026, past events
+│   │   │   ├── gallery.ts             # Photos with event tags and category filtering
+│   │   │   ├── houseFellowship.ts     # Home cell fellowship centers, centers & hosts
+│   │   │   ├── leadership.ts          # Pastors, ministers, and departmental heads
+│   │   │   ├── sermon.ts              # Video messages, speakers, scriptures, series
+│   │   │   └── index.ts               # Schema registry export
+│   │   ├── netlify.toml               # Netlify configuration for SPA studio (/* -> /index.html 200)
+│   │   ├── package.json               # Admin Studio dependencies (@sanity/vision, sanity, styled-components)
+│   │   ├── sanity.cli.ts              # Sanity CLI configuration (projectId, dataset)
+│   │   ├── sanity.config.ts           # Desk structure, navigation groupings, and branding
+│   │   └── tsconfig.json              # TypeScript configuration for Admin Studio
+│   │
+│   └── web/                           # Main Next.js 15 Website
+│       ├── public/                    # High-res church crest logos, SVG icons, videos
+│       ├── src/
+│       │   ├── app/                   # Next.js 15 App Router pages & layouts
+│       │   │   ├── blog/              # Faith articles and devotionals
+│       │   │   ├── connect/           # Prayer requests, testimonies, counseling forms
+│       │   │   ├── events/            # Events list & detail view with past event photo gallery
+│       │   │   ├── gallery/           # Filterable church photo gallery with pagination
+│       │   │   ├── give/              # Online giving, cathedral fund, How-It-Works progress animation
+│       │   │   ├── groups/            # Church fellowship groups & age-grade ministries
+│       │   │   ├── house-fellowship/  # Home centers directory & maps
+│       │   │   ├── leadership/        # Pastoral leadership directory
+│       │   │   ├── management/        # Local interactive management fallback
+│       │   │   ├── ministries/        # 21 Church departments directory
+│       │   │   ├── new-here/          # First-time visitors guide & missions
+│       │   │   ├── next-level-cathedral/ # Cathedral building project visualizer
+│       │   │   ├── our-beliefs/       # Core RCCG doctrines & beliefs
+│       │   │   ├── podcasts/          # Voice of Majesty podcast player
+│       │   │   ├── sermons/           # Searchable sermon archive & detail video player
+│       │   │   ├── services/          # Weekly service schedule & directions
+│       │   │   ├── watch-online/      # Live broadcast indicator, full-width stream, note-taking
+│       │   │   ├── globals.css        # Tailwind CSS v4 styling & typography
+│       │   │   ├── layout.tsx         # Root layout with Header & Footer
+│       │   │   └── page.tsx           # Flagship homepage
+│       │   ├── components/            # Reusable UI, modals, layouts, and feature sections
+│       │   ├── lib/
+│       │   │   ├── sanity.ts          # Read-only Sanity client with CDN caching enabled
+│       │   │   ├── content-store.ts   # Client-side state & fallback store
+│       │   │   ├── constants.ts       # Service times, church metadata, navigation structure
+│       │   │   └── utils.ts           # Utility helpers (cn, formatters)
+│       │   └── types/                 # TypeScript type definitions
+│       ├── netlify.toml               # Next.js Netlify plugin and caching configuration
+│       ├── next.config.ts             # Next.js image domains and experimental options
+│       ├── package.json               # Web application dependencies
+│       └── tsconfig.json              # Web TypeScript configuration
+│
+├── .gitignore                         # Monorepo git ignore rules
+├── netlify.toml                       # Root fallback Netlify configuration
+├── package.json                       # Monorepo orchestrator (npm workspaces: ["apps/*"])
+├── README.md                          # Platform documentation
+└── tsconfig.json                      # Composite TypeScript configuration
+```
 
 ---
 
-## Tech Stack
+## Applications Overview
 
-* **Framework:** [Next.js 15.1.7](https://nextjs.org/) (App Router)
-* **Runtime / Core:** [React 19.3.0](https://react.dev/)
-* **Language:** [TypeScript 5](https://www.typescriptlang.org/)
-* **CSS Framework:** [Tailwind CSS v4](https://tailwindcss.com/) (`@tailwindcss/turbopack`, `tailwind-merge`, `clsx`)
-* **Motion & Animations:** [Framer Motion](https://www.framer.com/motion/)
-* **Icons:** [Lucide React](https://lucide.dev/) + Custom SVG brand vector assets in `public/images/`
-* **CMS & Content Modeling:** [Sanity.io](https://www.sanity.io/) (`next-sanity@10.1.4`, `@sanity/image-url`, `@portabletext/react`)
-* **Hosting & CI/CD:** [Netlify](https://www.netlify.com/)
+### 1. Web App (`apps/web`)
+
+The primary public-facing portal built with **Next.js 15 (App Router)** and **Tailwind CSS v4**.
+
+#### Key Capabilities & Features:
+* **Interactive Navigation:**
+  * **Main Navigation:** Home, Give, New Here, Ministries, Our Beliefs, Our Leadership, Events, Watch Online, Next Level Cathedral.
+  * **Connect & Fellowship:** Connect with Us, Services, Groups, House Fellowship Centers, Prayer Request, Testify, Holy Ghost Service.
+  * **Resources:** Sermons, Photo Gallery, Blogs.
+* **Watch Online Page (`/watch-online`):**
+  * Live vs. Recent Broadcast indicator badge.
+  * Responsive YouTube player.
+  * Direct "Give Online" trigger opening the giving modal.
+  * Built-in **Sermon Notepad**: Opens without background on the bottom-right of viewport, complete with export/download capabilities.
+  * "Watch more on our YouTube channel" CTA.
+* **Photo Gallery Page (`/gallery`):**
+  * Filterable by category, date, and event tags.
+  * Initial page load loads 12 items, with an interactive "Load More" pagination button to optimize performance.
+* **Events Page (`/events` & `/events/[slug]`):**
+  * Highlights upcoming programs with "Add to Calendar" and registration.
+  * Automatically switches **Past Events** to showcase an embedded photo gallery section, replacing the "Join us in person" CTA and removing calendar actions.
+* **Give & Online Giving (`/give`):**
+  * Figma-accurate **How It Works Steps Showcase** with auto-advancing animated progress bars, customizable step timing, and smooth state switching.
+  * Bank transfer account numbers with instant click-to-copy functionality.
+* **Single Source of Truth for Sermons:**
+  * The `LatestSermonSection` on the homepage and the `/sermons` archive share identical data models and content.
+
+### 2. Admin Management Portal (`apps/admin`)
+
+A stand-alone **Sanity Studio v3** single-page application configured specifically for church content curators, media teams, and church leadership.
+
+#### Key Capabilities & Features:
+* **Dedicated Desk Structure:** Branded custom desk grouping documents into logical ministry categories:
+  * Sermons & Media
+  * Events & Conferences
+  * Our Leadership (Pastors & Ministers)
+  * Blog & Devotionals
+  * Photo Gallery
+  * House Fellowship Centers
+  * Announcements & Alerts
+  * Pastors & Authors
+* **Vision Tool:** Built-in GROQ query testing environment for developers to inspect data and formulate queries.
+* **Branded Interface:** Styled with RCCG Court of His Majesty titles, favicons, and metadata.
+* **Optimized Build:** Compiles to static HTML and JS in `apps/admin/dist` via `sanity build dist`, requiring no server-side runtime.
 
 ---
 
-## Project Architecture
+## Netlify Deployment Guide (Two Separate Projects)
+
+Netlify natively supports deploying individual applications out of a single monorepo repository. In your Netlify dashboard, you will create **two separate sites** pointing to the same Git repository (`stephenoduntan/CHM`).
 
 ```
-CHM/
-├── public/
-│   └── images/              # Official SVG logos, brand icons, and markers
-│       ├── rccgchm-logo.svg
-│       ├── fluent-menu.svg
-│       ├── youtube.svg
-│       ├── facebook.svg
-│       ├── instagram.svg
-│       ├── tiktok.svg
-│       └── x-twitter.svg
-├── sanity/
-│   └── schemas/             # Sanity Studio content schemas
-│       ├── sermon.ts
-│       ├── event.ts
-│       ├── blog.ts
-│       ├── podcast.ts
-│       ├── author.ts
-│       └── index.ts
-├── src/
-│   ├── app/                 # Next.js 15 App Router pages & API routes
-│   │   ├── api/revalidate/  # On-demand ISR revalidation webhook
-│   │   ├── blog/            # Blog index and [slug] dynamic post view
-│   │   ├── connect/         # Prayer, testimony, and inquiry forms
-│   │   ├── events/          # Events calendar and [slug] registration
-│   │   ├── give/            # Online giving and bank accounts
-│   │   ├── management/      # In-app media content management suite
-│   │   ├── ministries/      # 21 Church departments directory
-│   │   ├── new-here/        # First-time visitor & missions guide
-│   │   ├── podcasts/        # Voice of Majesty podcast player & episodes
-│   │   ├── sermons/         # Sermons archive and [slug] video view
-│   │   ├── services/        # Service times and location guide
-│   │   ├── globals.css      # Tailwind v4 import & @theme inline tokens
-│   │   ├── layout.tsx       # Root layout with fonts, Header, and Footer
-│   │   └── page.tsx         # Landing page combining all hero sections
-│   ├── components/
-│   │   ├── layout/          # Header, Footer, Container components
-│   │   ├── sections/        # Hero, Countdown, Cathedral, Events, etc.
-│   │   ├── shared/          # SectionHeading and reusable widgets
-│   │   └── ui/              # Buttons, inputs, modals, and badges
-│   ├── lib/
-│   │   ├── sanity/          # Sanity client, queries, and image builder
-│   │   ├── constants.ts     # Church metadata, nav links, service times
-│   │   └── utils.ts         # Utility helpers (cn, formatters)
-│   └── types/               # TypeScript data contracts & schemas
-├── .npmrc                   # Legacy peer dependency settings for Netlify
-├── netlify.toml             # Netlify build and deployment specification
-├── next.config.ts           # Next.js optimization and image remote patterns
-├── package.json             # Project dependencies and run scripts
-└── tsconfig.json            # TypeScript path aliases (@/* -> ./src/*)
+                    ┌─────────────────────────┐
+                    │    GitHub Repository    │
+                    │   stephenoduntan/CHM    │
+                    └────────────┬────────────┘
+                                 │
+                 ┌───────────────┴───────────────┐
+                 ▼                               ▼
+    ┌─────────────────────────┐     ┌─────────────────────────┐
+    │    Netlify Site #1      │     │    Netlify Site #2      │
+    │   yourchurch.org        │     │  admin.yourchurch.org   │
+    │   (Base: apps/web)      │     │  (Base: apps/admin)     │
+    └─────────────────────────┘     └─────────────────────────┘
+```
+
+### Project 1: Main Church Website (`yourchurch.org`)
+
+1. In the **Netlify Dashboard**, click **"Add new site"** → **"Import an existing project"**.
+2. Select your repository: `stephenoduntan/CHM`.
+3. Configure the **Build & Deploy settings**:
+   * **Site name:** `rccgchm` (or custom domain `yourchurch.org` / `rccgchm.com`)
+   * **Base directory:** `apps/web`
+   * **Package directory:** `apps/web`
+   * **Build command:** `npm run build`
+   * **Publish directory:** `apps/web/.next` (or `.next`)
+4. **Build Plugins:**
+   * The `@netlify/plugin-nextjs` is configured in `apps/web/netlify.toml` and will be loaded automatically.
+5. **Environment Variables:**
+   Add the following in **Site settings** → **Environment variables**:
+   ```env
+   NEXT_PUBLIC_SANITY_PROJECT_ID=d3m2i6v1
+   NEXT_PUBLIC_SANITY_DATASET=production
+   NEXT_PUBLIC_SANITY_API_VERSION=2024-01-01
+   NEXT_PUBLIC_SITE_URL=https://yourchurch.org
+   ```
+
+### Project 2: Admin Management Portal (`admin.yourchurch.org`)
+
+1. In the **Netlify Dashboard**, click **"Add new site"** → **"Import an existing project"**.
+2. Select the **same** repository: `stephenoduntan/CHM`.
+3. Configure the **Build & Deploy settings**:
+   * **Site name:** `admin-rccgchm` (or custom domain `admin.yourchurch.org` / `admin.rccgchm.com`)
+   * **Base directory:** `apps/admin`
+   * **Package directory:** `apps/admin`
+   * **Build command:** `npm run build`
+   * **Publish directory:** `apps/admin/dist` (or `dist`)
+4. **SPA Redirect Rules:**
+   * Handled automatically by `apps/admin/netlify.toml`:
+     ```toml
+     [build]
+       command = "npm run build"
+       publish = "dist"
+
+     [[redirects]]
+       from = "/*"
+       to = "/index.html"
+       status = 200
+     ```
+5. **Environment Variables:**
+   Add the following in **Site settings** → **Environment variables**:
+   ```env
+   SANITY_STUDIO_PROJECT_ID=d3m2i6v1
+   SANITY_STUDIO_DATASET=production
+   ```
+
+---
+
+## Sanity Studio & Schemas Configuration
+
+### Content Schemas
+
+The admin portal defines rich, typed content models in `apps/admin/schemas/`:
+
+| Schema File | Document Type | Core Fields | Purpose |
+| :--- | :--- | :--- | :--- |
+| `sermon.ts` | `sermon` | `title`, `slug`, `preacher`, `date`, `youtubeUrl`, `scripture`, `category`, `series`, `notes` | Videos, sermons archive, latest sermon section |
+| `event.ts` | `event` | `title`, `slug`, `startDate`, `endDate`, `location`, `category`, `featured`, `gallery` | Upcoming programs, conferences, past event galleries |
+| `leadership.ts` | `leadership` | `name`, `role`, `department`, `order`, `image`, `bio`, `socials` | Pastoral leadership and ministry team directory |
+| `announcement.ts` | `announcement` | `title`, `priority` (alert/info/urgent), `startDate`, `link`, `isActive` | Urgent alerts, top bar notifications, bulletins |
+| `blog.ts` | `blog` | `title`, `slug`, `publishedAt`, `excerpt`, `body`, `author`, `tags` | Devotionals, pastor's desk, articles |
+| `gallery.ts` | `gallery` | `title`, `image`, `eventTag`, `category`, `dateTaken` | Photo gallery with category and event filtering |
+| `houseFellowship.ts`| `houseFellowship`| `name`, `centerNumber`, `leaderName`, `phone`, `address`, `zone` | Home fellowship cell centers and map locations |
+| `author.ts` | `author` | `name`, `slug`, `image`, `bio` | Post authors, guest speakers, contributing pastors |
+
+### Sanity CORS Origins
+
+Because Sanity Studio and the Website run on distinct domains, you must register your production and local URLs in the Sanity management console:
+
+1. Visit [https://manage.sanity.io](https://manage.sanity.io)
+2. Select project **`d3m2i6v1`** (or your designated project)
+3. Navigate to **API** → **CORS Origins** → **Add CORS origin**:
+   * `http://localhost:3000` (Local Web App) — **Credentials: Yes**
+   * `http://localhost:3333` (Local Sanity Studio) — **Credentials: Yes**
+   * `https://yourchurch.org` (Production Web App) — **Credentials: Yes**
+   * `https://admin.yourchurch.org` (Production Admin Studio) — **Credentials: Yes**
+   * `https://rccgchm.netlify.app` (Netlify Preview) — **Credentials: Yes**
+
+### Read-Only Sanity Client in Web App
+
+The web application connects to Sanity using a dedicated, read-only client with CDN edge caching in [`apps/web/src/lib/sanity.ts`](apps/web/src/lib/sanity.ts):
+
+```typescript
+import { createClient } from "next-sanity";
+
+export const client = createClient({
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "d3m2i6v1",
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
+  apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2024-01-01",
+  useCdn: true, // Edge CDN enabled for fast static generation and reads
+});
+
+export default client;
 ```
 
 ---
@@ -180,87 +299,101 @@ CHM/
 ## Getting Started & Local Development
 
 ### Prerequisites
+
 * [Node.js](https://nodejs.org/) v20.x or v22.x LTS
 * `npm` v10+
 
-> **Note for Windows Users:** If running in PowerShell for the first time, ensure script execution is enabled for the current user to prevent execution policy errors:
-> ```powershell
-> Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force
-> ```
-
 ### Installation
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/stephenoduntan/CHM.git
-   cd CHM
-   ```
+Clone the monorepo and install dependencies across all workspaces:
 
-2. Install dependencies:
-   ```bash
-   npm install --legacy-peer-deps
-   ```
-
-3. Start the local development server:
-   ```bash
-   npm run dev
-   ```
-
-4. Open your browser and navigate to:
-   ```
-   http://localhost:3000
-   ```
-
-### Production Build & Verification
-
-To verify that all static pages and TypeScript types compile cleanly:
 ```bash
-npm run build
-npm run start
+git clone https://github.com/stephenoduntan/CHM.git
+cd CHM
+
+# Install dependencies for root and all workspaces (apps/web and apps/admin)
+npm install
+```
+
+### Workspace NPM Scripts
+
+Run commands from the repository root:
+
+| Command | Action | URL |
+| :--- | :--- | :--- |
+| `npm run dev` | Starts the Next.js church website development server | `http://localhost:3000` |
+| `npm run dev:web` | Explicitly starts the Next.js church website | `http://localhost:3000` |
+| `npm run dev:admin` | Starts the Sanity Studio admin management portal | `http://localhost:3333` |
+| `npm run build` | Compiles the production build for the website | Output: `apps/web/.next` |
+| `npm run build:web` | Compiles the production build for the website | Output: `apps/web/.next` |
+| `npm run build:admin` | Compiles the static Sanity Studio production bundle | Output: `apps/admin/dist` |
+| `npm run start:web` | Runs the production Next.js server locally | `http://localhost:3000` |
+| `npm run start:admin` | Serves the built Sanity Studio static files locally | `http://localhost:3333` |
+
+You can also run both apps simultaneously during development using separate terminal sessions:
+
+```bash
+# Terminal 1: Run Website
+npm run dev:web
+
+# Terminal 2: Run Admin Portal
+npm run dev:admin
 ```
 
 ---
 
 ## Environment Variables
 
-Create a `.env.local` file in the root directory to connect external cloud services:
+### 1. Web App (`apps/web/.env.local`)
 
 ```env
-# Sanity CMS Configuration
-NEXT_PUBLIC_SANITY_PROJECT_ID=your_sanity_project_id
+# Sanity CMS Project Configuration
+NEXT_PUBLIC_SANITY_PROJECT_ID=d3m2i6v1
 NEXT_PUBLIC_SANITY_DATASET=production
 NEXT_PUBLIC_SANITY_API_VERSION=2024-01-01
+
+# Optional Read/Write Token (for on-demand revalidation)
 SANITY_API_READ_TOKEN=your_sanity_read_token
 
-# Church App Metadata
-NEXT_PUBLIC_SITE_URL=https://rccgchm.netlify.app
+# Canonical URL
+NEXT_PUBLIC_SITE_URL=https://yourchurch.org
+```
+
+### 2. Admin Portal (`apps/admin/.env`)
+
+```env
+# Studio Project Configuration
+SANITY_STUDIO_PROJECT_ID=d3m2i6v1
+SANITY_STUDIO_DATASET=production
 ```
 
 ---
 
-## Content Management & CMS
+## Design System & Branding
 
-1. **In-App Management Dashboard:**
-   * Navigate to [`/management`](https://rccgchm.netlify.app/management) to manage dynamic church records locally or view existing uploads.
-2. **Sanity Studio Schema Integration:**
-   * Schemas located in `sanity/schemas/` are pre-modeled for cloud synchronization. Once your Sanity Project ID is provided, documents are automatically typed and queried via GROQ in `src/lib/sanity/queries.ts`.
+The user interface strictly adheres to the official Figma specifications:
 
----
+### Colors
+| Name | Hex Code | Purpose |
+| :--- | :--- | :--- |
+| **Primary Forest Green** | `#051202` | Deep church brand color used for dark sections, navigation, and footers |
+| **Secondary Accent Green**| `#1a3a1e` | Active states, badges, card surfaces |
+| **Accent Gold** | `#c8a96e` | Highlight accents, countdown borders, primary action CTAs |
+| **Light Gray Band** | `#e8e8e8` | Header/footer separator bands, muted backgrounds |
+| **Clean Off-White** | `#f5f5f5` | Page backgrounds, subtle card fills |
+| **Body Charcoal** | `#242424` | Primary reading and typography color |
+| **Border Gray** | `#bfbfbf` | Neutral card borders and dividers |
 
-## Deployment (Netlify)
-
-The project is configured for continuous deployment on **Netlify** through GitHub.
-
-### Netlify Configuration (`netlify.toml`)
-* **Build Command:** `npm run build`
-* **Publish Directory:** `.next`
-* **Node Version:** `22`
-* **NPM Flags:** `--legacy-peer-deps` (ensures peer dependency alignment between Next 15 and `next-sanity`)
-
-Every push to the `main` branch triggers an automated build and deploy on [rccgchm.netlify.app](https://rccgchm.netlify.app).
+### Typography
+* **Headings, Display, Navigation:** `Recursive` (Variable font configured with Google Fonts).
+* **Body, Forms, Content:** `Inter` (Optimized for maximum readability).
 
 ---
 
-## License
+## License & Church Information
 
-This project is proprietary and maintained for **The Redeemed Christian Church of God (RCCG), Court of His Majesty (Lagos Province 37 Headquarters)**. All rights reserved.
+This project is proprietary and maintained for **The Redeemed Christian Church of God (RCCG), Court of His Majesty (Lagos Province 37 Headquarters)**.
+
+* **Address:** RCCG Court of His Majesty, Lagos Province 37 Headquarters, Lagos, Nigeria
+* **Online Church:** [rccgchm.netlify.app](https://rccgchm.netlify.app)
+* **All rights reserved.**

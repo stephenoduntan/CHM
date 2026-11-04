@@ -1,7 +1,16 @@
+# Root Netlify Configuration
+# When deploying to Netlify, each site should point to its package directory:
+# - Project 1 (Main Website): Base Directory = "apps/web", Publish Directory = ".next"
+# - Project 2 (Admin Portal): Base Directory = "apps/admin", Publish Directory = "dist"
+
 [build]
+  base = "apps/web"
   command = "npm run build"
   publish = ".next"
 
 [build.environment]
   NODE_VERSION = "22"
   NPM_FLAGS = "--legacy-peer-deps"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
