@@ -175,16 +175,21 @@ export function Footer() {
                   Connect
                 </h3>
                 <ul className="space-y-3 text-[18px] lg:text-[20px] text-[#f5f5f5]">
-                  {FOOTER_CONNECT_LINKS.map((link) => (
-                    <li key={link.href}>
-                      <Link
-                        href={link.href}
-                        className="hover:text-[#c8a96e] transition-colors"
-                      >
-                        {link.label}
-                      </Link>
-                    </li>
-                  ))}
+                  {FOOTER_CONNECT_LINKS.map((link) => {
+                    const isExternal = "target" in link && (link as { target?: string }).target === "_blank";
+                    return (
+                      <li key={link.label}>
+                        <Link
+                          href={link.href}
+                          target={isExternal ? "_blank" : undefined}
+                          rel={isExternal ? "noopener noreferrer" : undefined}
+                          className="hover:text-[#c8a96e] transition-colors"
+                        >
+                          {link.label}
+                        </Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             </div>

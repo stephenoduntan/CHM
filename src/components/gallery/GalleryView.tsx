@@ -21,10 +21,8 @@ import {
 } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { GALLERY_IMAGES, GalleryImage, getGalleryTags, getGalleryYears } from "@/lib/gallery-data";
-import { useManagedGallery } from "@/lib/content-store";
 
 export function GalleryView() {
-  const [galleryImages] = useManagedGallery();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTag, setSelectedTag] = useState("All");
   const [selectedYear, setSelectedYear] = useState<string>("All");
@@ -41,25 +39,12 @@ export function GalleryView() {
   const [activePhotoIndex, setActivePhotoIndex] = useState<number | null>(null);
   const [copied, setCopied] = useState(false);
 
-  const tags = useMemo(() => {
-    const set = new Set<string>();
-    galleryImages.forEach((img) => {
-      if (img.eventTag) set.add(img.eventTag);
-    });
-    return ["All", ...Array.from(set)];
-  }, [galleryImages]);
-
-  const years = useMemo(() => {
-    const set = new Set<number>();
-    galleryImages.forEach((img) => {
-      if (img.year) set.add(img.year);
-    });
-    return ["All", ...Array.from(set).sort((a, b) => b - a).map(String)];
-  }, [galleryImages]);
+  const tags = useMemo(() => ["All", ...getGalleryTags()], []);
+  const years = useMemo(() => ["All", ...getGalleryYears().map(String)], []);
 
   // Filter & sort images
   const filteredImages = useMemo(() => {
-    return galleryImages.filter((img) => {
+    return GALLERY_IMAGES.filter((img) => {
       const q = searchQuery.trim().toLowerCase();
       const matchesSearch =
         !q ||
@@ -262,8 +247,8 @@ export function GalleryView() {
                 const isSelected = selectedTag.toLowerCase() === tag.toLowerCase();
                 const count =
                   tag === "All"
-                    ? galleryImages.length
-                    : galleryImages.filter((img) => img.eventTag.toLowerCase() === tag.toLowerCase()).length;
+                    ? GALLERY_IMAGES.length
+                    : GALLERY_IMAGES.filter((img) => img.eventTag.toLowerCase() === tag.toLowerCase()).length;
 
                 return (
                   <button

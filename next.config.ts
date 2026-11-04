@@ -29,6 +29,11 @@ const nextConfig: NextConfig = {
         destination: "/watch-online",
         permanent: true,
       },
+      {
+        source: "/management",
+        destination: process.env.NEXT_PUBLIC_MANAGEMENT_URL || "https://admin.rccgchm.com",
+        permanent: false,
+      },
     ];
   },
 };

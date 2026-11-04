@@ -6,15 +6,12 @@ import Link from "next/link";
 import { ChevronLeft, Check, BookOpen, FileText, Search, Copy, Clock } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { Sermon, getRelatedSermons } from "@/lib/sermons-data";
-import { useManagedSermons } from "@/lib/content-store";
 
 interface SermonWatchDetailViewProps {
   sermon: Sermon;
 }
 
-export function SermonWatchDetailView({ sermon: initialSermon }: SermonWatchDetailViewProps) {
-  const [managedSermons] = useManagedSermons();
-  const sermon = managedSermons.find((s) => s.id === initialSermon.id) || initialSermon;
+export function SermonWatchDetailView({ sermon }: SermonWatchDetailViewProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [playbackSpeed, setPlaybackSpeed] = useState<"1x" | "1.25x" | "1.5x" | "2x">("1x");
   const [isCopied, setIsCopied] = useState(false);

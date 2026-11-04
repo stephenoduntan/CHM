@@ -6,17 +6,14 @@ import Image from "next/image";
 import { ChevronLeft, ChevronRight, Play, ArrowRight } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { SERMONS_DATA } from "@/lib/sermons-data";
-import { useManagedSermons } from "@/lib/content-store";
 
 export function LatestSermonSection() {
-  const [sermons] = useManagedSermons();
   const [index, setIndex] = useState(0);
 
-  const total = sermons.length || 1;
-  const prev = () => setIndex((i) => (i === 0 ? total - 1 : i - 1));
-  const next = () => setIndex((i) => (i === total - 1 ? 0 : i + 1));
+  const prev = () => setIndex((i) => (i === 0 ? SERMONS_DATA.length - 1 : i - 1));
+  const next = () => setIndex((i) => (i === SERMONS_DATA.length - 1 ? 0 : i + 1));
 
-  const sermon = sermons[index] || sermons[0] || SERMONS_DATA[0];
+  const sermon = SERMONS_DATA[index];
 
   return (
     <section className="w-full py-16 lg:py-24 bg-white">
@@ -85,7 +82,7 @@ export function LatestSermonSection() {
                   <ChevronLeft className="size-6" />
                 </button>
                 <span className="text-xs text-gray-400 font-mono">
-                  {index + 1} / {total}
+                  {index + 1} / {SERMONS_DATA.length}
                 </span>
                 <button
                   type="button"

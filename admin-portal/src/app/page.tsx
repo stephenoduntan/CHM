@@ -499,7 +499,7 @@ export default function ManagementPortal() {
   const galleryTagOptions = useMemo(() => Array.from(new Set(gallery.map((g) => g.eventTag))), [gallery]);
 
   return (
-    <div className="w-full bg-[#f8f9fa] min-h-screen py-10 pb-24 text-[#1a1a1a]">
+    <div className="w-full bg-[#f8f9fa] min-h-screen pt-[112px] pb-24 text-[#1a1a1a]">
       <Container className="max-w-[1400px]">
         {/* Notification Toast */}
         {notification && (

@@ -6,15 +6,12 @@ import Link from "next/link";
 import { Check } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { BlogPost, getRelatedBlogPosts } from "@/lib/blog-data";
-import { useManagedBlogs } from "@/lib/content-store";
 
 interface BlogDetailViewProps {
   post: BlogPost;
 }
 
-export function BlogDetailView({ post: initialPost }: BlogDetailViewProps) {
-  const [managedBlogs] = useManagedBlogs();
-  const post = managedBlogs.find((b) => b.id === initialPost.id || b.slug === initialPost.slug) || initialPost;
+export function BlogDetailView({ post }: BlogDetailViewProps) {
   const [isCopied, setIsCopied] = useState(false);
 
   const relatedArticles = getRelatedBlogPosts(post.slug, 3);
