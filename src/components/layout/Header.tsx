@@ -24,6 +24,7 @@ const DARK_HEADER_ROUTES = [
   "/watch-online",
   "/watch-live",
   "/watch",
+  "/gallery",
 ];
 
 export function Header({ variant }: HeaderProps) {

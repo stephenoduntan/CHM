@@ -29,6 +29,7 @@ export const FOOTER_QUICK_LINKS = [
   { label: "Events", href: "/events" },
   { label: "Sermons", href: "/sermons" },
   { label: "Watch Online", href: "/watch-online"},
+  { label: "Photo Gallery", href: "/gallery" },
   { label: "Holy Ghost Service", href: "https://www.youtube.com/@rccglive/streams", target: "_blank" },
   { label: "Next Level Cathedral", href: "/next-level-cathedral" },
 ] as const;

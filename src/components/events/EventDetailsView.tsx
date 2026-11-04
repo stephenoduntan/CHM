@@ -14,9 +14,13 @@ import {
   ChevronDown,
   Download,
   ExternalLink,
+  Camera,
+  Maximize2,
+  X,
 } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { EventDetail } from "@/lib/events-data";
+import { getGalleryImagesByEventSlug, GALLERY_IMAGES, GalleryImage } from "@/lib/gallery-data";
 
 export interface EventDetailsViewProps {
   event: EventDetail;
@@ -27,6 +31,11 @@ export function EventDetailsView({ event }: EventDetailsViewProps) {
   const [calendarDownloaded, setCalendarDownloaded] = useState(false);
   const [isCalendarMenuOpen, setIsCalendarMenuOpen] = useState(false);
   const calendarMenuRef = useRef<HTMLDivElement>(null);
+  const [selectedPhoto, setSelectedPhoto] = useState<GalleryImage | null>(null);
+
+  const isPastEvent = event.status.toLowerCase().includes("past");
+  const specificImages = getGalleryImagesByEventSlug(event.slug);
+  const eventGalleryImages = specificImages.length > 0 ? specificImages : GALLERY_IMAGES.slice(0, 4);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -270,7 +279,8 @@ export function EventDetailsView({ event }: EventDetailsViewProps) {
             </div>
 
             {/* Add to Calendar Action with Dropdown (Node 2096:6858) */}
-            <div className="mt-8 sm:mt-10 relative inline-block text-left" ref={calendarMenuRef}>
+            {!isPastEvent ? (
+              <div className="mt-8 sm:mt-10 relative inline-block text-left" ref={calendarMenuRef}>
               <button
                 type="button"
                 onClick={() => setIsCalendarMenuOpen((prev) => !prev)}
@@ -427,6 +437,21 @@ export function EventDetailsView({ event }: EventDetailsViewProps) {
                 </div>
               )}
             </div>
+          ) : (
+              <div className="mt-8 sm:mt-10 flex flex-wrap items-center gap-3">
+                <div className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-gray-100 text-gray-700 text-sm font-semibold border border-gray-200 shadow-sm">
+                  <span className="size-2 rounded-full bg-gray-400" />
+                  <span>Event Concluded</span>
+                </div>
+                <a
+                  href="#event-gallery"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#180C62] hover:bg-[#13005A] text-white text-sm font-semibold transition-all shadow-md active:scale-95 cursor-pointer"
+                >
+                  <Camera className="size-4" />
+                  <span>View Event Photos</span>
+                </a>
+              </div>
+            )}
           </div>
 
           {/* Right Column: Conference Theme Banner (Node 2096:6862) */}
@@ -528,7 +553,81 @@ export function EventDetailsView({ event }: EventDetailsViewProps) {
         </section>
 
         {/* ─── Plan Your Visit / Join Us in Person (Node 2096:6880) ──── */}
-        <section
+        {isPastEvent ? (
+          /* ─── Event Photo Gallery (Replaces 'Join Us in Person' on Past Events ONLY) ──── */
+          <section id="event-gallery" className="w-full pb-16 lg:pb-24">
+            <div className="w-full bg-white border border-gray-200 rounded-[24px] p-6 sm:p-10 lg:p-12 shadow-sm">
+              <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 pb-5 border-b border-gray-100">
+                <div>
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#180c62]/10 text-[#180c62] text-xs font-semibold uppercase tracking-wider mb-2">
+                    <Camera className="size-3.5" />
+                    <span>Event Photo Highlights</span>
+                  </div>
+                  <h3 className="font-display font-recursive-sans font-bold text-2xl sm:text-3xl lg:text-4xl text-[#0a0a0a]">
+                    Moments from {event.title}
+                  </h3>
+                  <p className="font-sans text-sm sm:text-base text-gray-600 mt-2">
+                    Captured memories, testimonies, and celebrations from this concluded gathering.
+                  </p>
+                </div>
+
+                <Link
+                  href="/gallery"
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-[#180c62] hover:underline shrink-0"
+                >
+                  <span>Explore full church gallery</span>
+                  <ArrowUpRight className="size-4" />
+                </Link>
+              </div>
+
+              {/* Event Photos Grid */}
+              {eventGalleryImages.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                  {eventGalleryImages.map((photo) => (
+                    <div
+                      key={photo.id}
+                      onClick={() => setSelectedPhoto(photo)}
+                      className="group relative rounded-2xl overflow-hidden bg-gray-900 aspect-[4/3] cursor-pointer shadow-sm hover:shadow-lg transition-all"
+                    >
+                      <Image
+                        src={photo.imageUrl}
+                        alt={photo.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                      <div className="absolute bottom-3 left-3 right-3 text-white">
+                        <p className="text-xs font-medium text-[#c8a96e] uppercase tracking-wider">
+                          {photo.date}
+                        </p>
+                        <h4 className="font-display font-recursive-sans font-semibold text-sm line-clamp-1 group-hover:text-[#F9BAB8] transition-colors">
+                          {photo.title}
+                        </h4>
+                      </div>
+                      <div className="absolute top-3 right-3 size-7 rounded-full bg-black/60 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Maximize2 className="size-3.5" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="p-8 text-center bg-gray-50 rounded-2xl border border-gray-100">
+                  <p className="text-sm text-gray-500">
+                    Photos from this event are currently being compiled by the media team.
+                  </p>
+                  <Link
+                    href="/gallery"
+                    className="inline-block mt-3 text-sm font-semibold text-[#180c62] hover:underline"
+                  >
+                    View All Church Photos →
+                  </Link>
+                </div>
+              )}
+            </div>
+          </section>
+        ) : (
+          /* ─── Plan Your Visit / Join Us in Person (Upcoming Events ONLY) ──── */
+          <section
           className="w-full pb-16 lg:pb-24"
           data-node-id="2096:6880"
           data-name="Plan your visit"
@@ -605,8 +704,58 @@ export function EventDetailsView({ event }: EventDetailsViewProps) {
             </div>
           </div>
         </section>
+        )}
+
+        {/* ─── Lightbox Modal for Event Gallery ──── */}
+        {selectedPhoto && (
+          <div
+            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex flex-col justify-between p-4 sm:p-6 animate-in fade-in duration-200"
+            onClick={() => setSelectedPhoto(null)}
+            role="dialog"
+            aria-modal="true"
+          >
+            <div
+              className="flex items-center justify-between text-white z-20 pb-3"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <span className="text-xs px-3 py-1 rounded-full bg-white/10 uppercase tracking-wider">
+                {selectedPhoto.eventTag}
+              </span>
+              <button
+                type="button"
+                onClick={() => setSelectedPhoto(null)}
+                className="p-2.5 rounded-full bg-white/10 hover:bg-red-500/80 text-white transition-colors cursor-pointer"
+              >
+                <X className="size-5" />
+              </button>
+            </div>
+
+            <div
+              className="relative flex-1 flex items-center justify-center my-2 max-h-[75vh]"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="relative w-full h-full max-w-4xl max-h-[70vh]">
+                <Image
+                  src={selectedPhoto.imageUrl}
+                  alt={selectedPhoto.title}
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </div>
+            </div>
+
+            <div
+              className="bg-black/70 backdrop-blur-md rounded-2xl p-4 max-w-2xl mx-auto w-full text-white text-center flex flex-col items-center gap-1 z-20"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <p className="text-xs text-[#c8a96e] font-semibold uppercase">{selectedPhoto.date}</p>
+              <h4 className="font-display font-recursive-sans font-bold text-lg">{selectedPhoto.title}</h4>
+              {selectedPhoto.caption && <p className="text-xs text-gray-300">{selectedPhoto.caption}</p>}
+            </div>
+          </div>
+        )}
       </Container>
     </div>
   );
 }
-
