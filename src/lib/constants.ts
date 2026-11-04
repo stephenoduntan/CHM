@@ -74,7 +74,7 @@ export const FOOTER_CONNECT_LINKS = [
   { label: "Services", href: "/services" },
   { label: "Prayer Request", href: "/connect" },
   { label: "Testify", href: "/connect" },
-  { label: "Management Portal", href: process.env.NEXT_PUBLIC_MANAGEMENT_URL || "https://admin.rccgchm.com", target: "_blank" },
+  // { label: "Management Portal", href: "/management" },
 ] as const;
 
 export const SOCIAL_LINKS = [

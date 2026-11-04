@@ -6,24 +6,26 @@ import Link from "next/link";
 import { Play, Calendar, User, Search, RotateCcw } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { SERMONS_DATA } from "@/lib/sermons-data";
+import { useManagedSermons } from "@/lib/content-store";
 
 export default function SermonsPage() {
+  const [sermons] = useManagedSermons();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortBy, setSortBy] = useState<"newest" | "oldest" | "title">("newest");
 
-  // Derive unique categories from SERMONS_DATA
+  // Derive unique categories from managed sermons
   const categories = useMemo(() => {
     const set = new Set<string>();
-    SERMONS_DATA.forEach((s) => {
+    sermons.forEach((s) => {
       if (s.series) set.add(s.series);
     });
     return Array.from(set);
-  }, []);
+  }, [sermons]);
 
   // Filter and sort sermons in real-time
   const filteredSermons = useMemo(() => {
-    return SERMONS_DATA.filter((sermon) => {
+    return sermons.filter((sermon) => {
       const query = searchQuery.trim().toLowerCase();
       const matchesSearch =
         !query ||
