@@ -394,6 +394,6 @@ The user interface strictly adheres to the official Figma specifications:
 
 This project is proprietary and maintained for **The Redeemed Christian Church of God (RCCG), Court of His Majesty (Lagos Province 37 Headquarters)**.
 
-* **Address:** RCCG Court of His Majesty, Lagos Province 37 Headquarters, Lagos, Nigeria
+* **Address:** RCCG Court of His Majesty, Lagos Province 94 Headquarters, Lagos, Nigeria
 * **Online Church:** [rccgchm.netlify.app](https://rccgchm.netlify.app)
 * **All rights reserved.**
