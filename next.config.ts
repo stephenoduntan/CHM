@@ -24,6 +24,11 @@ const nextConfig: NextConfig = {
         destination: "/next-level-cathedral",
         permanent: true,
       },
+      {
+        source: "/live",
+        destination: "/watch-online",
+        permanent: true,
+      },
     ];
   },
 };

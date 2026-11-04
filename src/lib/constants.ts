@@ -8,7 +8,7 @@ export const SITE_CONFIG = {
   shortName: "MAJESTY",
   fullName: "RCCG Court of His Majesty",
   description: "Impacted Lives, Changing Community. Discover new ways to connect, serve, and grow as you live out your faith alongside others at Court of His Majesty.",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://courtofhismajesty.org",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://rccgchm.com",
   ogImage: "/images/og-image.jpg",
   address: "163 Ipaja Road, Abesan Estate Gate, Lagos, Nigeria",
   phone: "+234 803 306 8989",
@@ -28,13 +28,13 @@ export const FOOTER_QUICK_LINKS = [
   { label: "Our Leadership", href: "/leadership" },
   { label: "Events", href: "/events" },
   { label: "Sermons", href: "/sermons" },
-  { label: "Watch Live", href: "/watch-live", target: "_blank" },
-  { label: "Holy Ghost Service", href: "/holy-ghost-service" },
+  { label: "Watch Online", href: "/watch-online"},
+  { label: "Holy Ghost Service", href: "https://www.youtube.com/@rccglive/streams", target: "_blank" },
   { label: "Next Level Cathedral", href: "/next-level-cathedral" },
 ] as const;
 
 export const FOOTER_CONNECT_LINKS = [
-  { label: "Join a Group", href: "/connect" },
+  { label: "Connect with Us", href: "/connect" },
   { label: "House Fellowship", href: "/house-fellowship" },
   { label: "Services", href: "/services" },
   { label: "Prayer Request", href: "/connect" },

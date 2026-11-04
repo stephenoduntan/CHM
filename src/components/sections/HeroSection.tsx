@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
-import { ArrowUpRight, Volume2, VolumeX } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Volume2, VolumeX } from "lucide-react";
 
 interface VideoNode {
   id: string;
@@ -623,13 +623,12 @@ export function HeroSection() {
               </Link>
 
               <Link
-                href="https://youtube.com/@rccgchm?si=JSIawZL2BpxMx_OW"
-                target="_blank"
+                href="/watch-online"
                 className="inline-flex items-center justify-center gap-[8px] px-[36px] py-[15px] rounded-[28px] border border-[#b2a1ed] bg-[#b2a1ed]/10 hover:bg-[#b2a1ed]/20 text-[#180c62] font-sans font-semibold text-[17px] transition-all group"
                 data-node-id="2114:12596"
               >
                 <span>Watch Online</span>
-                <ArrowUpRight className="size-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                <ArrowRight className="size-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </Link>
             </div>
           </div>
