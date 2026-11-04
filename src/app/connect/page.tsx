@@ -35,14 +35,14 @@ export default function ConnectPage() {
           <h1 className="font-display font-recursive-sans text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#0a0a0a] mb-4 uppercase tracking-tight">
             Connect With Us
           </h1>
-          <p className="text-gray-200 text-base sm:text-lg max-w-2xl mx-auto">
+          <p className="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto">
             We are here to pray with you, celebrate what God is doing in your life, and help you find your community.
           </p>
         </Container>
       </section>
 
       {/* ─── Contact Info & Interactive Form ──────────────────────── */}
-      <section className="py-16 lg:py-24 bg-white">
+      <section className="py-2 lg:py-4 bg-white">
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             {/* Contact Details */}
