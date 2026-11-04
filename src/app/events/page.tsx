@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { EventsSection } from "@/components/sections/EventsSection";
+import { useManagedEvents } from "@/lib/content-store";
 
 interface EventItem {
   id: string;
@@ -249,26 +250,31 @@ const ALL_EVENTS: EventItem[] = [
 ];
 
 export default function EventsPage() {
+  const [events] = useManagedEvents();
   const [searchQuery, setSearchQuery] = useState("");
   const [visibleUpcomingCount, setVisibleUpcomingCount] = useState(3);
   const [visiblePastCount, setVisiblePastCount] = useState(3);
 
   // 1. Filter Upcoming Events: Date >= CURRENT_DATE
   const allUpcomingEvents = useMemo(() => {
-    return ALL_EVENTS.filter((e) => {
+    return events.filter((e) => {
+      if (e.isPast === true) return false;
+      if (!e.startDateIso) return true;
       const d = new Date(e.startDateIso);
-      return d >= CURRENT_DATE;
+      return isNaN(d.getTime()) ? true : d >= CURRENT_DATE;
     });
-  }, []);
+  }, [events]);
 
-  // 2. Filter Past Latest Events: Date < CURRENT_DATE AND Date >= SIX_MONTHS_AGO
+  // 2. Filter Past Latest Events: Date < CURRENT_DATE AND Date >= SIX_MONTHS_AGO (or explicitly flagged isPast)
   // Strictly enforces the "only show events from the last 6 months to the current date" rule
   const allPastLatestEvents = useMemo(() => {
-    return ALL_EVENTS.filter((e) => {
+    return events.filter((e) => {
+      if (e.isPast === true) return true;
+      if (!e.startDateIso) return false;
       const d = new Date(e.startDateIso);
-      return d < CURRENT_DATE && d >= SIX_MONTHS_AGO;
+      return !isNaN(d.getTime()) && d < CURRENT_DATE && d >= SIX_MONTHS_AGO;
     });
-  }, []);
+  }, [events]);
 
   // Apply search query to Upcoming Events
   const filteredUpcoming = useMemo(() => {
@@ -414,8 +420,8 @@ export default function EventsPage() {
                         data-node-id="2086:1305"
                         style={{ fontVariationSettings: '"CASL" 0, "CRSV" 0.5, "MONO" 0' }}
                       >
-                        <p className="leading-none mb-0">{event.watermark[0]}</p>
-                        <p className="leading-none">{event.watermark[1]}</p>
+                        <p className="leading-none mb-0">{event.watermark?.[0] || event.theme.slice(0, 10) || "CHURCH"}</p>
+                        <p className="leading-none">{event.watermark?.[1] || "ENCOUNTER"}</p>
                       </div>
                     </div>
 
@@ -578,8 +584,8 @@ export default function EventsPage() {
                         className="font-display font-black text-gray-500 text-5xl sm:text-7xl lg:text-[96px] leading-[0.92] tracking-tighter uppercase"
                         style={{ fontVariationSettings: '"CASL" 0, "CRSV" 0.5, "MONO" 0' }}
                       >
-                        <p className="leading-none mb-0">{event.watermark[0]}</p>
-                        <p className="leading-none">{event.watermark[1]}</p>
+                        <p className="leading-none mb-0">{event.watermark?.[0] || event.theme.slice(0, 10) || "CHURCH"}</p>
+                        <p className="leading-none">{event.watermark?.[1] || "ENCOUNTER"}</p>
                       </div>
                     </div>
 

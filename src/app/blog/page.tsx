@@ -9,15 +9,25 @@ import {
   BLOG_POSTS,
   BLOG_CATEGORIES,
 } from "@/lib/blog-data";
+import { useManagedBlogs } from "@/lib/content-store";
 
 export default function BlogPage() {
+  const [managedBlogs] = useManagedBlogs();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("All categories");
   const [sortBy, setSortBy] = useState<"newest" | "oldest">("newest");
 
+  const featuredArticle = useMemo(() => {
+    return managedBlogs.find((b) => b.isFeatured) || managedBlogs[0] || FEATURED_ARTICLE;
+  }, [managedBlogs]);
+
+  const blogPosts = useMemo(() => {
+    return managedBlogs.filter((b) => b.id !== featuredArticle.id && b.slug !== featuredArticle.slug);
+  }, [managedBlogs, featuredArticle]);
+
   // Filtering & Sorting logic
   const filteredPosts = useMemo(() => {
-    let result = [...BLOG_POSTS];
+    let result = [...blogPosts];
 
     // Category filter
     if (selectedCategory && selectedCategory !== "All categories") {
@@ -110,8 +120,8 @@ export default function BlogPage() {
             data-name="Featured image"
           >
             <Image
-              src={FEATURED_ARTICLE.image}
-              alt={FEATURED_ARTICLE.title}
+              src={featuredArticle.image}
+              alt={featuredArticle.title}
               fill
               className="object-cover"
               priority
@@ -130,21 +140,21 @@ export default function BlogPage() {
                 data-node-id="2102:5318"
                 data-name="Featured label"
               >
-                Featured • {FEATURED_ARTICLE.category}
+                Featured • {featuredArticle.category}
               </span>
               <h2
                 className="font-sans font-semibold text-2xl sm:text-3xl lg:text-[40px] text-[#0a0a0a] leading-[1.2]"
                 data-node-id="2102:5319"
                 data-name="Heading"
               >
-                {FEATURED_ARTICLE.title}
+                {featuredArticle.title}
               </h2>
               <p
                 className="font-sans font-normal text-base sm:text-lg lg:text-[20px] leading-relaxed text-[#616161]"
                 data-node-id="2102:5320"
                 data-name="Supporting copy"
               >
-                {FEATURED_ARTICLE.excerpt}
+                {featuredArticle.excerpt}
               </p>
             </div>
 
@@ -154,11 +164,11 @@ export default function BlogPage() {
                 data-node-id="2102:5321"
                 data-name="Article metadata"
               >
-                {FEATURED_ARTICLE.date} &nbsp;•&nbsp; {FEATURED_ARTICLE.readTime}
+                {featuredArticle.date} &nbsp;•&nbsp; {featuredArticle.readTime}
               </span>
 
               <Link
-                href={`/blog/${FEATURED_ARTICLE.slug}`}
+                href={`/blog/${featuredArticle.slug}`}
                 className="bg-[#f0a505] hover:bg-[#d99404] transition-colors rounded-[36px] px-6 sm:px-[28px] py-3.5 sm:py-[16px] inline-flex items-center justify-center gap-3 text-[#0a0a0a] font-sans font-semibold text-base sm:text-[18px] cursor-pointer shrink-0 shadow-xs group w-fit"
                 data-node-id="2102:5322"
                 data-name="Action"

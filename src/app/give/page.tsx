@@ -111,7 +111,7 @@ export default function GivePage() {
                       <h3 className="font-display font-recursive-sans font-semibold text-2xl sm:text-[28px] text-[#0a0a0a] tracking-tight">
                         Give Online
                       </h3>
-                      <p className="font-sans font-normal text-base sm:text-xl lg:text-[24px] text-[#242424] leading-relaxed">
+                      <p className="font-sans font-normal text-base sm:text-lg lg:text-[24px] text-[#242424] leading-relaxed">
                         Giving digitally is easy and quick. Click the button to give at any time, to any ministry associated with CHM
                       </p>
                     </div>
@@ -145,7 +145,7 @@ export default function GivePage() {
                     <h3 className="font-display font-recursive-sans font-semibold text-2xl sm:text-[28px] text-[#0a0a0a] tracking-tight">
                       Give In Person
                     </h3>
-                    <p className="font-sans font-normal text-base sm:text-xl lg:text-[24px] text-[#242424] leading-relaxed">
+                    <p className="font-sans font-normal text-base sm:text-lg lg:text-[24px] text-[#242424] leading-relaxed">
                       You can give in person at any one of our services
                     </p>
                   </div>
@@ -167,8 +167,8 @@ export default function GivePage() {
                     <h3 className="font-display font-recursive-sans font-semibold text-2xl sm:text-[28px] text-[#0a0a0a] tracking-tight">
                       Mail A Cheque
                     </h3>
-                    <p className="font-sans font-normal text-base sm:text-xl lg:text-[24px] text-[#242424] leading-relaxed">
-                      Checks can be written for RCCG City of David, Lagos Nigeria, given during any of our services or sent to RCCG Court of His Majesty, 163 Ipaja Road, Abesan Estate Gate, Lagos, Nigeria
+                    <p className="font-sans font-normal text-base sm:text-lg lg:text-[24px] text-[#242424] leading-relaxed">
+                      Cheques can be written for RCCG Court of His Majesty, Lagos Nigeria, given during any of our services or sent to RCCG Court of His Majesty, 163 Ipaja Road, Abesan Estate Gate, Lagos, Nigeria
                     </p>
                   </div>
                 </div>

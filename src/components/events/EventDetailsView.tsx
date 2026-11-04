@@ -21,12 +21,14 @@ import {
 import { Container } from "@/components/layout/Container";
 import { EventDetail } from "@/lib/events-data";
 import { getGalleryImagesByEventSlug, GALLERY_IMAGES, GalleryImage } from "@/lib/gallery-data";
+import { useManagedGallery } from "@/lib/content-store";
 
 export interface EventDetailsViewProps {
   event: EventDetail;
 }
 
 export function EventDetailsView({ event }: EventDetailsViewProps) {
+  const [allGalleryImages] = useManagedGallery();
   const [copied, setCopied] = useState(false);
   const [calendarDownloaded, setCalendarDownloaded] = useState(false);
   const [isCalendarMenuOpen, setIsCalendarMenuOpen] = useState(false);
@@ -34,8 +36,10 @@ export function EventDetailsView({ event }: EventDetailsViewProps) {
   const [selectedPhoto, setSelectedPhoto] = useState<GalleryImage | null>(null);
 
   const isPastEvent = event.status.toLowerCase().includes("past");
-  const specificImages = getGalleryImagesByEventSlug(event.slug);
-  const eventGalleryImages = specificImages.length > 0 ? specificImages : GALLERY_IMAGES.slice(0, 4);
+  const specificImages = allGalleryImages.filter(
+    (img) => img.eventSlug === event.slug || (img.eventName && img.eventName.toLowerCase().includes(event.title.toLowerCase()))
+  );
+  const eventGalleryImages = specificImages.length > 0 ? specificImages : allGalleryImages.slice(0, 4);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {

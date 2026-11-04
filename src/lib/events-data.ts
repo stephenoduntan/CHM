@@ -422,3 +422,226 @@ export function getEventBySlug(slug?: string): EventDetail {
   if (!slug) return DEFAULT_EVENT;
   return EVENTS_DETAILS[slug] || DEFAULT_EVENT;
 }
+
+
+export interface EventItem {
+  id: string;
+  title: string;
+  theme: string;
+  watermark?: [string, string];
+  date: string;
+  startDateIso: string;
+  time: string;
+  location: string;
+  description: string;
+  image: string;
+  badge: string;
+  isPast?: boolean;
+}
+
+export const ALL_EVENTS: EventItem[] = [
+  // ─── UPCOMING EVENTS ───────────────────────────────────────────────────────
+  {
+    id: "festival-of-destiny",
+    title: "2026 Festival of Destiny Conference",
+    theme: "Choose Life",
+    watermark: ["CHOOSE", "LIFE"],
+    date: "November 8th - 15th, 2026",
+    startDateIso: "2026-11-08T18:00:00Z",
+    time: "6:00 PM Daily (Grand Finale: 8:00 AM Sunday)",
+    location: "Church Auditorium",
+    description:
+      "Our signature annual convention celebrating 29 years of God's faithfulness with international guest speakers, prophetic worship, and signs and wonders.",
+    image: "/images/events/fod-2026-poster.webp",
+    badge: "Annual Convention",
+  },
+  {
+    id: "youth-ignite",
+    title: "Youth & Singles Ignite Encounter",
+    theme: "Purpose Unveiled",
+    watermark: ["PURPOSE", "UNVEILED"],
+    date: "November 28th, 2026",
+    startDateIso: "2026-11-28T16:00:00Z",
+    time: "4:00 PM",
+    location: "Youth Arena, Court of His Majesty",
+    description:
+      "Vibrant worship, breakout career and relationship masterclasses, and an altar encounter specifically for teenagers, students, and young professionals.",
+    image:
+      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=1200",
+    badge: "Youth Ministry",
+  },
+  {
+    id: "good-women-thanksgiving",
+    title: "Good Women End of Year Thanksgiving",
+    theme: "Joy Unspeakable",
+    watermark: ["JOY", "UNSPEAKABLE"],
+    date: "December 12th, 2026",
+    startDateIso: "2026-12-12T10:00:00Z",
+    time: "10:00 AM",
+    location: "Fellowship Hall, Court of His Majesty",
+    description:
+      "A grand annual celebration of God’s faithfulness, provisions, and protection over our families throughout 2026 with joyful praises and community banquet.",
+    image:
+      "https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&q=80&w=1200",
+    badge: "Women Fellowship",
+  },
+  {
+    id: "crossover-service",
+    title: "Crossover Night of Glory & Restoration",
+    theme: "Exceeding Grace",
+    watermark: ["EXCEEDING", "GRACE"],
+    date: "December 31st, 2026",
+    startDateIso: "2026-12-31T21:00:00Z",
+    time: "9:00 PM till 1:00 AM",
+    location: "Main Auditorium, Court of His Majesty",
+    description:
+      "Step boldly into the new year with prophetic declarations, high praises, thanksgiving, and communion as we receive the prophetic theme for 2027.",
+    image:
+      "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=1200",
+    badge: "Crossover Service",
+  },
+  {
+    id: "annual-fasting-prayer",
+    title: "21 Days Annual Prayer & Fasting",
+    theme: "Dominion & Power",
+    watermark: ["DOMINION", "& POWER"],
+    date: "January 11th - 31st, 2027",
+    startDateIso: "2027-01-11T18:00:00Z",
+    time: "6:00 PM Daily",
+    location: "Church Auditorium & Online",
+    description:
+      "Consecrate the first month of 2027 to seek the face of God in fasting, prayer, and word encounters for total dominion throughout the year.",
+    image:
+      "https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&q=80&w=1200",
+    badge: "Prayer & Fasting",
+  },
+  {
+    id: "divine-elevation",
+    title: "Divine Elevation Encounter Service",
+    theme: "Next Level Shift",
+    watermark: ["NEXT LEVEL", "SHIFT"],
+    date: "February 14th, 2027",
+    startDateIso: "2027-02-14T08:00:00Z",
+    time: "8:00 AM & 10:00 AM",
+    location: "Main Sanctuary, RCCG CHM",
+    description:
+      "A special anointing service for breakthroughs in careers, businesses, families, and personal destiny with transformative worship and prophetic declarations.",
+    image:
+      "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=1200",
+    badge: "Encounter Service",
+  },
+
+  // ─── PAST LATEST EVENTS (Last 6 Months: May 3rd, 2026 – Nov 3rd, 2026) ─────
+  {
+    id: "mens-annual-conference",
+    title: "Men’s Annual Conference",
+    theme: "Kingdom Men of Impact",
+    watermark: ["KINGDOM", "MEN"],
+    date: "October 18th - 20th, 2026",
+    startDateIso: "2026-10-18T09:00:00Z",
+    time: "9:00 AM & 5:00 PM",
+    location: "Main Sanctuary, RCCG CHM",
+    description:
+      "A strategic gathering of men discovering biblical leadership, career excellence, spiritual authority, and strong family foundations.",
+    image:
+      "https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&q=80&w=1200",
+    badge: "Men Fellowship",
+    isPast: true,
+  },
+  {
+    id: "ezzer-women-conference",
+    title: "Ezzer Women Annual Conference",
+    theme: "Women of Grace & Glory",
+    watermark: ["GRACE &", "GLORY"],
+    date: "September 12th - 14th, 2026",
+    startDateIso: "2026-09-12T10:00:00Z",
+    time: "10:00 AM & 6:00 PM",
+    location: "Main Sanctuary, RCCG CHM",
+    description:
+      "Empowering women across marriage, spiritual warfare, family, and enterprise through prayer, teachings, and sisterhood.",
+    image:
+      "https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&q=80&w=1200",
+    badge: "Women Fellowship",
+    isPast: true,
+  },
+  {
+    id: "choose-life-encounter",
+    title: "Choose Life Mid-Year Encounter",
+    theme: "Living Above Limits",
+    watermark: ["ABOVE", "LIMITS"],
+    date: "August 22nd - 24th, 2026",
+    startDateIso: "2026-08-22T17:30:00Z",
+    time: "5:30 PM Daily",
+    location: "Church Auditorium & Livestream",
+    description:
+      "A powerful weekend of intensive prayer, deliverance, divine healing, and breakthrough encounters in God's presence.",
+    image:
+      "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=1200",
+    badge: "Spiritual Encounter",
+    isPast: true,
+  },
+  {
+    id: "kingdom-leadership-summit",
+    title: "Kingdom Leadership & Business Summit",
+    theme: "Marketplace Apostles",
+    watermark: ["MARKETPLACE", "APOSTLES"],
+    date: "July 17th - 19th, 2026",
+    startDateIso: "2026-07-17T17:00:00Z",
+    time: "5:00 PM Daily",
+    location: "Main Auditorium, Court of His Majesty",
+    description:
+      "Equipping executives, entrepreneurs, and professionals with biblical leadership principles and Kingdom wealth creation strategies.",
+    image:
+      "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=1200",
+    badge: "Leadership Summit",
+    isPast: true,
+  },
+  {
+    id: "midyear-praise-night",
+    title: "Mid-Year Praise & Deliverance Night",
+    theme: "Hallelujah Victory",
+    watermark: ["HALLELUJAH", "VICTORY"],
+    date: "June 26th, 2026",
+    startDateIso: "2026-06-26T22:00:00Z",
+    time: "10:00 PM till Dawn",
+    location: "Church Auditorium, Court of His Majesty",
+    description:
+      "An explosive all-night worship celebration marking the conclusion of the first half of 2026 in high praise and deliverance.",
+    image:
+      "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=1200",
+    badge: "Praise Night",
+    isPast: true,
+  },
+  {
+    id: "family-marriage-weekend",
+    title: "Family & Marriage Enrichment Weekend",
+    theme: "Built to Last",
+    watermark: ["BUILT TO", "LAST"],
+    date: "May 23rd - 24th, 2026",
+    startDateIso: "2026-05-23T10:00:00Z",
+    time: "10:00 AM & 4:00 PM",
+    location: "Fellowship Hall, Court of His Majesty",
+    description:
+      "Strengthening matrimonial bonds, parenting communication, and generational blessings across families in our church.",
+    image:
+      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=1200",
+    badge: "Family Ministry",
+    isPast: true,
+  },
+  {
+    id: "easter-faith-convention",
+    title: "Easter Faith & Power Convention",
+    theme: "Resurrection Power",
+    watermark: ["RESURRECTION", "POWER"],
+    date: "April 3rd - 6th, 2026",
+    startDateIso: "2026-04-03T18:00:00Z",
+    time: "6:00 PM Daily",
+    location: "Main Auditorium, Court of His Majesty",
+    description:
+      "Celebrating the victory of the cross with teachings on faith, salvation, and the resurrected life in Jesus Christ.",
+    image:
+      "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=1200",
+    badge: "Easter Convention",
+    isPast: true,
+  },
+];
