@@ -154,13 +154,13 @@ export function WatchOnlineView() {
   return (
     <div className="w-full text-white min-h-screen flex flex-col justify-between">
       {/* ─── Top Header & Controls ─────────────────────────────────── */}
-      <section className="w-full pt-32 sm:pt-36 pb-6">
+      <section className="w-full pt-[64px] sm:pt-36 pb-6">
         <Container className="max-w-[1440px]">
           <div className="flex flex-col lg:flex-row lg:items-center justify-center gap-6 pb-2">
             {/* Left: Indicator & Title */}
             <div className="space-y-3 text-center">
               {/* Live / Recent Broadcast Indicator */}
-              <div className="inline-flex items-center gap-2">
+              {/* <div className="inline-flex items-center gap-2">
                 <button
                   type="button"
                   onClick={() => setIsLive((prev) => !prev)}
@@ -178,10 +178,10 @@ export function WatchOnlineView() {
                 <span className="text-xs text-gray-400">
                   {isLive ? "Streaming Now" : "Last Livestream Available"}
                 </span>
-              </div>
+              </div> */}
 
               {/* Title */}
-              <h1 className="font-display font-recursive-sans font-extrabold text-2xl sm:text-3xl lg:text-4xl text-white tracking-tight leading-tight">
+              <h1 className="font-display font-recursive-sans font-extrabold text-2xl sm:text-3xl lg:text-4xl text-[#0a0a0a] tracking-tight leading-tight">
                 Watch Online &amp; Experience God&apos;s Presence
               </h1>
             </div>
@@ -192,7 +192,7 @@ export function WatchOnlineView() {
       {/* ─── YouTube Player (Full Viewport Width) ───────────────────── */}
       <section className="w-full relative">
         <Container className="max-w-[1440px] px-4 sm:px-8 lg:px-12 py-6 sm:py-8 lg:py-10">
-          <div className="w-full aspect-video max-h-[85vh] rounded-lg relative overflow-hidden bg-black shadow-2xl">
+          <div className="w-full aspect-video max-h-[85vh] rounded-xl relative overflow-hidden bg-black shadow-2xl">
             <iframe
               src={`https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=0&rel=0&modestbranding=1`}
               title="Watch Online & Experience God's Presence — RCCG Court of His Majesty"
@@ -236,7 +236,7 @@ export function WatchOnlineView() {
       {/* ─── CTA: Watch More on Our YouTube Channel (Light Grey BG) ─── */}
       <section className="w-full text-[#0a0a0a] py-14 sm:py-18 lg:py-20">
         <Container className="max-w-[1440px]">
-          <div className="bg-[#f2f2f2] rounded-[24px] p-8 sm:p-12 lg:p-16 border border-[#e5e5e5] relative overflow-hidden items-center justify-center gap-8 shadow-xs">
+          <div className="flex flex-col bg-[#f2f2f2] rounded-[24px] p-8 sm:p-12 lg:p-16 border border-[#e5e5e5] relative overflow-hidden items-center justify-center gap-8 shadow-xs">
             {/* YouTube Red Icon Pill */}
             <div className="size-14 rounded-2xl bg-red-600 text-white flex items-center justify-center shadow-md shadow-red-600/20">
               <Image
