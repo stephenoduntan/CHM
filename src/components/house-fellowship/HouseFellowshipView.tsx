@@ -351,7 +351,7 @@ export function HouseFellowshipView() {
       </section>
 
       {/* ─── Why Join a House Fellowship Section ───────────────────── */}
-      <section className="py-16 bg-[#f2f2f2] w-full">
+      <section className="py-16 bg-[#f2f2f2]/15 w-full">
         <Container className="max-w-[1440px]">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="text-xs font-semibold uppercase tracking-wider text-[#180c62] bg-[#180c62]/10 px-3.5 py-1.5 rounded-full inline-block mb-3">

@@ -154,9 +154,9 @@ export function WatchOnlineView() {
   return (
     <div className="w-full text-white min-h-screen flex flex-col justify-between">
       {/* ─── Top Header & Controls ─────────────────────────────────── */}
-      <section className="w-full pt-32 sm:pt-36 pb-6 bg-[#051202]">
-        <Container>
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-2">
+      <section className="w-full pt-32 sm:pt-36 pb-6">
+        <Container className="max-w-[1440px]">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-center gap-6 pb-2">
             {/* Left: Indicator & Title */}
             <div className="space-y-3 text-center">
               {/* Live / Recent Broadcast Indicator */}
@@ -185,15 +185,13 @@ export function WatchOnlineView() {
                 Watch Online &amp; Experience God&apos;s Presence
               </h1>
             </div>
-
-           
           </div>
         </Container>
       </section>
 
       {/* ─── YouTube Player (Full Viewport Width) ───────────────────── */}
-      <section className="w-full bg-black relative">
-        <Container className="max-w-[1440px]">
+      <section className="w-full relative">
+        <Container className="max-w-[1440px] px-4 sm:px-8 lg:px-12 py-6 sm:py-8 lg:py-10">
           <div className="w-full aspect-video max-h-[85vh] rounded-lg relative overflow-hidden bg-black shadow-2xl">
             <iframe
               src={`https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=0&rel=0&modestbranding=1`}
@@ -206,14 +204,14 @@ export function WatchOnlineView() {
         </Container>
       </section>
 
-      <section className="w-full align-center items-center py-4 sm:py-6 lg:py-8">
+      <section className="w-full py-4 sm:py-6 lg:py-8">
         {/* Right: Give Online & Sermon Notepad Action Buttons */}
-        <div className="flex flex-wrap items-center gap-3 shrink-0">
+        <div className="flex flex-wrap items-center gap-3 shrink-0 justify-center">
           {/* Give Online Button */}
           <button
             type="button"
             onClick={() => setIsGiveModalOpen(true)}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#c8a96e] hover:bg-[#d8b97e] text-[#051202] font-semibold text-sm sm:text-base transition-all shadow-md active:scale-95 cursor-pointer"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#f0a505] hover:bg-[#d99504] text-[#051202] font-semibold text-sm sm:text-base transition-all shadow-md active:scale-95 cursor-pointer"
           >
             <Heart className="size-4 fill-current" />
             <span>Give Online</span>
@@ -226,7 +224,7 @@ export function WatchOnlineView() {
             className={`inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm sm:text-base font-semibold border transition-all active:scale-95 cursor-pointer ${
               isNotepadOpen
                 ? "bg-white text-[#051202] border-white shadow-lg"
-                : "bg-white/10 hover:bg-white/20 text-white border-white/20"
+                : "bg-[#b2a1ed]/10 hover:bg-[#b2a1ed] text-[#180c62] border-[#b2a1ed]"
             }`}
           >
             <FileText className="size-4" />
@@ -237,8 +235,8 @@ export function WatchOnlineView() {
 
       {/* ─── CTA: Watch More on Our YouTube Channel (Light Grey BG) ─── */}
       <section className="w-full text-[#0a0a0a] py-14 sm:py-18 lg:py-20">
-        <Container className="max-w-[1440px] p-6 sm:p-8 rounded-[20px] bg-gray-50 border border-gray-200 shadow-sm">
-          <div className="max-w-3xl mx-auto text-center flex flex-col items-center gap-5">
+        <Container className="max-w-[1440px]">
+          <div className="bg-[#f2f2f2] rounded-[24px] p-8 sm:p-12 lg:p-16 border border-[#e5e5e5] relative overflow-hidden items-center justify-center gap-8 shadow-xs">
             {/* YouTube Red Icon Pill */}
             <div className="size-14 rounded-2xl bg-red-600 text-white flex items-center justify-center shadow-md shadow-red-600/20">
               <Image
