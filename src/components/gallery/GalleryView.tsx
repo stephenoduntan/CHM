@@ -10,6 +10,7 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
   Download,
   Share2,
   Calendar,
@@ -26,6 +27,13 @@ export function GalleryView() {
   const [selectedTag, setSelectedTag] = useState("All");
   const [selectedYear, setSelectedYear] = useState<string>("All");
   const [sortBy, setSortBy] = useState<"newest" | "oldest">("newest");
+  const PAGE_SIZE = 12;
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+
+  // Reset pagination count when filters change
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE);
+  }, [searchQuery, selectedTag, selectedYear, sortBy]);
 
   // Lightbox state
   const [activePhotoIndex, setActivePhotoIndex] = useState<number | null>(null);
@@ -56,6 +64,13 @@ export function GalleryView() {
       return sortBy === "newest" ? dateB - dateA : dateA - dateB;
     });
   }, [searchQuery, selectedTag, selectedYear, sortBy]);
+
+  // Displayed subset based on pagination (Max 12 on initial load)
+  const displayedImages = useMemo(() => {
+    return filteredImages.slice(0, visibleCount);
+  }, [filteredImages, visibleCount]);
+
+  const hasMore = filteredImages.length > visibleCount;
 
   const activePhoto: GalleryImage | null =
     activePhotoIndex !== null && filteredImages[activePhotoIndex]
@@ -101,6 +116,7 @@ export function GalleryView() {
     setSelectedTag("All");
     setSelectedYear("All");
     setSortBy("newest");
+    setVisibleCount(PAGE_SIZE);
   };
 
   const isFiltered = searchQuery !== "" || selectedTag !== "All" || selectedYear !== "All" || sortBy !== "newest";
@@ -267,7 +283,10 @@ export function GalleryView() {
           {/* Results Summary */}
           <div className="flex items-center justify-between mb-6 pb-3 border-b border-gray-200 text-xs sm:text-sm text-gray-600">
             <p>
-              Showing <span className="font-bold text-[#0a0a0a]">{filteredImages.length}</span>{" "}
+              Showing <span className="font-bold text-[#0a0a0a]">{displayedImages.length}</span>
+              {filteredImages.length > displayedImages.length && (
+                <> of <span className="font-bold text-[#0a0a0a]">{filteredImages.length}</span></>
+              )}{" "}
               {filteredImages.length === 1 ? "photo" : "photos"}
               {selectedTag !== "All" && (
                 <>
@@ -283,47 +302,54 @@ export function GalleryView() {
           </div>
 
           {filteredImages.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6">
-              {filteredImages.map((photo, index) => (
-                <div
-                  key={photo.id}
-                  onClick={() => setActivePhotoIndex(index)}
-                  className="group relative rounded-2xl overflow-hidden bg-gray-900 border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300 aspect-[4/3] cursor-pointer"
-                >
-                  <Image
-                    src={photo.imageUrl}
-                    alt={photo.title}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6">
+                {displayedImages.map((photo, index) => (
+                  <div
+                    key={photo.id}
+                    onClick={() => setActivePhotoIndex(index)}
+                    className="group relative rounded-2xl overflow-hidden bg-gray-900 border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300 aspect-[4/3] cursor-pointer"
+                  >
+                    <Image
+                      src={photo.imageUrl}
+                      alt={photo.title}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
 
-                  {/* Top Badges */}
-                  {/* <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2 z-10">
-                    <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-white border border-white/20">
-                      {photo.eventTag}
-                    </span>
-                    <div className="size-8 rounded-full bg-black/50 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                      <Maximize2 className="size-4" />
+                    {/* Bottom Captions */}
+                    <div className="absolute bottom-3 left-3 right-3 text-white z-10">
+                      <h3 className="font-display font-recursive-sans font-bold text-base sm:text-lg leading-tight line-clamp-1 group-hover:text-[#F9BAB8] transition-colors">
+                        {photo.title}
+                      </h3>
+                      <p className="text-xs text-gray-300 line-clamp-1 mt-0.5">
+                        {photo.eventName}
+                      </p>
                     </div>
-                  </div> */}
-
-                  {/* Bottom Captions */}
-                  <div className="absolute bottom-3 left-3 right-3 text-white z-10">
-                    {/* <p className="text-[11px] font-medium text-[#c8a96e] uppercase tracking-wider mb-0.5">
-                      {photo.date}
-                    </p> */}
-                    <h3 className="font-display font-recursive-sans font-bold text-base sm:text-lg leading-tight line-clamp-1 group-hover:text-[#F9BAB8] transition-colors">
-                      {photo.title}
-                    </h3>
-                    <p className="text-xs text-gray-300 line-clamp-1 mt-0.5">
-                      {photo.eventName}
-                    </p>
                   </div>
+                ))}
+              </div>
+
+              {/* ─── Control Method: Load More Photos Button (Initial 12 on display) ─── */}
+              {hasMore && (
+                <div className="flex flex-col items-center justify-center mt-12 sm:mt-16 pt-4">
+                  <button
+                    type="button"
+                    onClick={() => setVisibleCount((prev) => prev + PAGE_SIZE)}
+                    className="inline-flex items-center gap-3 px-8 sm:px-10 py-3.5 sm:py-4 rounded-full font-semibold text-sm sm:text-base text-[#180C62] bg-[#180C62]/5 hover:bg-[#180C62] hover:text-white border border-[#180C62]/20 transition-all duration-200 cursor-pointer shadow-sm hover:shadow-md active:scale-95 group"
+                    aria-label="Load more photos"
+                  >
+                    <span>Load More Photos</span>
+                    <ChevronDown className="size-4 sm:size-5 group-hover:translate-y-0.5 transition-transform" />
+                  </button>
+                  <p className="text-xs text-gray-500 mt-3">
+                    Showing {displayedImages.length} of {filteredImages.length} photos
+                  </p>
                 </div>
-              ))}
-            </div>
+              )}
+            </>
           ) : (
             <div className="py-20 text-center flex flex-col items-center justify-center gap-4 bg-white rounded-3xl border border-gray-200 shadow-sm max-w-lg mx-auto">
               <div className="size-14 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center">
