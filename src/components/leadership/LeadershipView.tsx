@@ -40,9 +40,9 @@ export function LeadershipView() {
         {/* ─── Page Introduction ────────────────────────────────────── */}
         <section className="flex flex-col items-center pb-10 sm:pb-[64px] pt-6 sm:pt-[60px] px-4 text-center w-full">
           <div className="flex flex-col gap-4 sm:gap-[20px] items-center max-w-[1100px] w-full">
-            <p className="font-serif italic text-base sm:text-[20px] text-[#616161]">
+            {/* <p className="font-serif italic text-base sm:text-[20px] text-[#616161]">
               Spiritual Shepherds & Servant Leaders
-            </p>
+            </p> */}
             <h1 className="font-display font-recursive-sans font-bold text-4xl sm:text-5xl lg:text-[56px] text-[#0a0a0a] leading-[1.2] tracking-tight">
               Our Leadership
             </h1>
@@ -69,9 +69,9 @@ export function LeadershipView() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6 text-white">
-                  <span className="inline-block px-3.5 py-1 rounded-full bg-[#180c62] text-xs font-semibold uppercase tracking-wider mb-2 text-[#b2a1ed] border border-[#b2a1ed]/30 shadow-xs">
+                  {/* <span className="inline-block px-3.5 py-1 rounded-full bg-[#180c62] text-xs font-semibold uppercase tracking-wider mb-2 text-[#b2a1ed] border border-[#b2a1ed]/30 shadow-xs">
                     {SENIOR_PASTORS.badge}
-                  </span>
+                  </span> */}
                   <h3 className="font-display font-recursive-sans text-xl sm:text-2xl font-bold">
                     {SENIOR_PASTORS.name}
                   </h3>
@@ -85,12 +85,12 @@ export function LeadershipView() {
             {/* Narrative & Quote */}
             <div className="flex-1 flex flex-col gap-6 justify-between">
               <div className="flex flex-col gap-4">
-                <div className="flex items-center gap-2">
+                {/* <div className="flex items-center gap-2">
                   <span className="size-2 rounded-full bg-[#d61812]" />
                   <span className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-[#180c62]">
                     Senior Pastorate & Provincial Oversight
                   </span>
-                </div>
+                </div> */}
                 <h2 className="font-display font-recursive-sans font-bold text-2xl sm:text-3xl lg:text-[38px] text-[#0a0a0a] leading-[1.2]">
                   Pastor and Pastor Mrs. Fred Odekhian
                 </h2>
@@ -118,26 +118,26 @@ export function LeadershipView() {
                   <button
                     type="button"
                     onClick={() => setSelectedLeader(SENIOR_PASTORS)}
-                    className="bg-[#180c62] hover:bg-[#180c62]/90 text-white rounded-full px-6 py-3 text-sm sm:text-base font-semibold transition-all shadow-sm cursor-pointer"
+                    className="bg-[#f0a505] hover:bg-[#d99404]/90 text-[#0a0a0a] rounded-full px-6 py-3 text-sm sm:text-base font-semibold transition-all shadow-sm cursor-pointer"
                   >
                     Read Full Biography
                   </button>
-                  <Link
+                  {/* <Link
                     href="/connect"
                     className="bg-white hover:bg-neutral-50 border border-[#d0d2d6] text-[#0a0a0a] rounded-full px-5 py-3 text-sm sm:text-base font-medium transition-colors cursor-pointer"
                   >
                     Connect with Pastors
-                  </Link>
+                  </Link> */}
                 </div>
 
-                <div className="relative h-12 w-36 opacity-85">
+                {/* <div className="relative h-12 w-36 opacity-85">
                   <Image
                     src="/images/pastor-fred-signature.png"
                     alt="Pastor Fred Odekhian signature"
                     fill
                     className="object-contain"
                   />
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -187,25 +187,25 @@ export function LeadershipView() {
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute top-4 left-4">
+                  {/* <div className="absolute top-4 left-4">
                     <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#180c62]/90 backdrop-blur-md text-white border border-white/20">
                       {leader.badge}
                     </span>
-                  </div>
+                  </div> */}
                 </div>
 
                 {/* Content */}
                 <div className="p-6 flex flex-col justify-between flex-1 gap-5">
                   <div className="flex flex-col gap-2">
-                    <h3 className="font-display font-recursive-sans font-semibold text-xl sm:text-[22px] text-[#0a0a0a] group-hover:text-[#180c62] transition-colors">
+                    <h3 className="font-display font-recursive-sans font-semibold text-xl sm:text-[22px] text-[#0a0a0a] group-hover:text-[#d61812] transition-colors">
                       {leader.name}
                     </h3>
                     <p className="text-xs sm:text-sm font-medium text-[#180c62] uppercase tracking-wider">
                       {leader.role}
                     </p>
-                    <p className="text-sm sm:text-base text-[#616161] leading-relaxed mt-2 line-clamp-3">
+                    {/* <p className="text-sm sm:text-base text-[#616161] leading-relaxed mt-2 line-clamp-3">
                       {leader.shortBio}
-                    </p>
+                    </p> */}
                   </div>
 
                   <div className="pt-4 border-t border-[#f0f0f0] flex items-center justify-between">
@@ -218,11 +218,11 @@ export function LeadershipView() {
                       <ArrowRight className="size-4" />
                     </button>
 
-                    {leader.scripture && (
+                    {/* {leader.scripture && (
                       <span className="text-xs font-mono text-[#737373] bg-[#f9fafb] px-2.5 py-1 rounded-md border border-[#e5e5e5]">
                         {leader.scripture.reference}
                       </span>
-                    )}
+                    )} */}
                   </div>
                 </div>
               </div>
@@ -231,7 +231,7 @@ export function LeadershipView() {
         </section>
 
         {/* ─── Leadership Values Section ────────────────────────────── */}
-        <section className="bg-[#f9fafb] border border-[#e5e7eb] rounded-[24px] p-8 sm:p-12 mb-16 sm:mb-24">
+        <section className="p-8 sm:p-12 mb-16 sm:mb-24">
           <div className="flex flex-col items-center text-center max-w-[800px] mx-auto mb-10">
             <span className="text-xs font-semibold uppercase tracking-wider text-[#180c62] bg-[#180c62]/10 px-3 py-1 rounded-full mb-3">
               Guiding Principles
@@ -269,12 +269,12 @@ export function LeadershipView() {
         <section className="bg-[#180c62] text-white rounded-[24px] p-8 sm:p-12 relative overflow-hidden">
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 relative z-10">
             <div className="flex flex-col gap-3 max-w-[760px]">
-              <div className="flex items-center gap-2">
+              {/* <div className="flex items-center gap-2">
                 <Heart className="size-5 text-[#f0a505]" />
                 <span className="text-xs uppercase tracking-wider font-semibold text-[#b2a1ed]">
                   Pastoral Care & Counseling
                 </span>
-              </div>
+              </div> */}
               <h2 className="font-display font-recursive-sans font-bold text-2xl sm:text-3xl lg:text-[36px] text-white leading-tight">
                 Need Spiritual Guidance or Confidential Prayer?
               </h2>
@@ -286,12 +286,12 @@ export function LeadershipView() {
             </div>
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 shrink-0">
-              <Link
+              {/* <Link
                 href="/connect"
                 className="bg-[#f0a505] hover:bg-[#d99404] text-[#0a0a0a] rounded-full px-7 py-3.5 text-base font-semibold transition-colors text-center shadow-sm"
               >
                 Request Pastoral Care
-              </Link>
+              </Link> */}
               <Link
                 href="/connect"
                 className="bg-white/10 hover:bg-white/20 border border-white/30 text-white rounded-full px-6 py-3.5 text-base font-medium transition-colors text-center"
@@ -311,10 +311,10 @@ export function LeadershipView() {
               aria-modal="true"
             >
               {/* Modal Header */}
-              <div className="sticky top-0 bg-white/95 backdrop-blur-md border-b border-[#e5e5e5] px-6 py-4 flex items-center justify-between z-10">
-                <span className="text-xs font-semibold uppercase tracking-wider text-[#180c62] bg-[#180c62]/10 px-3 py-1 rounded-full">
+              <div className="sticky top-0 bg-white/95 backdrop-blur-md border-b border-[#e5e5e5] px-6 py-4 flex items-center justify-end z-10">
+                {/* <span className="text-xs font-semibold uppercase tracking-wider text-[#180c62] bg-[#180c62]/10 px-3 py-1 rounded-full">
                   {selectedLeader.badge}
-                </span>
+                </span> */}
                 <button
                   type="button"
                   onClick={() => setSelectedLeader(null)}
@@ -401,13 +401,13 @@ export function LeadershipView() {
                   >
                     Close
                   </button>
-                  <Link
+                  {/* <Link
                     href="/connect"
                     onClick={() => setSelectedLeader(null)}
                     className="px-5 py-2.5 bg-[#180c62] hover:bg-[#180c62]/90 text-white rounded-full text-sm font-semibold transition-colors"
                   >
                     Connect with Ministry
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
             </div>

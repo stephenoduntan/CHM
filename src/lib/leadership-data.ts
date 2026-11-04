@@ -3,7 +3,7 @@ export interface Leader {
   name: string;
   role: string;
   category: "senior" | "associate" | "director" | "elders";
-  badge: string;
+  //badge: string;
   image: string;
   shortBio: string;
   fullBio: string[];
@@ -20,7 +20,7 @@ export const SENIOR_PASTORS: Leader = {
   name: "Pastor & Pastor (Mrs.) Fred Odekhian",
   role: "Pastor-in-Charge of Province (PICP) & Parish Pastor",
   category: "senior",
-  badge: "Senior Pastoral Leadership",
+  //badge: "Senior Pastoral Leadership",
   image: "/images/sermons/sermon-hero-video.png",
   shortBio:
     "Visionary shepherds called by God to teach spiritual alignment, raise consecrated disciples, and steer Lagos Province 94 in apostolic impact and supernatural growth.",
@@ -49,7 +49,7 @@ export const LEADERSHIP_TEAM: Leader[] = [
     name: "Pastor & Pastor (Mrs.) Caleb Okedere",
     role: "National Secretary RCCG & Assistant Pastor (Admin)",
     category: "associate",
-    badge: "Executive Pastoral Team",
+    //badge: "Executive Pastoral Team",
     image: "/images/explore/teachings.webp",
     shortBio:
       "Seasoned administrator, teacher of righteousness, and National Secretary of RCCG, championing operational excellence and ministerial fidelity.",
@@ -74,7 +74,7 @@ export const LEADERSHIP_TEAM: Leader[] = [
     name: "Pastor David Adeyemi",
     role: "Associate Pastor, Discipleship & Evangelism",
     category: "associate",
-    badge: "Associate Pastor",
+    //badge: "Associate Pastor",
     image: "/images/explore/community.webp",
     shortBio:
       "A passionate evangelist dedicated to grassroots outreach, soul winning, follow-up, and raising believers who actively share their faith.",
@@ -98,7 +98,7 @@ export const LEADERSHIP_TEAM: Leader[] = [
     name: "Pastor (Mrs.) Grace Oladipo",
     role: "Associate Pastor, Women & Family Ministries",
     category: "associate",
-    badge: "Associate Pastor",
+    //badge: "Associate Pastor",
     image: "/images/explore/ministries.webp",
     shortBio:
       "A compassionate shepherd and intercessor devoted to equipping women, strengthening marriages, and building wholesome, godly homes.",
@@ -122,7 +122,7 @@ export const LEADERSHIP_TEAM: Leader[] = [
     name: "Pastor Emmanuel Ogundele",
     role: "Youth & Young Adults Pastor (Youth Ignite)",
     category: "director",
-    badge: "NextGen & Youth Director",
+    //badge: "NextGen & Youth Director",
     image: "/images/explore/get-involved.webp",
     shortBio:
       "A dynamic mentor empowering youth, teens, students, and young professionals to maximize their divine potential without compromising kingdom values.",
@@ -146,7 +146,7 @@ export const LEADERSHIP_TEAM: Leader[] = [
     name: "Minister Michael Adeleke",
     role: "Director of Music & Creative Arts",
     category: "director",
-    badge: "Music & Media Director",
+    //badge: "Music & Media Director",
     image: "/images/blog/church-family.png",
     shortBio:
       "Consecrated psalmist and choir director steering Majesty Voices into profound atmospheres of high praise, deep worship, and creative ministry.",
@@ -170,7 +170,7 @@ export const LEADERSHIP_TEAM: Leader[] = [
     name: "The Elders’ Forum of Throne of Grace / CHM",
     role: "Board of Spiritual Elders & Advisors",
     category: "elders",
-    badge: "Spiritual Council",
+    //badge: "Spiritual Council",
     image: "/images/blog/bible-study.png",
     shortBio:
       "Heaven-bound fathers and mothers in faith who provide seasoned spiritual counsel, intercessory cover, and mature guidance to the body of Christ.",
@@ -196,7 +196,7 @@ export const LEADERSHIP_CATEGORIES = [
   { id: "senior", label: "Senior Pastors" },
   { id: "associate", label: "Associate Pastors" },
   { id: "director", label: "Ministry Directors" },
-  { id: "elders", label: "Elders' Council" },
+  // { id: "elders", label: "Elders' Council" },
 ] as const;
 
 export const LEADERSHIP_VALUES = [

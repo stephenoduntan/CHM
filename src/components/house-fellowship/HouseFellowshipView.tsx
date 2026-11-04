@@ -92,7 +92,6 @@ export function HouseFellowshipView() {
 
         <Container className="relative z-10 text-center py-16 sm:py-20 max-w-[1100px]">
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#b2a1ed]/15 border border-[#b2a1ed]/30 text-[#b2a1ed] text-xs font-semibold uppercase tracking-wider mb-4 shadow-xs">
-            <Home className="size-3.5" />
             <span>House to House • Life to Life</span>
           </span>
 
@@ -136,12 +135,12 @@ export function HouseFellowshipView() {
       {/* ─── Search & Zone Filter Bar ───────────────────────────────── */}
       <section
         id="centers-list"
-        className="sticky top-[80px] z-30 bg-white/95 backdrop-blur-md border-b border-[#e5e5e5] py-4 shadow-2xs"
+        className="sticky top-[120px] z-30 bg-white/95 backdrop-blur-md border-b border-[#e5e5e5] py-4 shadow-2xs"
       >
         <Container className="max-w-[1440px]">
-          <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
+          <div className="flex flex-col items-stretch lg:items-center justify-between gap-8">
             {/* Live Search */}
-            <div className="relative w-full lg:w-[360px]">
+            {/* <div className="relative w-full lg:w-[360px]">
               <Search className="size-4 text-[#9ca3af] absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
@@ -159,7 +158,7 @@ export function HouseFellowshipView() {
                   Clear
                 </button>
               )}
-            </div>
+            </div> */}
 
             {/* Landmark Zone Filter Tabs */}
             <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
@@ -223,7 +222,7 @@ export function HouseFellowshipView() {
                 return (
                   <div key={landmark} className="flex flex-col gap-6">
                     {/* Landmark Header */}
-                    <div className="flex items-center gap-3 border-b border-[#e5e5e5] pb-3">
+                    <div className="flex items-center gap-3">
                       <div className="size-8 rounded-full bg-[#180c62]/10 text-[#180c62] flex items-center justify-center">
                         <MapPin className="size-4 text-[#180c62]" />
                       </div>
@@ -246,7 +245,7 @@ export function HouseFellowshipView() {
                         >
                           <div>
                             {/* Header / Center Name & Area */}
-                            <div className="flex items-start justify-between gap-2 mb-3">
+                            {/* <div className="flex items-start justify-between gap-2 mb-3">
                               <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#180c62]/10 text-[#180c62]">
                                 {center.landmarkArea}
                               </span>
@@ -254,7 +253,7 @@ export function HouseFellowshipView() {
                                 <Clock className="size-3 text-[#180c62]" />
                                 <span>{center.meetingTime}</span>
                               </span>
-                            </div>
+                            </div> */}
 
                             <h3 className="font-display font-recursive-sans font-bold text-xl text-[#0a0a0a] group-hover:text-[#180c62] transition-colors mb-3">
                               {center.name}
@@ -278,7 +277,7 @@ export function HouseFellowshipView() {
                           <div className="pt-4 border-t border-[#f0f0f0] flex flex-col gap-3">
                             <div className="flex items-center justify-between text-xs sm:text-sm">
                               <div className="flex items-center gap-2 text-[#616161]">
-                                <User className="size-3.5 text-[#180c62]" />
+                                {/* <User className="size-3.5 text-[#180c62]" /> */}
                                 <span className="font-medium text-[#0a0a0a]">
                                   {center.hostName}
                                 </span>
@@ -352,7 +351,7 @@ export function HouseFellowshipView() {
       </section>
 
       {/* ─── Why Join a House Fellowship Section ───────────────────── */}
-      <section className="py-16 bg-[#f9fafb] border-t border-b border-[#e5e7eb] w-full">
+      <section className="py-16 bg-[#f2f2f2] w-full">
         <Container className="max-w-[1440px]">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="text-xs font-semibold uppercase tracking-wider text-[#180c62] bg-[#180c62]/10 px-3.5 py-1.5 rounded-full inline-block mb-3">
@@ -393,10 +392,10 @@ export function HouseFellowshipView() {
         <Container className="max-w-[1440px]">
           <div className="bg-[#f2f2f2] rounded-[24px] p-8 sm:p-12 lg:p-16 border border-[#e5e5e5] relative overflow-hidden flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 sm:gap-12 shadow-xs">
             <div className="flex flex-col gap-3.5 max-w-[760px]">
-              <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#180c62]">
+              {/* <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#180c62]">
                 <Sparkles className="size-4 text-[#f0a505]" />
                 <span>Get Connected Today</span>
-              </span>
+              </span> */}
               <h2 className="font-display font-recursive-sans font-bold text-2xl sm:text-3xl lg:text-[40px] text-[#0a0a0a] leading-[1.2]">
                 Join a House Fellowship Centre
               </h2>
@@ -405,7 +404,7 @@ export function HouseFellowshipView() {
                 living room as a fellowship host? The House Fellowship Directorate of
                 RCCG Court of His Majesty is ready to assist you.
               </p>
-              <div className="flex flex-wrap items-center gap-4 text-xs sm:text-sm text-[#404040] pt-2">
+              {/* <div className="flex flex-wrap items-center gap-4 text-xs sm:text-sm text-[#404040] pt-2">
                 <span className="flex items-center gap-1.5">
                   <Check className="size-4 text-emerald-600" /> Free weekly study outline
                 </span>
@@ -415,16 +414,16 @@ export function HouseFellowshipView() {
                 <span className="flex items-center gap-1.5">
                   <Check className="size-4 text-emerald-600" /> Neighborhood prayer cover
                 </span>
-              </div>
+              </div> */}
             </div>
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 shrink-0 w-full sm:w-auto">
-              <Link
+              {/* <Link
                 href="/connect"
                 className="bg-[#180c62] hover:bg-[#180c62]/90 text-white rounded-full px-7 py-4 text-base font-semibold transition-all shadow-md text-center cursor-pointer hover:scale-[1.02]"
               >
                 Locate My Center
-              </Link>
+              </Link> */}
               <a
                 href="tel:+2348033068989"
                 className="bg-white hover:bg-neutral-50 border border-[#d0d2d6] text-[#0a0a0a] rounded-full px-6 py-4 text-base font-medium transition-colors text-center inline-flex items-center justify-center gap-2 cursor-pointer shadow-xs"
