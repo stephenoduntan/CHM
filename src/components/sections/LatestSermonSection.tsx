@@ -5,50 +5,19 @@ import Link from "next/link";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Play, ArrowRight } from "lucide-react";
 import { Container } from "@/components/layout/Container";
-
-const sermonsList = [
-  {
-    id: "walking-in-divine-destiny",
-    title: "Walking in Divine Destiny",
-    date: "October 24, 2026",
-    convener: "Pastor Fred Odekhian",
-    series: "Destiny Unfolding",
-    videoThumbnail: "https://images.unsplash.com/photo-1510590337019-5ef8d3d32116?auto=format&fit=crop&q=80&w=1200",
-    videoUrl: "https://youtube.com/@courtofhismajesty",
-  },
-  {
-    id: "the-power-of-consecration",
-    title: "The Power of Consecration",
-    date: "October 17, 2026",
-    convener: "Pastor Mrs. Fred Odekhian",
-    series: "Spiritual Foundations",
-    videoThumbnail: "https://images.unsplash.com/photo-1544427920-c49ccfb85579?auto=format&fit=crop&q=80&w=1200",
-    videoUrl: "https://youtube.com/@courtofhismajesty",
-  },
-  {
-    id: "overflowing-grace",
-    title: "Overflowing Grace for Greater Exploits",
-    date: "October 10, 2026",
-    convener: "Pastor Caleb Okedere",
-    series: "Grace Upon Grace",
-    videoThumbnail: "https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&q=80&w=1200",
-    videoUrl: "https://youtube.com/@courtofhismajesty",
-  },
-];
+import { SERMONS_DATA } from "@/lib/sermons-data";
 
 export function LatestSermonSection() {
   const [index, setIndex] = useState(0);
 
-  const prev = () => setIndex((i) => (i === 0 ? sermonsList.length - 1 : i - 1));
-  const next = () => setIndex((i) => (i === sermonsList.length - 1 ? 0 : i + 1));
+  const prev = () => setIndex((i) => (i === 0 ? SERMONS_DATA.length - 1 : i - 1));
+  const next = () => setIndex((i) => (i === SERMONS_DATA.length - 1 ? 0 : i + 1));
 
-  const sermon = sermonsList[index];
+  const sermon = SERMONS_DATA[index];
 
   return (
     <section className="w-full py-16 lg:py-24 bg-white">
       <Container>
-        
-
         {/* Dark Sermon Card */}
         <div className="relative rounded-[32px] overflow-hidden bg-[#0c0f24] text-white p-8 sm:p-12 lg:p-14 shadow-2xl">
           {/* Header */}
@@ -76,15 +45,30 @@ export function LatestSermonSection() {
                 <p className="font-sans font-semibold text-xs sm:text-sm tracking-widest text-[#c8a96e] uppercase mb-2">
                   {sermon.date}
                 </p>
-                <h3 className="font-sans font-extrabold text-2xl sm:text-3xl lg:text-4xl leading-tight mb-3 text-white">
-                  {sermon.title}
-                </h3>
+                <Link
+                  href={`/sermons/${sermon.id}`}
+                  className="group/title block"
+                >
+                  <h3 className="font-sans font-extrabold text-2xl sm:text-3xl lg:text-4xl leading-tight mb-3 text-white group-hover/title:text-[#F9BAB8] transition-colors">
+                    {sermon.title}
+                  </h3>
+                </Link>
                 <p className="font-display font-recursive-sans italic text-lg sm:text-xl text-gray-300">
-                  {sermon.convener}
+                  {sermon.speaker}
                 </p>
-                <p className="text-xs uppercase tracking-wider text-gray-400 mt-1">
-                  Series: {sermon.series}
-                </p>
+                <div className="flex flex-wrap items-center gap-2 mt-2 text-xs text-gray-400">
+                  {sermon.series && (
+                    <span className="uppercase tracking-wider">
+                      Series: {sermon.series}
+                    </span>
+                  )}
+                  {sermon.biblePassage && (
+                    <>
+                      <span>•</span>
+                      <span className="text-[#c8a96e] font-medium">{sermon.biblePassage}</span>
+                    </>
+                  )}
+                </div>
               </div>
 
               {/* Navigation Chevrons */}
@@ -93,15 +77,18 @@ export function LatestSermonSection() {
                   type="button"
                   onClick={prev}
                   aria-label="Previous sermon"
-                  className="size-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all cursor-pointer"
+                  className="size-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all cursor-pointer active:scale-95"
                 >
                   <ChevronLeft className="size-6" />
                 </button>
+                <span className="text-xs text-gray-400 font-mono">
+                  {index + 1} / {SERMONS_DATA.length}
+                </span>
                 <button
                   type="button"
                   onClick={next}
                   aria-label="Next sermon"
-                  className="size-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all cursor-pointer"
+                  className="size-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all cursor-pointer active:scale-95"
                 >
                   <ChevronRight className="size-6" />
                 </button>
@@ -110,26 +97,31 @@ export function LatestSermonSection() {
 
             {/* Right Column: Video Preview Thumbnail */}
             <div className="lg:col-span-7">
-              <a
-                href={sermon.videoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href={`/sermons/${sermon.id}`}
                 className="group relative block w-full aspect-video rounded-[24px] overflow-hidden bg-gray-900 border border-white/10 shadow-lg cursor-pointer"
               >
                 <Image
-                  src={sermon.videoThumbnail}
+                  src={sermon.thumbnail}
                   alt={sermon.title}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-80"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
+                {/* Duration Badge */}
+                {sermon.duration && (
+                  <div className="absolute top-4 right-4 text-xs bg-black/75 backdrop-blur-sm px-3 py-1 rounded-full text-white font-medium border border-white/10">
+                    {sermon.duration}
+                  </div>
+                )}
+
                 {/* Watch Button Badge */}
                 <div className="absolute bottom-6 left-6 flex items-center gap-3 px-5 py-2.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white group-hover:bg-[#c8a96e] group-hover:text-[#051202] transition-colors">
                   <Play className="size-4 fill-current" />
                   <span className="text-sm font-semibold tracking-wide">Watch Message</span>
                 </div>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -137,4 +129,3 @@ export function LatestSermonSection() {
     </section>
   );
 }
-

@@ -165,30 +165,30 @@ export const LEADERSHIP_TEAM: Leader[] = [
       "Mentoring vocalists, instrumentalists, and sound technicians",
     ],
   },
-  {
-    id: "elders-forum",
-    name: "The Elders’ Forum of Throne of Grace / CHM",
-    role: "Board of Spiritual Elders & Advisors",
-    category: "elders",
-    //badge: "Spiritual Council",
-    image: "/images/blog/bible-study.png",
-    shortBio:
-      "Heaven-bound fathers and mothers in faith who provide seasoned spiritual counsel, intercessory cover, and mature guidance to the body of Christ.",
-    fullBio: [
-      "The Elders’ Forum is an esteemed association of seasoned believers who are heaven-bound, fully committed to finishing their Christian race well.",
-      "Comprising retired ministers, veteran workers, and spiritual patriarchs from age 60 and above, God has empowered and equipped our elders with wisdom from above to offer continual guidance and prayer support to the pastors and members.",
-    ],
-    scripture: {
-      quote:
-        "“The hoary head is a crown of glory, if it be found in the way of righteousness.”",
-      reference: "Proverbs 16:31",
-    },
-    responsibilities: [
-      "Strategic prayer cover for the pastorate, province, and nation",
-      "Spiritual conflict resolution and ethical guidance within the parish",
-      "Mentoring younger couples and interceding for the church's spiritual vitality",
-    ],
-  },
+  // {
+  //   id: "elders-forum",
+  //   name: "The Elders’ Forum of Throne of Grace / CHM",
+  //   role: "Board of Spiritual Elders & Advisors",
+  //   category: "elders",
+  //   badge: "Spiritual Council",
+  //   image: "/images/blog/bible-study.png",
+  //   shortBio:
+  //     "Heaven-bound fathers and mothers in faith who provide seasoned spiritual counsel, intercessory cover, and mature guidance to the body of Christ.",
+  //   fullBio: [
+  //     "The Elders’ Forum is an esteemed association of seasoned believers who are heaven-bound, fully committed to finishing their Christian race well.",
+  //     "Comprising retired ministers, veteran workers, and spiritual patriarchs from age 60 and above, God has empowered and equipped our elders with wisdom from above to offer continual guidance and prayer support to the pastors and members.",
+  //   ],
+  //   scripture: {
+  //     quote:
+  //       "“The hoary head is a crown of glory, if it be found in the way of righteousness.”",
+  //     reference: "Proverbs 16:31",
+  //   },
+  //   responsibilities: [
+  //     "Strategic prayer cover for the pastorate, province, and nation",
+  //     "Spiritual conflict resolution and ethical guidance within the parish",
+  //     "Mentoring younger couples and interceding for the church's spiritual vitality",
+  //   ],
+  // },
 ];
 
 export const LEADERSHIP_CATEGORIES = [

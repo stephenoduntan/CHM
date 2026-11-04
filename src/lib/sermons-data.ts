@@ -81,7 +81,7 @@ export const SERMONS_DATA: Sermon[] = [
     date: "October 17, 2026",
     series: "Destiny Series",
     duration: "58 mins",
-    thumbnail: "/images/sermons/sermon-hero-video.png",
+    thumbnail: "https://images.unsplash.com/photo-1510590337019-5ef8d3d32116?auto=format&fit=crop&q=80&w=1200",
     youtubeId: "vBvP_h0k_X8",
     biblePassage: "Jeremiah 29:11",
     description:
@@ -118,7 +118,7 @@ export const SERMONS_DATA: Sermon[] = [
     date: "October 10, 2026",
     series: "Spiritual Foundations",
     duration: "45 mins",
-    thumbnail: "/images/sermons/sermon-hero-video.png",
+    thumbnail: "https://images.unsplash.com/photo-1544427920-c49ccfb85579?auto=format&fit=crop&q=80&w=1200",
     youtubeId: "vBvP_h0k_X8",
     biblePassage: "Joshua 3:5",
     description:
@@ -150,7 +150,7 @@ export const SERMONS_DATA: Sermon[] = [
     date: "October 3, 2026",
     series: "Grace Unveiled",
     duration: "1 hr 12 mins",
-    thumbnail: "/images/sermons/sermon-hero-video.png",
+    thumbnail: "https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&q=80&w=1200",
     youtubeId: "vBvP_h0k_X8",
     biblePassage: "2 Corinthians 9:8",
     description:
@@ -176,7 +176,7 @@ export const SERMONS_DATA: Sermon[] = [
     date: "September 26, 2026",
     series: "Victorious Faith",
     duration: "52 mins",
-    thumbnail: "/images/sermons/sermon-hero-video.png",
+    thumbnail: "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?auto=format&fit=crop&q=80&w=1200",
     youtubeId: "vBvP_h0k_X8",
     biblePassage: "Mark 11:23-24",
     description:
@@ -202,7 +202,7 @@ export const SERMONS_DATA: Sermon[] = [
     date: "September 19, 2026",
     series: "Intimacy with God",
     duration: "48 mins",
-    thumbnail: "/images/sermons/sermon-hero-video.png",
+    thumbnail: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=1200",
     youtubeId: "vBvP_h0k_X8",
     biblePassage: "Psalm 91:1-2",
     description:

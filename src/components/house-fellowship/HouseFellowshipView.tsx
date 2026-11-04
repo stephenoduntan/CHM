@@ -223,9 +223,9 @@ export function HouseFellowshipView() {
                   <div key={landmark} className="flex flex-col gap-6">
                     {/* Landmark Header */}
                     <div className="flex items-center gap-3">
-                      <div className="size-8 rounded-full bg-[#180c62]/10 text-[#180c62] flex items-center justify-center">
+                      {/* <div className="size-8 rounded-full bg-[#180c62]/10 text-[#180c62] flex items-center justify-center">
                         <MapPin className="size-4 text-[#180c62]" />
-                      </div>
+                      </div> */}
                       <div>
                         <h2 className="font-display font-recursive-sans font-bold text-xl sm:text-2xl text-[#0a0a0a]">
                           {landmark} Zone
