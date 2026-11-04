@@ -59,12 +59,12 @@ export const FOOTER_QUICK_LINKS = [
   { label: "Give", href: "/give" },
   { label: "New Here", href: "/new-here" },
   { label: "Our Beliefs", href: "/our-beliefs" },
-  { label: "Our Leadership", href: "/leadership" },
+  // { label: "Our Leadership", href: "/leadership" },
   { label: "Events", href: "/events" },
-  { label: "Sermons", href: "/sermons" },
+  // { label: "Sermons", href: "/sermons" },
   { label: "Watch Online", href: "/watch-online"},
-  { label: "Photo Gallery", href: "/gallery" },
-  { label: "Holy Ghost Service", href: "https://www.youtube.com/@rccglive/streams", target: "_blank" },
+  // { label: "Photo Gallery", href: "/gallery" },
+  // { label: "Holy Ghost Service", href: "https://www.youtube.com/@rccglive/streams", target: "_blank" },
   { label: "Next Level Cathedral", href: "/next-level-cathedral" },
 ] as const;
 
@@ -74,7 +74,7 @@ export const FOOTER_CONNECT_LINKS = [
   { label: "Services", href: "/services" },
   { label: "Prayer Request", href: "/connect" },
   { label: "Testify", href: "/connect" },
-  { label: "Management Portal", href: "/management" },
+  // { label: "Management Portal", href: "/management" },
 ] as const;
 
 export const SOCIAL_LINKS = [

@@ -198,7 +198,7 @@ export function Header({ variant }: HeaderProps) {
             <div className="py-6 space-y-7">
               {/* Main Navigation */}
               <div>
-                <h3 className="text-xs uppercase tracking-widest text-[#c8a96e] mb-3.5 font-display font-recursive-mono font-semibold">
+                <h3 className="text-xs uppercase tracking-widest text-gray-400 mb-3.5 font-display font-recursive-mono font-semibold">
                   Main Navigation
                 </h3>
                 <ul className="space-y-2 font-display font-recursive-sans text-lg">
@@ -225,7 +225,7 @@ export function Header({ variant }: HeaderProps) {
 
               {/* Connect & Fellowship */}
               <div className="pt-4 border-t border-white/10">
-                <h3 className="text-xs uppercase tracking-widest text-[#c8a96e] mb-3.5 font-display font-recursive-mono font-semibold">
+                <h3 className="text-xs uppercase tracking-widest text-gray-400 mb-3.5 font-display font-recursive-mono font-semibold">
                   Connect & Fellowship
                 </h3>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-[#f5f5f5]">
@@ -256,7 +256,7 @@ export function Header({ variant }: HeaderProps) {
 
               {/* Resources */}
               <div className="pt-4 border-t border-white/10">
-                <h3 className="text-xs uppercase tracking-widest text-[#c8a96e] mb-3.5 font-display font-recursive-mono font-semibold">
+                <h3 className="text-xs uppercase tracking-widest text-gray-400 mb-3.5 font-display font-recursive-mono font-semibold">
                   Resources
                 </h3>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-[#f5f5f5]">
