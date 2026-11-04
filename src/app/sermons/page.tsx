@@ -69,7 +69,7 @@ export default function SermonsPage() {
         data-name="hero"
       >
         <Container className="relative z-10 text-center w-full">
-          <div className="max-w-3xl mx-auto mb-8 sm:mb-10">
+          <div className="max-w-3xl mx-auto mb-8 sm:mb-10 py-14">
             <h1
               className="font-display font-recursive-sans text-4xl sm:text-5xl lg:text-[56px] font-bold text-[#0a0a0a] mb-4 uppercase tracking-tight text-center"
               data-node-id="2086:1098"
