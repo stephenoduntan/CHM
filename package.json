@@ -17,5 +17,9 @@
     "start:web": "npm run start --workspace=web",
     "start:admin": "npm run start --workspace=admin",
     "lint": "npm run lint --workspace=web"
+  },
+  "dependencies": {
+    "@sanity/client": "^7.28.0",
+    "@sanity/image-url": "^2.1.1"
   }
 }
