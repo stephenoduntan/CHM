@@ -35,7 +35,7 @@ export function WatchOnlineView() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Default YouTube livestream ID (CHM stream fallback)
-  const youtubeId = "vBvP_h0k_X8";
+  const youtubeId = "GAtafaSSyxw";
 
   // Initialize date & restore notes on mount
   useEffect(() => {
@@ -120,7 +120,7 @@ export function WatchOnlineView() {
       "------------------------------------------------------------",
       "RCCG Court of His Majesty (Lagos Province 94 HQ)",
       "163 Ipaja Road, Abesan Estate Gate, Lagos, Nigeria",
-      "https://courtofhismajesty.org",
+      "https://rccgchm.com",
       divider,
     ].join("\n");
 
@@ -259,7 +259,7 @@ export function WatchOnlineView() {
 
             <div className="pt-2">
               <a
-                href="https://youtube.com/@rccgchm"
+                href="https://youtube.com/@rccgchm/streams"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 px-8 py-3.5 rounded-full bg-red-600 hover:bg-red-700 text-white font-sans font-semibold text-sm sm:text-base transition-all shadow-md hover:shadow-lg hover:scale-105 active:scale-95 cursor-pointer"

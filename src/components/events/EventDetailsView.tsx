@@ -65,7 +65,7 @@ export function EventDetailsView({ event }: EventDetailsViewProps) {
   }, [isCalendarMenuOpen]);
 
   const handleShare = async () => {
-    const url = typeof window !== "undefined" ? window.location.href : "https://courtofhismajesty.org/events";
+    const url = typeof window !== "undefined" ? window.location.href : "https://rccgchm.com/events";
     const shareData = {
       title: event.title,
       text: `${event.title} - ${event.theme ? `"${event.theme}" - ` : ""}${event.date} at RCCG Court of His Majesty`,
@@ -102,7 +102,7 @@ export function EventDetailsView({ event }: EventDetailsViewProps) {
       "CALSCALE:GREGORIAN",
       "METHOD:PUBLISH",
       "BEGIN:VEVENT",
-      `UID:${event.slug}-2026@courtofhismajesty.org`,
+      `UID:${event.slug}-2026@rccgchm.com`,
       `DTSTAMP:${formatDate(new Date().toISOString())}`,
       `DTSTART:${formatDate(event.calendarEvent.startDate)}`,
       `DTEND:${formatDate(event.calendarEvent.endDate)}`,
@@ -559,7 +559,7 @@ export function EventDetailsView({ event }: EventDetailsViewProps) {
             <div className="w-full bg-white border border-gray-200 rounded-[24px] p-6 sm:p-10 lg:p-12 shadow-sm">
               <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 pb-5 border-b border-gray-100">
                 <div>
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#180c62]/10 text-[#180c62] text-xs font-semibold uppercase tracking-wider mb-2">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full bg-[#180c62]/10 text-[#180c62] text-xs font-semibold uppercase tracking-wider mb-2">
                     <Camera className="size-3.5" />
                     <span>Event Photo Highlights</span>
                   </div>
@@ -597,9 +597,9 @@ export function EventDetailsView({ event }: EventDetailsViewProps) {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                       <div className="absolute bottom-3 left-3 right-3 text-white">
-                        <p className="text-xs font-medium text-[#c8a96e] uppercase tracking-wider">
+                        {/* <p className="text-xs font-medium text-[#c8a96e] uppercase tracking-wider">
                           {photo.date}
-                        </p>
+                        </p> */}
                         <h4 className="font-display font-recursive-sans font-semibold text-sm line-clamp-1 group-hover:text-[#F9BAB8] transition-colors">
                           {photo.title}
                         </h4>

@@ -138,10 +138,10 @@ export function GalleryView() {
         </div>
 
         <Container className="relative z-10 text-center max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-[#c8a96e] text-xs font-semibold uppercase tracking-widest mb-4">
+          {/* <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-[#c8a96e] text-xs font-semibold uppercase tracking-widest mb-4">
             <Camera className="size-3.5" />
             <span>Moments of Grace & Fellowship</span>
-          </div>
+          </div> */}
 
           <h1 className="font-display font-recursive-sans font-extrabold text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight leading-tight">
             Church Photo Gallery
@@ -300,20 +300,20 @@ export function GalleryView() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
 
                   {/* Top Badges */}
-                  <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2 z-10">
+                  {/* <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2 z-10">
                     <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-white border border-white/20">
                       {photo.eventTag}
                     </span>
                     <div className="size-8 rounded-full bg-black/50 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                       <Maximize2 className="size-4" />
                     </div>
-                  </div>
+                  </div> */}
 
                   {/* Bottom Captions */}
                   <div className="absolute bottom-3 left-3 right-3 text-white z-10">
-                    <p className="text-[11px] font-medium text-[#c8a96e] uppercase tracking-wider mb-0.5">
+                    {/* <p className="text-[11px] font-medium text-[#c8a96e] uppercase tracking-wider mb-0.5">
                       {photo.date}
-                    </p>
+                    </p> */}
                     <h3 className="font-display font-recursive-sans font-bold text-base sm:text-lg leading-tight line-clamp-1 group-hover:text-[#F9BAB8] transition-colors">
                       {photo.title}
                     </h3>
@@ -464,11 +464,11 @@ export function GalleryView() {
               {activePhoto.title}
             </h2>
 
-            {activePhoto.caption && (
+            {/* {activePhoto.caption && (
               <p className="text-xs sm:text-sm text-gray-300 max-w-xl leading-relaxed">
                 {activePhoto.caption}
               </p>
-            )}
+            )} */}
           </div>
         </div>
       )}

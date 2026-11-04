@@ -40,7 +40,7 @@ export const SENIOR_PASTORS: Leader = {
     "Leadership development, ministerial mentorship, and ordination guidance",
     "Chief visionaries of the Next Level Cathedral project and regional missions",
   ],
-  contactEmail: "pastorate@courtofhismajesty.org",
+  contactEmail: "pastorate@rccgchm.com",
 };
 
 export const LEADERSHIP_TEAM: Leader[] = [
@@ -67,7 +67,7 @@ export const LEADERSHIP_TEAM: Leader[] = [
       "Executive governance and national church relations",
       "Ministerial ethics, worker training, and leadership accountability",
     ],
-    contactEmail: "admin@courtofhismajesty.org",
+    contactEmail: "admin@rccgchm.com",
   },
   {
     id: "pastor-david-adeyemi",

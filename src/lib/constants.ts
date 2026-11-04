@@ -12,7 +12,7 @@ export const SITE_CONFIG = {
   ogImage: "/images/og-image.jpg",
   address: "163 Ipaja Road, Abesan Estate Gate, Lagos, Nigeria",
   phone: "+234 803 306 8989",
-  email: "info@courtofhismajesty.org",
+  email: "info@rccgchm.com",
 } as const;
 
 export const NAV_LINKS = [
