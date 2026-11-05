@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -22,17 +22,30 @@ import {
   LEADERSHIP_CATEGORIES,
   LEADERSHIP_VALUES,
 } from "@/lib/leadership-data";
+import { useManagedLeadership } from "@/lib/content-store";
 
 export function LeadershipView() {
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [selectedLeader, setSelectedLeader] = useState<Leader | null>(null);
+  const [allLeaders] = useManagedLeadership();
 
-  const allLeaders = [SENIOR_PASTORS, ...LEADERSHIP_TEAM];
+  const seniorPastors = useMemo(() => {
+    return (
+      allLeaders.find(
+        (l) =>
+          l.category === "senior" ||
+          l.id.toLowerCase().includes("odekhian") ||
+          l.name.toLowerCase().includes("fred odekhian")
+      ) ||
+      allLeaders[0] ||
+      SENIOR_PASTORS
+    );
+  }, [allLeaders]);
 
-  const filteredLeaders =
-    activeCategory === "all"
-      ? allLeaders
-      : allLeaders.filter((leader) => leader.category === activeCategory);
+  const filteredLeaders = useMemo(() => {
+    if (activeCategory === "all") return allLeaders;
+    return allLeaders.filter((leader) => leader.category === activeCategory);
+  }, [allLeaders, activeCategory]);
 
   return (
     <div className="w-full bg-white text-[#0a0a0a]">
@@ -61,8 +74,8 @@ export function LeadershipView() {
             <div className="w-full lg:w-[45%] shrink-0">
               <div className="relative aspect-[4/5] sm:aspect-square lg:aspect-[4/5] w-full rounded-[20px] overflow-hidden bg-neutral-200 shadow-md">
                 <Image
-                  src={SENIOR_PASTORS.image}
-                  alt={SENIOR_PASTORS.name}
+                  src={seniorPastors.image}
+                  alt={seniorPastors.name}
                   fill
                   className="object-cover"
                   priority
@@ -70,13 +83,13 @@ export function LeadershipView() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6 text-white">
                   {/* <span className="inline-block px-3.5 py-1 rounded-full bg-[#180c62] text-xs font-semibold uppercase tracking-wider mb-2 text-[#b2a1ed] border border-[#b2a1ed]/30 shadow-xs">
-                    {SENIOR_PASTORS.badge}
+                    {seniorPastors.badge}
                   </span> */}
                   <h3 className="font-display font-recursive-sans text-xl sm:text-2xl font-bold">
-                    {SENIOR_PASTORS.name}
+                    {seniorPastors.name}
                   </h3>
                   <p className="text-sm sm:text-base text-gray-200 mt-1">
-                    {SENIOR_PASTORS.role}
+                    {seniorPastors.role}
                   </p>
                 </div>
               </div>
@@ -92,32 +105,36 @@ export function LeadershipView() {
                   </span>
                 </div> */}
                 <h2 className="font-display font-recursive-sans font-bold text-2xl sm:text-3xl lg:text-[38px] text-[#0a0a0a] leading-[1.2]">
-                  Pastor and Pastor Mrs. Fred Odekhian
+                  {seniorPastors.name}
                 </h2>
                 <p className="text-base sm:text-lg text-[#616161] leading-relaxed">
-                  {SENIOR_PASTORS.fullBio[0]}
+                  {seniorPastors.fullBio[0]}
                 </p>
-                <p className="text-base sm:text-lg text-[#616161] leading-relaxed">
-                  {SENIOR_PASTORS.fullBio[1]}
-                </p>
+                {seniorPastors.fullBio[1] && (
+                  <p className="text-base sm:text-lg text-[#616161] leading-relaxed">
+                    {seniorPastors.fullBio[1]}
+                  </p>
+                )}
               </div>
 
               {/* Anchor Scripture Card */}
-              <div className="bg-white rounded-2xl border-l-4 border-[#d61812] p-5 sm:p-6 shadow-2xs">
-                <blockquote className="font-sans text-base sm:text-lg text-[#0a0a0a] italic leading-relaxed">
-                  {SENIOR_PASTORS.scripture.quote}
-                </blockquote>
-                <cite className="block text-xs sm:text-sm font-semibold text-[#180c62] not-italic mt-2">
-                  — {SENIOR_PASTORS.scripture.reference}
-                </cite>
-              </div>
+              {seniorPastors.scripture && (
+                <div className="bg-white rounded-2xl border-l-4 border-[#d61812] p-5 sm:p-6 shadow-2xs">
+                  <blockquote className="font-sans text-base sm:text-lg text-[#0a0a0a] italic leading-relaxed">
+                    {seniorPastors.scripture.quote}
+                  </blockquote>
+                  <cite className="block text-xs sm:text-sm font-semibold text-[#180c62] not-italic mt-2">
+                    — {seniorPastors.scripture.reference}
+                  </cite>
+                </div>
+              )}
 
               {/* Actions & Official Signature */}
               <div className="flex flex-wrap items-center justify-between gap-6 pt-2">
                 <div className="flex items-center gap-3">
                   <button
                     type="button"
-                    onClick={() => setSelectedLeader(SENIOR_PASTORS)}
+                    onClick={() => setSelectedLeader(seniorPastors)}
                     className="bg-[#f0a505] hover:bg-[#d99404]/90 text-[#0a0a0a] rounded-full px-6 py-3 text-sm sm:text-base font-semibold transition-all shadow-sm cursor-pointer"
                   >
                     Read Full Biography

@@ -17,21 +17,7 @@ import {
 import { Container } from "@/components/layout/Container";
 import { EventsSection } from "@/components/sections/EventsSection";
 import { useManagedEvents } from "@/lib/content-store";
-
-interface EventItem {
-  id: string;
-  title: string;
-  theme: string;
-  watermark: [string, string];
-  date: string;
-  startDateIso: string;
-  time: string;
-  location: string;
-  description: string;
-  image: string;
-  badge: string;
-  isPast?: boolean;
-}
+import { EventItem } from "@/lib/events-data";
 
 // Reference current date for Court of His Majesty church calendar
 // Anchored at November 3rd, 2026

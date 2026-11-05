@@ -14,6 +14,8 @@ import { Sermon, SERMONS_DATA, DEFAULT_SERMON } from "@/lib/sermons-data";
 import { EventItem, EventDetail, ALL_EVENTS, EVENTS_DETAILS } from "@/lib/events-data";
 import { BlogPost, ALL_BLOG_POSTS, FEATURED_ARTICLE } from "@/lib/blog-data";
 import { GalleryImage, GALLERY_IMAGES } from "@/lib/gallery-data";
+import { Leader, SENIOR_PASTORS, LEADERSHIP_TEAM } from "@/lib/leadership-data";
+import { FellowshipCenter, HOUSE_FELLOWSHIP_CENTERS } from "@/lib/house-fellowship-data";
 
 /**
  * Robust YouTube ID extractor.
@@ -100,15 +102,28 @@ export async function fetchSanitySermonBySlug(slug: string): Promise<Sermon> {
 // ─── Events ──────────────────────────────────────────────────────────────────
 export function mapSanityEvent(doc: any): EventItem {
   const slug = doc.slug?.current || doc._id;
+  const posterImg = doc.posterImage || doc.posterImageUrl || "/images/events/fod-2026-poster.webp";
+  const startDate = doc.startDate || doc.date || "2026-11-08T18:00:00Z";
+  
+  const themeWords = (doc.theme || "CHURCH ENCOUNTER").trim().split(/\s+/);
+  const watermark: [string, string] = [
+    themeWords[0] ? themeWords[0].toUpperCase() : "CHURCH",
+    themeWords.slice(1).join(" ").toUpperCase() || "ENCOUNTER",
+  ];
+
   return {
     id: slug,
     title: doc.title || "Untitled Event",
     theme: doc.theme || "",
+    watermark,
     date: doc.date || "",
+    startDateIso: startDate,
     time: doc.time || "6:00 PM Daily",
     location: doc.venue || "Main Auditorium, RCCG Court of His Majesty",
-    posterImage: doc.posterImage || "/images/events/fod-2026-poster.webp",
-    videoUrl: doc.videoUrl || "/videos/FOD 2026.webm",
+    venue: doc.venue || "Main Auditorium, RCCG Court of His Majesty",
+    posterImage: posterImg,
+    image: posterImg,
+    videoUrl: doc.videoUrl || "",
     isPast: Boolean(doc.isPast),
     badge: doc.badge || "Church Event",
     description: doc.description || "",
@@ -119,6 +134,7 @@ export function mapSanityEvent(doc: any): EventItem {
 
 export function mapSanityEventDetail(doc: any): EventDetail {
   const slug = doc.slug?.current || doc._id;
+  const posterImg = doc.posterImage || doc.posterImageUrl || "/images/events/fod-2026-poster.webp";
   return {
     slug,
     status: doc.isPast ? "Past event" : "Upcoming event",
@@ -131,7 +147,7 @@ export function mapSanityEventDetail(doc: any): EventDetail {
     churchName: "RCCG Court of His Majesty",
     addressLine1: "163 Ipaja Road, Abesan Estate Gate,",
     addressLine2: "Lagos, Nigeria",
-    posterImage: doc.posterImage || "/images/events/fod-2026-poster.webp",
+    posterImage: posterImg,
     aboutTitle: "About the event",
     overviewParagraph1: doc.description || doc.title,
     overviewParagraph2: `Date: ${doc.date} • Venue: ${doc.venue || "Church Auditorium"}`,
@@ -251,3 +267,95 @@ export async function fetchSanityGallery(): Promise<GalleryImage[]> {
   return GALLERY_IMAGES;
 }
 
+// ─── Leadership ──────────────────────────────────────────────────────────────
+export function mapSanityLeader(doc: any): Leader {
+  const slug = doc.slug?.current || doc._id;
+  let category: "senior" | "associate" | "director" | "elders" = "associate";
+  if (doc.category === "pastoral" || doc.category === "senior" || doc.order === 1) {
+    category = "senior";
+  } else if (doc.category === "assistant" || doc.category === "associate") {
+    category = "associate";
+  } else if (doc.category === "ministry" || doc.category === "director") {
+    category = "director";
+  } else if (doc.category === "executive" || doc.category === "elders") {
+    category = "elders";
+  }
+
+  const bio = doc.bio || "";
+  const fullBio = Array.isArray(doc.fullBio) && doc.fullBio.length > 0
+    ? doc.fullBio
+    : bio
+    ? [bio]
+    : [
+        `${doc.name} serves faithfully at RCCG Court of His Majesty, advancing spiritual excellence and kingdom growth.`
+      ];
+
+  return {
+    id: slug,
+    name: doc.name || "Church Leader",
+    role: doc.role || "Pastoral Ministry",
+    category,
+    image: doc.image || doc.imageUrl || "/images/explore/teachings.webp",
+    shortBio: bio || fullBio[0] || "",
+    fullBio,
+    scripture: doc.scripture || {
+      quote: "“And my speech and my preaching was not with enticing words of man's wisdom, but in demonstration of the Spirit and of power.”",
+      reference: "1 Corinthians 2:4",
+    },
+    responsibilities: Array.isArray(doc.responsibilities) && doc.responsibilities.length > 0
+      ? doc.responsibilities
+      : [
+          `${doc.role} and spiritual direction`,
+          "Pulpit ministry and pastoral care",
+          "Mentorship and community discipleship",
+        ],
+    contactEmail: doc.contactEmail || "info@rccgchm.com",
+  };
+}
+
+export async function fetchSanityLeadership(): Promise<Leader[]> {
+  try {
+    const docs = await client.fetch(LEADERSHIP_QUERY);
+    if (Array.isArray(docs) && docs.length > 0) {
+      return docs.map(mapSanityLeader);
+    }
+  } catch (err) {
+    console.error("[Sanity] Failed to fetch leadership:", err);
+  }
+  return [SENIOR_PASTORS, ...LEADERSHIP_TEAM];
+}
+
+// ─── House Fellowship ────────────────────────────────────────────────────────
+export function mapSanityHouseFellowship(doc: any): FellowshipCenter {
+  const id = doc.slug?.current || doc._id;
+  const rawLandmark = doc.landmark || "Abesan";
+  const landmark: "Abesan" | "Ayobo" | "Isefun" | "Mosan" | "Gowon Estate" | "Ipaja" =
+    ["Abesan", "Ayobo", "Isefun", "Mosan", "Gowon Estate", "Ipaja"].includes(rawLandmark)
+      ? (rawLandmark as any)
+      : "Abesan";
+
+  return {
+    id,
+    name: doc.centerName || "House Fellowship Center",
+    landmark,
+    landmarkArea: doc.landmarkArea || `${rawLandmark} District`,
+    address: doc.address || "",
+    hostName: doc.hostName || "Host Minister",
+    hostPhone: doc.hostPhone || "",
+    meetingTime: doc.meetingTime || "5:00 PM – 6:00 PM",
+    meetingDay: doc.meetingDay || "Sundays",
+    directionsHint: doc.directionsHint || `Located within ${rawLandmark}`,
+  };
+}
+
+export async function fetchSanityHouseFellowship(): Promise<FellowshipCenter[]> {
+  try {
+    const docs = await client.fetch(HOUSE_FELLOWSHIP_QUERY);
+    if (Array.isArray(docs) && docs.length > 0) {
+      return docs.map(mapSanityHouseFellowship);
+    }
+  } catch (err) {
+    console.error("[Sanity] Failed to fetch house fellowship:", err);
+  }
+  return HOUSE_FELLOWSHIP_CENTERS;
+}

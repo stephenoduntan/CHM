@@ -26,8 +26,10 @@ import {
   HOUSE_FELLOWSHIP_CENTERS,
   FELLOWSHIP_BENEFITS,
 } from "@/lib/house-fellowship-data";
+import { useManagedHouseFellowship } from "@/lib/content-store";
 
 export function HouseFellowshipView() {
+  const [centers] = useManagedHouseFellowship();
   const [selectedZone, setSelectedZone] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [copiedPhoneId, setCopiedPhoneId] = useState<string | null>(null);
@@ -42,7 +44,7 @@ export function HouseFellowshipView() {
 
   // Filtered centers
   const filteredCenters = useMemo(() => {
-    return HOUSE_FELLOWSHIP_CENTERS.filter((center) => {
+    return centers.filter((center) => {
       // Zone match
       const matchesZone =
         selectedZone === "all" || center.landmark === selectedZone;
@@ -59,7 +61,7 @@ export function HouseFellowshipView() {
 
       return matchesZone && matchesSearch;
     });
-  }, [selectedZone, searchQuery]);
+  }, [centers, selectedZone, searchQuery]);
 
   // Group centers by landmark for sectional display
   const centersByLandmark = useMemo(() => {
