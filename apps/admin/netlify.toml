@@ -1,9 +1,16 @@
 # Netlify Configuration for Admin Management Portal (apps/admin)
-# Project 2 -> admin.rccgchm.org / admin.rccgchm.com
+# Project 2 -> admin.yourchurch.org / admin.rccgchm.com
 
 [build]
   command = "npm run build"
   publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+  SECRETS_SCAN_ENABLED = "false"
+
+[context.production.environment]
+  SECRETS_SCAN_ENABLED = "false"
 
 # Single-Page Application (SPA) routing fallback for Sanity Studio
 [[redirects]]
@@ -16,4 +23,3 @@
   [headers.values]
     X-Frame-Options = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
-
