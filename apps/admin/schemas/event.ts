@@ -117,7 +117,7 @@ export const eventType = defineType({
       options: {
         list: [
           { title: "Event Name & Theme Text (Typography)", value: "text" },
-          { title: "Artwork / Logo Image (JPG, PNG, or SVG)", value: "image" },
+          { title: "Artwork / Logo Image (WEBP or SVG)", value: "image" },
         ],
         layout: "radio",
       },
@@ -132,10 +132,10 @@ export const eventType = defineType({
       type: "image",
       options: {
         hotspot: true,
-        accept: ".jpg,.jpeg,.png,.svg,image/jpeg,image/png,image/svg+xml",
+        accept: ".webp,.svg,image/webp,image/svg+xml",
       },
       description:
-        "Upload event artwork, badge, or logo. Only JPG, PNG, or SVG formats are accepted. Recommended: 600×240px to 800×320px with transparent background (max 2MB).",
+        "Upload event artwork, badge, or logo. Only WEBP or SVG formats are accepted. Recommended: 600×240px to 800×320px with transparent background (max 2MB).",
       hidden: ({ parent }) => !parent?.isFeatured || parent?.featuredDisplayType !== "image",
       validation: (Rule) =>
         Rule.custom((value, context) => {
@@ -156,7 +156,7 @@ export const eventType = defineType({
       title: "Featured Event Artwork URL / Path (Alternative)",
       type: "string",
       placeholder: "e.g. /images/events/fod-2026-poster.webp or https://...",
-      description: "Direct URL or local image path (JPG, PNG, or SVG) if not uploading directly.",
+      description: "Direct URL or local image path (WEBP or SVG) if not uploading directly.",
       hidden: ({ parent }) => !parent?.isFeatured || parent?.featuredDisplayType !== "image",
     }),
     defineField({
