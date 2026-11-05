@@ -9,6 +9,9 @@
   publish = ".next"
   SECRETS_SCAN_ENABLED = false
 
+  [context.production]
+  environment = { SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_SANITY_PROJECT_ID,NEXT_PUBLIC_SANITY_DATASET" }
+
 [build.environment]
   NODE_VERSION = "22"
   NPM_FLAGS = "--legacy-peer-deps"
