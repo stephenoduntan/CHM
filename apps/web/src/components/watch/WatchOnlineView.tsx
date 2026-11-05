@@ -16,26 +16,42 @@ import {
 } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { GiveModal } from "@/components/give/GiveModal";
+import { useManagedWatchOnline } from "@/lib/content-store";
+import { extractYouTubeId } from "@/lib/sanity/fetcher";
 
 const LOCAL_STORAGE_KEY = "chm_sermon_notepad_v1";
 
 export function WatchOnlineView() {
-  const [isLive, setIsLive] = useState(true);
+  const [watchOnline] = useManagedWatchOnline();
   const [isGiveModalOpen, setIsGiveModalOpen] = useState(false);
   const [isNotepadOpen, setIsNotepadOpen] = useState(false);
 
+  // Dynamic YouTube livestream ID from Sanity Management Portal
+  const youtubeId = extractYouTubeId(watchOnline.youtubeId) || "GAtafaSSyxw";
+  const isLive = Boolean(watchOnline.isLive);
+
   // Notepad states
-  const [noteTitle, setNoteTitle] = useState("Sunday Celebration Service");
-  const [noteSpeaker, setNoteSpeaker] = useState("Pastor Fred Odekhian");
+  const [noteTitle, setNoteTitle] = useState(watchOnline.serviceName || "Sunday Celebration Service");
+  const [noteSpeaker, setNoteSpeaker] = useState(watchOnline.speaker || "Pastor Fred Odekhian");
   const [noteDate, setNoteDate] = useState("");
-  const [notePassage, setNotePassage] = useState("1 Corinthians 2:4");
+  const [notePassage, setNotePassage] = useState(watchOnline.scripturePassage || "1 Corinthians 2:4");
   const [noteBody, setNoteBody] = useState("");
   const [isSaved, setIsSaved] = useState(true);
   const [isCopied, setIsCopied] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // Default YouTube livestream ID (CHM stream fallback)
-  const youtubeId = "GAtafaSSyxw";
+  // Sync notepad presets when CMS updates if user hasn't overridden
+  useEffect(() => {
+    if (watchOnline.serviceName && !localStorage.getItem(LOCAL_STORAGE_KEY)) {
+      setNoteTitle(watchOnline.serviceName);
+    }
+    if (watchOnline.speaker && !localStorage.getItem(LOCAL_STORAGE_KEY)) {
+      setNoteSpeaker(watchOnline.speaker);
+    }
+    if (watchOnline.scripturePassage && !localStorage.getItem(LOCAL_STORAGE_KEY)) {
+      setNotePassage(watchOnline.scripturePassage);
+    }
+  }, [watchOnline.serviceName, watchOnline.speaker, watchOnline.scripturePassage]);
 
   // Initialize date & restore notes on mount
   useEffect(() => {
@@ -160,29 +176,25 @@ export function WatchOnlineView() {
             {/* Left: Indicator & Title */}
             <div className="space-y-3 text-center">
               {/* Live / Recent Broadcast Indicator */}
-              {/* <div className="inline-flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => setIsLive((prev) => !prev)}
-                  className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
+              <div className="inline-flex items-center gap-2">
+                <span
+                  className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider ${
                     isLive
                       ? "bg-red-600 text-white shadow-lg shadow-red-900/40"
-                      : "bg-white/15 text-gray-300 hover:bg-white/20"
+                      : "bg-[#f2f2f2] text-[#616161] border border-[#e5e5e5]"
                   }`}
-                  title="Click to toggle Live / Recent indicator"
                 >
                   <span className={`size-2 rounded-full ${isLive ? "bg-white animate-ping" : "bg-gray-400"}`} />
-                  <span className={`size-2 rounded-full ${isLive ? "bg-white -ml-4" : "hidden"}`} />
-                  <span>{isLive ? "● LIVE" : "RECENT BROADCAST"}</span>
-                </button>
-                <span className="text-xs text-gray-400">
-                  {isLive ? "Streaming Now" : "Last Livestream Available"}
+                  <span>{isLive ? "● LIVE STREAM" : "RECENT BROADCAST"}</span>
                 </span>
-              </div> */}
+                <span className="text-xs text-gray-500 font-medium">
+                  {isLive ? "Streaming Now" : "Latest Service Replay"}
+                </span>
+              </div>
 
               {/* Title */}
               <h1 className="font-display font-recursive-sans font-extrabold text-2xl sm:text-3xl lg:text-4xl text-[#0a0a0a] tracking-tight leading-tight">
-                Watch Online &amp; Experience God&apos;s Presence
+                {watchOnline.title || "Watch Online & Experience God's Presence"}
               </h1>
             </div>
           </div>
@@ -195,7 +207,7 @@ export function WatchOnlineView() {
           <div className="w-full aspect-video max-h-[85vh] rounded-xl relative overflow-hidden bg-black shadow-2xl">
             <iframe
               src={`https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=0&rel=0&modestbranding=1`}
-              title="Watch Online & Experience God's Presence — RCCG Court of His Majesty"
+              title={`${watchOnline.title || "Watch Online"} — RCCG Court of His Majesty`}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
               className="absolute inset-0 size-full border-0"

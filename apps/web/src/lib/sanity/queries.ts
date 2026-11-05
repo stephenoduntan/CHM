@@ -117,7 +117,8 @@ export const GALLERY_QUERY = `*[_type == "gallery"] | order(date desc) {
   _id,
   title,
   caption,
-  eventName,
+  "eventName": coalesce(event->title, eventName, "RCCG Court of His Majesty"),
+  "eventSlug": coalesce(event->slug.current, ""),
   eventTag,
   date,
   year,
@@ -157,4 +158,19 @@ export const ANNOUNCEMENTS_QUERY = `*[_type == "announcement" && isActive == tru
   link,
   isActive,
   publishDate
+}`;
+
+// ─── Watch Online & Livestream ───────────────────────────────────────────────
+export const WATCH_ONLINE_QUERY = `coalesce(
+  *[_type == "watchOnline" && (_id == "watchOnlineSettings" || _id == "drafts.watchOnlineSettings")][0],
+  *[_type == "watchOnline"] | order(_updatedAt desc)[0]
+) {
+  _id,
+  title,
+  youtubeId,
+  isLive,
+  serviceName,
+  speaker,
+  scripturePassage,
+  description
 }`;

@@ -14,6 +14,9 @@ import {
   fetchSanityGallery,
   fetchSanityLeadership,
   fetchSanityHouseFellowship,
+  fetchSanityWatchOnline,
+  WatchOnlineSettings,
+  DEFAULT_WATCH_ONLINE,
 } from "@/lib/sanity/fetcher";
 
 export const STORAGE_KEYS = {
@@ -23,11 +26,12 @@ export const STORAGE_KEYS = {
   GALLERY: "chm_managed_gallery_v1",
   LEADERSHIP: "chm_managed_leadership_v1",
   HOUSE_FELLOWSHIP: "chm_managed_house_fellowship_v1",
+  WATCH_ONLINE: "chm_managed_watch_online_v1",
 } as const;
 
 export const SYNC_EVENT_NAME = "chm_content_sync";
 
-function triggerSync(type: "sermons" | "events" | "blogs" | "gallery" | "leadership" | "houseFellowship" | "all") {
+function triggerSync(type: "sermons" | "events" | "blogs" | "gallery" | "leadership" | "houseFellowship" | "watchOnline" | "all") {
   if (typeof window !== "undefined") {
     window.dispatchEvent(new CustomEvent(SYNC_EVENT_NAME, { detail: { type } }));
   }
@@ -41,6 +45,7 @@ interface ContentBundle {
   gallery: GalleryImage[];
   leadership: Leader[];
   houseFellowship: FellowshipCenter[];
+  watchOnline?: WatchOnlineSettings;
 }
 
 let cachedContentPromise: Promise<ContentBundle | null> | null = null;
@@ -65,7 +70,7 @@ async function fetchManagedBundle(): Promise<ContentBundle | null> {
 
   // 2. Direct Sanity client fallback
   try {
-    const [sermons, events, blogs, gallery, leadership, houseFellowship] =
+    const [sermons, events, blogs, gallery, leadership, houseFellowship, watchOnline] =
       await Promise.all([
         fetchSanitySermons(),
         fetchSanityEvents(),
@@ -73,8 +78,9 @@ async function fetchManagedBundle(): Promise<ContentBundle | null> {
         fetchSanityGallery(),
         fetchSanityLeadership(),
         fetchSanityHouseFellowship(),
+        fetchSanityWatchOnline(),
       ]);
-    return { sermons, events, blogs, gallery, leadership, houseFellowship };
+    return { sermons, events, blogs, gallery, leadership, houseFellowship, watchOnline };
   } catch (err) {
     console.error("[ContentStore] Sanity direct fallback failed:", err);
     return null;
@@ -232,9 +238,32 @@ export function saveManagedHouseFellowship(centers: FellowshipCenter[]) {
   }
 }
 
+// ─── Watch Online Settings ───────────────────────────────────────────────────
+export function getManagedWatchOnline(): WatchOnlineSettings {
+  if (typeof window === "undefined") return DEFAULT_WATCH_ONLINE;
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.WATCH_ONLINE);
+    if (!raw) return DEFAULT_WATCH_ONLINE;
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === "object" ? { ...DEFAULT_WATCH_ONLINE, ...parsed } : DEFAULT_WATCH_ONLINE;
+  } catch {
+    return DEFAULT_WATCH_ONLINE;
+  }
+}
+
+export function saveManagedWatchOnline(settings: WatchOnlineSettings) {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(STORAGE_KEYS.WATCH_ONLINE, JSON.stringify(settings));
+    triggerSync("watchOnline");
+  } catch (err) {
+    console.error("Failed to save watchOnline settings:", err);
+  }
+}
+
 // ─── Reset Store ─────────────────────────────────────────────────────────────
 export function resetContentStore(
-  type: "all" | "sermons" | "events" | "blogs" | "gallery" | "leadership" | "houseFellowship" = "all"
+  type: "all" | "sermons" | "events" | "blogs" | "gallery" | "leadership" | "houseFellowship" | "watchOnline" = "all"
 ) {
   if (typeof window === "undefined") return;
   if (type === "all" || type === "sermons") localStorage.removeItem(STORAGE_KEYS.SERMONS);
@@ -243,6 +272,7 @@ export function resetContentStore(
   if (type === "all" || type === "gallery") localStorage.removeItem(STORAGE_KEYS.GALLERY);
   if (type === "all" || type === "leadership") localStorage.removeItem(STORAGE_KEYS.LEADERSHIP);
   if (type === "all" || type === "houseFellowship") localStorage.removeItem(STORAGE_KEYS.HOUSE_FELLOWSHIP);
+  if (type === "all" || type === "watchOnline") localStorage.removeItem(STORAGE_KEYS.WATCH_ONLINE);
   triggerSync(type);
 }
 
@@ -533,6 +563,49 @@ export function useManagedHouseFellowship(): [FellowshipCenter[], (items: Fellow
   const update = (items: FellowshipCenter[]) => {
     setData(items);
     saveManagedHouseFellowship(items);
+  };
+
+  return [data, update, isLoaded];
+}
+
+export function useManagedWatchOnline(): [WatchOnlineSettings, (settings: WatchOnlineSettings) => void, boolean] {
+  const [data, setData] = useState<WatchOnlineSettings>(DEFAULT_WATCH_ONLINE);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const local = getManagedWatchOnline();
+    setData(local);
+    setIsLoaded(true);
+
+    getSharedContentBundle()
+      .then((bundle) => {
+        if (bundle && bundle.watchOnline) {
+          setData(bundle.watchOnline);
+          saveManagedWatchOnline(bundle.watchOnline);
+        }
+      })
+      .catch((err) => {
+        console.warn("[Sanity] Live watchOnline fetch fallback:", err);
+      });
+
+    const handleSync = (e: Event) => {
+      const customEvent = e as CustomEvent<{ type?: string }>;
+      if (!customEvent.detail || customEvent.detail.type === "watchOnline" || customEvent.detail.type === "all") {
+        setData(getManagedWatchOnline());
+      }
+    };
+
+    window.addEventListener(SYNC_EVENT_NAME, handleSync);
+    window.addEventListener("storage", handleSync);
+    return () => {
+      window.removeEventListener(SYNC_EVENT_NAME, handleSync);
+      window.removeEventListener("storage", handleSync);
+    };
+  }, []);
+
+  const update = (settings: WatchOnlineSettings) => {
+    setData(settings);
+    saveManagedWatchOnline(settings);
   };
 
   return [data, update, isLoaded];

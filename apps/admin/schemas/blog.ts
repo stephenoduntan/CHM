@@ -78,8 +78,8 @@ export const blogType = defineType({
     defineField({
       name: "content",
       title: "Article Body Content",
-      type: "array",
-      of: [{ type: "block" }, { type: "image", options: { hotspot: true } }],
+      type: "richText",
+      description: "Standard rich text editor with headings, formatted text, and quote/scripture callouts.",
     }),
   ],
   preview: {

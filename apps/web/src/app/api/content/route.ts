@@ -6,6 +6,7 @@ import {
   fetchSanityGallery,
   fetchSanityLeadership,
   fetchSanityHouseFellowship,
+  fetchSanityWatchOnline,
 } from "@/lib/sanity/fetcher";
 
 export const dynamic = "force-dynamic";
@@ -13,7 +14,7 @@ export const revalidate = 0;
 
 export async function GET() {
   try {
-    const [sermons, events, blogs, gallery, leadership, houseFellowship] =
+    const [sermons, events, blogs, gallery, leadership, houseFellowship, watchOnline] =
       await Promise.all([
         fetchSanitySermons(),
         fetchSanityEvents(),
@@ -21,6 +22,7 @@ export async function GET() {
         fetchSanityGallery(),
         fetchSanityLeadership(),
         fetchSanityHouseFellowship(),
+        fetchSanityWatchOnline(),
       ]);
 
     return NextResponse.json(
@@ -35,6 +37,7 @@ export async function GET() {
           gallery,
           leadership,
           houseFellowship,
+          watchOnline,
         },
       },
       {

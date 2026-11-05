@@ -17,6 +17,18 @@ export default defineConfig({
           .title("Church Content Management")
           .items([
             S.listItem()
+              .title("Watch Online & Livestream")
+              .schemaType("watchOnline")
+              .child(
+                S.document()
+                  .schemaType("watchOnline")
+                  .documentId("watchOnlineSettings")
+                  .title("Watch Online & Livestream Settings")
+              ),
+
+            S.divider(),
+
+            S.listItem()
               .title("Sermons & Media")
               .schemaType("sermon")
               .child(S.documentTypeList("sermon").title("Sermons")),

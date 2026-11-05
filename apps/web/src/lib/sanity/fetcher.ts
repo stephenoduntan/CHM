@@ -9,6 +9,7 @@ import {
   GALLERY_QUERY,
   LEADERSHIP_QUERY,
   HOUSE_FELLOWSHIP_QUERY,
+  WATCH_ONLINE_QUERY,
 } from "./queries";
 import { Sermon, SERMONS_DATA, DEFAULT_SERMON } from "@/lib/sermons-data";
 import { EventItem, EventDetail, ALL_EVENTS, EVENTS_DETAILS } from "@/lib/events-data";
@@ -46,6 +47,58 @@ export function extractYouTubeId(urlOrId?: string): string {
   return str;
 }
 
+/**
+ * Converts Sanity rich text / portable text blocks or fallback strings to clean plain text.
+ */
+export function blocksToPlainText(blocks: any): string {
+  if (!blocks) return "";
+  if (typeof blocks === "string") return blocks;
+  if (!Array.isArray(blocks)) return "";
+
+  return blocks
+    .map((block) => {
+      if (block._type === "block") {
+        if (!block.children || !Array.isArray(block.children)) return "";
+        return block.children.map((c: any) => c.text || "").join("");
+      }
+      if (block._type === "quote") {
+        const text = block.quote || block.text || "";
+        const ref = block.reference || block.attribution;
+        return ref ? `“${text}” — ${ref}` : `“${text}”`;
+      }
+      return "";
+    })
+    .filter(Boolean)
+    .join("\n\n");
+}
+
+/**
+ * Converts Sanity rich text / portable text blocks or strings to an array of paragraphs.
+ */
+export function blocksToParagraphs(blocks: any): string[] {
+  if (!blocks) return [];
+  if (typeof blocks === "string") {
+    return blocks
+      .split(/\n+/)
+      .map((s) => s.trim())
+      .filter(Boolean);
+  }
+  if (!Array.isArray(blocks)) return [];
+
+  const paragraphs: string[] = [];
+  for (const block of blocks) {
+    if (block._type === "block") {
+      const text = block.children?.map((c: any) => c.text || "").join("") || "";
+      if (text.trim()) paragraphs.push(text.trim());
+    } else if (block._type === "quote") {
+      const text = block.quote || block.text || "";
+      const ref = block.reference || block.attribution;
+      paragraphs.push(ref ? `“${text}” — ${ref}` : `“${text}”`);
+    }
+  }
+  return paragraphs;
+}
+
 // ─── Sermons ─────────────────────────────────────────────────────────────────
 export function mapSanitySermon(doc: any): Sermon {
   const slug = doc.slug?.current || doc._id;
@@ -60,7 +113,7 @@ export function mapSanitySermon(doc: any): Sermon {
     duration: doc.duration || "1 hr",
     thumbnail: doc.thumbnail || "/images/sermons/sermon-hero-video.png",
     youtubeId,
-    description: doc.description || "",
+    description: blocksToPlainText(doc.description) || "",
     supportingCopy: "Watch the full message and continue exploring sermons from Court of His Majesty below.",
     biblePassage: doc.biblePassage || "",
     keyPoints: Array.isArray(doc.keyPoints) && doc.keyPoints.length > 0 ? doc.keyPoints : undefined,
@@ -126,7 +179,7 @@ export function mapSanityEvent(doc: any): EventItem {
     videoUrl: doc.videoUrl || "",
     isPast: Boolean(doc.isPast),
     badge: doc.badge || "Church Event",
-    description: doc.description || "",
+    description: blocksToPlainText(doc.description) || "",
     gallery: doc.gallery || [],
     link: `/events/${slug}`,
   };
@@ -135,6 +188,7 @@ export function mapSanityEvent(doc: any): EventItem {
 export function mapSanityEventDetail(doc: any): EventDetail {
   const slug = doc.slug?.current || doc._id;
   const posterImg = doc.posterImage || doc.posterImageUrl || "/images/events/fod-2026-poster.webp";
+  const descText = blocksToPlainText(doc.description) || doc.title || "";
   return {
     slug,
     status: doc.isPast ? "Past event" : "Upcoming event",
@@ -149,13 +203,13 @@ export function mapSanityEventDetail(doc: any): EventDetail {
     addressLine2: "Lagos, Nigeria",
     posterImage: posterImg,
     aboutTitle: "About the event",
-    overviewParagraph1: doc.description || doc.title,
+    overviewParagraph1: descText,
     overviewParagraph2: `Date: ${doc.date} • Venue: ${doc.venue || "Church Auditorium"}`,
     inviteHeading: "Come with someone",
     inviteCopy: "Invite a friend or family member to join you.",
     calendarEvent: {
       title: `${doc.title}${doc.theme ? ` - ${doc.theme}` : ""}`,
-      description: doc.description || doc.title,
+      description: descText,
       location: doc.venue || "RCCG Court of His Majesty",
       startDate: doc.startDate || doc.date || "2026-11-08T18:00:00",
       endDate: doc.endDate || doc.startDate || doc.date || "2026-11-15T21:00:00",
@@ -190,6 +244,73 @@ export async function fetchSanityEventBySlug(slug: string): Promise<EventDetail>
 // ─── Blog ────────────────────────────────────────────────────────────────────
 export function mapSanityBlog(doc: any): BlogPost {
   const slug = doc.slug?.current || doc._id;
+
+  // Robust PortableText to Sections mapper supporting headings, paragraphs, and quote callouts
+  const sections: {
+    id: string;
+    heading: string;
+    paragraphs: string[];
+    scripture?: { quote: string; reference: string };
+  }[] = [];
+
+  if (Array.isArray(doc.content) && doc.content.length > 0) {
+    let currentSection: (typeof sections)[0] | null = null;
+
+    doc.content.forEach((item: any, idx: number) => {
+      if (item._type === "block") {
+        const text = (item.children || []).map((c: any) => c.text || "").join("");
+        const isHeading = ["h1", "h2", "h3", "h4"].includes(item.style);
+
+        if (isHeading && text.trim()) {
+          if (currentSection) {
+            sections.push(currentSection);
+          }
+          currentSection = {
+            id: `sec-${idx}`,
+            heading: text.trim(),
+            paragraphs: [],
+          };
+        } else if (text.trim()) {
+          if (!currentSection) {
+            currentSection = {
+              id: `sec-${idx}`,
+              heading: "Introduction",
+              paragraphs: [],
+            };
+          }
+          currentSection.paragraphs.push(text.trim());
+        }
+      } else if (item._type === "quote") {
+        const qText = item.quote || item.text || "";
+        const qRef = [item.reference, item.attribution].filter(Boolean).join(" • ") || "Scripture Reflection";
+        if (!currentSection) {
+          currentSection = {
+            id: `sec-${idx}`,
+            heading: "Reflection & Scripture",
+            paragraphs: [],
+          };
+        }
+        currentSection.scripture = {
+          quote: qText,
+          reference: qRef,
+        };
+      }
+    });
+
+    if (currentSection) {
+      sections.push(currentSection);
+    }
+  }
+
+  // Fallback if no explicit sections were generated
+  if (sections.length === 0 && doc.excerpt) {
+    sections.push({
+      id: "sec-overview",
+      heading: "Overview",
+      paragraphs: [doc.excerpt],
+    });
+  }
+
   return {
     id: slug,
     slug,
@@ -203,15 +324,7 @@ export function mapSanityBlog(doc: any): BlogPost {
     image: doc.coverImage || "/images/blog/featured-bible-hands.png",
     coverImage: doc.coverImage || "/images/blog/article-cover.png",
     isFeatured: Boolean(doc.isFeatured),
-    sections: Array.isArray(doc.content)
-      ? doc.content
-          .filter((b: any) => b._type === "block" && Array.isArray(b.children))
-          .map((b: any, idx: number) => ({
-            id: `sec-${idx}`,
-            heading: b.style === "h2" || b.style === "h3" ? b.children.map((c: any) => c.text).join("") : "",
-            paragraphs: [b.children.map((c: any) => c.text).join("")],
-          }))
-      : [],
+    sections,
   };
 }
 
@@ -281,11 +394,12 @@ export function mapSanityLeader(doc: any): Leader {
     category = "elders";
   }
 
-  const bio = doc.bio || "";
+  const bioText = blocksToPlainText(doc.bio) || "";
+  const bioParagraphs = blocksToParagraphs(doc.bio);
   const fullBio = Array.isArray(doc.fullBio) && doc.fullBio.length > 0
     ? doc.fullBio
-    : bio
-    ? [bio]
+    : bioParagraphs.length > 0
+    ? bioParagraphs
     : [
         `${doc.name} serves faithfully at RCCG Court of His Majesty, advancing spiritual excellence and kingdom growth.`
       ];
@@ -296,7 +410,7 @@ export function mapSanityLeader(doc: any): Leader {
     role: doc.role || "Pastoral Ministry",
     category,
     image: doc.image || doc.imageUrl || "/images/explore/teachings.webp",
-    shortBio: bio || fullBio[0] || "",
+    shortBio: bioText || fullBio[0] || "",
     fullBio,
     scripture: doc.scripture || {
       quote: "“And my speech and my preaching was not with enticing words of man's wisdom, but in demonstration of the Spirit and of power.”",
@@ -358,4 +472,45 @@ export async function fetchSanityHouseFellowship(): Promise<FellowshipCenter[]> 
     console.error("[Sanity] Failed to fetch house fellowship:", err);
   }
   return HOUSE_FELLOWSHIP_CENTERS;
+}
+
+// ─── Watch Online & Livestream ───────────────────────────────────────────────
+export interface WatchOnlineSettings {
+  title: string;
+  youtubeId: string;
+  isLive: boolean;
+  serviceName: string;
+  speaker: string;
+  scripturePassage: string;
+  description: string;
+}
+
+export const DEFAULT_WATCH_ONLINE: WatchOnlineSettings = {
+  title: "Watch Online & Experience God's Presence",
+  youtubeId: "GAtafaSSyxw",
+  isLive: true,
+  serviceName: "Sunday Celebration Service",
+  speaker: "Pastor Fred Odekhian",
+  scripturePassage: "1 Corinthians 2:4",
+  description: "Join us live online from anywhere in the world and experience transformative worship and the undiluted Word of God.",
+};
+
+export async function fetchSanityWatchOnline(): Promise<WatchOnlineSettings> {
+  try {
+    const doc = await client.fetch(WATCH_ONLINE_QUERY);
+    if (doc) {
+      return {
+        title: doc.title || DEFAULT_WATCH_ONLINE.title,
+        youtubeId: extractYouTubeId(doc.youtubeId) || DEFAULT_WATCH_ONLINE.youtubeId,
+        isLive: typeof doc.isLive === "boolean" ? doc.isLive : DEFAULT_WATCH_ONLINE.isLive,
+        serviceName: doc.serviceName || DEFAULT_WATCH_ONLINE.serviceName,
+        speaker: doc.speaker || DEFAULT_WATCH_ONLINE.speaker,
+        scripturePassage: doc.scripturePassage || DEFAULT_WATCH_ONLINE.scripturePassage,
+        description: blocksToPlainText(doc.description) || DEFAULT_WATCH_ONLINE.description,
+      };
+    }
+  } catch (err) {
+    console.error("[Sanity] Failed to fetch watchOnline:", err);
+  }
+  return DEFAULT_WATCH_ONLINE;
 }

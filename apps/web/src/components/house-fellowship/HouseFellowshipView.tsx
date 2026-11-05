@@ -120,7 +120,7 @@ export function HouseFellowshipView() {
           <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
             <a
               href="#centers-list"
-              className="bg-[#180c62] hover:bg-[#180c62]/90 border border-[#b2a1ed]/40 text-white font-sans font-semibold text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-3.5 rounded-full transition-all shadow-md hover:scale-[1.02] cursor-pointer"
+              className="bg-white hover:bg-gray-100 border border-[#b2a1ed]/40 text-[#0a0a0a] font-sans font-semibold text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-3.5 rounded-full transition-all shadow-md hover:scale-[1.02] cursor-pointer"
             >
               Find a Center Near You
             </a>

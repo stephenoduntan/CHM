@@ -30,8 +30,16 @@ export const galleryType = defineType({
       rows: 2,
     }),
     defineField({
-      name: "eventName",
+      name: "event",
       title: "Associated Event / Program Name",
+      description: "Select an event created in the Events section from this dropdown.",
+      type: "reference",
+      to: [{ type: "event" }],
+    }),
+    defineField({
+      name: "eventName",
+      title: "Custom Event / Program Name (Alternative)",
+      description: "Optional custom name if this photo is not linked to an event in the dropdown above.",
       type: "string",
       placeholder: "e.g. Festival of Destiny 2026",
     }),

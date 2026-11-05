@@ -92,8 +92,8 @@ export const eventType = defineType({
     defineField({
       name: "description",
       title: "About the Event / Description",
-      type: "text",
-      rows: 4,
+      type: "richText",
+      description: "Standard rich text editor with headings, formatted text, and quote/scripture callouts.",
     }),
     defineField({
       name: "isPast",

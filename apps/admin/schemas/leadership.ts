@@ -54,8 +54,8 @@ export const leadershipType = defineType({
     defineField({
       name: "bio",
       title: "Biography",
-      type: "text",
-      rows: 4,
+      type: "richText",
+      description: "Standard rich text editor with headings, formatted text, and quote/scripture callouts.",
     }),
     defineField({
       name: "order",
