@@ -27,8 +27,10 @@ import {
   FELLOWSHIP_BENEFITS,
 } from "@/lib/house-fellowship-data";
 import { useManagedHouseFellowship } from "@/lib/content-store";
+import { useHeaderVisibility } from "@/lib/hooks/useHeaderVisibility";
 
 export function HouseFellowshipView() {
+  const isHeaderVisible = useHeaderVisibility();
   const [centers] = useManagedHouseFellowship();
   const [selectedZone, setSelectedZone] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -137,7 +139,10 @@ export function HouseFellowshipView() {
       {/* ─── Search & Zone Filter Bar ───────────────────────────────── */}
       <section
         id="centers-list"
-        className="sticky top-[120px] z-30 bg-white/95 backdrop-blur-md border-b border-[#e5e5e5] py-4 shadow-2xs"
+        className={`sticky z-30 bg-white/95 backdrop-blur-md border-b border-[#e5e5e5] py-4 shadow-2xs transition-[top] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          isHeaderVisible ? "top-[124px]" : "top-0"
+        }`}
+        style={{ top: isHeaderVisible ? "124px" : "0px" }}
       >
         <Container className="max-w-[1440px]">
           <div className="flex flex-col items-stretch lg:items-center justify-between gap-8">

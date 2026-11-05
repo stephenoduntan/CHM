@@ -12,6 +12,7 @@ import {
   MENU_CONNECT_FELLOWSHIP,
   MENU_RESOURCES,
 } from "@/lib/constants";
+import { HEADER_VISIBILITY_EVENT } from "@/lib/hooks/useHeaderVisibility";
 import { Container } from "./Container";
 
 export interface HeaderProps {
@@ -97,6 +98,25 @@ export function Header({ variant }: HeaderProps) {
       setIsVisible(true);
     }
   }, [pathname]);
+
+  // Synchronize header visibility state with global event and document root attributes
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(
+        new CustomEvent(HEADER_VISIBILITY_EVENT, {
+          detail: { isVisible, isSticky },
+        })
+      );
+      document.documentElement.setAttribute(
+        "data-header-visible",
+        isVisible ? "true" : "false"
+      );
+      document.documentElement.style.setProperty(
+        "--header-offset",
+        isVisible ? "124px" : "0px"
+      );
+    }
+  }, [isVisible, isSticky]);
 
   // Determine variant: explicit prop takes precedence, otherwise auto-detect from route
   // Note: /events (root) has a solid black hero (dark header), but /events/[slug] has a white background (light header)

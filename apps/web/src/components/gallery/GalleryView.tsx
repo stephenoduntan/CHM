@@ -22,8 +22,10 @@ import {
 import { Container } from "@/components/layout/Container";
 import { GALLERY_IMAGES, GalleryImage, getGalleryTags, getGalleryYears } from "@/lib/gallery-data";
 import { useManagedGallery } from "@/lib/content-store";
+import { useHeaderVisibility } from "@/lib/hooks/useHeaderVisibility";
 
 export function GalleryView() {
+  const isHeaderVisible = useHeaderVisibility();
   const [galleryImages] = useManagedGallery();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTag, setSelectedTag] = useState("All");
@@ -184,7 +186,12 @@ export function GalleryView() {
       </section>
 
       {/* ─── Filter & Search Bar Section ───────────────────────────── */}
-      <section className="sticky top-28 z-30 bg-white/95 backdrop-blur-md border-b border-gray-200 py-4 shadow-sm">
+      <section
+        className={`sticky z-30 bg-white/95 backdrop-blur-md border-b border-gray-200 py-4 shadow-sm transition-[top] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          isHeaderVisible ? "top-[124px]" : "top-0"
+        }`}
+        style={{ top: isHeaderVisible ? "124px" : "0px" }}
+      >
         <Container>
           <div className="flex flex-col gap-4">
             {/* Top row: Search input & Date dropdowns */}
