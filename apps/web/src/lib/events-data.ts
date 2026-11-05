@@ -442,6 +442,9 @@ export interface EventItem {
   posterImage?: string;
   venue?: string;
   gallery?: Array<{ url: string; caption?: string; alt?: string }>;
+  isFeatured?: boolean;
+  featuredDisplayType?: "text" | "image";
+  featuredImage?: string;
 }
 
 export const ALL_EVENTS: EventItem[] = [
@@ -453,6 +456,8 @@ export const ALL_EVENTS: EventItem[] = [
     watermark: ["CHOOSE", "LIFE"],
     date: "November 8th - 15th, 2026",
     startDateIso: "2026-11-08T18:00:00Z",
+    isFeatured: true,
+    featuredDisplayType: "text",
     time: "6:00 PM Daily (Grand Finale: 8:00 AM Sunday)",
     location: "Church Auditorium",
     description:

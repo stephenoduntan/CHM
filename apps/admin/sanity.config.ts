@@ -1,7 +1,43 @@
-import { defineConfig } from "sanity";
+import { defineConfig, useClient } from "sanity";
 import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
 import { schemaTypes } from "./schemas";
+
+function createFeaturedEventPublishAction(originalPublishAction: any) {
+  return function FeaturedEventPublishAction(props: any) {
+    const originalResult = originalPublishAction(props);
+    const client = useClient({ apiVersion: "2024-01-01" });
+
+    return {
+      ...originalResult,
+      onHandle: async () => {
+        const isFeatured = props.draft?.isFeatured ?? props.published?.isFeatured;
+        if (isFeatured) {
+          try {
+            const docId = props.id.replace(/^drafts\./, "");
+            const otherFeaturedIds: string[] = await client.fetch(
+              `*[_type == "event" && isFeatured == true && !(_id in [$id, $draftId])]._id`,
+              { id: docId, draftId: `drafts.${docId}` }
+            );
+
+            if (otherFeaturedIds.length > 0) {
+              const tx = client.transaction();
+              for (const id of otherFeaturedIds) {
+                tx.patch(id, (patch) => patch.set({ isFeatured: false }));
+              }
+              await tx.commit();
+            }
+          } catch (err) {
+            console.error("Error clearing previous featured event:", err);
+          }
+        }
+        if (originalResult && typeof originalResult.onHandle === "function") {
+          originalResult.onHandle();
+        }
+      },
+    };
+  };
+}
 
 export default defineConfig({
   name: "default",
@@ -76,6 +112,20 @@ export default defineConfig({
 
   schema: {
     types: schemaTypes,
+  },
+
+  document: {
+    actions: (prev, context) => {
+      if (context.schemaType === "event") {
+        return prev.map((action) => {
+          if (action.action === "publish") {
+            return createFeaturedEventPublishAction(action);
+          }
+          return action;
+        });
+      }
+      return prev;
+    },
   },
 });
 

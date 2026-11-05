@@ -37,7 +37,7 @@ export const SERMON_BY_SLUG_QUERY = `*[_type == "sermon" && (slug.current == $sl
 }`;
 
 // ─── Events ──────────────────────────────────────────────────────────────────
-export const EVENTS_QUERY = `*[_type == "event"] | order(startDate asc) {
+export const EVENTS_QUERY = `*[_type == "event"] | order(isFeatured desc, startDate asc) {
   _id,
   title,
   slug,
@@ -50,6 +50,9 @@ export const EVENTS_QUERY = `*[_type == "event"] | order(startDate asc) {
   badge,
   description,
   isPast,
+  isFeatured,
+  featuredDisplayType,
+  "featuredImage": coalesce(featuredImage.asset->url, featuredImageUrl),
   "posterImage": coalesce(posterImage.asset->url, posterImageUrl),
   "videoUrl": coalesce(videoFile.asset->url, videoUrl),
   "gallery": gallery[]{
@@ -72,6 +75,9 @@ export const EVENT_BY_SLUG_QUERY = `*[_type == "event" && (slug.current == $slug
   badge,
   description,
   isPast,
+  isFeatured,
+  featuredDisplayType,
+  "featuredImage": coalesce(featuredImage.asset->url, featuredImageUrl),
   "posterImage": coalesce(posterImage.asset->url, posterImageUrl),
   "videoUrl": coalesce(videoFile.asset->url, videoUrl),
   "gallery": gallery[]{

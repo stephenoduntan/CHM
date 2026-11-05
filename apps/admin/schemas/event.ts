@@ -103,6 +103,63 @@ export const eventType = defineType({
       description: "When marked as past, the live event page replaces the 'Join us in person' card with the Photo Gallery recap.",
     }),
     defineField({
+      name: "isFeatured",
+      title: "Set as Featured Countdown Event",
+      type: "boolean",
+      initialValue: false,
+      description:
+        "Toggle ON to showcase this event in the homepage Countdown Section. Only ONE event can be featured at a time; turning this ON replaces any previously featured event.",
+    }),
+    defineField({
+      name: "featuredDisplayType",
+      title: "Countdown Display Format",
+      type: "string",
+      options: {
+        list: [
+          { title: "Event Name & Theme Text (Typography)", value: "text" },
+          { title: "Artwork / Logo Image (JPG, PNG, or SVG)", value: "image" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "text",
+      description:
+        "Choose whether the countdown showcases stylized text (Event Name & Theme) or a custom graphic artwork/logo image.",
+      hidden: ({ parent }) => !parent?.isFeatured,
+    }),
+    defineField({
+      name: "featuredImage",
+      title: "Featured Event Artwork / Logo Image",
+      type: "image",
+      options: {
+        hotspot: true,
+        accept: ".jpg,.jpeg,.png,.svg,image/jpeg,image/png,image/svg+xml",
+      },
+      description:
+        "Upload event artwork, badge, or logo. Only JPG, PNG, or SVG formats are accepted. Recommended: 600×240px to 800×320px with transparent background (max 2MB).",
+      hidden: ({ parent }) => !parent?.isFeatured || parent?.featuredDisplayType !== "image",
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const parent = context.parent as any;
+          if (
+            parent?.isFeatured &&
+            parent?.featuredDisplayType === "image" &&
+            !value?.asset &&
+            !parent?.featuredImageUrl
+          ) {
+            return "Please upload an artwork image or provide an image URL.";
+          }
+          return true;
+        }),
+    }),
+    defineField({
+      name: "featuredImageUrl",
+      title: "Featured Event Artwork URL / Path (Alternative)",
+      type: "string",
+      placeholder: "e.g. /images/events/fod-2026-poster.webp or https://...",
+      description: "Direct URL or local image path (JPG, PNG, or SVG) if not uploading directly.",
+      hidden: ({ parent }) => !parent?.isFeatured || parent?.featuredDisplayType !== "image",
+    }),
+    defineField({
       name: "gallery",
       title: "Event Gallery Photos (for concluded events)",
       type: "array",
@@ -123,6 +180,15 @@ export const eventType = defineType({
       title: "title",
       subtitle: "theme",
       media: "posterImage",
+      isFeatured: "isFeatured",
+    },
+    prepare(selection) {
+      const { title, subtitle, media, isFeatured } = selection;
+      return {
+        title: isFeatured ? `★ [FEATURED] ${title}` : title,
+        subtitle: subtitle || "Event",
+        media,
+      };
     },
   },
 });
