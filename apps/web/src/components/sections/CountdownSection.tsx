@@ -86,7 +86,7 @@ export function CountdownSection() {
           {/* Left Column: Event Presentation (Typography or Artwork) + View Details CTA */}
           {isImageDisplay ? (
             <div className="flex flex-col gap-4 items-center lg:items-start text-center lg:text-left max-w-xl">
-              <div className="relative h-[90px] sm:h-[115px] md:h-[135px] w-[260px] sm:w-[320px] md:w-[380px] max-w-full">
+              <div className="relative h-[90px] sm:h-[115px] md:h-[240px] w-[260px] sm:w-[320px] md:w-[480px] max-w-full">
                 <Image
                   src={currentEvent.featuredImage!}
                   alt={`${currentEvent.title}${currentEvent.theme ? ` - ${currentEvent.theme}` : ""}`}
@@ -103,7 +103,7 @@ export function CountdownSection() {
               <div className="pt-1 flex justify-center lg:justify-start">
                 <Link
                   href={eventLink}
-                  className="inline-flex items-center gap-2.5 px-6 sm:px-7 py-3 rounded-full bg-[#180c62] hover:bg-[#180c62]/90 text-white font-sans font-semibold text-sm sm:text-base transition-all shadow-md hover:shadow-lg hover:scale-105 active:scale-95 cursor-pointer group"
+                  className="inline-flex items-center gap-2.5 px-6 sm:px-7 py-3 rounded-full border border-[#b2a1ed] bg-[#b2a1ed]/10 hover:bg-[#b2a1ed]/20 text-[#180c62] font-sans font-semibold text-sm sm:text-base transition-all shadow-md hover:shadow-lg hover:scale-105 active:scale-95 cursor-pointer group"
                 >
                   <span>View Details</span>
                   <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
@@ -129,7 +129,7 @@ export function CountdownSection() {
               <div className="pt-2 flex justify-center lg:justify-start">
                 <Link
                   href={eventLink}
-                  className="inline-flex items-center gap-2.5 px-6 sm:px-7 py-3 rounded-full bg-[#180c62] hover:bg-[#180c62]/90 text-white font-sans font-semibold text-sm sm:text-base transition-all shadow-md hover:shadow-lg hover:scale-105 active:scale-95 cursor-pointer group"
+                  className="inline-flex items-center gap-2.5 px-6 sm:px-7 py-3 rounded-full border border-[#b2a1ed] bg-[#b2a1ed]/10 hover:bg-[#b2a1ed]/20 text-[#180c62] font-sans font-semibold text-sm sm:text-base transition-all shadow-md hover:shadow-lg hover:scale-105 active:scale-95 cursor-pointer group"
                 >
                   <span>View Details</span>
                   <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
