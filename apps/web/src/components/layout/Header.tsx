@@ -33,25 +33,70 @@ const DARK_HEADER_ROUTES = [
 export function Header({ variant }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const headerRef = useRef<HTMLElement>(null);
+  const lastScrollYRef = useRef(0);
+  const pathname = usePathname();
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const headerHeight = headerRef.current ? headerRef.current.offsetHeight : 124;
+    let ticking = false;
 
-      if (scrollY > headerHeight) {
-        setIsSticky(true);
-      } else if (scrollY <= 20) {
+    const updateHeader = () => {
+      const currentScrollY = Math.max(0, window.scrollY);
+      const prevScrollY = lastScrollYRef.current;
+      const delta = currentScrollY - prevScrollY;
+      const topThreshold = 50;
+
+      // When at or near the top of the page, header is always visible and in transparent/initial state
+      if (currentScrollY <= topThreshold) {
         setIsSticky(false);
+        setIsVisible(true);
+      } else {
+        // Scrolled down past the top: sticky styles are primed
+        setIsSticky(true);
+
+        // Guard against bottom rubber-band bouncing on iOS/Safari
+        const isNearBottom =
+          window.innerHeight + currentScrollY >=
+          document.documentElement.scrollHeight - 20;
+
+        // Upward scroll -> appear and stick at the top of the page
+        if (delta < -8 && !isNearBottom) {
+          setIsVisible(true);
+        }
+        // Downward scroll -> remain hidden
+        else if (delta > 8) {
+          setIsVisible(false);
+        }
+      }
+
+      lastScrollYRef.current = currentScrollY;
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateHeader);
+        ticking = true;
       }
     };
 
-    handleScroll();
+    // Check position on mount
+    updateHeader();
+
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-  const pathname = usePathname();
+
+  // Reset header state and close mobile drawer on route change
+  useEffect(() => {
+    setIsMenuOpen(false);
+    lastScrollYRef.current = typeof window !== "undefined" ? Math.max(0, window.scrollY) : 0;
+    if (lastScrollYRef.current <= 50) {
+      setIsSticky(false);
+      setIsVisible(true);
+    }
+  }, [pathname]);
 
   // Determine variant: explicit prop takes precedence, otherwise auto-detect from route
   // Note: /events (root) has a solid black hero (dark header), but /events/[slug] has a white background (light header)
@@ -68,14 +113,16 @@ export function Header({ variant }: HeaderProps) {
     <>
       <header
         ref={headerRef}
-        className={`w-full transition-all duration-300 ${
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          isVisible ? "translate-y-0" : "-translate-y-full pointer-events-none"
+        } ${
           isSticky
-            ? `fixed top-0 left-0 z-50 animate-header-slide-down shadow-md ${
+            ? `shadow-md ${
                 isDark
                   ? "bg-[#051202]/95 backdrop-blur-md text-white border-b border-white/10"
                   : "bg-white/95 backdrop-blur-md text-[#242424] border-b border-gray-100/80"
               }`
-            : `absolute top-0 left-0 z-40 bg-transparent border-b border-transparent ${
+            : `bg-transparent border-b border-transparent shadow-none ${
                 isDark ? "text-white" : "text-[#242424]"
               }`
         }`}>
