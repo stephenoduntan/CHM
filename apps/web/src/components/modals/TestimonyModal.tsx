@@ -119,18 +119,18 @@ export function TestimonyModal({ isOpen, onClose }: TestimonyModalProps) {
         {/* Header Bar */}
         <div className="flex items-start justify-between px-5 sm:px-8 pt-6 pb-4 border-b border-gray-100 bg-linear-to-r from-amber-50/50 via-white to-purple-50/30">
           <div className="pr-4 space-y-1">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-100/80 text-amber-900 text-xs font-semibold uppercase tracking-wider">
+            {/* <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-100/80 text-amber-900 text-xs font-semibold uppercase tracking-wider">
               <Sparkles className="size-3 text-amber-600" />
               <span>Praise Report</span>
-            </div>
+            </div> */}
             <h2
               id="testimony-modal-title"
               className="font-display font-recursive-sans font-bold text-lg sm:text-xl text-[#0a0a0a] leading-snug tracking-tight"
             >
-              Testify the goodness of God. Revelation 12:11
+              Testify the goodness of God
             </h2>
             <p className="text-xs sm:text-sm text-gray-500 italic">
-              &ldquo;And they overcame him by the blood of the Lamb, and by the word of their testimony...&rdquo;
+              &ldquo;And they overcame him by the blood of the Lamb, and by the word of their testimony...&rdquo; Revelation 12:11.
             </p>
           </div>
 

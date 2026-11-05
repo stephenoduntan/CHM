@@ -130,18 +130,18 @@ export function AltarCallModal({ isOpen, onClose }: AltarCallModalProps) {
         {/* Header Bar */}
         <div className="flex items-start justify-between px-5 sm:px-8 pt-6 pb-4 border-b border-gray-100 bg-linear-to-r from-red-50/60 via-white to-amber-50/40">
           <div className="pr-4 space-y-1">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-red-100 text-[#d61812] text-xs font-semibold uppercase tracking-wider">
+            {/* <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-red-100 text-[#d61812] text-xs font-semibold uppercase tracking-wider">
               <HeartHandshake className="size-3 text-[#d61812]" />
               <span>Decision For Christ</span>
-            </div>
+            </div> */}
             <h2
               id="altar-call-modal-title"
               className="font-display font-recursive-sans font-bold text-lg sm:text-xl text-[#0a0a0a] leading-snug tracking-tight"
             >
-              Your New Beginning Starts Today. 2 Corinthians 5:17
+              Your New Beginning Starts Today
             </h2>
             <p className="text-xs sm:text-sm text-gray-500 italic">
-              &ldquo;Therefore if any man be in Christ, he is a new creature: old things are passed away; behold, all things are become new.&rdquo;
+              &ldquo;Therefore if any man be in Christ, he is a new creature: old things are passed away; behold, all things are become new.&rdquo; 2 Corinthians 5:17.
             </p>
           </div>
 

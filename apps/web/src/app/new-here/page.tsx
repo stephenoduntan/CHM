@@ -161,7 +161,7 @@ export default function NewHerePage() {
           >
             {/* Left Photo Column (Figma Frame 2085668955) */}
             <div
-              className="w-full lg:w-[560px] min-h-[380px] sm:min-h-[480px] lg:min-h-[766px] relative bg-[#051202] rounded-[20px] shrink-0 overflow-hidden self-stretch before:content-['']before:absolute before:-inset-0 before:bg-[linear-gradient(45deg,#334155_25%,transparent_25%,transparent_75%,#334155_75%),linear-gradient(45deg,#334155_25%,transparent_25%,transparent_75%,#334155_75%)]"
+              className="w-full lg:w-[560px] min-h-[380px] sm:min-h-[480px] lg:min-h-[766px] relative bg-[#051202] rounded-[20px] shrink-0 overflow-hidden self-stretch before:content-['']before:absolute before:-inset-0 before:bg-[repeating-radial-gradient(circle at 70% 20%,rgba(159,195,230,.14)0 1px,transparent 1px 28px)]"
               data-node-id="2086:337"
               data-name="Frame 2085668955"
             >
@@ -174,7 +174,7 @@ export default function NewHerePage() {
                 priority
               />
 
-              <div className="absolute bottom-4 left-4 p-4 lg:p-[24px] bg-white/25 border border-white/50 backdrop-blur-sm rounded-[12px] lg:rounded-[20px] flex flex-col gap-1 lg:gap-2 items-start justify-center" data-node-id="2086:338" data-name="PICP Portrait"
+              <div className="absolute bottom-4 left-4 p-4 lg:p-[24px] bg-white/75 border border-white/50 backdrop-blur-sm rounded-[12px] lg:rounded-[20px] flex flex-col gap-1 lg:gap-2 items-start justify-center" data-node-id="2086:338" data-name="PICP Portrait"
               >
                 
                 <p className="text-[#051202] text-xl font-semibold">
