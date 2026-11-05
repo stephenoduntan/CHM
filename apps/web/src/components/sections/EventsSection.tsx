@@ -692,7 +692,7 @@ export function EventsSection({
           <button
             type="button"
             onClick={handlePrev}
-            className={`absolute left-0 top-1/2 -translate-y-1/2 z-30 flex items-center gap-2 pl-4 sm:pl-6 lg:pl-10 pr-6 py-6 transition-all cursor-pointer group ${
+            className={`absolute left-0 top-1/2 -translate-y-1/2 z-30 flex items-center gap-2 px-4 py-3 transition-all cursor-pointer group ${
               isSolid
                 ? "text-[#f5f5f5] hover:text-white"
                 : "px-4 sm:px-5 py-3 rounded-full bg-white/95 hover:bg-white text-gray-900 border border-gray-200/90 shadow-xl backdrop-blur-md left-4 lg:left-10"
@@ -708,7 +708,7 @@ export function EventsSection({
           <button
             type="button"
             onClick={handleNext}
-            className={`absolute right-0 top-1/2 -translate-y-1/2 z-30 flex items-center gap-2 pr-4 sm:pr-6 lg:pr-10 pl-6 py-6 transition-all cursor-pointer group ${
+            className={`absolute right-0 top-1/2 -translate-y-1/2 z-30 flex items-center gap-2 px-4 py-3 transition-all cursor-pointer group ${
               isSolid
                 ? "text-[#f5f5f5] hover:text-white"
                 : "px-4 sm:px-5 py-3 rounded-full bg-white/95 hover:bg-white text-gray-900 border border-gray-200/90 shadow-xl backdrop-blur-md right-4 lg:right-10"
