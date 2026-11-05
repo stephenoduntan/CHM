@@ -46,7 +46,7 @@ export const MENU_CONNECT_FELLOWSHIP: MenuItem[] = [
   { label: "House Fellowship Centers", href: "/house-fellowship" },
   { label: "Prayer Request", href: "/connect" },
   { label: "Testify", href: "/connect" },
-  { label: "Holy Ghost Service", href: "https://www.youtube.com/@rccglive/streams", target: "_blank" },
+  { label: "Holy Ghost Service", href: "https://rccgworld.org/rccg/", target: "_blank" },
 ];
 
 export const MENU_RESOURCES: MenuItem[] = [
