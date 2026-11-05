@@ -41,6 +41,19 @@ export default function GivePage() {
           <p className="text-gray-300 text-base sm:text-xl max-w-2xl mx-auto leading-relaxed">
             &quot;Give, and it will be given to you: good measure, pressed down, shaken together, and running over...&quot; — Luke 6:38
           </p>
+
+          {/* Top Primary CTA Button */}
+            <div>
+              <button
+                type="button"
+                onClick={() => setIsModalOpen(true)}
+                className="bg-white hover:bg-gray-100 text-[#0a0a0a] font-sans font-semibold text-base sm:text-[18px] px-8 sm:px-[40px] py-3.5 sm:py-[16px] rounded-[36px] transition-all cursor-pointer shadow-sm hover:shadow-md"
+              >
+                <Heart className="size-4 fill-current" />
+                Click here to Give
+              </button>
+            </div>
+            
         </Container>
       </section>
 
@@ -56,7 +69,7 @@ export default function GivePage() {
             </div>
 
             {/* Top Primary CTA Button */}
-            <div>
+            {/* <div>
               <button
                 type="button"
                 onClick={() => setIsModalOpen(true)}
@@ -64,7 +77,7 @@ export default function GivePage() {
               >
                 Click here to Give
               </button>
-            </div>
+            </div> */}
 
             {/* Ways to Give Section Header */}
             <div className="w-full text-left pt-6 sm:pt-10">

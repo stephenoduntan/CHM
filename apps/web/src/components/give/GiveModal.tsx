@@ -514,7 +514,7 @@ export function GiveModal({
             <button
               type="submit"
               form="give-modal-form"
-              className="bg-[#180c62] hover:bg-[#251394] text-white font-sans font-semibold text-base h-[50px] sm:h-[54px] rounded-[36px] w-full flex items-center justify-center transition-all cursor-pointer shadow-md hover:shadow-lg"
+              className="bg-[#f0a505] hover:bg-[#d99504] text-[#0a0a0a] font-sans font-semibold text-base h-[50px] sm:h-[54px] rounded-[36px] w-full flex items-center justify-center transition-all cursor-pointer shadow-md hover:shadow-lg"
             >
               Make Payment
             </button>
