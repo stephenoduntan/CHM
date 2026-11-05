@@ -1,14 +1,16 @@
 import { Metadata } from "next";
-import { getBlogPostBySlug, ALL_BLOG_POSTS } from "@/lib/blog-data";
+import { fetchSanityBlogBySlug, fetchSanityBlogs } from "@/lib/sanity/fetcher";
 import { BlogDetailView } from "@/components/blog/BlogDetailView";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const post = getBlogPostBySlug(slug);
+  const post = await fetchSanityBlogBySlug(slug);
 
   return {
     title: `${post.title} | RCCG Court of His Majesty`,
@@ -29,15 +31,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export async function generateStaticParams() {
-  return ALL_BLOG_POSTS.map((post) => ({
+  const blogs = await fetchSanityBlogs();
+  return blogs.map((post) => ({
     slug: post.slug,
   }));
 }
 
 export default async function BlogPostPage({ params }: PageProps) {
   const { slug } = await params;
-  const post = getBlogPostBySlug(slug);
+  const post = await fetchSanityBlogBySlug(slug);
 
   return <BlogDetailView post={post} />;
 }
-

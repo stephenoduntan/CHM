@@ -5,6 +5,12 @@ import { SERMONS_DATA, Sermon } from "@/lib/sermons-data";
 import { ALL_EVENTS, EventItem } from "@/lib/events-data";
 import { ALL_BLOG_POSTS, BlogPost } from "@/lib/blog-data";
 import { GALLERY_IMAGES, GalleryImage } from "@/lib/gallery-data";
+import {
+  fetchSanitySermons,
+  fetchSanityEvents,
+  fetchSanityBlogs,
+  fetchSanityGallery,
+} from "@/lib/sanity/fetcher";
 
 export const STORAGE_KEYS = {
   SERMONS: "chm_managed_sermons_v1",
@@ -151,15 +157,30 @@ export function importContentBackup(jsonString: string): boolean {
   }
 }
 
-// ─── React Hooks ─────────────────────────────────────────────────────────────
+// ─── React Hooks with Sanity Live Synchronization ───────────────────────────
 export function useManagedSermons(): [Sermon[], (items: Sermon[]) => void, boolean] {
   const [data, setData] = useState<Sermon[]>(SERMONS_DATA);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    setData(getManagedSermons());
+    // 1. Instant local render from storage or initial seed
+    const local = getManagedSermons();
+    setData(local);
     setIsLoaded(true);
 
+    // 2. Fetch fresh live data from Sanity CMS
+    fetchSanitySermons()
+      .then((live) => {
+        if (Array.isArray(live) && live.length > 0) {
+          setData(live);
+          saveManagedSermons(live);
+        }
+      })
+      .catch((err) => {
+        console.warn("[Sanity] Live sermons fetch fallback:", err);
+      });
+
+    // 3. Listen to local and storage synchronization events
     const handleSync = (e: Event) => {
       const customEvent = e as CustomEvent<{ type?: string }>;
       if (!customEvent.detail || customEvent.detail.type === "sermons" || customEvent.detail.type === "all") {
@@ -188,8 +209,22 @@ export function useManagedEvents(): [EventItem[], (items: EventItem[]) => void, 
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    setData(getManagedEvents());
+    // 1. Instant local render
+    const local = getManagedEvents();
+    setData(local);
     setIsLoaded(true);
+
+    // 2. Live Sanity sync
+    fetchSanityEvents()
+      .then((live) => {
+        if (Array.isArray(live) && live.length > 0) {
+          setData(live);
+          saveManagedEvents(live);
+        }
+      })
+      .catch((err) => {
+        console.warn("[Sanity] Live events fetch fallback:", err);
+      });
 
     const handleSync = (e: Event) => {
       const customEvent = e as CustomEvent<{ type?: string }>;
@@ -219,8 +254,20 @@ export function useManagedBlogs(): [BlogPost[], (items: BlogPost[]) => void, boo
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    setData(getManagedBlogs());
+    const local = getManagedBlogs();
+    setData(local);
     setIsLoaded(true);
+
+    fetchSanityBlogs()
+      .then((live) => {
+        if (Array.isArray(live) && live.length > 0) {
+          setData(live);
+          saveManagedBlogs(live);
+        }
+      })
+      .catch((err) => {
+        console.warn("[Sanity] Live blogs fetch fallback:", err);
+      });
 
     const handleSync = (e: Event) => {
       const customEvent = e as CustomEvent<{ type?: string }>;
@@ -250,8 +297,20 @@ export function useManagedGallery(): [GalleryImage[], (items: GalleryImage[]) =>
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    setData(getManagedGallery());
+    const local = getManagedGallery();
+    setData(local);
     setIsLoaded(true);
+
+    fetchSanityGallery()
+      .then((live) => {
+        if (Array.isArray(live) && live.length > 0) {
+          setData(live);
+          saveManagedGallery(live);
+        }
+      })
+      .catch((err) => {
+        console.warn("[Sanity] Live gallery fetch fallback:", err);
+      });
 
     const handleSync = (e: Event) => {
       const customEvent = e as CustomEvent<{ type?: string }>;
@@ -275,4 +334,3 @@ export function useManagedGallery(): [GalleryImage[], (items: GalleryImage[]) =>
 
   return [data, update, isLoaded];
 }
-

@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "sanity dev",
     "start": "sanity start",
-    "build": "sanity build dist"
+    "build": "sanity build dist",
+    "seed": "node scripts/seed-sanity.mjs"
   },
   "dependencies": {
     "@sanity/vision": "^3.77.1",

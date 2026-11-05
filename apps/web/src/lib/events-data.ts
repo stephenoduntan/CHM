@@ -427,16 +427,21 @@ export function getEventBySlug(slug?: string): EventDetail {
 export interface EventItem {
   id: string;
   title: string;
-  theme: string;
+  theme?: string;
   watermark?: [string, string];
   date: string;
-  startDateIso: string;
-  time: string;
-  location: string;
-  description: string;
-  image: string;
-  badge: string;
+  startDateIso?: string;
+  time?: string;
+  location?: string;
+  description?: string;
+  image?: string;
+  badge?: string;
   isPast?: boolean;
+  videoUrl?: string;
+  link?: string;
+  posterImage?: string;
+  venue?: string;
+  gallery?: Array<{ url: string; caption?: string; alt?: string }>;
 }
 
 export const ALL_EVENTS: EventItem[] = [

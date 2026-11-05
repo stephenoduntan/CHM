@@ -67,6 +67,29 @@ export const eventType = defineType({
       options: { hotspot: true },
     }),
     defineField({
+      name: "posterImageUrl",
+      title: "Poster Image URL (Alternative)",
+      type: "string",
+      placeholder: "e.g. /images/events/fod-2026-poster.webp or https://...",
+      description: "Direct image path or URL if not uploading an image file directly.",
+    }),
+    defineField({
+      name: "videoFile",
+      title: "Video Montage / Short Clip (File Upload)",
+      type: "file",
+      options: {
+        accept: "video/mp4,video/webm,video/ogg,video/quicktime",
+      },
+      description: "Upload a cinematic video montage or short clip for this event. Powers the cinematic event carousel on the homepage.",
+    }),
+    defineField({
+      name: "videoUrl",
+      title: "Video Montage URL / Path (Alternative)",
+      type: "string",
+      placeholder: "e.g. /videos/FOD 2026.webm or https://...",
+      description: "Direct video file path or hosted streaming URL for the cinematic carousel.",
+    }),
+    defineField({
       name: "description",
       title: "About the Event / Description",
       type: "text",

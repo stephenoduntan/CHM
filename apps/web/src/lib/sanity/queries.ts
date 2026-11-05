@@ -1,5 +1,6 @@
 /**
  * GROQ queries for fetching data from Sanity CMS
+ * Tuned to match apps/admin/schemas precisely and extract full image/video asset URLs.
  */
 
 // ─── Sermons ─────────────────────────────────────────────────────────────────
@@ -7,139 +8,153 @@ export const SERMONS_QUERY = `*[_type == "sermon"] | order(date desc) {
   _id,
   title,
   slug,
-  date,
+  speaker,
   series,
+  date,
+  duration,
+  biblePassage,
+  youtubeId,
   description,
-  videoUrl,
-  audioUrl,
-  scriptureReferences,
-  image,
-  "speaker": speaker->{name, slug, image, role}
+  keyPoints,
+  transcript,
+  "thumbnail": coalesce(thumbnail.asset->url, thumbnailUrl)
 }`;
 
-export const SERMON_BY_SLUG_QUERY = `*[_type == "sermon" && slug.current == $slug][0] {
+export const SERMON_BY_SLUG_QUERY = `*[_type == "sermon" && (slug.current == $slug || _id == $slug)][0] {
   _id,
   title,
   slug,
-  date,
+  speaker,
   series,
+  date,
+  duration,
+  biblePassage,
+  youtubeId,
   description,
-  videoUrl,
-  audioUrl,
-  scriptureReferences,
-  image,
-  notes,
-  "speaker": speaker->{name, slug, image, role}
+  keyPoints,
+  transcript,
+  "thumbnail": coalesce(thumbnail.asset->url, thumbnailUrl)
 }`;
 
 // ─── Events ──────────────────────────────────────────────────────────────────
-export const EVENTS_QUERY = `*[_type == "event"] | order(date asc) {
+export const EVENTS_QUERY = `*[_type == "event"] | order(startDate asc) {
   _id,
   title,
   slug,
+  theme,
   date,
+  startDate,
   endDate,
   time,
-  location,
+  venue,
+  badge,
   description,
-  image,
-  registrationUrl,
-  isFeatured
+  isPast,
+  "posterImage": coalesce(posterImage.asset->url, posterImageUrl),
+  "videoUrl": coalesce(videoFile.asset->url, videoUrl),
+  "gallery": gallery[]{
+    "url": asset->url,
+    caption,
+    alt
+  }
 }`;
 
-export const UPCOMING_EVENTS_QUERY = `*[_type == "event" && date >= now()] | order(date asc) [0...6] {
+export const EVENT_BY_SLUG_QUERY = `*[_type == "event" && (slug.current == $slug || _id == $slug)][0] {
   _id,
   title,
   slug,
+  theme,
   date,
-  time,
-  location,
-  description,
-  image,
-  registrationUrl,
-  isFeatured
-}`;
-
-export const EVENT_BY_SLUG_QUERY = `*[_type == "event" && slug.current == $slug][0] {
-  _id,
-  title,
-  slug,
-  date,
+  startDate,
   endDate,
   time,
-  location,
+  venue,
+  badge,
   description,
-  image,
-  registrationUrl,
-  isFeatured,
-  body
+  isPast,
+  "posterImage": coalesce(posterImage.asset->url, posterImageUrl),
+  "videoUrl": coalesce(videoFile.asset->url, videoUrl),
+  "gallery": gallery[]{
+    "url": asset->url,
+    caption,
+    alt
+  }
 }`;
 
-// ─── Blog ────────────────────────────────────────────────────────────────────
+// ─── Blog & Articles ─────────────────────────────────────────────────────────
 export const BLOG_POSTS_QUERY = `*[_type == "blog"] | order(publishedAt desc) {
   _id,
   title,
   slug,
+  category,
   publishedAt,
+  readTime,
   excerpt,
-  featuredImage,
-  tags,
-  "author": author->{name, slug, image},
-  "categories": categories[]->{title, slug}
+  isFeatured,
+  "author": coalesce(author->name, author, "CHM Editorial Team"),
+  "authorRole": author->role,
+  "coverImage": coalesce(coverImage.asset->url, coverImageUrl),
+  content
 }`;
 
-export const BLOG_POST_BY_SLUG_QUERY = `*[_type == "blog" && slug.current == $slug][0] {
+export const BLOG_POST_BY_SLUG_QUERY = `*[_type == "blog" && (slug.current == $slug || _id == $slug)][0] {
   _id,
   title,
   slug,
+  category,
   publishedAt,
+  readTime,
   excerpt,
-  body,
-  featuredImage,
-  tags,
-  "author": author->{name, slug, image, bio, role},
-  "categories": categories[]->{title, slug}
+  isFeatured,
+  "author": coalesce(author->name, author, "CHM Editorial Team"),
+  "authorRole": author->role,
+  "coverImage": coalesce(coverImage.asset->url, coverImageUrl),
+  content
 }`;
 
-// ─── Podcasts ────────────────────────────────────────────────────────────────
-export const PODCASTS_QUERY = `*[_type == "podcast"] | order(publishedAt desc) {
+// ─── Photo Gallery ───────────────────────────────────────────────────────────
+export const GALLERY_QUERY = `*[_type == "gallery"] | order(date desc) {
   _id,
   title,
-  slug,
-  episodeNumber,
-  season,
-  audioUrl,
-  duration,
-  description,
-  guests,
-  image,
-  publishedAt
+  caption,
+  eventName,
+  eventTag,
+  date,
+  year,
+  "imageUrl": coalesce(image.asset->url, imageUrl)
 }`;
 
-export const PODCAST_BY_SLUG_QUERY = `*[_type == "podcast" && slug.current == $slug][0] {
+// ─── Leadership ──────────────────────────────────────────────────────────────
+export const LEADERSHIP_QUERY = `*[_type == "leadership"] | order(order asc) {
   _id,
-  title,
+  name,
   slug,
-  episodeNumber,
-  season,
-  audioUrl,
-  duration,
-  description,
-  showNotes,
-  guests,
-  image,
-  publishedAt
+  role,
+  category,
+  order,
+  bio,
+  "image": coalesce(image.asset->url, imageUrl)
 }`;
 
-// ─── Site Settings ───────────────────────────────────────────────────────────
-export const SITE_SETTINGS_QUERY = `*[_type == "siteSettings"][0] {
-  title,
-  description,
-  logo,
+// ─── House Fellowship ────────────────────────────────────────────────────────
+export const HOUSE_FELLOWSHIP_QUERY = `*[_type == "houseFellowship"] | order(landmark asc, centerName asc) {
+  _id,
+  centerName,
+  landmark,
   address,
-  phone,
-  email,
-  serviceTimes,
-  socialLinks
+  hostName,
+  hostPhone,
+  meetingDay,
+  meetingTime
 }`;
 
+// ─── Announcements ───────────────────────────────────────────────────────────
+export const ANNOUNCEMENTS_QUERY = `*[_type == "announcement" && isActive == true] | order(publishDate desc) {
+  _id,
+  title,
+  message,
+  category,
+  link,
+  isActive,
+  publishDate
+}`;

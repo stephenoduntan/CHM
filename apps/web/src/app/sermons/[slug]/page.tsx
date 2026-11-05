@@ -1,14 +1,16 @@
 import { Metadata } from "next";
-import { getSermonBySlug, SERMONS_DATA } from "@/lib/sermons-data";
+import { fetchSanitySermonBySlug, fetchSanitySermons } from "@/lib/sanity/fetcher";
 import { SermonWatchDetailView } from "@/components/sermons/SermonWatchDetailView";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const sermon = getSermonBySlug(slug);
+  const sermon = await fetchSanitySermonBySlug(slug);
 
   return {
     title: `${sermon.title} | RCCG Court of His Majesty`,
@@ -29,15 +31,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export async function generateStaticParams() {
-  return SERMONS_DATA.map((sermon) => ({
+  const sermons = await fetchSanitySermons();
+  return sermons.map((sermon) => ({
     slug: sermon.id,
   }));
 }
 
 export default async function SermonWatchPage({ params }: PageProps) {
   const { slug } = await params;
-  const sermon = getSermonBySlug(slug);
+  const sermon = await fetchSanitySermonBySlug(slug);
 
-  return <SermonWatchDetailView sermon={sermon} />;
+  return <SermonWatchDetailView sermon={sermon} requestedSlug={slug} />;
 }
-

@@ -62,7 +62,12 @@ export const blogType = defineType({
       title: "Featured Cover Image",
       type: "image",
       options: { hotspot: true },
-      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "coverImageUrl",
+      title: "Cover Image URL / Path (Alternative)",
+      type: "string",
+      placeholder: "/images/blog/featured-bible-hands.png or https://...",
     }),
     defineField({
       name: "isFeatured",

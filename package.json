@@ -16,6 +16,7 @@
     "start": "npm run start --workspace=web",
     "start:web": "npm run start --workspace=web",
     "start:admin": "npm run start --workspace=admin",
+    "seed": "npm run seed --workspace=admin",
     "lint": "npm run lint --workspace=web"
   },
   "dependencies": {

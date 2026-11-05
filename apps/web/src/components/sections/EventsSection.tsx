@@ -6,17 +6,8 @@ import Link from "next/link";
 import { ChevronLeft, ChevronRight, Volume2, VolumeX, ArrowRight } from "lucide-react";
 import { motion, useMotionValue, useTransform, animate, MotionValue } from "framer-motion";
 import { Container } from "@/components/layout/Container";
-
-export interface EventItem {
-  id: string;
-  title: string;
-  theme?: string;
-  date: string;
-  time?: string;
-  location?: string;
-  videoUrl: string;
-  link: string;
-}
+import { useManagedEvents } from "@/lib/content-store";
+import { EventItem } from "@/lib/events-data";
 
 // Exactly 4 items (does not exceed 4 as required)
 const EVENTS_DATA: EventItem[] = [
@@ -244,7 +235,7 @@ function Panel({
       >
         <video
           ref={videoRef}
-          src={slide.videoUrl}
+          src={slide.videoUrl || "/videos/FOD 2026.webm"}
           autoPlay
           loop
           muted={!isCenter || isMuted}
@@ -328,8 +319,14 @@ export function EventsSection({
   const hasDragged = useRef(false);
   const centerVideoRef = useRef<HTMLVideoElement | null>(null);
 
-  const total = EVENTS_DATA.length;
-  const currentEvent = EVENTS_DATA[currentIndex];
+  const [managedEvents] = useManagedEvents();
+  const slides = useMemo(() => {
+    const withVideos = managedEvents.filter((e) => Boolean(e.videoUrl));
+    return withVideos.length >= 4 ? withVideos.slice(0, 4) : managedEvents.slice(0, 4);
+  }, [managedEvents]);
+
+  const total = slides.length || 1;
+  const currentEvent = slides[currentIndex] || slides[0] || EVENTS_DATA[0];
 
   // Track responsive dimensions
   useEffect(() => {
@@ -662,7 +659,7 @@ export function EventsSection({
           >
             {visibleOffsets.map((offset) => {
               const slideIdx = ((currentIndex + offset) % total + total) % total;
-              const slide = EVENTS_DATA[slideIdx];
+              const slide = slides[slideIdx] || EVENTS_DATA[0];
               const isCenter = offset === 0;
 
               return (

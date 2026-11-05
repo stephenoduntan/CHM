@@ -1,14 +1,16 @@
 import { Metadata } from "next";
-import { getEventBySlug, EVENTS_DETAILS } from "@/lib/events-data";
+import { fetchSanityEventBySlug, fetchSanityEvents } from "@/lib/sanity/fetcher";
 import { EventDetailsView } from "@/components/events/EventDetailsView";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const event = getEventBySlug(slug);
+  const event = await fetchSanityEventBySlug(slug);
 
   return {
     title: `${event.title} | RCCG Court of His Majesty`,
@@ -29,13 +31,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export async function generateStaticParams() {
-  return Object.keys(EVENTS_DETAILS).map((slug) => ({ slug }));
+  const events = await fetchSanityEvents();
+  return events.map((event) => ({ slug: event.id }));
 }
 
 export default async function EventDetailPage({ params }: PageProps) {
   const { slug } = await params;
-  const event = getEventBySlug(slug);
+  const event = await fetchSanityEventBySlug(slug);
 
   return <EventDetailsView event={event} />;
 }
-

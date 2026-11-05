@@ -7,14 +7,17 @@ import { ChevronLeft, Check, BookOpen, FileText, Search, Copy, Clock } from "luc
 import { Container } from "@/components/layout/Container";
 import { Sermon, getRelatedSermons } from "@/lib/sermons-data";
 import { useManagedSermons } from "@/lib/content-store";
+import { extractYouTubeId } from "@/lib/sanity/fetcher";
 
 interface SermonWatchDetailViewProps {
   sermon: Sermon;
+  requestedSlug?: string;
 }
 
-export function SermonWatchDetailView({ sermon: initialSermon }: SermonWatchDetailViewProps) {
+export function SermonWatchDetailView({ sermon: initialSermon, requestedSlug }: SermonWatchDetailViewProps) {
   const [managedSermons] = useManagedSermons();
-  const sermon = managedSermons.find((s) => s.id === initialSermon.id) || initialSermon;
+  const targetId = requestedSlug || initialSermon.id;
+  const sermon = managedSermons.find((s) => s.id === targetId || s.id === initialSermon.id) || initialSermon;
   const [isPlaying, setIsPlaying] = useState(false);
   const [playbackSpeed, setPlaybackSpeed] = useState<"1x" | "1.25x" | "1.5x" | "2x">("1x");
   const [isCopied, setIsCopied] = useState(false);
@@ -123,7 +126,7 @@ export function SermonWatchDetailView({ sermon: initialSermon }: SermonWatchDeta
             ) : (
               <div className="absolute inset-0 z-0 bg-black">
                 <iframe
-                  src={`https://www.youtube-nocookie.com/embed/${sermon.youtubeId}?autoplay=1&rel=0`}
+                  src={`https://www.youtube-nocookie.com/embed/${extractYouTubeId(sermon.youtubeId)}?autoplay=1&rel=0`}
                   title={sermon.title}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen

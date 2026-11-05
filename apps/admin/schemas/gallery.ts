@@ -16,7 +16,12 @@ export const galleryType = defineType({
       title: "High-Resolution Image",
       type: "image",
       options: { hotspot: true },
-      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "imageUrl",
+      title: "Image URL / Path (Alternative)",
+      type: "string",
+      placeholder: "https://images.unsplash.com/... or /images/...",
     }),
     defineField({
       name: "caption",

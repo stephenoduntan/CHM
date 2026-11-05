@@ -218,14 +218,14 @@ export default function ManagementPortal() {
         setEventForm({
           id: item.id,
           title: item.title,
-          theme: item.theme,
+          theme: item.theme || "",
           date: item.date,
           startDateIso: item.startDateIso || new Date().toISOString(),
-          time: item.time,
-          location: item.location,
-          badge: item.badge,
-          image: item.image,
-          description: item.description,
+          time: item.time || "",
+          location: item.location || "",
+          badge: item.badge || "",
+          image: item.image || item.posterImage || "",
+          description: item.description || "",
           isPast: !!item.isPast,
         });
       }
@@ -457,8 +457,8 @@ export default function ManagementPortal() {
       const matchSearch =
         !q ||
         e.title.toLowerCase().includes(q) ||
-        e.theme.toLowerCase().includes(q) ||
-        e.location.toLowerCase().includes(q);
+        (e.theme && e.theme.toLowerCase().includes(q)) ||
+        (e.location && e.location.toLowerCase().includes(q));
       const matchCat =
         filterCategory === "All" ||
         (filterCategory === "Upcoming" && !e.isPast) ||
@@ -871,7 +871,7 @@ export default function ManagementPortal() {
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-3">
                             <div className="relative size-12 rounded-lg overflow-hidden bg-gray-200 shrink-0">
-                              <Image src={item.image} alt={item.title} fill className="object-cover" />
+                              <Image src={item.image || item.posterImage || "/images/events/fod-2026-poster.webp"} alt={item.title} fill className="object-cover" />
                             </div>
                             <div>
                               <p className="font-semibold text-[#051202] line-clamp-1">{item.title}</p>

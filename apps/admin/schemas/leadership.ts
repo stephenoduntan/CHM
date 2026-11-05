@@ -44,14 +44,18 @@ export const leadershipType = defineType({
       title: "Portrait Photo",
       type: "image",
       options: { hotspot: true },
-      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "imageUrl",
+      title: "Image URL / Path (Alternative)",
+      type: "string",
+      placeholder: "/images/pastor-fred.png or https://...",
     }),
     defineField({
       name: "bio",
       title: "Biography",
-      type: "array",
-      of: [{ type: "block" }],
-      validation: (rule) => rule.required(),
+      type: "text",
+      rows: 4,
     }),
     defineField({
       name: "order",

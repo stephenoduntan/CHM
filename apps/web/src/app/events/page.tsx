@@ -283,10 +283,10 @@ export default function EventsPage() {
     return allUpcomingEvents.filter(
       (e) =>
         e.title.toLowerCase().includes(q) ||
-        e.theme.toLowerCase().includes(q) ||
-        e.location.toLowerCase().includes(q) ||
+        (e.theme && e.theme.toLowerCase().includes(q)) ||
+        (e.location && e.location.toLowerCase().includes(q)) ||
         e.date.toLowerCase().includes(q) ||
-        e.badge.toLowerCase().includes(q)
+        (e.badge && e.badge.toLowerCase().includes(q))
     );
   }, [allUpcomingEvents, searchQuery]);
 
@@ -297,10 +297,10 @@ export default function EventsPage() {
     return allPastLatestEvents.filter(
       (e) =>
         e.title.toLowerCase().includes(q) ||
-        e.theme.toLowerCase().includes(q) ||
-        e.location.toLowerCase().includes(q) ||
+        (e.theme && e.theme.toLowerCase().includes(q)) ||
+        (e.location && e.location.toLowerCase().includes(q)) ||
         e.date.toLowerCase().includes(q) ||
-        e.badge.toLowerCase().includes(q)
+        (e.badge && e.badge.toLowerCase().includes(q))
     );
   }, [allPastLatestEvents, searchQuery]);
 
@@ -420,7 +420,7 @@ export default function EventsPage() {
                         data-node-id="2086:1305"
                         style={{ fontVariationSettings: '"CASL" 0, "CRSV" 0.5, "MONO" 0' }}
                       >
-                        <p className="leading-none mb-0">{event.watermark?.[0] || event.theme.slice(0, 10) || "CHURCH"}</p>
+                        <p className="leading-none mb-0">{event.watermark?.[0] || (event.theme ? event.theme.slice(0, 10) : "CHURCH")}</p>
                         <p className="leading-none">{event.watermark?.[1] || "ENCOUNTER"}</p>
                       </div>
                     </div>
@@ -486,7 +486,7 @@ export default function EventsPage() {
                     data-node-id="2086:1310"
                   >
                     <Image
-                      src={event.image}
+                      src={event.image || event.posterImage || "/images/events/fod-2026-poster.webp"}
                       alt={event.title}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -584,7 +584,7 @@ export default function EventsPage() {
                         className="font-display font-black text-gray-500 text-5xl sm:text-7xl lg:text-[96px] leading-[0.92] tracking-tighter uppercase"
                         style={{ fontVariationSettings: '"CASL" 0, "CRSV" 0.5, "MONO" 0' }}
                       >
-                        <p className="leading-none mb-0">{event.watermark?.[0] || event.theme.slice(0, 10) || "CHURCH"}</p>
+                        <p className="leading-none mb-0">{event.watermark?.[0] || (event.theme ? event.theme.slice(0, 10) : "CHURCH")}</p>
                         <p className="leading-none">{event.watermark?.[1] || "ENCOUNTER"}</p>
                       </div>
                     </div>
@@ -649,7 +649,7 @@ export default function EventsPage() {
                   {/* Right Column: Poster Image with subtle grayscale hover effect */}
                   <div className="lg:col-span-6 relative w-full h-[280px] sm:h-[340px] lg:h-full min-h-[340px] lg:min-h-[400px] rounded-[16px] overflow-hidden shadow-lg border border-gray-100 group">
                     <Image
-                      src={event.image}
+                      src={event.image || event.posterImage || "/images/events/fod-2026-poster.webp"}
                       alt={event.title}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-500"

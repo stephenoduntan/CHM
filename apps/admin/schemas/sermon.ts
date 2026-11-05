@@ -62,6 +62,13 @@ export const sermonType = defineType({
       options: { hotspot: true },
     }),
     defineField({
+      name: "thumbnailUrl",
+      title: "Thumbnail Image URL / Path (Alternative)",
+      type: "string",
+      placeholder: "/images/sermons/sermon-hero-video.png or https://...",
+      description: "Direct image path or URL if not uploading an image file directly.",
+    }),
+    defineField({
       name: "description",
       title: "Sermon Overview / Summary",
       type: "text",
