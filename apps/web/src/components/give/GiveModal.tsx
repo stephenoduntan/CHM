@@ -533,7 +533,7 @@ export function GiveModal({
             <button
               type="button"
               onClick={handleClose}
-              className="px-6 py-2.5 rounded-full bg-[#180c62] hover:bg-[#251394] text-white text-xs sm:text-sm font-semibold transition-all cursor-pointer shadow-md"
+              className="px-6 py-2.5 rounded-full bg-[#f0a505] hover:bg-[#d99504] text-[#0a0a0a] text-xs sm:text-sm font-semibold transition-all cursor-pointer shadow-md"
             >
               Done
             </button>

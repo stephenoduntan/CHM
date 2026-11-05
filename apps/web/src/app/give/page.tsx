@@ -43,11 +43,11 @@ export default function GivePage() {
           </p>
 
           {/* Top Primary CTA Button */}
-            <div>
+            <div className="mt-8 sm:mt-10 flex justify-center">
               <button
                 type="button"
                 onClick={() => setIsModalOpen(true)}
-                className="bg-white hover:bg-gray-100 text-[#0a0a0a] font-sans font-semibold text-base sm:text-[18px] px-8 sm:px-[40px] py-3.5 sm:py-[16px] rounded-[36px] transition-all cursor-pointer shadow-sm hover:shadow-md"
+                className="flex items-center gap-4 bg-white hover:bg-gray-100 text-[#0a0a0a] font-sans font-semibold text-base sm:text-[18px] px-8 sm:px-[40px] py-3.5 sm:py-[16px] rounded-[36px] transition-all cursor-pointer shadow-sm hover:shadow-md"
               >
                 <Heart className="size-4 fill-current" />
                 Click here to Give

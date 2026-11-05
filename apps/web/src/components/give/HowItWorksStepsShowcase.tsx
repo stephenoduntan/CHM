@@ -199,7 +199,7 @@ export function HowItWorksStepsShowcase({
                         e.stopPropagation();
                         onOpenGiveModal();
                       }}
-                      className="bg-[#f0a505] hover:bg-[#d99504] text-[#0a0a0a] font-sans font-semibold text-base sm:text-[18px] px-8 sm:px-[40px] py-3.5 sm:py-[16px] rounded-[36px] transition-all cursor-pointer shadow-sm hover:shadow-md active:scale-95 shrink-0"
+                      className="flex items-center gap-4 bg-[#f0a505] hover:bg-[#d99504] text-[#0a0a0a] font-sans font-semibold text-base sm:text-[18px] px-8 sm:px-[40px] py-3.5 sm:py-[16px] rounded-[36px] transition-all cursor-pointer shadow-sm hover:shadow-md active:scale-95 shrink-0"
                     >
                       <Heart className="size-4 fill-current" />
                       Click here to Give
