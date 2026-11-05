@@ -250,3 +250,4 @@ export async function fetchSanityGallery(): Promise<GalleryImage[]> {
   }
   return GALLERY_IMAGES;
 }
+
