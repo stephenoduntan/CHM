@@ -103,3 +103,25 @@ export const UPCOMING_EVENT = {
   endDate: "2026-11-15",
   dateLabel: "8th - 15th November 2026",
 } as const;
+
+export const COUNTRIES_LIST = [
+  "Nigeria",
+  "United Kingdom",
+  "United States",
+  "Canada",
+  "Ghana",
+  "South Africa",
+  "Kenya",
+  "Germany",
+  "United Arab Emirates",
+  "Australia",
+  "Ireland",
+  "France",
+  "Netherlands",
+  "Italy",
+  "Spain",
+  "India",
+  "Brazil",
+  "Philippines",
+  "Other",
+] as const;

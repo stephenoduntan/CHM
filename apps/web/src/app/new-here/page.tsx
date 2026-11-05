@@ -161,7 +161,7 @@ export default function NewHerePage() {
           >
             {/* Left Photo Column (Figma Frame 2085668955) */}
             <div
-              className="w-full lg:w-[560px] min-h-[380px] sm:min-h-[480px] lg:min-h-[766px] relative bg-gradient-to-b from-[#051202] to-[#0e0826] rounded-[20px] shrink-0 rounded-2xl lg:rounded-none overflow-hidden self-stretch before:content-['']before:absolute before:-inset-0 before:bg-[linear-gradient(45deg,#334155_25%,transparent_25%,transparent_75%,#334155_75%),linear-gradient(45deg,#334155_25%,transparent_25%,transparent_75%,#334155_75%)]"
+              className="w-full lg:w-[560px] min-h-[380px] sm:min-h-[480px] lg:min-h-[766px] relative bg-[#051202] rounded-[20px] shrink-0 overflow-hidden self-stretch before:content-['']before:absolute before:-inset-0 before:bg-[linear-gradient(45deg,#334155_25%,transparent_25%,transparent_75%,#334155_75%),linear-gradient(45deg,#334155_25%,transparent_25%,transparent_75%,#334155_75%)]"
               data-node-id="2086:337"
               data-name="Frame 2085668955"
             >
@@ -170,17 +170,17 @@ export default function NewHerePage() {
                 alt="Church family fellowship and community at Court of His Majesty"
                 fill
                 sizes="(max-width: 1024px) 100vw, 560px"
-                className="object-cover object-center pointer-events-none"
+                className="object-cover object-center pointer-events-none transform scale-103 hover:scale-104 transition-transform duration-500"
                 priority
               />
 
-              <div className="absolute bottom-4 left-4 p-4 lg:p-[24px] bg-white/85 blur-sm backdrop-blur-sm rounded-[12px] lg:rounded-[20px] flex flex-col gap-1 lg:gap-2 items-start justify-center w-[calc(100%-32px)] lg:w-[calc(100%-48px)]" data-node-id="2086:338" data-name="PICP Portrait"
+              <div className="absolute bottom-4 left-4 p-4 lg:p-[24px] bg-white/25 border border-white/50 backdrop-blur-sm rounded-[12px] lg:rounded-[20px] flex flex-col gap-1 lg:gap-2 items-start justify-center" data-node-id="2086:338" data-name="PICP Portrait"
               >
                 
-                <p className="text-white text-lg font-semibold">
+                <p className="text-[#051202] text-xl font-semibold">
                   Pastor Fred Odekhian
                 </p>
-                <span className="text-white text-center text-sm font-normal">
+                <span className="text-gray-500 text-center text-sm font-normal">
                   Pastor-in-Charge of Province (PICP), Lagos Province 94 HQ
                 </span>
               </div>

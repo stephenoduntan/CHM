@@ -101,6 +101,29 @@ export default defineConfig({
 
             S.divider(),
 
+            // ── Form Submissions & Pastoral Care ──
+            S.listItem()
+              .title("Testimonies")
+              .schemaType("testimony")
+              .child(S.documentTypeList("testimony").title("Testimonies & Praise Reports")),
+
+            S.listItem()
+              .title("Altar Call & Decisions")
+              .schemaType("altarCall")
+              .child(S.documentTypeList("altarCall").title("Altar Call Decisions")),
+
+            S.listItem()
+              .title("Prayer Requests")
+              .schemaType("prayerRequest")
+              .child(S.documentTypeList("prayerRequest").title("Prayer Requests")),
+
+            S.listItem()
+              .title("General Inquiries")
+              .schemaType("generalInquiry")
+              .child(S.documentTypeList("generalInquiry").title("General Inquiries")),
+
+            S.divider(),
+
             S.listItem()
               .title("Pastors & Authors")
               .schemaType("author")

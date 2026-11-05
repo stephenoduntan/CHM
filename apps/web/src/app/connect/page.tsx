@@ -2,17 +2,56 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Mail, Phone, MapPin, Send, CheckCircle2 } from "lucide-react";
+import { Mail, Phone, MapPin, Send, CheckCircle2, Loader2 } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { SITE_CONFIG } from "@/lib/constants";
 
 export default function ConnectPage() {
   const [submitted, setSubmitted] = useState(false);
-  const [formType, setFormType] = useState<"general" | "prayer" | "testimony" | "volunteer">("general");
+  const [formType, setFormType] = useState<"general" | "prayer" | "testimony">("general");
+  const [fullName, setFullName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setErrorMessage("");
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("/api/submissions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          formType,
+          fullName,
+          phoneNumber,
+          email,
+          message,
+          testimony: formType === "testimony" ? message : undefined,
+          prayerRequest: formType === "prayer" ? message : undefined,
+          source: "Connect Page",
+        }),
+      });
+
+      const data = await response.json();
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || "Failed to submit. Please try again.");
+      }
+
+      setSubmitted(true);
+      setFullName("");
+      setPhoneNumber("");
+      setEmail("");
+      setMessage("");
+    } catch (err: any) {
+      setErrorMessage(err.message || "An error occurred while submitting.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -146,6 +185,12 @@ export default function ConnectPage() {
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-6">
+                    {errorMessage && (
+                      <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs sm:text-sm">
+                        {errorMessage}
+                      </div>
+                    )}
+
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div>
                         <label className="block text-xs font-semibold uppercase tracking-wider text-gray-700 mb-2">
@@ -154,6 +199,8 @@ export default function ConnectPage() {
                         <input
                           type="text"
                           required
+                          value={fullName}
+                          onChange={(e) => setFullName(e.target.value)}
                           placeholder="e.g. Brother John Doe"
                           className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-[#051202] focus:ring-1 focus:ring-[#051202] text-sm text-gray-900 outline-none"
                         />
@@ -166,6 +213,8 @@ export default function ConnectPage() {
                         <input
                           type="tel"
                           required
+                          value={phoneNumber}
+                          onChange={(e) => setPhoneNumber(e.target.value)}
                           placeholder="+234 800 000 0000"
                           className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-[#051202] focus:ring-1 focus:ring-[#051202] text-sm text-gray-900 outline-none"
                         />
@@ -178,6 +227,8 @@ export default function ConnectPage() {
                       </label>
                       <input
                         type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         placeholder="john.doe@example.com"
                         className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-[#051202] focus:ring-1 focus:ring-[#051202] text-sm text-gray-900 outline-none"
                       />
@@ -189,13 +240,13 @@ export default function ConnectPage() {
                           ? "Your Prayer Request *"
                           : formType === "testimony"
                           ? "Your Praise Report / Testimony *"
-                          : formType === "volunteer"
-                          ? "Department of Interest & Skills *"
                           : "Your Message *"}
                       </label>
                       <textarea
                         required
                         rows={5}
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
                         placeholder={
                           formType === "prayer"
                             ? "Please write what you would like the pastoral team to intercede with you for..."
@@ -209,10 +260,20 @@ export default function ConnectPage() {
 
                     <button
                       type="submit"
-                      className="inline-flex items-center w-full justify-center gap-2 px-7 py-4 rounded-full bg-[#f0a505] hover:bg-[#d99404] text-[#0a0a0a] font-sans font-semibold text-[14px] uppercase shadow-sm hover:shadow-md transition-all active:scale-[0.98]"
+                      disabled={isLoading}
+                      className="inline-flex items-center w-full justify-center gap-2 px-7 py-4 rounded-full bg-[#f0a505] hover:bg-[#d99404] disabled:opacity-60 text-[#0a0a0a] font-sans font-semibold text-[14px] uppercase shadow-sm hover:shadow-md transition-all active:scale-[0.98] cursor-pointer"
                     >
-                      <Send className="size-4" />
-                      <span>Submit Message</span>
+                      {isLoading ? (
+                        <>
+                          <Loader2 className="size-4 animate-spin" />
+                          <span>Submitting...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Send className="size-4" />
+                          <span>Submit Message</span>
+                        </>
+                      )}
                     </button>
                   </form>
                 )}

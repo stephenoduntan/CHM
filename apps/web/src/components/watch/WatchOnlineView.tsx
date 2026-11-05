@@ -13,9 +13,13 @@ import {
   ExternalLink,
   ArrowRight,
   Radio,
+  Sparkles,
+  HeartHandshake,
 } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { GiveModal } from "@/components/give/GiveModal";
+import { TestimonyModal } from "@/components/modals/TestimonyModal";
+import { AltarCallModal } from "@/components/modals/AltarCallModal";
 import { useManagedWatchOnline } from "@/lib/content-store";
 import { extractYouTubeId } from "@/lib/sanity/fetcher";
 
@@ -24,6 +28,8 @@ const LOCAL_STORAGE_KEY = "chm_sermon_notepad_v1";
 export function WatchOnlineView() {
   const [watchOnline] = useManagedWatchOnline();
   const [isGiveModalOpen, setIsGiveModalOpen] = useState(false);
+  const [isTestimonyModalOpen, setIsTestimonyModalOpen] = useState(false);
+  const [isAltarCallModalOpen, setIsAltarCallModalOpen] = useState(false);
   const [isNotepadOpen, setIsNotepadOpen] = useState(false);
 
   // Dynamic YouTube livestream ID from Sanity Management Portal
@@ -241,6 +247,26 @@ export function WatchOnlineView() {
           >
             <FileText className="size-4" />
             <span>{isNotepadOpen ? "Hide Notepad" : "Sermon Notepad"}</span>
+          </button>
+
+          {/* Testimony Button */}
+          <button
+            type="button"
+            onClick={() => setIsTestimonyModalOpen(true)}
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm sm:text-base font-semibold border border-amber-300 bg-amber-500/10 hover:bg-[#f0a505] text-amber-900 hover:text-[#051202] transition-all shadow-xs active:scale-95 cursor-pointer"
+          >
+            <Sparkles className="size-4 text-amber-600" />
+            <span>Testimony</span>
+          </button>
+
+          {/* Altar Call Button */}
+          <button
+            type="button"
+            onClick={() => setIsAltarCallModalOpen(true)}
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm sm:text-base font-semibold border border-red-200 bg-red-50 hover:bg-[#d61812] text-[#d61812] hover:text-white transition-all shadow-xs active:scale-95 cursor-pointer"
+          >
+            <HeartHandshake className="size-4" />
+            <span>Altar Call</span>
           </button>
         </div>
       </section>
@@ -462,6 +488,18 @@ export function WatchOnlineView() {
         isOpen={isGiveModalOpen}
         onClose={() => setIsGiveModalOpen(false)}
         defaultTab="online"
+      />
+
+      {/* ─── Testimony Modal ───────────────────────────────────────── */}
+      <TestimonyModal
+        isOpen={isTestimonyModalOpen}
+        onClose={() => setIsTestimonyModalOpen(false)}
+      />
+
+      {/* ─── Altar Call Modal ──────────────────────────────────────── */}
+      <AltarCallModal
+        isOpen={isAltarCallModalOpen}
+        onClose={() => setIsAltarCallModalOpen(false)}
       />
     </div>
   );
