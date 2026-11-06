@@ -161,26 +161,26 @@ export default function NewHerePage() {
           >
             {/* Left Photo Column (Figma Frame 2085668955) */}
             <div
-              className="w-full lg:w-[560px] min-h-[380px] sm:min-h-[480px] lg:min-h-[766px] relative bg-[#051202] rounded-[20px] shrink-0 overflow-hidden self-stretch before:content-[''] before:absolute before:inset-0 before:bg-[repeating-radial-gradient(circle at 70% 20%, rgba(159, 195, 230, .14) 0 1px, transparent 1px 28px), center / 100% 100% no-repeat] before:opacity-20 before:pointer-events-none"
+              className="w-full lg:w-[560px] min-h-[380px] sm:min-h-[480px] lg:min-h-[766px] relative bg-[#051202] rounded-[20px] hidden sm:block shrink-0 overflow-hidden self-stretch before:content-[''] before:absolute before:inset-0 before:bg-[repeating-radial-gradient(circle_at_70%_20%, rgba(159, 195, 230, .14) 0_1px, transparent 1px_28px), center / 100%_100% no-repeat] before:opacity-20 before:pointer-events-none"
               data-node-id="2086:337"
               data-name="Frame 2085668955"
             >
               <Image
                 src="/images/new-here/Pst. Fred.webp"
-                alt="Church family fellowship and community at Court of His Majesty"
+                alt="Pastor Fred Odekhian, Pastor-in-Charge of Province (PICP), Lagos Province 94 HQ"
                 fill
                 sizes="(max-width: 1024px) 100vw, 560px"
-                className="object-cover object-center pointer-events-none transform scale-120 hover:scale-125 transition-transform duration-500"
+                className="object-cover object-center pointer-events-none transform scale-120 hover:scale-125 transition-transform duration-500 top-0 sm:top-[35%] md:top-[0]"
                 priority
               />
 
               <div className="absolute bottom-4 left-4 p-4 lg:p-[24px] bg-white/50 border border-white/50 backdrop-blur-sm rounded-[12px] lg:rounded-[20px] flex flex-col gap-1 lg:gap-2 items-start justify-center" data-node-id="2086:338" data-name="PICP Portrait"
               >
                 
-                <p className="text-[#051202] text-3xl font-semibold">
+                <p className="text-[#051202] text-lg md:text-3xl font-semibold">
                   Pastor Fred Odekhian
                 </p>
-                <span className="text-gray-800 text-center text-lg font-normal">
+                <span className="text-gray-800 text-sm sm:text-md font-normal">
                   Pastor-in-Charge of Province (PICP), Lagos Province 94 HQ
                 </span>
               </div>
