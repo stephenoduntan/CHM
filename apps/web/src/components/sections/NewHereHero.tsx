@@ -121,7 +121,7 @@ export function NewHereHero() {
         >
           <div data-node-id="2086:332" data-name="Frame 22">
             <h1
-              className="font-sans font-bold text-2xl sm:text-3xl md:text-[32px] text-[#f5f5f5] uppercase tracking-wide leading-[1.25] text-left"
+              className="font-sans font-bold text-xl sm:text-3xl md:text-[32px] text-[#f5f5f5] uppercase tracking-wide leading-[1.25] text-left"
               data-node-id="2086:333"
               data-name="Know God, Find Freedom, Discover Purpose, Make a Difference"
             >

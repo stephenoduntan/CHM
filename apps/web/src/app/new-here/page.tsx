@@ -161,7 +161,7 @@ export default function NewHerePage() {
           >
             {/* Left Photo Column (Figma Frame 2085668955) */}
             <div
-              className="w-full lg:w-[560px] min-h-[380px] sm:min-h-[480px] lg:min-h-[766px] relative bg-[#051202] rounded-[20px] hidden sm:block shrink-0 overflow-hidden self-stretch before:content-[''] before:absolute before:inset-0 before:bg-[image:var(--radial-pattern)] before:opacity-20 before:pointer-events-none"
+              className="w-full lg:w-[560px] min-h-[380px] sm:min-h-[480px] lg:min-h-[766px] relative bg-[#051202] rounded-[20px] hidden sm:block shrink-0 overflow-hidden self-stretch before:content-[''] before:absolute before:inset-0 before:bg-[var(--radial-pattern)] before:opacity-20 before:pointer-events-none"
               style={{
                 ['--radial-pattern' as any]:
                 'repeating-radial-gradient(circle at 70% 20%, rgba(159, 195, 230, 0.14) 0 1px transparent 1px 28px)',
