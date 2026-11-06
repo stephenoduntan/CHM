@@ -170,7 +170,7 @@ export default function NewHerePage() {
                 alt="Church family fellowship and community at Court of His Majesty"
                 fill
                 sizes="(max-width: 1024px) 100vw, 560px"
-                className="object-cover object-center pointer-events-none transform scale-103 hover:scale-104 transition-transform duration-500"
+                className="object-cover object-center pointer-events-none transform scale-108 hover:scale-110 transition-transform duration-500"
                 priority
               />
 
