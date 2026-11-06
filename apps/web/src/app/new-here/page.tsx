@@ -161,7 +161,7 @@ export default function NewHerePage() {
           >
             {/* Left Photo Column (Figma Frame 2085668955) */}
             <div
-              className="w-full lg:w-[560px] min-h-[380px] sm:min-h-[480px] lg:min-h-[766px] relative bg-[#051202] rounded-[20px] shrink-0 overflow-hidden self-stretch before:content-['']before:absolute before:inset-0 before:bg-[repeating-linear-gradient(45deg,#f2f2f2_0px,#f2f2f2_10px,transparent_10px,transparent_20px),repeating-linear-gradient(-45deg,#f2f2f2_0px,#f2f2f2_10px,transparent_10px,transparent_20px)]"
+              className="w-full lg:w-[560px] min-h-[380px] sm:min-h-[480px] lg:min-h-[766px] relative bg-[#051202] rounded-[20px] shrink-0 overflow-hidden self-stretch before:content-[''] before:absolute before:inset-0 before:bg-[repeating-linear-gradient(45deg,#f2f2f2_0px,#f2f2f2_10px,transparent_10px,transparent_20px),repeating-linear-gradient(-45deg,#f2f2f2_0px,#f2f2f2_10px,transparent_10px,transparent_20px)]"
               data-node-id="2086:337"
               data-name="Frame 2085668955"
             >
@@ -170,7 +170,7 @@ export default function NewHerePage() {
                 alt="Church family fellowship and community at Court of His Majesty"
                 fill
                 sizes="(max-width: 1024px) 100vw, 560px"
-                className="object-cover object-center pointer-events-none transform scale-108 hover:scale-110 transition-transform duration-500"
+                className="object-cover object-center pointer-events-none transform scale-120 hover:scale-125 transition-transform duration-500"
                 priority
               />
 
