@@ -161,7 +161,7 @@ export default function NewHerePage() {
           >
             {/* Left Photo Column (Figma Frame 2085668955) */}
             <div
-              className="w-full lg:w-[560px] min-h-[380px] sm:min-h-[480px] lg:min-h-[766px] relative bg-[#051202] rounded-[20px] shrink-0 overflow-hidden self-stretch before:content-['']before:absolute before:-inset-0 before:bg-[repeating-radial-gradient(circle at 70% 20%,rgba(159,195,230,.14)0 1px,transparent 1px 28px)]"
+              className="w-full lg:w-[560px] min-h-[380px] sm:min-h-[480px] lg:min-h-[766px] relative bg-[#051202] rounded-[20px] shrink-0 overflow-hidden self-stretch before:content-['']before:absolute before:inset-0 before:bg-[repeating-linear-gradient(45deg,#f2f2f2_0px,#f2f2f2_10px,transparent_10px,transparent_20px),repeating-linear-gradient(-45deg,#f2f2f2_0px,#f2f2f2_10px,transparent_10px,transparent_20px)]"
               data-node-id="2086:337"
               data-name="Frame 2085668955"
             >
@@ -174,13 +174,13 @@ export default function NewHerePage() {
                 priority
               />
 
-              <div className="absolute bottom-4 left-4 p-4 lg:p-[24px] bg-white/75 border border-white/50 backdrop-blur-sm rounded-[12px] lg:rounded-[20px] flex flex-col gap-1 lg:gap-2 items-start justify-center" data-node-id="2086:338" data-name="PICP Portrait"
+              <div className="absolute bottom-4 left-4 p-4 lg:p-[24px] bg-white/50 border border-white/50 backdrop-blur-sm rounded-[12px] lg:rounded-[20px] flex flex-col gap-1 lg:gap-2 items-start justify-center" data-node-id="2086:338" data-name="PICP Portrait"
               >
                 
-                <p className="text-[#051202] text-xl font-semibold">
+                <p className="text-[#051202] text-2xl font-semibold">
                   Pastor Fred Odekhian
                 </p>
-                <span className="text-gray-500 text-center text-sm font-normal">
+                <span className="text-gray-700 text-center text-md font-normal">
                   Pastor-in-Charge of Province (PICP), Lagos Province 94 HQ
                 </span>
               </div>
