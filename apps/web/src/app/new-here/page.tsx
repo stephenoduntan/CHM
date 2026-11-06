@@ -161,10 +161,10 @@ export default function NewHerePage() {
           >
             {/* Left Photo Column (Figma Frame 2085668955) */}
             <div
-              className="w-full lg:w-[560px] min-h-[380px] sm:min-h-[480px] lg:min-h-[766px] relative bg-[#051202] rounded-[20px] hidden sm:block shrink-0 overflow-hidden self-stretch before:content-[''] before:absolute before:inset-0 before:bg-[var(--radial-pattern)] before:opacity-20 before:pointer-events-none"
+              className="w-full lg:w-[560px] min-h-[380px] sm:min-h-[480px] lg:min-h-[766px] relative bg-[#051202] rounded-[20px] hidden sm:block shrink-0 overflow-hidden self-stretch before:content-[''] before:absolute before:inset-0 before:bg-[image:var(--radial-pattern)] before:opacity-50 before:pointer-events-none"
               style={{
                 ['--radial-pattern' as any]:
-                'repeating-radial-gradient(circle at 70% 20%, rgba(159, 195, 230, 0.14) 0 1px transparent 1px 28px)',
+                'repeating-radial-gradient(circle at 70% 20%,rgba(159,195,230,.14)0 1px,transparent 1px 28px)',
               }}
               data-node-id="2086:337"
               data-name="Frame 2085668955"
@@ -426,7 +426,7 @@ export default function NewHerePage() {
             className="absolute inset-0"
             style={{
               background:
-                "radial-gradient(ellipse at center, rgba(5, 18, 2, 0.76) 0%, rgba(5, 18, 2, 0.90) 65%, #051202 100%), linear-gradient(180deg, rgba(5, 18, 2, 0.88) 0%, rgba(5, 18, 2, 0.72) 45%, rgba(5, 18, 2, 0.92) 100%)",
+                "radial-gradient(ellipse at center, rgba(5, 18, 2, 0.76) 0%, rgba(5, 18, 2, 0.90) 50%, #051202 100%), linear-gradient(180deg, rgba(5, 18, 2, 0.88) 0%, rgba(5, 18, 2, 0.72) 40%, rgba(5, 18, 2, 0.92) 100%)",
             }}
           />
         </div>
