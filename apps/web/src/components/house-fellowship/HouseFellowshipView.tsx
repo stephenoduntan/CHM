@@ -57,7 +57,7 @@ export function HouseFellowshipView() {
         !q ||
         center.name.toLowerCase().includes(q) ||
         center.address.toLowerCase().includes(q) ||
-        center.hostName.toLowerCase().includes(q) ||
+        center.leaderName.toLowerCase().includes(q) ||
         center.landmarkArea.toLowerCase().includes(q) ||
         center.landmark.toLowerCase().includes(q);
 
@@ -130,7 +130,7 @@ export function HouseFellowshipView() {
               href="#connect-callout"
               className="bg-white/10 hover:bg-white/20 border border-white/30 text-white font-sans font-medium text-sm sm:text-base px-6 sm:px-7 py-3 sm:py-3.5 rounded-full transition-colors cursor-pointer"
             >
-              Host a Fellowship
+              leader a Fellowship
             </a>
           </div>
         </Container>
@@ -153,7 +153,7 @@ export function HouseFellowshipView() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search center, street, or host..."
+                placeholder="Search center, street, or leader..."
                 className="w-full pl-9 pr-8 py-2.5 text-sm bg-[#f9fafb] border border-[#d0d2d6] rounded-full focus:outline-none focus:ring-2 focus:ring-[#180c62]/20 focus:border-[#180c62] text-[#0a0a0a] placeholder:text-[#9ca3af] transition-all"
               />
               {searchQuery && (
@@ -280,13 +280,13 @@ export function HouseFellowshipView() {
                             </div>
                           </div>
 
-                          {/* Host Details & Actions */}
+                          {/* leader Details & Actions */}
                           <div className="pt-4 border-t border-[#f0f0f0] flex flex-col gap-3">
                             <div className="flex items-center justify-between text-xs sm:text-sm">
                               <div className="flex items-center gap-2 text-[#616161]">
                                 {/* <User className="size-3.5 text-[#180c62]" /> */}
                                 <span className="font-medium text-[#0a0a0a]">
-                                  {center.hostName}
+                                  {center.leaderName}
                                 </span>
                               </div>
                             </div>
@@ -294,17 +294,17 @@ export function HouseFellowshipView() {
                             {/* Phone & Direct Action */}
                             <div className="flex items-center justify-between gap-2 pt-1">
                               <a
-                                href={`tel:${center.hostPhone}`}
+                                href={`tel:${center.leaderPhone}`}
                                 className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-[#f0a505]/15 hover:bg-[#f0a505]/30 text-[#0a0a0a] rounded-full text-xs sm:text-sm font-semibold transition-colors cursor-pointer"
                               >
                                 <Phone className="size-3.5 text-[#d97706]" />
-                                <span>{center.hostPhone}</span>
+                                <span>{center.leaderPhone}</span>
                               </a>
 
                               <button
                                 type="button"
                                 onClick={() =>
-                                  handleCopyPhone(center.id, center.hostPhone)
+                                  handleCopyPhone(center.id, center.leaderPhone)
                                 }
                                 className="inline-flex items-center gap-1 text-xs text-[#616161] hover:text-[#180c62] transition-colors cursor-pointer p-1.5 rounded-md hover:bg-neutral-100"
                                 title="Copy phone number"
@@ -408,7 +408,7 @@ export function HouseFellowshipView() {
               </h2>
               <p className="font-sans text-base sm:text-lg text-[#616161] leading-relaxed">
                 Can&apos;t find a center on your street, or interested in opening your
-                living room as a fellowship host? The House Fellowship Directorate of
+                living room as a fellowship leader? The House Fellowship Directorate of
                 RCCG Court of His Majesty is ready to assist you.
               </p>
               {/* <div className="flex flex-wrap items-center gap-4 text-xs sm:text-sm text-[#404040] pt-2">

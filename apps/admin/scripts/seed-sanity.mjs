@@ -101,7 +101,7 @@ const sermons = [
       "In this profound message delivered at the Festival of Destiny, Pastor Fred Odekhian teaches on the divine principle of alignment. Drawing from 1 Corinthians 2:4, he demonstrates that when a believer’s spirit, thoughts, and actions align with the counsel of God, supernatural acceleration and victory become inevitable.",
     keyPoints: [
       "Divine Order: God never releases maximum acceleration into an area of your life that lacks spiritual order.",
-      "Demonstration of Power: Power does not reside in human oratory, but in alignment with the Holy Ghost.",
+      "Demonstration of Power: Power does not reside in human oratory, but in alignment with the Holy Gleader.",
       "The Prepared Altar: Like Elijah on Mount Carmel, the altar of your heart must be repaired before heaven responds with fire.",
       "Unlocking Supernatural Speed: What takes ten years of human striving can be achieved in ten days under divine alignment.",
     ],
@@ -562,8 +562,8 @@ const houseFellowships = [
     centerName: "CHM Goodness Centre",
     landmark: "Abesan",
     address: "Block 84, Flat 4, Sector 4, Abesan Estate, Ipaja, Lagos",
-    hostName: "Bro. Jairus Ogwuda",
-    hostPhone: "07060646611",
+    leaderName: "Bro. Jairus Ogwuda",
+    leaderPhone: "07060646611",
     meetingDay: "Sunday",
     meetingTime: "5:00 PM – 6:00 PM",
   },
@@ -573,8 +573,8 @@ const houseFellowships = [
     centerName: "Ebenezer Centre",
     landmark: "Abesan",
     address: "Road 14, Sector 2, Abesan Housing Estate, Ipaja",
-    hostName: "Dcns. Dayo Adepoju",
-    hostPhone: "08127723565",
+    leaderName: "Dcns. Dayo Adepoju",
+    leaderPhone: "08127723565",
     meetingDay: "Sunday",
     meetingTime: "5:00 PM – 6:00 PM",
   },
@@ -584,8 +584,8 @@ const houseFellowships = [
     centerName: "Shalom Peace Centre",
     landmark: "Abesan",
     address: "Block 142, Flat 2, Sector 7, Abesan Estate, Lagos",
-    hostName: "Elder & Mrs. S. A. Babatunde",
-    hostPhone: "08033221144",
+    leaderName: "Elder & Mrs. S. A. Babatunde",
+    leaderPhone: "08033221144",
     meetingDay: "Sunday",
     meetingTime: "5:00 PM – 6:00 PM",
   },
@@ -595,8 +595,8 @@ const houseFellowships = [
     centerName: "Grace Sanctuary Centre",
     landmark: "Ayobo",
     address: "12 Megida Road, Opposite St. Peter Catholic Church, Ayobo",
-    hostName: "Bro. Emmanuel & Sis. Ruth Chukwu",
-    hostPhone: "08023456789",
+    leaderName: "Bro. Emmanuel & Sis. Ruth Chukwu",
+    leaderPhone: "08023456789",
     meetingDay: "Sunday",
     meetingTime: "5:00 PM – 6:00 PM",
   },
@@ -606,8 +606,8 @@ const houseFellowships = [
     centerName: "Dominion Fellowship Centre",
     landmark: "Isefun",
     address: "Plot 8, Peace Estate, Near Camp Davies Junction, Isefun",
-    hostName: "Dcn. & Mrs. Tunde Bakare",
-    hostPhone: "08055667788",
+    leaderName: "Dcn. & Mrs. Tunde Bakare",
+    leaderPhone: "08055667788",
     meetingDay: "Sunday",
     meetingTime: "5:00 PM – 6:00 PM",
   },
@@ -668,7 +668,7 @@ async function seed() {
 
   console.log(`\n🎉 Seeding Complete!`);
   console.log(`✨ Total documents processed: ${allDocuments.length}`);
-  console.log(`✨ Open Sanity Studio at http://localhost:3333 to view all content!`);
+  console.log(`✨ Open Sanity Studio at http://localleader:3333 to view all content!`);
 }
 
 seed().catch(console.error);

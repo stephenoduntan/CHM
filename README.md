@@ -10,6 +10,7 @@
 Official monorepo platform and content ecosystem for **The Redeemed Christian Church of God (RCCG), Court of His Majesty** — Lagos Province 94 Headquarters.
 
 This repository (`chm-platform`) is structured as an npm workspaces monorepo containing two decoupled, purpose-built applications:
+
 1. **`apps/web`**: The public-facing church website powered by **Next.js 15 (App Router)** and **Tailwind CSS v4**.
 2. **`apps/admin`**: The administrative management portal powered by **Sanity Studio v3** for managing sermons, events, leadership, blog devotionals, announcements, and photo galleries.
 
@@ -72,7 +73,7 @@ chm-platform/
 │   │   │   ├── blog.ts                # Devotionals, pastor's desk, faith articles
 │   │   │   ├── event.ts               # Church calendar, conferences, FOD 2026, past events
 │   │   │   ├── gallery.ts             # Photos with event tags and category filtering
-│   │   │   ├── houseFellowship.ts     # Home cell fellowship centers, centers & hosts
+│   │   │   ├── houseFellowship.ts     # Home cell fellowship centers, centers & leaders
 │   │   │   ├── leadership.ts          # Pastors, ministers, and departmental heads
 │   │   │   ├── sermon.ts              # Video messages, speakers, scriptures, series
 │   │   │   └── index.ts               # Schema registry export
@@ -134,45 +135,47 @@ chm-platform/
 The primary public-facing portal built with **Next.js 15 (App Router)** and **Tailwind CSS v4**.
 
 #### Key Capabilities & Features:
-* **Interactive Navigation:**
-  * **Main Navigation:** Home, Give, New Here, Ministries, Our Beliefs, Our Leadership, Events, Watch Online, Next Level Cathedral.
-  * **Connect & Fellowship:** Connect with Us, Services, Groups, House Fellowship Centers, Prayer Request, Testify, Holy Ghost Service.
-  * **Resources:** Sermons, Photo Gallery, Blogs.
-* **Watch Online Page (`/watch-online`):**
-  * Live vs. Recent Broadcast indicator badge.
-  * Responsive YouTube player.
-  * Direct "Give Online" trigger opening the giving modal.
-  * Built-in **Sermon Notepad**: Opens without background on the bottom-right of viewport, complete with export/download capabilities.
-  * "Watch more on our YouTube channel" CTA.
-* **Photo Gallery Page (`/gallery`):**
-  * Filterable by category, date, and event tags.
-  * Initial page load loads 12 items, with an interactive "Load More" pagination button to optimize performance.
-* **Events Page (`/events` & `/events/[slug]`):**
-  * Highlights upcoming programs with "Add to Calendar" and registration.
-  * Automatically switches **Past Events** to showcase an embedded photo gallery section, replacing the "Join us in person" CTA and removing calendar actions.
-* **Give & Online Giving (`/give`):**
-  * Figma-accurate **How It Works Steps Showcase** with auto-advancing animated progress bars, customizable step timing, and smooth state switching.
-  * Bank transfer account numbers with instant click-to-copy functionality.
-* **Single Source of Truth for Sermons:**
-  * The `LatestSermonSection` on the homepage and the `/sermons` archive share identical data models and content.
+
+- **Interactive Navigation:**
+  - **Main Navigation:** Home, Give, New Here, Ministries, Our Beliefs, Our Leadership, Events, Watch Online, Next Level Cathedral.
+  - **Connect & Fellowship:** Connect with Us, Services, Groups, House Fellowship Centers, Prayer Request, Testify, Holy Gleader Service.
+  - **Resources:** Sermons, Photo Gallery, Blogs.
+- **Watch Online Page (`/watch-online`):**
+  - Live vs. Recent Broadcast indicator badge.
+  - Responsive YouTube player.
+  - Direct "Give Online" trigger opening the giving modal.
+  - Built-in **Sermon Notepad**: Opens without background on the bottom-right of viewport, complete with export/download capabilities.
+  - "Watch more on our YouTube channel" CTA.
+- **Photo Gallery Page (`/gallery`):**
+  - Filterable by category, date, and event tags.
+  - Initial page load loads 12 items, with an interactive "Load More" pagination button to optimize performance.
+- **Events Page (`/events` & `/events/[slug]`):**
+  - Highlights upcoming programs with "Add to Calendar" and registration.
+  - Automatically switches **Past Events** to showcase an embedded photo gallery section, replacing the "Join us in person" CTA and removing calendar actions.
+- **Give & Online Giving (`/give`):**
+  - Figma-accurate **How It Works Steps Showcase** with auto-advancing animated progress bars, customizable step timing, and smooth state switching.
+  - Bank transfer account numbers with instant click-to-copy functionality.
+- **Single Source of Truth for Sermons:**
+  - The `LatestSermonSection` on the homepage and the `/sermons` archive share identical data models and content.
 
 ### 2. Admin Management Portal (`apps/admin`)
 
 A stand-alone **Sanity Studio v3** single-page application configured specifically for church content curators, media teams, and church leadership.
 
 #### Key Capabilities & Features:
-* **Dedicated Desk Structure:** Branded custom desk grouping documents into logical ministry categories:
-  * Sermons & Media
-  * Events & Conferences
-  * Our Leadership (Pastors & Ministers)
-  * Blog & Devotionals
-  * Photo Gallery
-  * House Fellowship Centers
-  * Announcements & Alerts
-  * Pastors & Authors
-* **Vision Tool:** Built-in GROQ query testing environment for developers to inspect data and formulate queries.
-* **Branded Interface:** Styled with RCCG Court of His Majesty titles, favicons, and metadata.
-* **Optimized Build:** Compiles to static HTML and JS in `apps/admin/dist` via `sanity build dist`, requiring no server-side runtime.
+
+- **Dedicated Desk Structure:** Branded custom desk grouping documents into logical ministry categories:
+  - Sermons & Media
+  - Events & Conferences
+  - Our Leadership (Pastors & Ministers)
+  - Blog & Devotionals
+  - Photo Gallery
+  - House Fellowship Centers
+  - Announcements & Alerts
+  - Pastors & Authors
+- **Vision Tool:** Built-in GROQ query testing environment for developers to inspect data and formulate queries.
+- **Branded Interface:** Styled with RCCG Court of His Majesty titles, favicons, and metadata.
+- **Optimized Build:** Compiles to static HTML and JS in `apps/admin/dist` via `sanity build dist`, requiring no server-side runtime.
 
 ---
 
@@ -200,13 +203,13 @@ Netlify natively supports deploying individual applications out of a single mono
 1. In the **Netlify Dashboard**, click **"Add new site"** → **"Import an existing project"**.
 2. Select your repository: `stephenoduntan/CHM`.
 3. Configure the **Build & Deploy settings**:
-   * **Site name:** `rccgchm` (or custom domain `yourchurch.org` / `rccgchm.com`)
-   * **Base directory:** `apps/web`
-   * **Package directory:** `apps/web`
-   * **Build command:** `npm run build`
-   * **Publish directory:** `apps/web/.next` (or `.next`)
+   - **Site name:** `rccgchm` (or custom domain `yourchurch.org` / `rccgchm.com`)
+   - **Base directory:** `apps/web`
+   - **Package directory:** `apps/web`
+   - **Build command:** `npm run build`
+   - **Publish directory:** `apps/web/.next` (or `.next`)
 4. **Build Plugins:**
-   * The `@netlify/plugin-nextjs` is configured in `apps/web/netlify.toml` and will be loaded automatically.
+   - The `@netlify/plugin-nextjs` is configured in `apps/web/netlify.toml` and will be loaded automatically.
 5. **Environment Variables:**
    Add the following in **Site settings** → **Environment variables**:
    ```env
@@ -221,13 +224,13 @@ Netlify natively supports deploying individual applications out of a single mono
 1. In the **Netlify Dashboard**, click **"Add new site"** → **"Import an existing project"**.
 2. Select the **same** repository: `stephenoduntan/CHM`.
 3. Configure the **Build & Deploy settings**:
-   * **Site name:** `admin-rccgchm` (or custom domain `admin.yourchurch.org` / `admin.rccgchm.com`)
-   * **Base directory:** `apps/admin`
-   * **Package directory:** `apps/admin`
-   * **Build command:** `npm run build`
-   * **Publish directory:** `apps/admin/dist` (or `dist`)
+   - **Site name:** `admin-rccgchm` (or custom domain `admin.yourchurch.org` / `admin.rccgchm.com`)
+   - **Base directory:** `apps/admin`
+   - **Package directory:** `apps/admin`
+   - **Build command:** `npm run build`
+   - **Publish directory:** `apps/admin/dist` (or `dist`)
 4. **SPA Redirect Rules:**
-   * Handled automatically by `apps/admin/netlify.toml`:
+   - Handled automatically by `apps/admin/netlify.toml`:
      ```toml
      [build]
        command = "npm run build"
@@ -253,16 +256,16 @@ Netlify natively supports deploying individual applications out of a single mono
 
 The admin portal defines rich, typed content models in `apps/admin/schemas/`:
 
-| Schema File | Document Type | Core Fields | Purpose |
-| :--- | :--- | :--- | :--- |
-| `sermon.ts` | `sermon` | `title`, `slug`, `preacher`, `date`, `youtubeUrl`, `scripture`, `category`, `series`, `notes` | Videos, sermons archive, latest sermon section |
-| `event.ts` | `event` | `title`, `slug`, `startDate`, `endDate`, `location`, `category`, `featured`, `gallery` | Upcoming programs, conferences, past event galleries |
-| `leadership.ts` | `leadership` | `name`, `role`, `department`, `order`, `image`, `bio`, `socials` | Pastoral leadership and ministry team directory |
-| `announcement.ts` | `announcement` | `title`, `priority` (alert/info/urgent), `startDate`, `link`, `isActive` | Urgent alerts, top bar notifications, bulletins |
-| `blog.ts` | `blog` | `title`, `slug`, `publishedAt`, `excerpt`, `body`, `author`, `tags` | Devotionals, pastor's desk, articles |
-| `gallery.ts` | `gallery` | `title`, `image`, `eventTag`, `category`, `dateTaken` | Photo gallery with category and event filtering |
-| `houseFellowship.ts`| `houseFellowship`| `name`, `centerNumber`, `leaderName`, `phone`, `address`, `zone` | Home fellowship cell centers and map locations |
-| `author.ts` | `author` | `name`, `slug`, `image`, `bio` | Post authors, guest speakers, contributing pastors |
+| Schema File          | Document Type     | Core Fields                                                                                   | Purpose                                              |
+| :------------------- | :---------------- | :-------------------------------------------------------------------------------------------- | :--------------------------------------------------- |
+| `sermon.ts`          | `sermon`          | `title`, `slug`, `preacher`, `date`, `youtubeUrl`, `scripture`, `category`, `series`, `notes` | Videos, sermons archive, latest sermon section       |
+| `event.ts`           | `event`           | `title`, `slug`, `startDate`, `endDate`, `location`, `category`, `featured`, `gallery`        | Upcoming programs, conferences, past event galleries |
+| `leadership.ts`      | `leadership`      | `name`, `role`, `department`, `order`, `image`, `bio`, `socials`                              | Pastoral leadership and ministry team directory      |
+| `announcement.ts`    | `announcement`    | `title`, `priority` (alert/info/urgent), `startDate`, `link`, `isActive`                      | Urgent alerts, top bar notifications, bulletins      |
+| `blog.ts`            | `blog`            | `title`, `slug`, `publishedAt`, `excerpt`, `body`, `author`, `tags`                           | Devotionals, pastor's desk, articles                 |
+| `gallery.ts`         | `gallery`         | `title`, `image`, `eventTag`, `category`, `dateTaken`                                         | Photo gallery with category and event filtering      |
+| `houseFellowship.ts` | `houseFellowship` | `name`, `centerNumber`, `leaderName`, `phone`, `address`, `zone`                              | Home fellowship cell centers and map locations       |
+| `author.ts`          | `author`          | `name`, `slug`, `image`, `bio`                                                                | Post authors, guest speakers, contributing pastors   |
 
 ### Sanity CORS Origins
 
@@ -271,11 +274,11 @@ Because Sanity Studio and the Website run on distinct domains, you must register
 1. Visit [https://manage.sanity.io](https://manage.sanity.io)
 2. Select project **`ct660z6u`** (or your designated project)
 3. Navigate to **API** → **CORS Origins** → **Add CORS origin**:
-   * `http://localhost:3000` (Local Web App) — **Credentials: Yes**
-   * `http://localhost:3333` (Local Sanity Studio) — **Credentials: Yes**
-   * `https://rccgchm.org` (Production Web App) — **Credentials: Yes**
-   * `https://admin.rccgchm.org` (Production Admin Studio) — **Credentials: Yes**
-   * `https://rccgchm.netlify.app` (Netlify Preview) — **Credentials: Yes**
+   - `http://localleader:3000` (Local Web App) — **Credentials: Yes**
+   - `http://localleader:3333` (Local Sanity Studio) — **Credentials: Yes**
+   - `https://rccgchm.org` (Production Web App) — **Credentials: Yes**
+   - `https://admin.rccgchm.org` (Production Admin Studio) — **Credentials: Yes**
+   - `https://rccgchm.netlify.app` (Netlify Preview) — **Credentials: Yes**
 
 ### Read-Only Sanity Client in Web App
 
@@ -300,8 +303,8 @@ export default client;
 
 ### Prerequisites
 
-* [Node.js](https://nodejs.org/) v20.x or v22.x LTS
-* `npm` v10+
+- [Node.js](https://nodejs.org/) v20.x or v22.x LTS
+- `npm` v10+
 
 ### Installation
 
@@ -319,16 +322,16 @@ npm install
 
 Run commands from the repository root:
 
-| Command | Action | URL |
-| :--- | :--- | :--- |
-| `npm run dev` | Starts the Next.js church website development server | `http://localhost:3000` |
-| `npm run dev:web` | Explicitly starts the Next.js church website | `http://localhost:3000` |
-| `npm run dev:admin` | Starts the Sanity Studio admin management portal | `http://localhost:3333` |
-| `npm run build` | Compiles the production build for the website | Output: `apps/web/.next` |
-| `npm run build:web` | Compiles the production build for the website | Output: `apps/web/.next` |
-| `npm run build:admin` | Compiles the static Sanity Studio production bundle | Output: `apps/admin/dist` |
-| `npm run start:web` | Runs the production Next.js server locally | `http://localhost:3000` |
-| `npm run start:admin` | Serves the built Sanity Studio static files locally | `http://localhost:3333` |
+| Command               | Action                                               | URL                       |
+| :-------------------- | :--------------------------------------------------- | :------------------------ |
+| `npm run dev`         | Starts the Next.js church website development server | `http://localleader:3000` |
+| `npm run dev:web`     | Explicitly starts the Next.js church website         | `http://localleader:3000` |
+| `npm run dev:admin`   | Starts the Sanity Studio admin management portal     | `http://localleader:3333` |
+| `npm run build`       | Compiles the production build for the website        | Output: `apps/web/.next`  |
+| `npm run build:web`   | Compiles the production build for the website        | Output: `apps/web/.next`  |
+| `npm run build:admin` | Compiles the static Sanity Studio production bundle  | Output: `apps/admin/dist` |
+| `npm run start:web`   | Runs the production Next.js server locally           | `http://localleader:3000` |
+| `npm run start:admin` | Serves the built Sanity Studio static files locally  | `http://localleader:3333` |
 
 You can also run both apps simultaneously during development using separate terminal sessions:
 
@@ -374,19 +377,21 @@ SANITY_STUDIO_DATASET=production
 The user interface strictly adheres to the official Figma specifications:
 
 ### Colors
-| Name | Hex Code | Purpose |
-| :--- | :--- | :--- |
-| **Primary Forest Green** | `#051202` | Deep church brand color used for dark sections, navigation, and footers |
-| **Secondary Accent Green**| `#1a3a1e` | Active states, badges, card surfaces |
-| **Accent Gold** | `#c8a96e` | Highlight accents, countdown borders, primary action CTAs |
-| **Light Gray Band** | `#e8e8e8` | Header/footer separator bands, muted backgrounds |
-| **Clean Off-White** | `#f5f5f5` | Page backgrounds, subtle card fills |
-| **Body Charcoal** | `#242424` | Primary reading and typography color |
-| **Border Gray** | `#bfbfbf` | Neutral card borders and dividers |
+
+| Name                       | Hex Code  | Purpose                                                                 |
+| :------------------------- | :-------- | :---------------------------------------------------------------------- |
+| **Primary Forest Green**   | `#051202` | Deep church brand color used for dark sections, navigation, and footers |
+| **Secondary Accent Green** | `#1a3a1e` | Active states, badges, card surfaces                                    |
+| **Accent Gold**            | `#c8a96e` | Highlight accents, countdown borders, primary action CTAs               |
+| **Light Gray Band**        | `#e8e8e8` | Header/footer separator bands, muted backgrounds                        |
+| **Clean Off-White**        | `#f5f5f5` | Page backgrounds, subtle card fills                                     |
+| **Body Charcoal**          | `#242424` | Primary reading and typography color                                    |
+| **Border Gray**            | `#bfbfbf` | Neutral card borders and dividers                                       |
 
 ### Typography
-* **Headings, Display, Navigation:** `Recursive` (Variable font configured with Google Fonts).
-* **Body, Forms, Content:** `Inter` (Optimized for maximum readability).
+
+- **Headings, Display, Navigation:** `Recursive` (Variable font configured with Google Fonts).
+- **Body, Forms, Content:** `Inter` (Optimized for maximum readability).
 
 ---
 
@@ -394,6 +399,6 @@ The user interface strictly adheres to the official Figma specifications:
 
 This project is proprietary and maintained for **The Redeemed Christian Church of God (RCCG), Court of His Majesty (Lagos Province 94 Headquarters)**.
 
-* **Address:** RCCG Court of His Majesty, Lagos Province 94 Headquarters, Lagos, Nigeria
-* **Online Church:** [rccgchm.netlify.app](https://rccgchm.netlify.app)
-* **All rights reserved.**
+- **Address:** RCCG Court of His Majesty, Lagos Province 94 Headquarters, Lagos, Nigeria
+- **Online Church:** [rccgchm.netlify.app](https://rccgchm.netlify.app)
+- **All rights reserved.**

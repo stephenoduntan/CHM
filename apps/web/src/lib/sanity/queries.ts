@@ -149,8 +149,8 @@ export const HOUSE_FELLOWSHIP_QUERY = `*[_type == "houseFellowship"] | order(lan
   centerName,
   landmark,
   address,
-  hostName,
-  hostPhone,
+  leaderName,
+  leaderPhone,
   meetingDay,
   meetingTime
 }`;
