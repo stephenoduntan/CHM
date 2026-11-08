@@ -378,7 +378,7 @@ export default function NewHerePage() {
                 key={p.name}
                 className="bg-white rounded-[28px] overflow-hidden border border-gray-100 shadow-md group"
               >
-                <div className="relative h-[340px] w-full overflow-hidden">
+                <div className="relative h-[400px] w-full overflow-hidden object-top">
                   <Image
                     src={p.image}
                     alt={p.name}
