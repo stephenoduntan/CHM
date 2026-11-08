@@ -15,30 +15,44 @@ export interface BankAccount {
 export const BANK_ACCOUNTS: BankAccount[] = [
   {
     category: "Tithe & Offering",
-    bank: "Zenith Bank",
-    accountNumber: "1012345678",
+    bank: "Polaris Bank",
+    accountNumber: "1771023394",
     accountName: "RCCG Court of His Majesty",
     icon: Gift,
   },
   {
-    category: "Next Level Cathedral Project",
+    category: "Destiny Conference",
+    bank: "Polaris Bank",
+    accountNumber: "1771237216",
+    accountName: "RCCG Court of His Majesty",
+    icon: Gift,
+  },
+  {
+    category: "Project Partners",
     bank: "Polaris Bank",
     accountNumber: "4092011875",
-    accountName: "RCCG NEXT LEVEL PROJECT PARTNERS ACCOUNT",
+    accountName: "RCCG Next Level Project Partners",
     icon: Building2,
   },
   {
-    category: "Missions & Evangelism",
-    bank: "Access Bank",
-    accountNumber: "0098765432",
-    accountName: "RCCG CHM Missions",
+    category: "Men's Fellowship",
+    bank: "Providus Bank",
+    accountNumber: "1809046723",
+    accountName: "Men Court of His Majesty RCCG",
     icon: Globe,
   },
   {
-    category: "Welfare & Benevolence",
-    bank: "Zenith Bank",
-    accountNumber: "1098765431",
-    accountName: "RCCG CHM Welfare Department",
+    category: "Good Women's Fellowship",
+    bank: "Polaris Bank",
+    accountNumber: "1771923810",
+    accountName: "RCCG CHM Good Women Fellowship",
+    icon: Globe,
+  },
+  {
+    category: "Welfare",
+    bank: "Polaris Bank",
+    accountNumber: "4091907966",
+    accountName: "RCCG Court of His Majesty Welfare",
     icon: Heart,
   },
 ];
@@ -454,9 +468,9 @@ export function GiveModal({
                       className="p-3.5 sm:p-4 rounded-xl bg-gray-50 border border-gray-200 hover:border-[#180c62]/30 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 shadow-sm"
                     >
                       <div className="flex items-start gap-3">
-                        <div className="size-10 rounded-xl bg-[#051202] text-[#f0a505] flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
+                        {/* <div className="size-10 rounded-xl bg-[#051202] text-[#f0a505] flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
                           <Icon className="size-5" />
-                        </div>
+                        </div> */}
                         <div className="space-y-0.5">
                           <span className="inline-block text-[11px] font-bold uppercase tracking-wider text-[#180c62] bg-[#180c62]/10 px-2 py-0.5 rounded-md">
                             {item.category}

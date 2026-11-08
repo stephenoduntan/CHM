@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Clock, ArrowRight } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { SITE_CONFIG } from "@/lib/constants";
+import { truncateSync } from "fs";
 
 export const metadata = {
   title: "Groups & Fellowships",
@@ -19,6 +20,7 @@ interface GroupItem {
   image: string;
   imageAlt: string;
   isImageLeft: boolean;
+  hasLink?: boolean;
   link: string;
 }
 
@@ -31,22 +33,38 @@ const groupsList: GroupItem[] = [
     description:
       "Gathering weekly in neighborhood homes across Lagos for intimate Bible study, heartfelt worship, mutual care, and fervent prayers.",
     schedule: "Every Sunday, 5:00 PM – 6:00 PM",
-    image: "/images/explore/community.webp",
+    image: "./images/groups/house fellowship.webp",
     imageAlt: "House fellowship gathering at RCCG Court of His Majesty",
     isImageLeft: false,
+    hasLink: true,
     link: "/house-fellowship",
   },
   {
-    id: "men-of-valor",
-    name: "Men of Valor",
+    id: "redeemers-mens-fellowship",
+    name: "Redeemers Men's Fellowship",
     tagline: "Brothers standing in faith",
-    watermark: ["MEN OF", "VALOR"],
+    watermark: ["MEN'S", "FELLOWSHIP"],
     description:
       "Equipping men to be godly leaders in their homes, businesses, careers, and the church through mentorship and prayer breakfasts.",
     schedule: "Monthly Breakfast & Fellowship Meetings",
-    image: "https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&q=80&w=1200",
-    imageAlt: "Men of Valor fellowship at RCCG Court of His Majesty",
+    image: "./images/groups/Redeemers Men's Fellowship.webp",
+    imageAlt: "Redeemers Men's Fellowship at RCCG Court of His Majesty",
     isImageLeft: true,
+    hasLink: false,
+    link: "#",
+  },
+  {
+    id: "hour-of-prophecy",
+    name: "Hour of Prophecy",
+    tagline: "A time for divine revelation",
+    watermark: ["HOUR OF", "PROPHETRY"],
+    description:
+      "A dedicated time for receiving prophetic words, divine guidance, and spiritual insights from the Lord.",
+    schedule: "Monthly Breakfast & Fellowship Meetings",
+    image: "./images/groups/Hour of prophecy Oct 2026 screen.webp",
+    imageAlt: "Hour of Prophecy gathering at RCCG Court of His Majesty",
+    isImageLeft: true,
+    hasLink: false,
     link: "#",
   },
   {
@@ -57,9 +75,10 @@ const groupsList: GroupItem[] = [
     description:
       "Nurturing women in godly wisdom, motherly excellence, and intercessory prayer, impacting families and community circles.",
     schedule: "Bi-weekly Gatherings & Annual Conference",
-    image: "https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&q=80&w=1200",
+    image: "./images/groups/women's fellowship.webp",
     imageAlt: "Good Women fellowship at RCCG Court of His Majesty",
     isImageLeft: false,
+    hasLink: false,
     link: "#",
   },
   {
@@ -70,9 +89,10 @@ const groupsList: GroupItem[] = [
     description:
       "Empowering students, young professionals, and creatives through relevant doctrine, career networking, and spirit-filled praise.",
     schedule: "",
-    image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=1200",
+    image: "./images/groups/rccgchm yaya.webp",
     imageAlt: "Youth and Young Adults ministry at RCCG Court of His Majesty",
     isImageLeft: true,
+    hasLink: false,
     link: "#",
   },
   {
@@ -83,9 +103,10 @@ const groupsList: GroupItem[] = [
     description:
       "Dynamic, safe, and engaging environment helping adolescents navigate culture, develop spiritual gifts, and build lifelong friendships.",
     schedule: "Every Sunday during Main Services",
-    image: "https://images.unsplash.com/photo-1485546246426-74dc88dec4d9?auto=format&fit=crop&q=80&w=1200",
+    image: "./images/groups/children.webp",
     imageAlt: "Teens and Junior Church at RCCG Court of His Majesty",
     isImageLeft: false,
+    hasLink: false,
     link: "#",
   },
   {
@@ -96,9 +117,10 @@ const groupsList: GroupItem[] = [
     description:
       "A dedicated group for women to gather in prayer, study the Word, and support one another in their faith journey.",
     schedule: "Weekly cohorts available on Mondays (11:30 PM) online",
-    image: "/images/explore/teachings.webp",
+    image: "./images/groups/New women on their knees screen Nov. 2nd 2026.webp",
     imageAlt: "Women on Their Knees at RCCG Court of His Majesty",
     isImageLeft: true,
+    hasLink: true,
     link: "https://facebook.com/womenontheirkneespraying",
   },
 ];
@@ -196,9 +218,11 @@ export default function GroupsPage() {
                     <div className="pt-2">
                       <Link
                         href={group.link}
-                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold text-[#180c62] bg-[#180c62]/10 hover:bg-[#180c62] hover:text-white transition-all shadow-sm cursor-pointer"
+                        className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold text-[#180c62] bg-[#180c62]/10 hover:bg-[#180c62] hover:text-white transition-all shadow-sm cursor-pointer ${
+                        group.hasLink ? "block" : "hidden"}
+                        `}
                       >
-                        <span>Join Fellowship</span>
+                        <span>Join Group</span>
                         <ArrowRight className="size-4" />
                       </Link>
                     </div>
@@ -229,12 +253,12 @@ export default function GroupsPage() {
               <h3 className="font-display font-recursive-sans font-bold text-2xl sm:text-3xl lg:text-4xl mb-4">
                 Looking for a House Fellowship Near You?
               </h3>
-              <p className="text-gray-300 text-sm sm:text-base mb-8 leading-relaxed">
+              {/* <p className="text-gray-300 text-sm sm:text-base mb-8 leading-relaxed">
                 Connect with our pastoral care team to locate the nearest house fellowship center to your residence or workplace in Lagos.
-              </p>
+              </p> */}
               <Link
                 href="/house-fellowship"
-                className="inline-flex items-center justify-center px-8 py-3.5 rounded-full font-semibold text-[#051202] bg-[#c8a96e] hover:bg-[#b59556] shadow-md transition-all text-sm uppercase tracking-wider cursor-pointer"
+                className="inline-flex items-center justify-center px-8 py-3.5 rounded-full font-semibold text-[#0a0a0a] bg-white hover:bg-gray-200 shadow-md transition-all text-sm uppercase tracking-wider cursor-pointer"
               >
                 Find Nearest Center
               </Link>

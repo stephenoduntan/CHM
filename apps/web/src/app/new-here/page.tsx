@@ -378,12 +378,12 @@ export default function NewHerePage() {
                 key={p.name}
                 className="bg-white rounded-[28px] overflow-hidden border border-gray-100 shadow-md group"
               >
-                <div className="relative h-[400px] w-full overflow-hidden object-top">
+                <div className="relative h-[400px] w-full overflow-hidden">
                   <Image
                     src={p.image}
                     alt={p.name}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500 object-top"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                   <div className="absolute bottom-4 left-6 right-6 text-white">

@@ -27,7 +27,7 @@ const STEPS: StepItem[] = [
     id: "in-person",
     title: "Give In Person",
     description: "You can give in person at any one of our services",
-    image: "/images/give/step-give-in-person.png",
+    image: "/images/give/step-give-in-person.webp",
     barHeightDesktop: "87px",
     hasButton: false,
   },
