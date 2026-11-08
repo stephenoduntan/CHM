@@ -1,7 +1,7 @@
 export interface FellowshipCenter {
   id: string;
   name: string;
-  landmark: "Abesan" | "Ayobo" | "Isefun" | "Mosan" | "Gowon Estate" | "Ipaja";
+  landmark: "Abesan" | "Ayobo" | "Ikola" | "Mosan" | "Gowon Estate" | "Ipaja";
   landmarkArea: string;
   address: string;
   leaderName: string;

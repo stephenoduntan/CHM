@@ -446,8 +446,8 @@ export async function fetchSanityLeadership(): Promise<Leader[]> {
 export function mapSanityHouseFellowship(doc: any): FellowshipCenter {
   const id = doc.slug?.current || doc._id;
   const rawLandmark = doc.landmark || "Abesan";
-  const landmark: "Abesan" | "Ayobo" | "Isefun" | "Mosan" | "Gowon Estate" | "Ipaja" =
-    ["Abesan", "Ayobo", "Isefun", "Mosan", "Gowon Estate", "Ipaja"].includes(rawLandmark)
+  const landmark: "Abesan" | "Ayobo" | "Ikola" | "Mosan" | "Gowon Estate" | "Ipaja" =
+    ["Abesan", "Ayobo", "Ikola", "Mosan", "Gowon Estate", "Ipaja"].includes(rawLandmark)
       ? (rawLandmark as any)
       : "Abesan";
 

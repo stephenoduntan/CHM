@@ -4,11 +4,11 @@ import { HouseFellowshipView } from "@/components/house-fellowship/HouseFellowsh
 export const metadata: Metadata = {
   title: "House Fellowship Centers | RCCG Court of His Majesty",
   description:
-    "Find an RCCG Court of His Majesty house fellowship center near you across Abesan Estate, Ayobo, Isefun, Mosan, Gowon Estate, and Ipaja, Lagos. Meet weekly from house to house for prayer, study, and fellowship.",
+    "Find an RCCG Court of His Majesty house fellowship center near you across Abesan Estate, Ayobo, Ikola, Mosan, Gowon Estate, and Ipaja, Lagos. Meet weekly from house to house for prayer, study, and fellowship.",
   openGraph: {
     title: "House Fellowship Centers | RCCG Court of His Majesty",
     description:
-      "Find an RCCG Court of His Majesty house fellowship center near you in Abesan Estate, Ayobo, Isefun, Mosan, Gowon Estate, and Ipaja.",
+      "Find an RCCG Court of His Majesty house fellowship center near you in Abesan Estate, Ayobo, Ikola, Mosan, Gowon Estate, and Ipaja.",
     images: [
       {
         url: "/images/blog/church-family.png",
