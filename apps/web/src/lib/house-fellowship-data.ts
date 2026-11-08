@@ -15,7 +15,7 @@ export const HOUSE_FELLOWSHIP_ZONES = [
   { id: "all", name: "All Locations" },
   { id: "Abesan", name: "Abesan Estate" },
   { id: "Ayobo", name: "Ayobo" },
-  { id: "Isefun", name: "Isefun & Camp Davies" },
+  { id: "Ikola", name: "Ikola" },
   { id: "Mosan", name: "Mosan & Baruwa" },
   { id: "Gowon Estate", name: "Gowon Estate" },
   { id: "Ipaja", name: "Ipaja Central" },

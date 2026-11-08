@@ -20,7 +20,7 @@ export const houseFellowshipType = defineType({
         list: [
           { title: "Abesan Estate", value: "Abesan" },
           { title: "Ayobo", value: "Ayobo" },
-          { title: "Isefun", value: "Isefun" },
+          { title: "Ikola", value: "Ikola" },
           { title: "Mosan", value: "Mosan" },
           { title: "Ipaja", value: "Ipaja" },
           { title: "Gowon Estate", value: "Gowon Estate" },
