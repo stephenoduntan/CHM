@@ -122,21 +122,21 @@ const EXPECTATIONS: ExpectationItem[] = [
 
 const pastors = [
   {
-    name: "Pastor & Pastor (Mrs.) Fred Odekhian",
+    name: "Pastor Fred & Pastor (Mrs.) Helen Odekhian",
     role: "Pastor-in-Charge of Province (PICP), Lagos Province 94 HQ",
-    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=600",
+    image: "./images/exec/PICP Pastor & Pastor (Mrs) Fred Odekhian.webp",
     isLead: true,
   },
   {
-    name: "Pastor & Pastor (Mrs.) Caleb Okedere",
-    role: "National Secretary, RCCG",
-    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=600",
+    name: "Pastor Oluwaseun & Pastor (Mrs.) Peace Adebayo",
+    role: "Assistant Pastor-in-Charge of Province (APICP) (Admin)",
+    image: "./images/exec/APICP (Admin) Pastor Oluwaseun & Pastor (Mrs.) Peace Adebayo.webp",
     isLead: false,
   },
   {
-    name: "Associate Ministers & Pastoral Team",
-    role: "Leadership & Congregational Care",
-    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=600",
+    name: "Pastor Ezekiel & Pastor (Mrs.) Seyi Oni",
+    role: "Assistant Pastor-in-Charge of Province (APICP) (CSR)",
+    image: "./images/exec/APICP (CSR) Pastor Ezekiel & Pastor (Mrs.) Seyi Oni.webp",
     isLead: false,
   },
 ];
@@ -387,9 +387,9 @@ export default function NewHerePage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                   <div className="absolute bottom-4 left-6 right-6 text-white">
-                    <span className="text-xs font-semibold uppercase tracking-wider text-[#c8a96e]">
+                    {/* <span className="text-xs font-semibold uppercase tracking-wider text-[#c8a96e]">
                       {p.isLead ? "Senior Pastor" : "Pastoral Minister"}
-                    </span>
+                    </span> */}
                     <h3 className="font-sans font-bold text-lg sm:text-xl">
                       {p.name}
                     </h3>
