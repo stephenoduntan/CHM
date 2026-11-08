@@ -101,7 +101,7 @@ const sermons = [
       "In this profound message delivered at the Festival of Destiny, Pastor Fred Odekhian teaches on the divine principle of alignment. Drawing from 1 Corinthians 2:4, he demonstrates that when a believer’s spirit, thoughts, and actions align with the counsel of God, supernatural acceleration and victory become inevitable.",
     keyPoints: [
       "Divine Order: God never releases maximum acceleration into an area of your life that lacks spiritual order.",
-      "Demonstration of Power: Power does not reside in human oratory, but in alignment with the Holy Gleader.",
+      "Demonstration of Power: Power does not reside in human oratory, but in alignment with the Holy Ghost.",
       "The Prepared Altar: Like Elijah on Mount Carmel, the altar of your heart must be repaired before heaven responds with fire.",
       "Unlocking Supernatural Speed: What takes ten years of human striving can be achieved in ten days under divine alignment.",
     ],
@@ -668,7 +668,7 @@ async function seed() {
 
   console.log(`\n🎉 Seeding Complete!`);
   console.log(`✨ Total documents processed: ${allDocuments.length}`);
-  console.log(`✨ Open Sanity Studio at http://localleader:3333 to view all content!`);
+  console.log(`✨ Open Sanity Studio at http://localhost:3333 to view all content!`);
 }
 
 seed().catch(console.error);

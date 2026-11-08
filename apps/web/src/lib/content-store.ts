@@ -25,7 +25,7 @@ export const STORAGE_KEYS = {
   BLOGS: "chm_managed_blogs_v1",
   GALLERY: "chm_managed_gallery_v1",
   LEADERSHIP: "chm_managed_leadership_v1",
-  HOUSE_FELLOWSHIP: "chm_managed_house_fellowship_v1",
+  HOUSE_FELLOWSHIP: "chm_managed_house_fellowship_v2",
   WATCH_ONLINE: "chm_managed_watch_online_v1",
 } as const;
 
@@ -222,7 +222,13 @@ export function getManagedHouseFellowship(): FellowshipCenter[] {
     const raw = localStorage.getItem(STORAGE_KEYS.HOUSE_FELLOWSHIP);
     if (!raw) return HOUSE_FELLOWSHIP_CENTERS;
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) && parsed.length > 0 ? parsed : HOUSE_FELLOWSHIP_CENTERS;
+    if (Array.isArray(parsed) && parsed.length > 0) {
+      const hasValidPhones = parsed.some(
+        (c: FellowshipCenter) => c.leaderPhone && c.leaderPhone.trim().length > 0
+      );
+      return hasValidPhones ? parsed : HOUSE_FELLOWSHIP_CENTERS;
+    }
+    return HOUSE_FELLOWSHIP_CENTERS;
   } catch {
     return HOUSE_FELLOWSHIP_CENTERS;
   }

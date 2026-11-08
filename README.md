@@ -138,7 +138,7 @@ The primary public-facing portal built with **Next.js 15 (App Router)** and **Ta
 
 - **Interactive Navigation:**
   - **Main Navigation:** Home, Give, New Here, Ministries, Our Beliefs, Our Leadership, Events, Watch Online, Next Level Cathedral.
-  - **Connect & Fellowship:** Connect with Us, Services, Groups, House Fellowship Centers, Prayer Request, Testify, Holy Gleader Service.
+  - **Connect & Fellowship:** Connect with Us, Services, Groups, House Fellowship Centers, Prayer Request, Testify, Holy Ghost Service.
   - **Resources:** Sermons, Photo Gallery, Blogs.
 - **Watch Online Page (`/watch-online`):**
   - Live vs. Recent Broadcast indicator badge.
@@ -274,8 +274,8 @@ Because Sanity Studio and the Website run on distinct domains, you must register
 1. Visit [https://manage.sanity.io](https://manage.sanity.io)
 2. Select project **`ct660z6u`** (or your designated project)
 3. Navigate to **API** → **CORS Origins** → **Add CORS origin**:
-   - `http://localleader:3000` (Local Web App) — **Credentials: Yes**
-   - `http://localleader:3333` (Local Sanity Studio) — **Credentials: Yes**
+   - `http://localhost:3000` (Local Web App) — **Credentials: Yes**
+   - `http://localhost:3333` (Local Sanity Studio) — **Credentials: Yes**
    - `https://rccgchm.org` (Production Web App) — **Credentials: Yes**
    - `https://admin.rccgchm.org` (Production Admin Studio) — **Credentials: Yes**
    - `https://rccgchm.netlify.app` (Netlify Preview) — **Credentials: Yes**
@@ -324,14 +324,14 @@ Run commands from the repository root:
 
 | Command               | Action                                               | URL                       |
 | :-------------------- | :--------------------------------------------------- | :------------------------ |
-| `npm run dev`         | Starts the Next.js church website development server | `http://localleader:3000` |
-| `npm run dev:web`     | Explicitly starts the Next.js church website         | `http://localleader:3000` |
-| `npm run dev:admin`   | Starts the Sanity Studio admin management portal     | `http://localleader:3333` |
+| `npm run dev`         | Starts the Next.js church website development server | `http://localhost:3000` |
+| `npm run dev:web`     | Explicitly starts the Next.js church website         | `http://localhost:3000` |
+| `npm run dev:admin`   | Starts the Sanity Studio admin management portal     | `http://localhost:3333` |
 | `npm run build`       | Compiles the production build for the website        | Output: `apps/web/.next`  |
 | `npm run build:web`   | Compiles the production build for the website        | Output: `apps/web/.next`  |
 | `npm run build:admin` | Compiles the static Sanity Studio production bundle  | Output: `apps/admin/dist` |
-| `npm run start:web`   | Runs the production Next.js server locally           | `http://localleader:3000` |
-| `npm run start:admin` | Serves the built Sanity Studio static files locally  | `http://localleader:3333` |
+| `npm run start:web`   | Runs the production Next.js server locally           | `http://localhost:3000` |
+| `npm run start:admin` | Serves the built Sanity Studio static files locally  | `http://localhost:3333` |
 
 You can also run both apps simultaneously during development using separate terminal sessions:
 

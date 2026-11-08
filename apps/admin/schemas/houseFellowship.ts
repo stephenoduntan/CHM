@@ -36,14 +36,14 @@ export const houseFellowshipType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: "LeaderName",
+      name: "leaderName",
       title: "Leader Name",
       type: "string",
       placeholder: "e.g. Bro. & Sis. Adeleke",
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: "LeaderPhone",
+      name: "leaderPhone",
       title: "Leader Contact Phone Number",
       type: "string",
       placeholder: "+234 803 123 4567",

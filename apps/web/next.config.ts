@@ -5,11 +5,11 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        leadername: "images.unsplash.com",
+        hostname: "images.unsplash.com",
       },
       {
         protocol: "https",
-        leadername: "cdn.sanity.io",
+        hostname: "cdn.sanity.io",
       },
     ],
   },
