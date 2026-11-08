@@ -114,7 +114,7 @@ export const HOUSE_FELLOWSHIP_CENTERS: FellowshipCenter[] = [
   {
     id: "open-heaven-isefun",
     name: "Open Heaven Centre",
-    landmark: "Isefun",
+    landmark: "Ikola",
     landmarkArea: "Camp Davies Road",
     address: "22 Camp Davies Road, Isefun, Ayobo-Ipaja, Lagos",
     leaderName: "Bro. Francis Okon",
@@ -126,7 +126,7 @@ export const HOUSE_FELLOWSHIP_CENTERS: FellowshipCenter[] = [
   {
     id: "favour-centre-isefun",
     name: "Favour Centre",
-    landmark: "Isefun",
+    landmark: "Ikola",
     landmarkArea: "Peace Estate, Isefun",
     address: "Plot 8, Road 2, Peace Estate, off Isefun Road",
     leaderName: "A/P Joe Mbulu",
@@ -138,7 +138,7 @@ export const HOUSE_FELLOWSHIP_CENTERS: FellowshipCenter[] = [
   {
     id: "divine-mercy-isefun",
     name: "Divine Mercy Centre",
-    landmark: "Isefun",
+    landmark: "Ikola",
     landmarkArea: "Kande Community, Isefun",
     address: "15 Kande Street, near Isefun Jetty, Lagos",
     leaderName: "Sis. Benedicta Ebhomenye",
