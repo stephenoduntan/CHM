@@ -13,38 +13,21 @@ export function CountdownSection() {
   const [events] = useManagedEvents();
 
   // Find featured countdown event set from Admin Management Portal
-  const currentEvent = useMemo<EventItem>(() => {
-    // 1. Explicitly toggled featured event (most recent)
-    const featured = events.find((e) => e.isFeatured);
-    if (featured) return featured;
-
-    // 2. Fallback to next upcoming event
-    const upcoming = events.find((e) => !e.isPast);
-    if (upcoming) return upcoming;
-
-    // 3. Fallback to first available event or hardcoded default
-    return (
-      events[0] || {
-        id: "festival-of-destiny",
-        title: UPCOMING_EVENT.name,
-        theme: UPCOMING_EVENT.theme,
-        date: UPCOMING_EVENT.dateLabel,
-        startDateIso: `${UPCOMING_EVENT.startDate}T09:00:00`,
-        link: "/events/festival-of-destiny",
-        isFeatured: true,
-        featuredDisplayType: "text",
-      }
-    );
+  const currentEvent = useMemo<EventItem | null>(() => {
+    // Only return the event that has isFeatured explicitly toggled on
+    return events.find((e) => Boolean(e.isFeatured)) || null;
   }, [events]);
 
   const [timeLeft, setTimeLeft] = useState({
-    days: 13,
-    hours: 17,
-    minutes: 27,
-    seconds: 27,
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
   });
 
   useEffect(() => {
+    if (!currentEvent) return;
+
     let targetTime = new Date(`${UPCOMING_EVENT.startDate}T09:00:00`).getTime();
     if (currentEvent.startDateIso) {
       const parsed = new Date(currentEvent.startDateIso).getTime();
@@ -72,7 +55,12 @@ export function CountdownSection() {
     updateTimer();
     const interval = setInterval(updateTimer, 1000);
     return () => clearInterval(interval);
-  }, [currentEvent.startDateIso]);
+  }, [currentEvent]);
+
+  // Hide the countdown section if no event is set as a featured event
+  if (!currentEvent) {
+    return null;
+  }
 
   const isImageDisplay =
     currentEvent.featuredDisplayType === "image" && Boolean(currentEvent.featuredImage);
